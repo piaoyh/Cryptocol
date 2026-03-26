@@ -17,14 +17,14 @@ use std::ops::{ Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, 
                 BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not,
                 Shl, ShlAssign, Shr, ShrAssign };
 
-use crate::number::{ SmallUInt, TraitsBigUInt };
+use crate::number::SmallUInt;
 
 /// big_uint.rs was too big because of documentation and plenty of examples
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to big_uint_arithmetic_uint.rs.
 pub struct BigUInt<T, const N: usize>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     // Dummy struct for documentation
     #[allow(dead_code)] number: [T; N],
@@ -32,7 +32,7 @@ where T: TraitsBigUInt<T>
 }
 
 impl<T, const N: usize> BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     /***** ARITHMATIC OPERATIONS WITH UINT *****/
 
@@ -165,7 +165,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(sum.is_right_carry(), false);
     /// ```
     pub fn carrying_add_uint<U>(&self, _rhs: U, _carry: bool) -> (Self, bool)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -330,7 +330,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     pub fn carrying_add_assign_uint<U>(&mut self, _rhs: U, _carry: bool) -> bool
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -411,7 +411,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(res.is_undefined(), false);
     /// ```
     pub fn wrapping_add_uint<U>(&self, _rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -510,7 +510,7 @@ where T: TraitsBigUInt<T>
     /// ```
     #[inline]
     pub fn wrapping_add_assign_uint<U>(&mut self, _rhs: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -603,7 +603,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(res.is_right_carry(), false);
     /// ```
     pub fn overflowing_add_uint<U>(&self, _rhs: U) -> (Self, bool)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -712,7 +712,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     pub fn overflowing_add_assign_uint<U>(&mut self, _rhs: U) -> bool
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -847,7 +847,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(dif.is_right_carry(), false);
     /// ```
     pub fn borrowing_sub_uint<U>(&self, _rhs: U, _borrow: bool) -> (Self, bool)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1017,7 +1017,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     pub fn borrowing_sub_assign_uint<U>(&mut self, _rhs: U, _borrow: bool) -> bool
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1102,7 +1102,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(res.is_right_carry(), false);
     /// ```
     pub fn wrapping_sub_uint<U>(&self, _rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1229,7 +1229,7 @@ where T: TraitsBigUInt<T>
     /// ```
     #[inline]
     pub fn wrapping_sub_assign_uint<U>(&mut self, _rhs: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1323,7 +1323,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(res.is_right_carry(), false);
     /// ```
     pub fn overflowing_sub_uint<U>(&self, _rhs: U) -> (Self, bool)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1463,7 +1463,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     pub fn overflowing_sub_assign_uint<U>(&mut self, _rhs: U) -> bool
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1614,7 +1614,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(res_low.is_right_carry(), false);
     /// ```
     pub fn carrying_mul_uint<U>(&self, _rhs: U, _carry: Self) -> (Self, Self)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1797,7 +1797,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(res_higher.is_right_carry(), false);
     /// ```
     pub fn carrying_mul_assign_uint<U>(&mut self, _rhs: U, _carry: Self) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1897,7 +1897,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(res_low.is_right_carry(), false);
     /// ```
     pub fn widening_mul_uint<U>(&self, _rhs: U) -> (Self, Self)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2015,7 +2015,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     pub fn widening_mul_assign_uint<U>(&mut self, _rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2085,7 +2085,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(res.is_right_carry(), false);
     /// ```
     pub fn wrapping_mul_uint<U>(&self, _rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2177,7 +2177,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     pub fn wrapping_mul_assign_uint<U>(&mut self, _rhs: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2254,7 +2254,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(res.is_right_carry(), false);
     /// ```
     pub fn overflowing_mul_uint<U>(&self, _rhs: U) -> (Self, bool)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2357,7 +2357,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     pub fn overflowing_mul_assign_uint<U>(&mut self, _rhs: U) -> bool
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2453,7 +2453,7 @@ where T: TraitsBigUInt<T>
     /// let (quotient, remainder) = _dividend.divide_fully_uint(_divisor);
     /// ```
     pub fn divide_fully_uint<U>(&self, _rhs: U) -> (Self, U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2543,7 +2543,7 @@ where T: TraitsBigUInt<T>
     /// let quotient = _dividend.wrapping_div_uint(_divisor);
     /// ```
     pub fn wrapping_div_uint<U>(&self, _rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2652,7 +2652,7 @@ where T: TraitsBigUInt<T>
     /// _a_biguint.wrapping_div_assign_uint(_divisor);
     /// ```
     pub fn wrapping_div_assign_uint<U>(&mut self, _rhs: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2746,7 +2746,7 @@ where T: TraitsBigUInt<T>
     /// let (quotient, overflow) = _dividend.overflowing_div_uint(_divisor);
     /// ```
     pub fn overflowing_div_uint<U>(&self, _rhs: U) -> (Self, bool)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2863,7 +2863,7 @@ where T: TraitsBigUInt<T>
     /// let overflow = _a_biguint.overflowing_div_assign_uint(_divisor);
     /// ```
     pub fn overflowing_div_assign_uint<U>(&mut self, _rhs: U) -> bool
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2941,7 +2941,7 @@ where T: TraitsBigUInt<T>
     /// let remainder = _dividend.wrapping_rem_uint(_divisor);
     /// ```
     pub fn wrapping_rem_uint<U>(&self, _rhs: U) -> U
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -3052,7 +3052,7 @@ where T: TraitsBigUInt<T>
     /// _a_biguint.wrapping_rem_assign_uint(_divisor);
     /// ```
     pub fn wrapping_rem_assign_uint<U>(&mut self, _rhs: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -3133,7 +3133,7 @@ where T: TraitsBigUInt<T>
     /// let (remainder, overflow) = _dividend.overflowing_rem_uint(_divisor);
     /// ```
     pub fn overflowing_rem_uint<U>(&self, _rhs: U) -> (U, bool)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -3253,7 +3253,7 @@ where T: TraitsBigUInt<T>
     /// let overflow = _a_biguint.overflowing_rem_assign_uint(_divisor);
     /// ```
     pub fn overflowing_rem_assign_uint<U>(&mut self, _rhs: U) -> bool
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }

@@ -590,6 +590,24 @@ crate::number::format_for_integer_unions_impl! { LongUnion }
 
 
 
+impl Ord for LongUnion
+{
+    // fn cmp(&self, other: &Self) -> Ordering
+    /// This method returns an Ordering between self and other.
+    /// 
+    /// # Returns
+    /// An Ordering between self and other.
+    /// 
+    /// # Features
+    /// By convention, self.cmp(&other) returns the ordering matching
+    /// the expression self <operator> other if true.
+    #[inline]
+    fn cmp(&self, other: &Self) -> Ordering
+    {
+        self.get().cmp(&other.get())
+    }
+}
+
 
 impl Debug for LongUnion
 {

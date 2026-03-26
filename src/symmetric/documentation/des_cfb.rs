@@ -15,7 +15,7 @@
 
 
 use std::vec::Vec;
-use crate::number::TraitsBigUInt;
+use crate::number::SmallUInt;
 
 
 /// trait_cfb.rs may be too big
@@ -543,7 +543,7 @@ impl DES_Generic
     /// assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 F4 FC 94 B5 94 1F B9 BD ");
     /// ```
     pub fn encrypt_into_vec<U>(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -807,7 +807,7 @@ impl DES_Generic
     /// assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 F4 FC 94 B5 94 1F B9 BD ");
     /// ```
     pub fn encrypt_into_array<U, const N: usize>(&mut self, iv: u64, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1308,7 +1308,7 @@ impl DES_Generic
     /// assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 F4 FC 94 B5 94 1F B9 BD ");
     /// ```
     pub fn encrypt_str_into_vec<U>(&mut self, iv: u64, message: &str, cipher: &mut Vec<U>) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1566,7 +1566,7 @@ impl DES_Generic
     /// assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 F4 FC 94 B5 94 1F B9 BD ");
     /// ```
     pub fn encrypt_str_into_array<U, const N: usize>(&mut self, iv: u64, message: &str, cipher: &mut [U; N]) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2069,7 +2069,7 @@ impl DES_Generic
     /// assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 F4 FC 94 B5 94 1F B9 BD ");
     /// ```
     pub fn encrypt_string_into_vec<U>(&mut self, iv: u64, message: &String, cipher: &mut Vec<U>) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2327,7 +2327,7 @@ impl DES_Generic
     /// assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 F4 FC 94 B5 94 1F B9 BD ");
     /// ```
     pub fn encrypt_string_into_array<U, const N: usize>(&mut self, iv: u64, message: &String, cipher: &mut [U; N]) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2590,7 +2590,7 @@ impl DES_Generic
     /// assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 F4 FC 94 B5 94 1F B9 BD ");
     /// ```
     pub fn encrypt_vec<U>(&mut self, iv: u64, message: &Vec<U>, cipher: *mut u8) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2848,7 +2848,7 @@ impl DES_Generic
     /// assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 F4 FC 94 B5 94 1F B9 BD ");
     /// ```
     pub fn encrypt_vec_into_vec<U, V>(&mut self, iv: u64, message: &Vec<U>, cipher: &mut Vec<V>) -> u64
-    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
+    where U: SmallUInt, V: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -3117,7 +3117,7 @@ impl DES_Generic
     /// assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 F4 FC 94 B5 94 1F B9 BD ");
     /// ```
     pub fn encrypt_vec_into_array<U, V, const N: usize>(&mut self, iv: u64, message: &Vec<U>, cipher: &mut [V; N]) -> u64
-    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
+    where U: SmallUInt, V: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -3387,7 +3387,7 @@ impl DES_Generic
     /// assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 F4 FC 94 B5 94 1F B9 BD ");
     /// ```
     pub fn encrypt_array<U, const N: usize>(&mut self, iv: u64, message: &[U; N], cipher: *mut u8) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -3652,7 +3652,7 @@ impl DES_Generic
     /// assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 F4 FC 94 B5 94 1F B9 BD ");
     /// ```
     pub fn encrypt_array_into_vec<U, V, const N: usize>(&mut self, iv: u64, message: &[U; N], cipher: &mut Vec<V>) -> u64
-    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
+    where U: SmallUInt, V: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -3927,7 +3927,7 @@ impl DES_Generic
     /// assert_eq!(txt, "8D C3 61 CE 32 4F 7C A3 F4 FC 94 B5 94 1F B9 BD ");
     /// ```
     pub fn encrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, iv: u64, message: &[U; N], cipher: &mut [V; M]) -> u64
-    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
+    where U: SmallUInt, V: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -4769,7 +4769,7 @@ impl DES_Generic
     /// assert_eq!(converted, message);
     /// ```
     pub fn decrypt_into_vec<U>(&mut self, cipher: *const u8, length_in_bytes: u64, iv: u64, message: &mut Vec<U>) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -5200,7 +5200,7 @@ impl DES_Generic
     /// assert_eq!(converted, message);
     /// ```
     pub fn decrypt_into_array<U, const N: usize>(&mut self, cipher: *const u8, length_in_bytes: u64, iv: u64, message: &mut [U; N]) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -5939,7 +5939,7 @@ impl DES_Generic
     /// assert_eq!(converted, message);
     /// ```
     pub fn decrypt_vec<U>(&mut self, cipher: &Vec<U>, iv: u64, message: *mut u8) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -6352,7 +6352,7 @@ impl DES_Generic
     /// assert_eq!(converted, message);
     /// ```
     pub fn decrypt_vec_into_vec<U, V>(&mut self, cipher: &Vec<U>, iv: u64, message: &mut Vec<V>) -> u64
-    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
+    where U: SmallUInt, V: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -6780,7 +6780,7 @@ impl DES_Generic
     /// assert_eq!(converted, message);
     /// ```
     pub fn decrypt_vec_into_array<U, V, const N: usize>(&mut self, cipher: &Vec<U>, iv: u64, message: &mut [V; N]) -> u64
-    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
+    where U: SmallUInt, V: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -7089,7 +7089,7 @@ impl DES_Generic
     /// assert_eq!(recovered, message);
     /// ```
     pub fn decrypt_vec_into_string<U>(&mut self, cipher: &Vec<U>, iv: u64, message: &mut String) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -7524,7 +7524,7 @@ impl DES_Generic
     /// assert_eq!(converted, message);
     /// ```
     pub fn decrypt_array<U, const N: usize>(&mut self, iv: u64, cipher: &[U; N], message: *mut u8) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -7936,7 +7936,7 @@ impl DES_Generic
     /// assert_eq!(converted, message);
     /// ```
     pub fn decrypt_array_into_vec<U, V, const N: usize>(&mut self, iv: u64, cipher: &[U; N], message: &mut Vec<V>) -> u64
-    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
+    where U: SmallUInt, V: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -8364,7 +8364,7 @@ impl DES_Generic
     /// assert_eq!(converted, message);
     /// ```
     pub fn decrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, iv: u64, cipher: &[U; N], message: &mut [V; M]) -> u64
-    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
+    where U: SmallUInt, V: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -8673,7 +8673,7 @@ impl DES_Generic
     /// assert_eq!(recovered, message);
     /// ```
     pub fn decrypt_array_into_string<U, const N: usize>(&mut self, iv: u64, cipher: &[U; N], message: &mut String) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }

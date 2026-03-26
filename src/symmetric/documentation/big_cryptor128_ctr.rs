@@ -15,7 +15,7 @@
 
 
 use std::vec::Vec;
-use crate::number::TraitsBigUInt;
+use crate::number::SmallUInt;
 
 /// trait_ctr.rs may be too big
 /// because of documentation and plenty of examples.
@@ -151,7 +151,7 @@ impl BigCryptor128
     /// assert_eq!(txt, "91 99 31 04 B7 AB 4B 93 4A 4B 15 04 8F 75 7C B7 F3 AD A2 CE 90 FA 59 BF 79 67 BF 10 DE 26 6E A1 77 B7 7A 8E 82 3E 98 00 4B F4 31 28 87 A3 7D DE 86 4E B4 0D 2D 7B 0A ");
     /// ```
     pub fn encrypt_into_vec<U>(&mut self, nonce: u64, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -219,7 +219,7 @@ impl BigCryptor128
     /// assert_eq!(txt, "91 99 31 04 B7 AB 4B 93 4A 4B 15 04 8F 75 7C B7 F3 AD A2 CE 90 FA 59 BF 79 67 BF 10 DE 26 6E A1 77 B7 7A 8E 82 3E 98 00 4B F4 31 28 87 A3 7D DE 86 4E B4 0D 2D 7B 0A ");
     /// ```
     pub fn encrypt_into_array<U, const N: usize>(&mut self, nonce: u64, message: *const u8, length_in_bytes: u64, cipher: &mut [U; N]) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -327,7 +327,7 @@ impl BigCryptor128
     /// assert_eq!(txt, "91 99 31 04 B7 AB 4B 93 4A 4B 15 04 8F 75 7C B7 F3 AD A2 CE 90 FA 59 BF 79 67 BF 10 DE 26 6E A1 77 B7 7A 8E 82 3E 98 00 4B F4 31 28 87 A3 7D DE 86 4E B4 0D 2D 7B 0A ");
     /// ```
     pub fn encrypt_str_into_vec<U>(&mut self, nonce: u64, message: &str, cipher: &mut Vec<U>) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -388,7 +388,7 @@ impl BigCryptor128
     /// assert_eq!(txt, "91 99 31 04 B7 AB 4B 93 4A 4B 15 04 8F 75 7C B7 F3 AD A2 CE 90 FA 59 BF 79 67 BF 10 DE 26 6E A1 77 B7 7A 8E 82 3E 98 00 4B F4 31 28 87 A3 7D DE 86 4E B4 0D 2D 7B 0A ");
     /// ```
     pub fn encrypt_str_into_array<U, const N: usize>(&mut self, nonce: u64, message: &str, cipher: &mut [U; N]) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -497,7 +497,7 @@ impl BigCryptor128
     /// assert_eq!(txt, "91 99 31 04 B7 AB 4B 93 4A 4B 15 04 8F 75 7C B7 F3 AD A2 CE 90 FA 59 BF 79 67 BF 10 DE 26 6E A1 77 B7 7A 8E 82 3E 98 00 4B F4 31 28 87 A3 7D DE 86 4E B4 0D 2D 7B 0A ");
     /// ```
     pub fn encrypt_string_into_vec<U>(&mut self, nonce: u64, message: &String, cipher: &mut Vec<U>) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -558,7 +558,7 @@ impl BigCryptor128
     /// assert_eq!(txt, "91 99 31 04 B7 AB 4B 93 4A 4B 15 04 8F 75 7C B7 F3 AD A2 CE 90 FA 59 BF 79 67 BF 10 DE 26 6E A1 77 B7 7A 8E 82 3E 98 00 4B F4 31 28 87 A3 7D DE 86 4E B4 0D 2D 7B 0A ");
     /// ```
     pub fn encrypt_string_into_array<U, const N: usize>(&mut self, nonce: u64, message: &String, cipher: &mut [U; N]) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -618,7 +618,7 @@ impl BigCryptor128
     /// assert_eq!(txt, "91 99 31 04 B7 AB 4B 93 4A 4B 15 04 8F 75 7C B7 F3 AD A2 CE 90 FA 59 BF 79 67 BF 10 DE 26 6E A1 77 B7 7A 8E 82 3E 98 00 4B F4 31 28 87 A3 7D DE 86 4E B4 0D 2D 7B 0A ");
     /// ```
     pub fn encrypt_vec<U>(&mut self, nonce: u64, message: &Vec<U>, cipher: *mut u8) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -672,7 +672,7 @@ impl BigCryptor128
     /// assert_eq!(txt, "91 99 31 04 B7 AB 4B 93 4A 4B 15 04 8F 75 7C B7 F3 AD A2 CE 90 FA 59 BF 79 67 BF 10 DE 26 6E A1 77 B7 7A 8E 82 3E 98 00 4B F4 31 28 87 A3 7D DE 86 4E B4 0D 2D 7B 0A ");
     /// ```
     pub fn encrypt_vec_into_vec<U, V>(&mut self, nonce: u64, message: &Vec<U>, cipher: &mut Vec<V>) -> u64
-    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
+    where U: SmallUInt, V: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -738,7 +738,7 @@ impl BigCryptor128
     /// assert_eq!(txt, "91 99 31 04 B7 AB 4B 93 4A 4B 15 04 8F 75 7C B7 F3 AD A2 CE 90 FA 59 BF 79 67 BF 10 DE 26 6E A1 77 B7 7A 8E 82 3E 98 00 4B F4 31 28 87 A3 7D DE 86 4E B4 0D 2D 7B 0A ");
     /// ```
     pub fn encrypt_vec_into_array<U, V, const N: usize>(&mut self, nonce: u64, message: &Vec<U>, cipher: &mut [V; N]) -> u64
-    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
+    where U: SmallUInt, V: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -798,7 +798,7 @@ impl BigCryptor128
     /// assert_eq!(txt, "91 99 31 04 B7 AB 4B 93 4A 4B 15 04 8F 75 7C B7 F3 AD A2 CE 90 FA 59 BF 79 67 BF 10 DE 26 6E A1 77 B7 7A 8E 82 3E 98 00 4B F4 31 28 87 A3 7D DE 86 4E B4 0D 2D 7B 0A ");
     /// ```
     pub fn encrypt_array<U, const N: usize>(&mut self, nonce: u64, message: &[U; N], cipher: *mut u8) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -852,7 +852,7 @@ impl BigCryptor128
     /// assert_eq!(txt, "91 99 31 04 B7 AB 4B 93 4A 4B 15 04 8F 75 7C B7 F3 AD A2 CE 90 FA 59 BF 79 67 BF 10 DE 26 6E A1 77 B7 7A 8E 82 3E 98 00 4B F4 31 28 87 A3 7D DE 86 4E B4 0D 2D 7B 0A ");
     /// ```
     pub fn encrypt_array_into_vec<U, V, const N: usize>(&mut self, nonce: u64, message: &[U; N], cipher: &mut Vec<V>) -> u64
-    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
+    where U: SmallUInt, V: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -917,7 +917,7 @@ impl BigCryptor128
     /// assert_eq!(txt, "91 99 31 04 B7 AB 4B 93 4A 4B 15 04 8F 75 7C B7 F3 AD A2 CE 90 FA 59 BF 79 67 BF 10 DE 26 6E A1 77 B7 7A 8E 82 3E 98 00 4B F4 31 28 87 A3 7D DE 86 4E B4 0D 2D 7B 0A ");
     /// ```
     pub fn encrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, nonce: u64, message: &[U; N], cipher: &mut [V; M]) -> u64
-    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
+    where U: SmallUInt, V: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1078,7 +1078,7 @@ impl BigCryptor128
     /// assert_eq!(converted, message);
     /// ```
     pub fn decrypt_into_vec<U>(&mut self, nonce: u64, cipher: *const u8, length_in_bytes: u64, message: &mut Vec<U>) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1165,7 +1165,7 @@ impl BigCryptor128
     /// assert_eq!(converted, message);
     /// ```
     pub fn decrypt_into_array<U, const N: usize>(&mut self, nonce: u64, cipher: *const u8, length_in_bytes: u64, message: &mut [U; N]) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1317,7 +1317,7 @@ impl BigCryptor128
     /// assert_eq!(converted, message);
     /// ```
     pub fn decrypt_vec<U>(&mut self, nonce: u64, cipher: &Vec<U>, message: *mut u8) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1392,7 +1392,7 @@ impl BigCryptor128
     /// assert_eq!(converted, message);
     /// ```
     pub fn decrypt_vec_into_vec<U, V>(&mut self, nonce: u64, cipher: &Vec<U>, message: &mut Vec<V>) -> u64
-    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
+    where U: SmallUInt, V: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1475,7 +1475,7 @@ impl BigCryptor128
     /// assert_eq!(converted, "In the beginning God created the heavens and the earth.");
     /// ```
     pub fn decrypt_vec_into_array<U, V, const N: usize>(&mut self, nonce: u64, cipher: &Vec<U>, message: &mut [V; N]) -> u64
-    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
+    where U: SmallUInt, V: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1540,7 +1540,7 @@ impl BigCryptor128
     /// assert_eq!(recovered, message);
     /// ```
     pub fn decrypt_vec_into_string<U>(&mut self, nonce: u64, cipher: &Vec<U>, message: &mut String) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1623,7 +1623,7 @@ impl BigCryptor128
     /// assert_eq!(converted, message);
     /// ```
     fn decrypt_array<U, const N: usize>(&mut self, nonce: u64, cipher: &[U; N], message: *mut u8) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1696,7 +1696,7 @@ impl BigCryptor128
     /// assert_eq!(converted, message);
     /// ```
     pub fn decrypt_array_into_vec<U, V, const N: usize>(&mut self, nonce: u64, cipher: &[U; N], message: &mut Vec<V>) -> u64
-    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
+    where U: SmallUInt, V: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1779,7 +1779,7 @@ impl BigCryptor128
     /// assert_eq!(converted, message);
     /// ```
     pub fn decrypt_array_into_array<U, V, const N: usize, const M: usize>(&mut self, nonce: u64, cipher: &[U; N], message: &mut [V; M]) -> u64
-    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
+    where U: SmallUInt, V: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1843,7 +1843,7 @@ impl BigCryptor128
     /// assert_eq!(recovered, message);
     /// ```
     pub fn decrypt_array_into_string<U, const N: usize>(&mut self, nonce: u64, cipher: &[U; N], message: &mut String) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }

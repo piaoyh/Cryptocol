@@ -719,12 +719,12 @@ macro_rules! SmallUInt_methods_for_integer_unions_impl_ {
             /// Sets the MSB (Most Significant Bit) of `SmallUInt`-type
             /// number with `1`.
             /// [Read more](trait@SmallUInt#tymethod.set_msb) in detail.
-            #[inline] fn set_msb(&mut self)     { self.set(self.get() | !(Self::max().get() >> 1)); }
+            #[inline] fn set_msb(&mut self)     { self.set(self.get() | !(Self::MAX.get() >> 1)); }
 
             /// Sets the MSB (Most Significant Bit) of `SmallUInt`-type
             /// number with `0`.
             /// [Read more](trait@SmallUInt#tymethod.reset_msb) in detail.
-            #[inline] fn reset_msb(&mut self)   { self.set(self.get() & (Self::max().get() >> 1)); }
+            #[inline] fn reset_msb(&mut self)   { self.set(self.get() & (Self::MAX.get() >> 1)); }
 
             /// Sets the LSB (Least Significant Bit) of `SmallUInt`-type
             /// number with `1`.
@@ -759,7 +759,7 @@ macro_rules! SmallUInt_methods_for_integer_unions_impl_ {
             /// Checks whether or not the MSB (Most Segnificant Bit) of
             /// `self` is set to be one.
             /// [Read more](trait@SmallUInt#tymethod.is_msb_set) in detail.
-            #[inline] fn is_msb_set(self) -> bool   { (self.get() & !(Self::max().get() >> 1)) != 0 }
+            #[inline] fn is_msb_set(self) -> bool   { (self.get() & !(Self::MAX.get() >> 1)) != 0 }
 
             /// Checks whether or not the bit of `self` specified by `bit_pos`
             /// is set one.
@@ -774,11 +774,11 @@ macro_rules! SmallUInt_methods_for_integer_unions_impl_ {
             /// Sets `Self`-type number to be maximum value in which all bits
             /// are set to be `1`.
             /// [Read more](trait@SmallUInt#tymethod.set_max) in detail.
-            #[inline] fn set_max(&mut self)     { *self = Self::max() }
+            #[inline] fn set_max(&mut self)     { *self = Self::MAX }
 
             /// Checks whether or not `Self`-type number to be maximum value.
             /// [Read more](trait@SmallUInt#tymethod.is_max)
-            #[inline] fn is_max(self) -> bool { self == Self::max() }
+            #[inline] fn is_max(self) -> bool { self == Self::MAX }
 
             /// Sets `Self`-type number to be `size_in_bits`-bit long maximum
             /// value in which all bits of `size_in_bits`-bit long lower part

@@ -17,14 +17,14 @@ use std::ops::{ Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, 
                 BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not,
                 Shl, ShlAssign, Shr, ShrAssign };
 
-use crate::number::{ SmallUInt, TraitsBigUInt };
+use crate::number::SmallUInt;
 
 /// big_uint.rs was too big because of documentation and plenty of examples
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to big_uint_other_calculation_uint.rs.
 pub struct BigUInt<T, const N: usize>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     // Dummy struct for documentation
     #[allow(dead_code)] number: [T; N],
@@ -32,7 +32,7 @@ where T: TraitsBigUInt<T>
 }
 
 impl<T, const N: usize> BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     /***** METHODS FOR EXPONENTIATION AND LOGARITHM WITH UINT *****/
 
@@ -158,7 +158,7 @@ where T: TraitsBigUInt<T>
     /// ```
     #[inline]
     pub fn pow_uint<U>(&self, _exp: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -322,7 +322,7 @@ where T: TraitsBigUInt<T>
     /// ```
     #[inline]
     pub fn pow_assign_uint<U>(&mut self, _exp: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -445,7 +445,7 @@ where T: TraitsBigUInt<T>
     /// let res = _a_biguint.wrapping_pow_uint(_exp);
     /// ```
     pub fn wrapping_pow_uint<U>(&self, _exp: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -607,7 +607,7 @@ where T: TraitsBigUInt<T>
     /// _a_biguint.wrapping_pow_assign_uint(_exp);
     /// ```
     pub fn wrapping_pow_assign_uint<U>(&mut self, _exp: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -741,7 +741,7 @@ where T: TraitsBigUInt<T>
     /// let (res, overflow) = _a_biguint.overflowing_pow_uint(_exp);
     /// ```
     pub fn overflowing_pow_uint<U>(&self, _exp: U) -> (Self, bool)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -915,7 +915,7 @@ where T: TraitsBigUInt<T>
     /// let overflow = _a_biguint.overflowing_pow_assign_uint(_exp);
     /// ```
     pub fn overflowing_pow_assign_uint<U>(&mut self, _exp: U) -> bool
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1090,7 +1090,7 @@ where T: TraitsBigUInt<T>
     /// let res = _a_biguint.iroot_uint(_exp);
     /// ```
     pub fn iroot_uint<U>(&self, _exp: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1321,7 +1321,7 @@ where T: TraitsBigUInt<T>
     /// _a_biguint.iroot_assign_uint(_exp);
     /// ```
     pub fn iroot_assign_uint<U>(&mut self, _exp: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }

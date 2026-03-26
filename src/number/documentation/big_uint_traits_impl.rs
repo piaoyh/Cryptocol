@@ -18,14 +18,14 @@ use std::ops::{ BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, 
                 Add, AddAssign, Sub, SubAssign, Mul, MulAssign,
                 Div, DivAssign, Rem, RemAssign };
 
-use crate::number::{ SmallUInt, TraitsBigUInt, NumberErr };
+use crate::number::{ SmallUInt, NumberErr };
 
 /// big_uint.rs was too big because of documentation and plenty of examples
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to big_uint_arithmetic.rs.
 pub struct BigUInt<T, const N: usize>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     // Dummy struct for documentation
     #[allow(dead_code)] number: [T; N],
@@ -125,7 +125,7 @@ where T: TraitsBigUInt<T>
 /// }
 /// ```
 impl<T, const N: usize> Add for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     type Output = Self;
 
@@ -309,7 +309,7 @@ where T: TraitsBigUInt<T>
 /// }
 /// ```
 impl<T, const N: usize> AddAssign for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     // fn add_assign(&mut self, rhs: Self)
     /// Calculates `self` + `rhs`,
@@ -541,7 +541,7 @@ where T: TraitsBigUInt<T>
 /// }
 /// ```
 impl<T, const N: usize> Sub for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     type Output = Self;
 
@@ -725,7 +725,7 @@ where T: TraitsBigUInt<T>
 /// }
 /// ```
 impl<T, const N: usize> SubAssign for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     // fn sub_assign(&mut self, rhs: Self)
     /// Calculates `self` - `rhs`,
@@ -956,7 +956,7 @@ where T: TraitsBigUInt<T>
 /// }
 /// ```
 impl<T, const N: usize> Mul for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     type Output = Self;
 
@@ -1116,7 +1116,7 @@ where T: TraitsBigUInt<T>
 /// }
 /// ```
 impl<T, const N: usize> MulAssign for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     // fn mul_assign(&mut self, rhs: Self)
     /// Calculates `self` * `rhs`,
@@ -1314,7 +1314,7 @@ where T: TraitsBigUInt<T>
 /// }
 /// ```
 impl<T, const N: usize> Div for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     type Output = Self;
 
@@ -1498,7 +1498,7 @@ where T: TraitsBigUInt<T>
 /// }
 /// ```
 impl<T, const N: usize> DivAssign for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     // fn div_assign(&mut self, rhs: Self)
     /// Divides `self` by `rhs`, and assigns the quotient to `self` back.
@@ -1722,7 +1722,7 @@ where T: TraitsBigUInt<T>
 /// }
 /// ```
 impl<T, const N: usize> Rem for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     type Output = Self;
 
@@ -1914,7 +1914,7 @@ where T: TraitsBigUInt<T>
 /// }
 /// ```
 impl<T, const N: usize> RemAssign for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     // fn rem_assign(&mut self, rhs: Self)
     /// Divides `self` by `rhs`, and assigns the remainder to `self` back.
@@ -2140,7 +2140,7 @@ where T: TraitsBigUInt<T>
 /// }
 /// ```
 impl<T, const N: usize> BitAnd for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     type Output = Self;
 
@@ -2326,7 +2326,7 @@ where T: TraitsBigUInt<T>
 /// }
 /// ```
 impl<T, const N: usize> BitAndAssign for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     // fn bitand_assign(&mut self, rhs: Self)
     /// Performs the bitwise AND (&) operation,
@@ -2556,7 +2556,7 @@ where T: TraitsBigUInt<T>
 /// }
 /// ```
 impl<T, const N: usize> BitOr for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     type Output = Self;
 
@@ -2742,7 +2742,7 @@ where T: TraitsBigUInt<T>
 /// }
 /// ```
 impl<T, const N: usize> BitOrAssign for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     // fn bitor_assign(&mut self, rhs: Self)
     /// Performs the bitwise OR (|) operation,
@@ -2972,7 +2972,7 @@ where T: TraitsBigUInt<T>
 /// }
 /// ```
 impl<T, const N: usize> BitXor for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     type Output = Self;
 
@@ -3159,7 +3159,7 @@ where T: TraitsBigUInt<T>
 /// }
 /// ```
 impl<T, const N: usize> BitXorAssign for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     // fn bitxor_assign(&mut self, rhs: Self)
     /// Performs the bitwise XOR (^) operation,
@@ -3371,7 +3371,7 @@ where T: TraitsBigUInt<T>
 /// }
 /// ```
 impl<T, const N: usize> Not for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     type Output = Self;
 
@@ -3479,7 +3479,7 @@ where T: TraitsBigUInt<T>
 ///   for types that do not have a full equivalence relation.
 /// For more information, [read more](https://doc.rust-lang.org/std/cmp/trait.PartialEq.html#).
 impl<T, const N: usize> PartialEq for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     // fn eq(&self, other: &Self) -> bool
     /// Compare `self` with `other` to find whether `self` is equal to `other`.
@@ -3563,7 +3563,7 @@ where T: TraitsBigUInt<T>
 
 
 impl<T, const N: usize> PartialOrd for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     // fn partial_cmp(&self, other: &Self) -> Option<Ordering>
     /// # __self < other -> bool__
@@ -3926,7 +3926,7 @@ where T: TraitsBigUInt<T>
 
 
 impl<T, const N: usize> From<[T; N]> for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     // fn from(val: [T; N]) -> Self
     /// Constructs a new `BigUInt<T, N>`-type object from an array of type `T`
@@ -3960,7 +3960,7 @@ where T: TraitsBigUInt<T>
 
 
 impl<T, const N: usize> FromStr for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     type Err = NumberErr;
 
@@ -4061,7 +4061,7 @@ where T: TraitsBigUInt<T>
 
 /*
 impl<T, const N: usize> Add<&Self> for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     type Output = Self;
 
@@ -4073,7 +4073,7 @@ where T: TraitsBigUInt<T>
 }
 
 impl<T, const N: usize> AddAssign<&Self> for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     /// Adds and assign the result to it.
     /// 
@@ -4085,7 +4085,7 @@ where T: TraitsBigUInt<T>
 }
 
 impl<T, const N: usize> Sub<&Self> for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     type Output = Self;
 
@@ -4097,7 +4097,7 @@ where T: TraitsBigUInt<T>
 }
 
 impl<T, const N: usize> SubAssign<&Self> for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     /// Subtracts and assign the result to it.
     #[inline]
@@ -4108,7 +4108,7 @@ where T: TraitsBigUInt<T>
 }
 
 impl<T, const N: usize> Mul<&Self> for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     type Output = Self;
 
@@ -4120,7 +4120,7 @@ where T: TraitsBigUInt<T>
 }
 
 impl<T, const N: usize> MulAssign<&Self> for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     /// Multiplies and assign the result to it.
     #[inline] 
@@ -4131,7 +4131,7 @@ where T: TraitsBigUInt<T>
 }
 
 impl<T, const N: usize> Div<&Self> for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     type Output = Self;
 
@@ -4143,7 +4143,7 @@ where T: TraitsBigUInt<T>
 }
 
 impl<T, const N: usize> DivAssign<&Self> for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     #[inline]
     fn div_assign(&mut self, rhs: &Self)
@@ -4153,7 +4153,7 @@ where T: TraitsBigUInt<T>
 }
 
 impl<T, const N: usize> Rem<&Self> for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     type Output = Self;
 
@@ -4165,7 +4165,7 @@ where T: TraitsBigUInt<T>
 }
 
 impl<T, const N: usize> RemAssign<&Self> for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     #[inline]
     fn rem_assign(&mut self, rhs: &Self)
@@ -4175,7 +4175,7 @@ where T: TraitsBigUInt<T>
 }
 
 impl<T, const N: usize> BitAnd<&Self> for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     type Output = Self;
     //type Output = <Self as BitAnd<Self>>::Output;
@@ -4226,7 +4226,7 @@ where T: TraitsBigUInt<T>
 }
 
 impl<T, const N: usize> BitAndAssign<&Self> for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     /// Performs the &= operation.
     /// [Read more](https://doc.rust-lang.org/core/ops/bit/trait.BitAndAssign.html#tymethod.bitand_assign)
@@ -4270,7 +4270,7 @@ where T: TraitsBigUInt<T>
 }
 
 impl<T, const N: usize> BitOr<&Self> for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     type Output = Self;
     //type Output = <Self as BitOr<Self>>::Output;
@@ -4323,7 +4323,7 @@ where T: TraitsBigUInt<T>
 }
 
 impl<T, const N: usize> BitOrAssign<&Self> for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     /// Performs the bitwise OR (|) operation.
     /// [Read more](https://doc.rust-lang.org/core/ops/bit/trait.BitOrAssign.html#tymethod.bitor_assign)
@@ -4370,7 +4370,7 @@ where T: TraitsBigUInt<T>
 }
 
 impl<T, const N: usize> BitXor<&Self> for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     type Output = Self;
     // type Output = <Self as BitXor<Self>>::Output;
@@ -4413,7 +4413,7 @@ where T: TraitsBigUInt<T>
 }
 
 impl<T, const N: usize> BitXorAssign<&Self> for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     /// Performs the ^= operation.
     /// [Read more](https://doc.rust-lang.org/core/ops/bit/trait.BitXorAssign.html#tymethod.bitxor_assign)

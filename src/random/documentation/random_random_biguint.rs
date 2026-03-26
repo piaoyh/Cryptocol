@@ -15,7 +15,7 @@
 // #![warn(rustdoc::missing_doc_code_examples)]
 
 
-use crate::number::{ TraitsBigUInt, BigUInt };
+use crate::number::{ SmallUInt, BigUInt };
 use crate::random::Random_Engine;
 
 /// Random.rs may be too big
@@ -3485,7 +3485,7 @@ impl Random_Generic
     ///     { println!("Slapdash number {} => {}", i, num[i]); }
     /// ```
     pub fn random_array<T, const N: usize>(&mut self) -> [T; N]
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -3713,7 +3713,7 @@ impl Random_Generic
     ///     { println!("Slapdash number {} => {}", i, num[i]); }
     /// ```
     pub fn put_random_in_array<T, const N: usize>(&mut self, out: &mut [T; N])
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -3985,7 +3985,7 @@ impl Random_Generic
     /// ```
     #[inline]
     pub fn random_biguint<T, const N: usize>(&mut self) -> BigUInt<T, N>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -4346,7 +4346,7 @@ impl Random_Generic
     /// ```
     #[inline]
     pub fn random_under_biguint<T, const N: usize>(&mut self, ceiling: &BigUInt<T, N>) -> Option<BigUInt<T, N>>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -4672,7 +4672,7 @@ impl Random_Generic
     /// ```
     #[inline]
     pub fn random_under_biguint_<T, const N: usize>(&mut self, ceiling: &BigUInt<T, N>) -> BigUInt<T, N>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -4972,7 +4972,7 @@ impl Random_Generic
     /// assert!(r.is_odd());
     /// ```
     pub fn random_odd_biguint<T, const N: usize>(&mut self) -> BigUInt<T, N>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -5354,7 +5354,7 @@ impl Random_Generic
     /// ```
     #[inline]
     pub fn random_odd_under_biguint<T, const N: usize>(&mut self, ceiling: &BigUInt<T, N>) -> Option<BigUInt<T, N>>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -5701,7 +5701,7 @@ impl Random_Generic
     /// ```
     #[inline]
     pub fn random_odd_under_biguint_<T, const N: usize>(&mut self, ceiling: &BigUInt<T, N>) -> BigUInt<T, N>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -6001,7 +6001,7 @@ impl Random_Generic
     /// ```
     #[inline]
     pub fn random_with_msb_set_biguint<T, const N: usize>(&mut self) -> BigUInt<T, N>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -6321,7 +6321,7 @@ impl Random_Generic
     /// assert!(r.is_odd());
     /// ```
     pub fn random_odd_with_msb_set_biguint<T, const N: usize>(&mut self) -> BigUInt<T, N>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -6603,7 +6603,7 @@ impl Random_Generic
     /// println!("Slapdash prime number: {}", prime);
     /// ```
     pub fn random_prime_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -6886,7 +6886,7 @@ impl Random_Generic
     /// println!("Slapdash prime number: {}", prime);
     /// ```
     pub fn random_prime_with_msb_set_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -7139,7 +7139,7 @@ impl Random_Generic
     /// println!("Slapdash prime number: {}", prime);
     /// ```
     pub fn random_prime_with_msb_set_using_miller_rabin_biguint_sequentially<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -7173,7 +7173,7 @@ impl Random_Generic
     /// - The random prime numbers that may or may not be cryptographically
     ///   secure depending on what pseudo-random number generator is used.
     pub fn random_primes_with_msb_set_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize, how_many: usize) -> Vec<BigUInt<T, N>>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -7467,7 +7467,7 @@ impl Random_Generic
     /// println!("Slapdash prime number: {}", prime);
     /// ```
     pub fn random_prime_with_half_length_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -7501,7 +7501,7 @@ impl Random_Generic
     /// - The random prime numbers that may or may not be cryptographically
     ///   secure depending on what pseudo-random number generator is used.
     pub fn random_primes_with_half_length_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize, how_many: usize) -> Vec<BigUInt<T, N>>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -7751,7 +7751,7 @@ impl Random_Generic
     /// ```
     #[inline]
     pub fn prepared_random_prime_with_msb_set<T, const N: usize>(&mut self) -> BigUInt<T, N>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -8001,7 +8001,7 @@ impl Random_Generic
     /// println!("Slapdash Number: {}", biguint);
     /// ```
     pub fn prepared_random_prime_with_half_length<T, const N: usize>(&mut self) -> BigUInt<T, N>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }

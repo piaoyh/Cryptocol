@@ -14,7 +14,7 @@
 // #![warn(rustdoc::missing_doc_code_examples)]
 
 
-use crate::number::TraitsBigUInt;
+use crate::number::SmallUInt;
 
 
 /// This trait PKCS1V15 is based on PKCS #1 ver. 1.5. The RSA PKCS #1 v1.5
@@ -169,7 +169,7 @@ pub trait PKCS1V15
     /// # Example 1 for Normal message
     /// click [here](trait@PKCS1V15#method.decrypt_vec)
     fn encrypt_into_vec<U>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn encrypt_into_array<U, const M: usize>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut [U; M]) -> u64
     /// Encrypts the data with the padding defined according to 
@@ -222,7 +222,7 @@ pub trait PKCS1V15
     /// # Example 1 for Normal message
     /// click [here](trait@PKCS1V15#method.decrypt_array)
     fn encrypt_into_array<U, const M: usize>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut [U; M]) -> u64
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn encrypt_str(&mut self, message: &str, cipher: *mut u8) -> u64
     /// Encrypts the data in a `str` object with the padding defined according
@@ -304,7 +304,7 @@ pub trait PKCS1V15
     /// click [here](trait@PKCS1V15#method.decrypt_vec_into_string)
     #[inline]
     fn encrypt_str_into_vec<U>(&mut self, message: &str, cipher: &mut Vec<U>) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         self.encrypt_into_vec(message.as_ptr(), message.len() as u64, cipher)
     }
@@ -355,7 +355,7 @@ pub trait PKCS1V15
     /// click [here](trait@PKCS1V15#method.decrypt_array_into_string)
     #[inline]
     fn encrypt_str_into_array<U, const M: usize>(&mut self, message: &str, cipher: &mut [U; M]) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         self.encrypt_into_array(message.as_ptr(), message.len() as u64, cipher)
     }
@@ -492,7 +492,7 @@ pub trait PKCS1V15
     /// ```
     #[inline]
     fn encrypt_string_into_vec<U>(&mut self, message: &String, cipher: &mut Vec<U>) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         self.encrypt_into_vec(message.as_ptr(), message.len() as u64, cipher)
     }
@@ -570,7 +570,7 @@ pub trait PKCS1V15
     /// ```
     #[inline]
     fn encrypt_string_into_array<U, const M: usize>(&mut self, message: &String, cipher: &mut [U; M]) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         self.encrypt_into_array(message.as_ptr(), message.len() as u64, cipher)
     }
@@ -617,7 +617,7 @@ pub trait PKCS1V15
     /// click [here](trait@PKCS1V15#method.decrypt_into_vec)
     #[inline]
     fn encrypt_vec<U>(&mut self, message: &Vec<U>, cipher: *mut u8) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         self.encrypt(message.as_ptr() as *const u8, (message.len() as u32 * U::size_in_bytes()) as u64, cipher)
     }
@@ -660,7 +660,7 @@ pub trait PKCS1V15
     /// click [here](trait@PKCS1V15#method.decrypt_vec_into_vec)
     #[inline]
     fn encrypt_vec_into_vec<U, V>(&mut self, message: &Vec<U>, cipher: &mut Vec<V>) -> u64
-    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
+    where U: SmallUInt, V: SmallUInt
     {
         self.encrypt_into_vec(message.as_ptr() as *const u8, (message.len() as u32 * U::size_in_bytes()) as u64, cipher)
     }
@@ -711,7 +711,7 @@ pub trait PKCS1V15
     /// click [here](trait@PKCS1V15#method.decrypt_array_into_array)
     #[inline]
     fn encrypt_vec_into_array<U, V, const M: usize>(&mut self, message: &Vec<U>, cipher: &mut [V; M]) -> u64
-    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
+    where U: SmallUInt, V: SmallUInt
     {
         self.encrypt_into_array(message.as_ptr() as *const u8, (message.len() as u32 * U::size_in_bytes()) as u64, cipher)
     }
@@ -757,7 +757,7 @@ pub trait PKCS1V15
     /// click [here](trait@PKCS1V15#method.decrypt_into_array)
     #[inline]
     fn encrypt_array<U, const M: usize>(&mut self, message: &[U; M], cipher: *mut u8) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         self.encrypt(message.as_ptr() as *const u8, (M as u32 * U::size_in_bytes()) as u64, cipher)
     }
@@ -798,7 +798,7 @@ pub trait PKCS1V15
     /// click [here](trait@PKCS1V15#method.decrypt_vec_into_array)
     #[inline]
     fn encrypt_array_into_vec<U, V, const M: usize>(&mut self, message: &[U; M], cipher: &mut Vec<V>) -> u64
-    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
+    where U: SmallUInt, V: SmallUInt
     {
         self.encrypt_into_vec(message.as_ptr() as *const u8, (M as u32 * U::size_in_bytes()) as u64, cipher)
     }
@@ -850,7 +850,7 @@ pub trait PKCS1V15
     /// click [here](trait@PKCS1V15#method.decrypt_array_into_vec)
     #[inline]
     fn encrypt_array_into_array<U, V, const L: usize, const M: usize>(&mut self, message: &[U; L], cipher: &mut [V; M]) -> u64
-    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
+    where U: SmallUInt, V: SmallUInt
     {
         self.encrypt_into_array(message.as_ptr() as *const u8, (L as u32 * U::size_in_bytes()) as u64, cipher)
     }
@@ -1060,7 +1060,7 @@ pub trait PKCS1V15
     /// assert_eq!(recovered, message);
     /// ```
     fn decrypt_into_vec<U>(&mut self, cipher: *const u8, message: &mut Vec<U>) -> u64
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn decrypt_into_array<U, const M: usize>(&mut self, cipher: *const u8, message: &mut [U; M]) -> u64
     /// Decrypts the data with the padding defined according to
@@ -1189,7 +1189,7 @@ pub trait PKCS1V15
     /// assert_eq!(recovered, message);
     /// ```
     fn decrypt_into_array<U, const M: usize>(&mut self, cipher: *const u8, message: &mut [U; M]) -> u64
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn decrypt_into_string(&mut self, cipher: *const u8, message: &mut String) -> u64
     /// Decrypts the data with the padding defined according to PKCS #1
@@ -1382,7 +1382,7 @@ pub trait PKCS1V15
     /// ```
     #[inline]
     fn decrypt_vec<U>(&mut self, cipher: &Vec<U>, message: *mut u8) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         self.decrypt(cipher.as_ptr() as *const u8, message)
     }
@@ -1502,7 +1502,7 @@ pub trait PKCS1V15
     /// assert_eq!(recovered, message);
     /// ```
     fn decrypt_vec_into_vec<U, V>(&mut self, cipher: &Vec<U>, message: &mut Vec<V>) -> u64
-    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>;
+    where U: SmallUInt, V: SmallUInt;
 
     // fn decrypt_vec_into_array<U, V, const M: usize>(&mut self, cipher: &Vec<U>, message: &mut [V; M]) -> u64
     /// Decrypts the data stored in a `Vec<U>` object with the padding defined
@@ -1629,7 +1629,7 @@ pub trait PKCS1V15
     /// ```
     #[inline]
     fn decrypt_vec_into_array<U, V, const M: usize>(&mut self, cipher: &Vec<U>, message: &mut [V; M]) -> u64
-    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
+    where U: SmallUInt, V: SmallUInt
     {
         self.decrypt_into_array(cipher.as_ptr() as *const u8, message)
     }
@@ -1690,7 +1690,7 @@ pub trait PKCS1V15
     /// ```
     #[inline]
     fn decrypt_vec_into_string<U>(&mut self, cipher: &Vec<U>, message: &mut String) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         self.decrypt_into_string(cipher.as_ptr() as *const u8, message)
     }
@@ -1823,7 +1823,7 @@ pub trait PKCS1V15
     /// ```
     #[inline]
     fn decrypt_array<U, const M: usize>(&mut self, cipher: &[U; M], message: *mut u8) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         self.decrypt(cipher.as_ptr() as *const u8, message)
     }
@@ -1945,7 +1945,7 @@ pub trait PKCS1V15
     /// ```
     #[inline]
     fn decrypt_array_into_vec<U, V, const M: usize>(&mut self, cipher: &[U; M], message: &mut Vec<V>) -> u64
-    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
+    where U: SmallUInt, V: SmallUInt
     {
         self.decrypt_into_vec(cipher.as_ptr() as *const u8, message)
     }
@@ -2077,7 +2077,7 @@ pub trait PKCS1V15
     /// ```
     #[inline]
     fn decrypt_array_into_array<U, V, const L: usize, const M: usize>(&mut self, cipher: &[U; L], message: &mut [V; M]) -> u64
-    where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
+    where U: SmallUInt, V: SmallUInt
     {
         self.decrypt_into_array(cipher.as_ptr() as *const u8, message)
     }
@@ -2139,7 +2139,7 @@ pub trait PKCS1V15
     /// ```
     #[inline]
     fn decrypt_array_into_string<U, const M: usize>(&mut self, cipher: &[U; M], message: &mut String) -> u64
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         self.decrypt_into_string(cipher.as_ptr() as *const u8, message)
     }

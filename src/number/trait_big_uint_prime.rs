@@ -15,7 +15,7 @@
 // #![allow(rustdoc::missing_doc_code_examples)]
 
 
-use crate::number::TraitsBigUInt;
+use crate::number::SmallUInt;
 
 
 /// # Introduction
@@ -58,7 +58,7 @@ use crate::number::TraitsBigUInt;
 /// ```
 #[allow(non_camel_case_types)]
 pub trait BigUInt_Prime<T, const N: usize> : Clone + Sized //+ Display + + ToString
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 
 {
     /*** METHODS FOR MISCELLANEOUS ARITHMETIC OPERATIONS ***/
@@ -116,7 +116,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_prime/struct.BigUInt.html#method.gcd_uint)
     fn gcd_uint<U>(&self, other: U) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn gcd_assign_uint<U>(&mut self, other: U)
     /// Calculates the greatest common divisor of `self` and `other`,
@@ -177,7 +177,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_prime/struct.BigUInt.html#method.gcd_assign_uint)
     fn gcd_assign_uint<U>(&mut self, other: U)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn lcm_uint<U>(&self, other: U) -> Self
     /// Calculates the least common multiple of `self` and `other`,
@@ -235,7 +235,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_prime/struct.BigUInt.html#method.lcm_uint)
     fn lcm_uint<U>(&self, other: U) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn lcm_assign_uint<U>(&mut self, other: U)
     /// Calculates the least common multiple of `self` and `other`,
@@ -296,7 +296,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_prime/struct.BigUInt.html#method.lcm_assign_uint)
     fn lcm_assign_uint<U>(&mut self, other: U)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn gcd(&self, other: &Self) -> Self
     /// Calculates the greatest common divisor of `self` and `other`,

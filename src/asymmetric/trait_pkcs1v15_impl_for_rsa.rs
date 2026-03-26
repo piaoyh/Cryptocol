@@ -86,25 +86,25 @@ macro_rules! decrypt_into_array {
 macro_rules! crypt_into_something_with_padding {
     () => {
         fn encrypt_into_array<U, const M: usize>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut [U; M]) -> u64
-        where U: TraitsBigUInt<U>
+        where U: SmallUInt
         {
             encrypt_into_array!(self, message, length_in_bytes, cipher, U, M)
         }
 
         fn encrypt_into_vec<U>(&mut self, message: *const u8, length_in_bytes: u64, cipher: &mut Vec<U>) -> u64
-        where U: TraitsBigUInt<U>
+        where U: SmallUInt
         {
             encrypt_into_vec!(self, message, length_in_bytes, cipher, U)
         }
 
         fn decrypt_into_array<U, const M: usize>(&mut self, cipher: *const u8, message: &mut [U; M]) -> u64
-        where U: TraitsBigUInt<U>
+        where U: SmallUInt
         {
             decrypt_into_array!(self, cipher, message, U)
         }
 
         fn decrypt_into_vec<U>(&mut self, cipher: *const u8, message: &mut Vec<U>) -> u64
-        where U: TraitsBigUInt<U>
+        where U: SmallUInt
         {
             pre_decrypt_into_vec!(message, U);
             let len = self.decrypt(cipher, message.as_mut_ptr() as *mut u8);
@@ -115,7 +115,7 @@ macro_rules! crypt_into_something_with_padding {
         }
 
         fn decrypt_vec_into_vec<U, V>(&mut self, cipher: &Vec<U>, message: &mut Vec<V>) -> u64
-        where U: TraitsBigUInt<U>, V: TraitsBigUInt<V>
+        where U: SmallUInt, V: SmallUInt
         {
             pre_decrypt_into_vec!(message, V);
             self.decrypt_into_vec(cipher.as_ptr() as *const u8, message)
@@ -127,12 +127,12 @@ macro_rules! crypt_into_something_with_padding {
 
 use std::ptr::copy_nonoverlapping;
 
-use crate::number::TraitsBigUInt;
+use crate::number::SmallUInt;
 use crate::random::Slapdash as Random;
 use crate::asymmetric::{ PKCS1V15, RSA_Generic };
 
 impl<const N: usize, T> PKCS1V15 for RSA_Generic<N, T>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     fn encrypt(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
     {

@@ -1216,6 +1216,27 @@ crate::number::shift_ops_for_integer_unions_by_union_impl! { SizeUnion, LongUnio
 crate::number::shift_ops_for_integer_unions_by_union_impl! { SizeUnion, LongerUnion }
 crate::number::shift_ops_for_integer_unions_by_union_impl! { SizeUnion, SizeUnion }
 
+
+
+impl Ord for SizeUnion
+{
+    // fn cmp(&self, other: &Self) -> Ordering
+    /// This method returns an Ordering between self and other.
+    /// 
+    /// # Returns
+    /// An Ordering between self and other.
+    /// 
+    /// # Features
+    /// By convention, self.cmp(&other) returns the ordering matching
+    /// the expression self <operator> other if true.
+    #[inline]
+    fn cmp(&self, other: &Self) -> Ordering
+    {
+        self.get().cmp(&other.get())
+    }
+}
+
+
 impl Debug for SizeUnion
 {
     // fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result

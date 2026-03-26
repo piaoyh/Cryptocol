@@ -12,7 +12,7 @@
 // #![allow(rustdoc::missing_doc_code_examples)]
 
 
-use crate::number::TraitsBigUInt;
+use crate::number::SmallUInt;
 
 
 
@@ -71,7 +71,7 @@ use crate::number::TraitsBigUInt;
 /// ```
 #[allow(non_camel_case_types)]
 pub trait BigUInt_More<T, const N: usize> : Clone + Sized //+ Display + + ToString
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
 /*** ADDITION UINT ***/
 
@@ -132,7 +132,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_more/struct.BigUInt.html#method.checked_add_uint)
     fn checked_add_uint<U>(&self, rhs: U) -> Option<Self>
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn unchecked_add_uint<U>(&self, rhs: U) -> Self
     /// Calculates `self` + `rhs`, assuming overflow cannot occur,
@@ -183,7 +183,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_more/struct.BigUInt.html#method.unchecked_add_uint)
     fn unchecked_add_uint<U>(&self, rhs: U) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn saturating_add_uint<U>(&self, rhs: U) -> Self
     /// Calculates `self` + `rhs`,
@@ -233,7 +233,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_more/struct.BigUInt.html#method.saturating_add_uint)
     fn saturating_add_uint<U>(&self, rhs: U) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn saturating_add_assign_uint<U>(&mut self, rhs: T)
     /// Calculates `self` + `rhs`,
@@ -293,7 +293,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_more/struct.BigUInt.html#method.saturating_add_assign_uint)
     fn saturating_add_assign_uint<U>(&mut self, rhs: U)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn safe_add_uint<U>(&self, rhs: U) -> Self
     /// Calculates `self` + `rhs`,
@@ -354,7 +354,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_more/struct.BigUInt.html#method.safe_add_uint)
     fn safe_add_uint<U>(&self, rhs: U) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn safe_add_assign_uint<U>(&mut self, rhs: U)
     /// Calculates `self` + `rhs`,
@@ -427,7 +427,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_more/struct.BigUInt.html#method.safe_add_assign_uint)
     fn safe_add_assign_uint<U>(&mut self, rhs: U)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     
     
@@ -490,7 +490,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_more/struct.BigUInt.html#method.checked_sub_uint)
     fn checked_sub_uint<U>(&self, rhs: U) -> Option<Self>
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn unchecked_sub_uint<U>(&self, rhs: U) -> Self
     /// Calculates `self` - `rhs`, assuming underflow cannot occur,
@@ -541,7 +541,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_more/struct.BigUInt.html#method.unchecked_sub_uint)
     fn unchecked_sub_uint<U>(&self, rhs: U) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn saturating_sub_uint<U>(&self, rhs: U) -> Self
     /// Calculates `self` - `rhs`,
@@ -591,7 +591,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_more/struct.BigUInt.html#method.saturating_sub_uint)
     fn saturating_sub_uint<U>(&self, rhs: U) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn saturating_sub_assign_uint<U>(&mut self, rhs: T)
     /// Calculates `self` - `rhs`,
@@ -651,7 +651,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_more/struct.BigUInt.html#method.saturating_sub_assign_uint)
     fn saturating_sub_assign_uint<U>(&mut self, rhs: U)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn safe_sub_uint<U>(&self, rhs: U) -> Self
     /// Calculates `self` - `rhs`,
@@ -714,7 +714,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_more/struct.BigUInt.html#method.safe_sub_uint)
     fn safe_sub_uint<U>(&self, rhs: U) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn safe_sub_assign_uint<U>(&mut self, rhs: U)
     /// Calculates `self` - `rhs`,
@@ -787,7 +787,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_more/struct.BigUInt.html#method.safe_sub_assign_uint)
     fn safe_sub_assign_uint<U>(&mut self, rhs: U)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     
     
@@ -849,7 +849,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_more/struct.BigUInt.html#method.checked_mul_uint)
     fn checked_mul_uint<U>(&self, rhs: U) -> Option<Self>
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn unchecked_mul_uint<U>(&self, rhs: U) -> Self
     /// Calculates `self` * `rhs`, assuming overflow cannot occur,
@@ -900,7 +900,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_more/struct.BigUInt.html#method.unchecked_mul_uint)
     fn unchecked_mul_uint<U>(&self, rhs: U) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn saturating_mul_uint<U>(&self, rhs: U) -> Self
     /// Calculates `self` * `rhs`,
@@ -951,7 +951,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_more/struct.BigUInt.html#method.saturating_mul_uint)
     fn saturating_mul_uint<U>(&self, rhs: U) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn saturating_mul_assign_uint<U>(&mut self, rhs: U)
     /// Calculates `self` * `rhs`,
@@ -1010,7 +1010,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_more/struct.BigUInt.html#method.saturating_mul_assign_uint)
     fn saturating_mul_assign_uint<U>(&mut self, rhs: U)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn safe_mul_uint<U>(& self, rhs: U) -> Self
     /// Calculates `self` * `rhs`,
@@ -1074,7 +1074,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_more/struct.BigUInt.html#method.safe_mul_uint)
     fn safe_mul_uint<U>(&self, rhs: U) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn safe_mul_assign_uint<U>(&mut self, rhs: U)
     /// Calculates `self` * `rhs`,
@@ -1148,7 +1148,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_more/struct.BigUInt.html#method.safe_mul_assign_uint)
     fn safe_mul_assign_uint<U>(&mut self, rhs: U)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     
     
@@ -1212,7 +1212,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_more/struct.BigUInt.html#method.checked_div_uint)
     fn checked_div_uint<U>(&self, rhs: U) -> Option<Self>
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn unchecked_div_uint<U>(&self, rhs: U) -> Self
     /// Divides `self` by `rhs`, and returns the quotient.
@@ -1262,7 +1262,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_more/struct.BigUInt.html#method.unchecked_div_uint)
     fn unchecked_div_uint<U>(&self, rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
             self.checked_div_uint(rhs).unwrap()
     }
@@ -1318,7 +1318,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_more/struct.BigUInt.html#method.saturating_div_uint)
     fn saturating_div_uint<U>(&self, rhs: U) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn saturating_div_assign_uint<U>(&mut self, rhs: U)
     /// Divides `self` by `rhs`,
@@ -1380,7 +1380,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_more/struct.BigUInt.html#method.saturating_div_assign_uint)
     fn saturating_div_assign_uint<U>(&mut self, rhs: U)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn checked_rem_uint<U>(&self, rhs: U) -> Option<Self>
     /// Divides `self` by `rhs`,
@@ -1433,7 +1433,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_more/struct.BigUInt.html#method.checked_rem_uint)
     fn checked_rem_uint<U>(&self, rhs: U) -> Option<U>
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn unchecked_rem_uint<U>(&self, rhs: U) -> Self
     /// Divides `self` by `rhs`, and returns the remainder.
@@ -1476,7 +1476,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_more/struct.BigUInt.html#method.unchecked_rem_uint)
     fn unchecked_rem_uint<U>(&self, rhs: U) -> U
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn saturating_rem_uint<U>(&self, rhs: U) -> Self
     /// Divides `self` by `rhs`,
@@ -1522,7 +1522,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_more/struct.BigUInt.html#method.saturating_rem_uint)
     fn saturating_rem_uint<U>(&self, rhs: U) -> U
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn saturating_rem_assign_uint<U>(&mut self, rhs: U)
     /// Divides `self` by `rhs`,
@@ -1584,7 +1584,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_more/struct.BigUInt.html#method.saturating_rem_assign_uint)
     fn saturating_rem_assign_uint<U>(&mut self, rhs: U)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     
     
@@ -3204,7 +3204,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.next_multiple_of_uint)
     fn next_multiple_of_uint<U>(&self, rhs: U) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn next_multiple_of_assign_uint<U>(&mut self, rhs: U)
     /// Calculates the smallest value greater than or equal to `self`,
@@ -3273,7 +3273,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.next_multiple_of_assign_uint)
     fn next_multiple_of_assign_uint<U>(&mut self, rhs: U)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn is_multiple_of_uint<U>(&self, rhs: U) -> bool
     /// Returns `true` if `self` is a multiple of `rhs`, and `false` otherwise.
@@ -3320,7 +3320,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.is_multiple_of_uint)
     fn is_multiple_of_uint<U>(&self, rhs: U) -> bool
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     
     
@@ -3559,7 +3559,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.midpoint_uint)
     fn midpoint_uint<U>(&self, rhs: U) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn midpoint_assign_uint<U>(&mut self, rhs: U)
     /// Calculates the middle point of `self` and `rhs`,
@@ -3616,7 +3616,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.midpoint_assign_uint)
     fn midpoint_assign_uint<U>(&mut self, rhs: U)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn midpoint(&self, rhs: &Self) -> Self
     /// Calculates the middle point of `self` and `rhs`,
@@ -3795,7 +3795,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.checked_pow_uint)
     fn checked_pow_uint<U>(&self, exp: U) -> Option<Self>
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn unchecked_pow_uint<U>(&self, exp: U) -> Self
     /// Raises `BigUInt` type number to the power of `exp`, using
@@ -3850,7 +3850,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.unchecked_pow_uint)
     fn unchecked_pow_uint<U>(&self, exp: U) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn saturating_pow_uint<U>(&self, exp: U) -> Self
     /// Raises `BigUInt` type number to the power of `exp`, using
@@ -3906,7 +3906,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.saturating_pow_uint)
     fn saturating_pow_uint<U>(&self, exp: U) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn saturating_pow_assign_uint<U>(&self, exp: U)
     /// Raises `BigUInt` type number to the power of `exp`, using
@@ -3969,7 +3969,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.saturating_pow_assign_uint)
     fn saturating_pow_assign_uint<U>(&mut self, exp: U)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn checked_iroot_uint<U>(&self, exp: U) -> Option<Self>
     /// Calculates the `exp`-th root of `self`, rounded down,
@@ -4032,7 +4032,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.checked_iroot_uint)
     fn checked_iroot_uint<U>(&self, exp: U) -> Option<Self>
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn unchecked_iroot_uint<U>(&self, exp: U) -> Self
     /// Calculates the `exp`-th root of `self`, rounded down,
@@ -4087,7 +4087,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.unchecked_iroot_uint)
     fn unchecked_iroot_uint<U>(&self, exp: U) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn checked_ilog_uint<U>(&self, base: U) -> Option<Self>
     /// Calculates the logarithm of the number with respect to `base`, rounded
@@ -4145,7 +4145,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.checked_ilog_uint)
     fn checked_ilog_uint<U>(&self, base: U) -> Option<Self>
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn unchecked_ilog_uint<U>(&self, base: U) -> Self
     /// Calculates the logarithm of the number with respect to `base`,
@@ -4197,7 +4197,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_other_calculation_uint/struct.BigUInt.html#method.unchecked_ilog_uint)
     fn unchecked_ilog_uint<U>(&self, base: U) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     
     
@@ -4893,7 +4893,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.checked_shift_left)
     fn checked_shift_left<U>(&self, n: U) -> Option<Self>
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn unchecked_shift_left<U>(&self, n: U) -> Self
     /// Shift left the field `number: [T;N]` to the left by `n`,
@@ -4945,7 +4945,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.unchecked_shift_left)
     fn unchecked_shift_left<U>(&self, n: U) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn checked_shift_right<U>(&self, n: U) -> Option<Self>
     /// Shift right the field `number: [T;N]` to the right by `n`,
@@ -5005,7 +5005,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.checked_shift_right)
     fn checked_shift_right<U>(&self, n: U) -> Option<Self>
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn unchecked_shift_right<U>(&self, n: U) -> Self
     /// shifts the field `number: [T;N]` to the right by `n`,
@@ -5057,6 +5057,6 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_basic_operation/struct.BigUInt.html#method.unchecked_shift_right)
     fn unchecked_shift_right<U>(&self, n: U) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
 }

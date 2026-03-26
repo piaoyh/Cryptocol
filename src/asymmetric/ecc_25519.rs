@@ -13,7 +13,7 @@
 #![allow(non_camel_case_types)]
 // #![warn(rustdoc::missing_doc_code_examples)]
 
-use crate::number::{ TraitsBigUInt, BigUInt }; //, BigUInt_Modular, BigUInt_Prime };
+use crate::number::{ SmallUInt, BigUInt }; //, BigUInt_Modular, BigUInt_Prime };
 // use crate::random::Random;
 
 
@@ -51,7 +51,7 @@ type ECC_25519_u8 = ECC_25519<u8, 32>;
 /// which means adding this many times makes coming to the original point back.
 /// 
 struct ECC_25519<T, const N: usize, const A: usize = 486662, const B: usize = 1>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     generatop: (BigUInt<T, N>, BigUInt<T, N>),
     key_public: (BigUInt<T, N>, BigUInt<T, N>),
@@ -59,7 +59,7 @@ where T: TraitsBigUInt<T>
 }
 
 impl<T, const N: usize> ECC_25519<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     pub fn new() -> Self
     {

@@ -7,7 +7,7 @@
 // except according to those terms.
 
 
-use crate::number::{ TraitsBigUInt, SharedArrays };
+use crate::number::{ SmallUInt, SharedArrays };
 use crate::hash::Keccak_Generic;
 use crate::random::{ Random_Engine, SALT };
 
@@ -21,7 +21,7 @@ Random_Engine for Keccak_Generic<RATE, PADDING, ROUNDS, T, LFSR,
                                     THETA_SUB, THETA_ADD, THETA_ROT,
                                     RHO_MUL_X, RHO_MUL_Y, RHO_T,
                                     PI_MUL_X, PI_MUL_Y, CHI_ADD_1, CHI_ADD_2>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     fn sow_array(&mut self, message: &[u64; 8], original: &[u64; 8])
     {

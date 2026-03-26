@@ -24,7 +24,7 @@ use std::thread::{ available_parallelism, scope };
 #[cfg(not(target_family = "windows"))] use std::fs::File;
 #[cfg(not(target_family = "windows"))] use std::io::Read;
 
-use crate::number::{ SmallUInt, TraitsBigUInt, LongUnion, LongerUnion, BigUInt, BigUInt_Prime, A_LIST };
+use crate::number::{ SmallUInt, LongUnion, LongerUnion, BigUInt, BigUInt_Prime, A_LIST };
 use crate::random::{ Random, Random_Engine };
 
 
@@ -1747,7 +1747,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_uint)
     pub fn random_uint<T>(&mut self) -> T
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         match T::size_in_bytes()
         {
@@ -1792,7 +1792,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_under_uint)
     #[inline]
     pub fn random_under_uint<T>(&mut self, ceiling: T) -> Option<T>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         if ceiling != T::zero() { Some(self.random_under_uint_::<T>(ceiling)) } else { None }
     }
@@ -1831,7 +1831,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_under_uint_)
     #[inline]
     pub fn random_under_uint_<T>(&mut self, ceiling: T) -> T
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         self.random_uint::<T>() % ceiling
     }
@@ -1870,7 +1870,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_minmax_uint)
     #[inline]
     pub fn random_minmax_uint<T>(&mut self, from: T, ceiling: T) -> Option<T>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         if ceiling > from { Some(self.random_minmax_uint_(from, ceiling)) } else { None }
     }
@@ -1915,7 +1915,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_minmax_uint_)
     #[inline]
     pub fn random_minmax_uint_<T>(&mut self, from: T, ceiling: T) -> T
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         self.random_under_uint_(ceiling - from) + from
     }
@@ -1947,7 +1947,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_odd_uint)
     pub fn random_odd_uint<T>(&mut self) -> T
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         let mut res = self.random_uint::<T>();
         res.set_lsb();
@@ -2001,7 +2001,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_odd_under_uint)
     #[inline]
     pub fn random_odd_under_uint<T>(&mut self, ceiling: T) -> Option<T>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         if ceiling.is_zero_or_one() { None } else { Some(self.random_odd_under_uint_(ceiling)) }
     }
@@ -2055,7 +2055,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_odd_under_uint_)
     pub fn random_odd_under_uint_<T>(&mut self, mut ceiling: T) -> T
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         if ceiling.is_zero_or_one()
             { panic!(); }
@@ -2092,7 +2092,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_with_msb_set_uint)
     pub fn random_with_msb_set_uint<T>(&mut self) -> T
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         let mut res = self.random_uint::<T>();
         res.set_msb();
@@ -2126,7 +2126,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_odd_with_msb_set_uint)
     pub fn random_odd_with_msb_set_uint<T>(&mut self) -> T
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         let mut res = self.random_odd_uint::<T>();
         res.set_msb();
@@ -2186,7 +2186,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_prime_using_miller_rabin_uint)
     pub fn random_prime_using_miller_rabin_uint<T>(&mut self, repetition: usize) -> T
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         let mut res = self.random_odd_uint::<T>();
         while !res.is_prime_using_miller_rabin(repetition)
@@ -2253,7 +2253,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_smalluint/struct.Random_Generic.html#method.random_prime_with_msb_set_using_miller_rabin_uint)
     pub fn random_prime_with_msb_set_using_miller_rabin_uint<T>(&mut self, repetition: usize) -> T
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         let mut res = self.random_odd_with_msb_set_uint::<T>();
         while !res.is_prime_using_miller_rabin(repetition)
@@ -2296,7 +2296,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_array)
     pub fn random_array<T, const N: usize>(&mut self) -> [T; N]
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         let mut res = [T::zero(); N];
         self.put_random_in_array(&mut res);
@@ -2339,7 +2339,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.put_random_in_array)
     pub fn put_random_in_array<T, const N: usize>(&mut self, out: &mut [T; N])
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         self.produce_aux_state();
         self.produce_main_state();
@@ -2420,7 +2420,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_biguint)
     #[inline]
     pub fn random_biguint<T, const N: usize>(&mut self) -> BigUInt<T, N>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         BigUInt::<T, N>::from_array(self.random_array::<T, N>()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    )
     }
@@ -2499,7 +2499,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_under_biguint)
     #[inline]
     pub fn random_under_biguint<T, const N: usize>(&mut self, ceiling: &BigUInt<T, N>) -> Option<BigUInt<T, N>>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         if ceiling.eq_uint(0_u8) {None} else {Some(self.random_under_biguint_::<T, N>(ceiling))}
     }
@@ -2581,7 +2581,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_under_biguint_)
     #[inline]
     pub fn random_under_biguint_<T, const N: usize>(&mut self, ceiling: &BigUInt<T, N>) -> BigUInt<T, N>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         self.random_biguint::<T, N>().wrapping_rem(ceiling)
     }
@@ -2660,7 +2660,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_odd_biguint)
     pub fn random_odd_biguint<T, const N: usize>(&mut self) -> BigUInt<T, N>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         let mut res = self.random_biguint::<T, N>();
         res.set_lsb();
@@ -2743,7 +2743,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_odd_under_biguint)
     #[inline]
     pub fn random_odd_under_biguint<T, const N: usize>(&mut self, ceiling: &BigUInt<T, N>) -> Option<BigUInt<T, N>>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         if ceiling.is_zero_or_one() { None } else { Some(self.random_odd_under_biguint_(ceiling)) }
     }
@@ -2827,7 +2827,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_odd_under_biguint_)
     #[inline]
     pub fn random_odd_under_biguint_<T, const N: usize>(&mut self, ceiling: &BigUInt<T, N>) -> BigUInt<T, N>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         if ceiling.is_zero_or_one()
             { panic!(); }
@@ -2908,7 +2908,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_with_msb_set_biguint)
     #[inline]
     pub fn random_with_msb_set_biguint<T, const N: usize>(&mut self) -> BigUInt<T, N>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         let mut res = self.random_biguint::<T, N>();
         res.set_msb();
@@ -2986,7 +2986,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_odd_with_msb_set_biguint)
     pub fn random_odd_with_msb_set_biguint<T, const N: usize>(&mut self) -> BigUInt<T, N>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         let mut r = self.random_with_msb_set_biguint();
         r.set_lsb();
@@ -3064,7 +3064,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_prime_using_miller_rabin_biguint)
     pub fn random_prime_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         let mut res = self.random_odd_biguint::<T, N>();
         while !res.is_prime_using_miller_rabin(repetition)
@@ -3073,7 +3073,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     }
 
     pub(crate) fn random_prime_candidate_with_msb_set_biguint<T, const N: usize>(&mut self) -> BigUInt<T, N>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         let mut candidate = self.random_odd_with_msb_set_biguint::<T, N>();
         while candidate.filter_out_composite_number()
@@ -3084,7 +3084,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     }
 
     pub(crate) fn random_prime_candidate_with_half_length_biguint<T, const N: usize>(&mut self) -> BigUInt<T, N>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         let half = T::BITS * N as u32;
         let mut candidate = self.random_odd_with_msb_set_biguint::<T, N>();
@@ -3172,7 +3172,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_prime_with_msb_set_using_miller_rabin_biguint)
     #[inline]
     pub fn random_prime_with_msb_set_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         self.random_primes_with_msb_set_using_miller_rabin_biguint(repetition, 1).pop().unwrap()
     }
@@ -3219,7 +3219,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially)
     pub fn random_prime_with_msb_set_using_miller_rabin_biguint_sequentially<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         let mut res = self.random_odd_with_msb_set_biguint::<T, N>();
         while !res.is_prime_using_miller_rabin(repetition)
@@ -3256,7 +3256,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// - The random prime numbers that may or may not be cryptographically
     ///   secure depending on what pseudo-random number generator is used.
     pub fn random_primes_with_msb_set_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize, how_many: usize) -> Vec<BigUInt<T, N>>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         let mut v = Vec::new();
         let mut number_of_threads = match available_parallelism()
@@ -3480,7 +3480,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.random_prime_with_half_length_using_miller_rabin_biguint)
     pub fn random_prime_with_half_length_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize) -> BigUInt<T, N>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         let half = (T::BITS * N as u32) >> 1;
         let mut res: BigUInt<T, N> = self.random_with_msb_set_biguint();
@@ -3524,7 +3524,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// - The random prime numbers that may or may not be cryptographically
     ///   secure depending on what pseudo-random number generator is used.
     pub fn random_primes_with_half_length_using_miller_rabin_biguint<T, const N: usize>(&mut self, repetition: usize, how_many: usize) -> Vec<BigUInt<T, N>>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         let mut v = Vec::new();
         let mut number_of_threads = match available_parallelism()
@@ -3698,7 +3698,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// println!("U512 Prime number: {}", prime2);
     /// ```
     pub fn random_prime_with_half_length_using_rsa_biguint<T, const N: usize>(&mut self, repetition: usize) -> (BigUInt<T, N>, BigUInt<T, N>)
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         use crate::asymmetric::RSA_Generic;
         let length = N * (T::BITS >> 1) as usize;
@@ -3767,7 +3767,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.prepared_random_prime_with_msb_set)
     #[inline]
     pub fn prepared_random_prime_with_msb_set<T, const N: usize>(&mut self) -> BigUInt<T, N>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         self.get_prepared_prime_number(T::size_in_bytes() as usize * N)
     }
@@ -3811,13 +3811,13 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.prepared_random_prime_with_half_length)
     pub fn prepared_random_prime_with_half_length<T, const N: usize>(&mut self) -> BigUInt<T, N>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         self.get_prepared_prime_number((T::size_in_bytes() as usize * N) >> 1)
     }
 
     fn get_prepared_prime_number<T, const N: usize>(&mut self, length_in_bytes: usize) -> BigUInt<T, N>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         let row: usize;
         match length_in_bytes

@@ -17,7 +17,7 @@ use std::fmt::{ self, Debug, Display, Formatter };
 use std::ops::{ BitAnd, BitAndAssign, BitOr, BitOrAssign,
                 BitXor, BitXorAssign, Not, Shl };
 
-use crate::number::{ TraitsBigUInt, SmallUInt, LongUnion };
+use crate::number::{ SmallUInt, LongUnion };
 
 
 #[allow(non_camel_case_types)]
@@ -1720,7 +1720,7 @@ pub struct Keccak_Generic<const RATE: usize = 72, const PADDING: usize = 0,
         const RHO_MUL_X: usize = 2, const RHO_MUL_Y: usize = 3, const RHO_T: u32 = 24,
         const PI_MUL_X: usize = 1, const PI_MUL_Y: usize = 3,
         const CHI_ADD_1: usize = 1, const CHI_ADD_2: usize = 2>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     state: [[T; 5]; 5],
 }
@@ -1734,7 +1734,7 @@ Keccak_Generic<RATE, PADDING, ROUNDS, T, LFSR,
                 THETA_SUB, THETA_ADD, THETA_ROT,
                 RHO_MUL_X, RHO_MUL_Y, RHO_T,
                 PI_MUL_X, PI_MUL_Y, CHI_ADD_1, CHI_ADD_2>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     const RC: [T; ROUNDS] = make_RC!(T, ROUNDS, LFSR);
     const SEPARATOR: u8 = match PADDING
@@ -3964,7 +3964,7 @@ Display for Keccak_Generic<RATE, PADDING, ROUNDS, T, LFSR,
                 THETA_SUB, THETA_ADD, THETA_ROT,
                 RHO_MUL_X, RHO_MUL_Y, RHO_T,
                 PI_MUL_X, PI_MUL_Y, CHI_ADD_1, CHI_ADD_2>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     /// Formats the value using the given formatter.
     /// You will hardly use this method directly.

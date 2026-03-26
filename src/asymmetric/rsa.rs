@@ -13,7 +13,7 @@
 #![allow(non_camel_case_types)]
 // #![warn(rustdoc::missing_doc_code_examples)]
 
-use crate::number::{ TraitsBigUInt, BigUInt, BigUInt_Modular, BigUInt_Prime };
+use crate::number::{ SmallUInt, BigUInt, BigUInt_Modular, BigUInt_Prime };
 use crate::random::Random;
 
 
@@ -149,7 +149,7 @@ pub type RSA_1024 = RSA_1024_u32;
 /// 
 
 pub struct RSA_Generic<const N: usize, T, const MR: usize = 7>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     modulus: BigUInt<T, N>,
     key_public: BigUInt<T, N>,
@@ -157,7 +157,7 @@ where T: TraitsBigUInt<T>
 }
 
 impl<const N: usize, T, const MR: usize> RSA_Generic<N, T, MR>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     // pub fn new() -> Self
     /// Constructs a new object of the struct `RSA_Generic`.

@@ -15,7 +15,7 @@
 // #![allow(rustdoc::missing_doc_code_examples)]
 
 
-use crate::number::{ TraitsBigUInt, BigUInt,
+use crate::number::{ SmallUInt, BigUInt,
                     BigUInt_Modular, BigUInt_Prime, BigUInt_Panic_Free };
 
 
@@ -322,19 +322,19 @@ macro_rules! general_panic_free_calc_ilog
 
 
 impl<T, const N: usize> BigUInt_Panic_Free<T, N> for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     /*** ADDITION ***/
 
     fn panic_free_modular_add_uint<U>(&self, rhs: U, modulus: &Self) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
 
     {
         biguint_calc_assign_to_calc!(self, Self::panic_free_modular_add_assign_uint, rhs, modulus);
     }
     
     fn panic_free_modular_add_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         panic_free_modular_calc_assign!(self, Self::common_modular_add_assign_uint, rhs, modulus);
     }
@@ -352,13 +352,13 @@ where T: TraitsBigUInt<T>
 
     /*** SUBTRACTION ***/
     fn panic_free_modular_sub_uint<U>(&self, rhs: U, modulus: &Self) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         biguint_calc_assign_to_calc!(self, Self::panic_free_modular_sub_assign_uint, rhs, modulus);
     }
 
     fn panic_free_modular_sub_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         panic_free_modular_calc_assign!(self, Self::common_modular_sub_assign_uint, rhs, modulus);
     }
@@ -378,13 +378,13 @@ where T: TraitsBigUInt<T>
     /*** MULTIPLICATION ***/
 
     fn panic_free_modular_mul_uint<U>(&self, rhs: U, modulus: &Self) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         biguint_calc_assign_to_calc!(self, Self::panic_free_modular_mul_assign_uint, rhs, modulus);
     }
 
     fn panic_free_modular_mul_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         panic_free_modular_calc_assign!(self, Self::common_modular_mul_assign_uint, rhs, modulus);
     }
@@ -403,7 +403,7 @@ where T: TraitsBigUInt<T>
     /*** DIVISION ***/
 
     fn panic_free_divide_fully_uint<U>(&self, rhs: U) -> (Self, Self)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         if rhs.is_zero()
         {
@@ -418,25 +418,25 @@ where T: TraitsBigUInt<T>
     }
 
     fn panic_free_div_uint<U>(&self, rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         biguint_calc_assign_to_calc_div!(self, Self::panic_free_divide_fully_uint, rhs);
     }
 
     fn panic_free_div_assign_uint<U>(&mut self, rhs: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         panic_free_calc_div_rem_assign!(self, Self::panic_free_div_uint, rhs);
     }
 
     fn panic_free_modular_div_uint<U>(&self, rhs: U, modulus: &Self) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         biguint_calc_assign_to_calc!(self, Self::panic_free_modular_div_assign_uint, rhs, modulus);
     }
 
     fn panic_free_modular_div_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         let mut terminated = false;
         let mut mrhs = rhs;
@@ -568,25 +568,25 @@ where T: TraitsBigUInt<T>
     }
 
     fn panic_free_rem_uint<U>(&self, rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         biguint_calc_assign_to_calc_rem!(self, Self::panic_free_divide_fully_uint, rhs);
     }
 
     fn panic_free_rem_assign_uint<U>(&mut self, rhs: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         panic_free_calc_div_rem_assign!(self, Self::panic_free_rem_uint, rhs);
     }
 
     fn panic_free_modular_rem_uint<U>(&self, rhs: U, modulus: &Self) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         biguint_calc_assign_to_calc!(self, Self::panic_free_modular_rem_assign_uint, rhs, modulus);
     }
 
     fn panic_free_modular_rem_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         let mut terminated = false;
         let mut mrhs = rhs;
@@ -699,25 +699,25 @@ where T: TraitsBigUInt<T>
     /*** METHODS FOR EXPONENTIATION AND LOGARITHM WITH UINT ***/
 
     fn panic_free_pow_uint<U>(&self, exp: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         biguint_calc_assign_to_calc!(self, Self::panic_free_pow_assign_uint, exp);
     }
 
     fn panic_free_pow_assign_uint<U>(&mut self, exp: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         panic_free_calc_pow_assign!(self, Self::common_pow_assign_uint, exp);
     }
 
     fn panic_free_modular_pow_uint<U>(&self, exp: U, modulus: &Self) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         biguint_calc_assign_to_calc!(self, Self::panic_free_modular_pow_assign_uint, exp, modulus);
     }
 
     fn panic_free_modular_pow_assign_uint<U>(&mut self, exp: U, modulus: &Self)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         if modulus.is_zero_or_one() || (self.is_zero() && exp.is_zero())
         {
@@ -780,13 +780,13 @@ where T: TraitsBigUInt<T>
     }
 
     fn panic_free_iroot_uint<U>(&self, exp: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         general_panic_free_calc_iroot!(self, Self::common_iroot_uint, exp);
     }
 
     fn panic_free_iroot_assign_uint<U>(&mut self, exp: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         calc_to_calc_assign!(self, Self::panic_free_iroot_uint, exp);
     }
@@ -802,13 +802,13 @@ where T: TraitsBigUInt<T>
     }
 
     fn panic_free_ilog_uint<U>(&self, base: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         general_panic_free_calc_ilog!(self, Self::common_ilog_uint, base);
     }
 
     fn panic_free_ilog_assign_uint<U>(&mut self, base: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         calc_to_calc_assign!(self, Self::panic_free_ilog_uint, base);
     }
@@ -860,7 +860,7 @@ where T: TraitsBigUInt<T>
     /*** METHODS FOR MISCELLANEOUS ARITHMETIC OPERATIONS ***/
 
     fn panic_free_gcd_uint<U>(&self, other: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         if self.is_zero() || other.is_zero()
         {
@@ -875,7 +875,7 @@ where T: TraitsBigUInt<T>
     }
 
     fn panic_free_gcd_assign_uint<U>(&mut self, other: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         calc_to_calc_assign!(self, Self::panic_free_gcd_uint, other);
     }
@@ -900,7 +900,7 @@ where T: TraitsBigUInt<T>
     }
 
     fn panic_free_lcm_uint<U>(&self, other: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         if self.is_zero() || other.is_zero()
         {
@@ -915,7 +915,7 @@ where T: TraitsBigUInt<T>
     }
 
     fn panic_free_lcm_assign_uint<U>(&mut self, other: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         calc_to_calc_assign!(self, Self::panic_free_lcm_uint, other);
     }
@@ -940,13 +940,13 @@ where T: TraitsBigUInt<T>
     }
 
     fn panic_free_next_multiple_of_uint<U>(&self, rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         biguint_calc_assign_to_calc!(self, Self::panic_free_next_multiple_of_assign_uint, rhs);
     }
 
     fn panic_free_next_multiple_of_assign_uint<U>(&mut self, rhs: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         if rhs == U::zero()
         {
@@ -960,13 +960,13 @@ where T: TraitsBigUInt<T>
     }
 
     fn panic_free_modular_next_multiple_of_uint<U>(&self, rhs: U, modulus: &Self) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         biguint_calc_assign_to_calc!(self, Self::panic_free_modular_next_multiple_of_assign_uint, rhs, modulus);
     }
 
     fn panic_free_modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         if modulus.is_zero_or_one() || rhs.is_zero()
         {

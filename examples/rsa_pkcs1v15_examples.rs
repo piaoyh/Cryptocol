@@ -32,10 +32,10 @@ pub fn main()
     rsa_decrypt_array_into_array();
     rsa_decrypt_array_into_string();
 
-    // rsa_same_primes_test();
-    // rsa_composites_test();
-    // rsa_composite_prime_test();
-    // prime_test();
+    rsa_same_primes_test();
+    rsa_composites_test();
+    rsa_composite_prime_test();
+    prime_test();
 }
 
 fn rsa_encrypt_string()

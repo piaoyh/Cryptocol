@@ -12,7 +12,6 @@
 #![allow(unused_imports)]
 #![allow(non_snake_case)]
 
-use cryptocol::symmetric::documentation::rijndael_basic::Rijndael_Generic;
 
 
 pub fn main()
@@ -435,9 +434,9 @@ fn aes_new_with_key_u128()
 fn aes_encryptor_with_key()
 {
     println!("aes_encryptor_with_key");
-    use cryptocol::symmetric::{ AES_128, BigCryptor128, SmallCryptor };
+    use cryptocol::symmetric::{ AES_128, BigCryptor128, SmallCryptor128 };
     
-    let keys: [Box<dyn SmallCryptor<u128, 16>>; 3]
+    let keys: [Box<dyn SmallCryptor128>; 3]
             = [ Box::new(AES_128::encryptor_with_key(&[0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0x21, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE])),
                 Box::new(AES_128::decryptor_with_key(&[0x21_u8, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])),
                 Box::new(AES_128::encryptor_with_key(&[0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0x21, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE])) ];
@@ -477,7 +476,7 @@ fn aes_encryptor_with_key()
 fn aes_encryptor_with_key_u128()
 {
     println!("aes_encryptor_with_key_u128");
-    use cryptocol::symmetric::{ AES_128, BigCryptor128, SmallCryptor };
+    use cryptocol::symmetric::{ AES_128, BigCryptor128, SmallCryptor128 };
 
     let mut taes = BigCryptor128::new_with_small_cryptor_array(
                 [Box::new(AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128)),
@@ -519,9 +518,9 @@ fn aes_encryptor_with_key_u128()
 fn aes_decryptor_with_key()
 {
     println!("aes_decryptor_with_key");
-    use cryptocol::symmetric::{ AES_128, BigCryptor128, SmallCryptor };
+    use cryptocol::symmetric::{ AES_128, BigCryptor128, SmallCryptor128 };
     
-    let keys: [Box<dyn SmallCryptor<u128, 16>>; 3]
+    let keys: [Box<dyn SmallCryptor128>; 3]
             = [ Box::new(AES_128::encryptor_with_key(&[0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0x21, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE])),
                 Box::new(AES_128::decryptor_with_key(&[0x21_u8, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])),
                 Box::new(AES_128::encryptor_with_key(&[0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0x21, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE])) ];
@@ -561,7 +560,7 @@ fn aes_decryptor_with_key()
 fn aes_decryptor_with_key_u128()
 {
     println!("aes_decryptor_with_key_u128");
-    use cryptocol::symmetric::{ AES_128, BigCryptor128, SmallCryptor };
+    use cryptocol::symmetric::{ AES_128, BigCryptor128, SmallCryptor128 };
 
     let mut taes = BigCryptor128::new_with_small_cryptor_array(
                 [Box::new(AES_128::encryptor_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128)),
@@ -737,9 +736,9 @@ fn aes_set_key_u128()
 fn aes_turn_inverse()
 {
     println!("aes_turn_inverse");
-    use cryptocol::symmetric::{ AES_128, BigCryptor128, SmallCryptor };
+    use cryptocol::symmetric::{ AES_128, BigCryptor128, SmallCryptor128 };
 
-    let mut keys: [Box<dyn SmallCryptor<u128, 16>>; 3]
+    let mut keys: [Box<dyn SmallCryptor128>; 3]
                 = [ Box::new(AES_128::new_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128)),
                     Box::new(AES_128::new_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)),
                     Box::new(AES_128::new_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128)) ];
@@ -784,9 +783,9 @@ fn aes_turn_inverse()
 fn aes_turn_encryptor()
 {
     println!("aes_turn_encryptor");
-    use cryptocol::symmetric::{ AES_128, BigCryptor128, SmallCryptor };
+    use cryptocol::symmetric::{ AES_128, BigCryptor128, SmallCryptor128 };
 
-    let mut keys: [Box<dyn SmallCryptor<u128, 16>>; 3]
+    let mut keys: [Box<dyn SmallCryptor128>; 3]
             = [ Box::new(AES_128::new_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128)),
                 Box::new(AES_128::new_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)),
                 Box::new(AES_128::new_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128)) ];
@@ -831,9 +830,9 @@ fn aes_turn_encryptor()
 fn aes_turn_decryptor()
 {
     println!("aes_turn_decryptor");
-    use cryptocol::symmetric::{ AES_128, BigCryptor128, SmallCryptor };
+    use cryptocol::symmetric::{ AES_128, BigCryptor128, SmallCryptor128 };
 
-    let mut keys: [Box<dyn SmallCryptor<u128, 16>>; 3]
+    let mut keys: [Box<dyn SmallCryptor128>; 3]
                 = [ Box::new(AES_128::new_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128)),
                     Box::new(AES_128::new_with_key_u128(0x_FEDCBA09876543211234567890ABCDEF_u128)),
                     Box::new(AES_128::new_with_key_u128(0x_1234567890ABCDEFFEDCA0987654321_u128)) ];

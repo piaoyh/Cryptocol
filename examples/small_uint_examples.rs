@@ -14503,7 +14503,7 @@ fn small_uint_max()
     println!("small_uint_max");
     use cryptocol::number::{ SmallUInt, ShortUnion, IntUnion, LongUnion, LongerUnion, SizeUnion };
     // Example for u8
-    let a_max_u8 = u8::MAX; // You are encouraged to use u8::MAX rather than u8::max().
+    let a_max_u8 = u8::MAX; // You are encouraged to use u8::MAX rather than u8::MAX.
     println!("a_max_u8 = {}", a_max_u8);
     assert_eq!(a_max_u8, 255_u8);
 
@@ -14512,7 +14512,7 @@ fn small_uint_max()
     assert_eq!(b_max_u8, 255_u8);
 
     // Example for u16
-    let a_max_u16 = u16::MAX; // You are encouraged to use u16::MAX rather than u16::max().
+    let a_max_u16 = u16::MAX; // You are encouraged to use u16::MAX rather than u16::MAX.
     println!("a_max_u16 = {}", a_max_u16);
     assert_eq!(a_max_u16, 65535_u16);
 
@@ -14521,7 +14521,7 @@ fn small_uint_max()
     assert_eq!(b_max_u16, 65535_u16);
 
     // Example for u32
-    let a_max_u32 = u32::MAX; // You are encouraged to use u32::MAX rather than u32::max().
+    let a_max_u32 = u32::MAX; // You are encouraged to use u32::MAX rather than u32::MAX.
     println!("a_max_u32 = {}", a_max_u32);
     assert_eq!(a_max_u32, 4294967295_u32);
 
@@ -14530,7 +14530,7 @@ fn small_uint_max()
     assert_eq!(b_max_u32, 4294967295_u32);
 
     // Example for u64
-    let a_max_u64 = u64::MAX; // You are encouraged to use u64::MAX rather than u64::max().
+    let a_max_u64 = u64::MAX; // You are encouraged to use u64::MAX rather than u64::MAX.
     println!("a_max_u64 = {}", a_max_u64);
     assert_eq!(a_max_u64, 18446744073709551615_u64);
 
@@ -14539,7 +14539,7 @@ fn small_uint_max()
     assert_eq!(b_max_u64, 18446744073709551615_u64);
 
     // Example for u128
-    let a_max_u128 = u128::MAX; // You are encouraged to use u128::MAX rather than u128::max().
+    let a_max_u128 = u128::MAX; // You are encouraged to use u128::MAX rather than u128::MAX.
     println!("a_max_u128 = {}", a_max_u128);
     assert_eq!(a_max_u128, 340282366920938463463374607431768211455_u128);
 
@@ -14548,7 +14548,7 @@ fn small_uint_max()
     assert_eq!(b_max_u128, 340282366920938463463374607431768211455_u128);
 
     // Example for usize
-    let a_max_usize = usize::MAX; // You are encouraged to use usize::MAX rather than usize::max().
+    let a_max_usize = usize::MAX; // You are encouraged to use usize::MAX rather than usize::MAX.
     println!("a_max_usize = {}", a_max_usize);
     assert_eq!(a_max_usize, 18446744073709551615_usize);
 
@@ -14557,7 +14557,7 @@ fn small_uint_max()
     assert_eq!(b_max_usize, 18446744073709551615_usize);
 
     // Example for ShortUnion
-    let a_max_shortunion = ShortUnion::max();
+    let a_max_shortunion = ShortUnion::MAX;
     println!("a_max_shortunion = {}", a_max_shortunion);
     assert_eq!(a_max_shortunion.get(), 65535_u16);
 
@@ -14566,7 +14566,7 @@ fn small_uint_max()
     assert_eq!(b_max_shortunion.get(), 65535_u16);
 
     // Example for IntUnion
-    let a_max_intunion = IntUnion::max();
+    let a_max_intunion = IntUnion::MAX;
     println!("a_max_intunion = {}", a_max_intunion);
     assert_eq!(a_max_intunion.get(), 4294967295_u32);
 
@@ -14575,7 +14575,7 @@ fn small_uint_max()
     assert_eq!(b_max_intunion.get(), 4294967295_u32);
 
     // Example for LongUnion
-    let a_max_longunion = LongUnion::max();
+    let a_max_longunion = LongUnion::MAX;
     println!("a_max_longunion = {}", a_max_intunion);
     assert_eq!(a_max_longunion.get(), 18446744073709551615_u64);
 
@@ -14584,7 +14584,7 @@ fn small_uint_max()
     assert_eq!(b_max_longunion.get(), 18446744073709551615_u64);
 
     // Example for LongerUnion
-    let a_max_longerunion = LongerUnion::max();
+    let a_max_longerunion = LongerUnion::MAX;
     println!("a_max_longerunion = {}", a_max_longerunion);
     assert_eq!(a_max_longerunion.get(), 340282366920938463463374607431768211455_u128);
 
@@ -14593,7 +14593,7 @@ fn small_uint_max()
     assert_eq!(b_max_longerunion.get(), 340282366920938463463374607431768211455_u128);
 
     // Example for SizeUnion
-    let a_max_sizeunion = SizeUnion::max();
+    let a_max_sizeunion = SizeUnion::MAX;
     println!("a_max_sizeunion = {}", a_max_sizeunion);
     assert_eq!(a_max_sizeunion.get(), 18446744073709551615_usize);
 
@@ -14605,7 +14605,7 @@ fn small_uint_max()
 
 fn small_uint_max_func<T: cryptocol::number::SmallUInt>() -> T
 {
-    T::max()
+    T::MAX
 }
 
 fn small_uint_min()
@@ -14613,7 +14613,7 @@ fn small_uint_min()
     println!("small_uint_min");
     use cryptocol::number::{ SmallUInt, ShortUnion, IntUnion, LongUnion, LongerUnion, SizeUnion };
     // Example for u8
-    let a_min_u8 = u8::MIN; // You are encouraged to use u8::MIN or 0_u8 rather than u8::min().
+    let a_min_u8 = u8::MIN; // You are encouraged to use u8::MIN or 0_u8 rather than u8::MIN.
     println!("a_min_u8 = {}", a_min_u8);
     assert_eq!(a_min_u8, 0_u8);
 
@@ -14622,7 +14622,7 @@ fn small_uint_min()
     assert_eq!(b_min_u8, 0_u8);
 
     // Example for u16
-    let a_min_u16 = u16::MIN; // You are encouraged to use u16::MIN or 0_u16 rather than u16::min().
+    let a_min_u16 = u16::MIN; // You are encouraged to use u16::MIN or 0_u16 rather than u16::MIN.
     println!("a_min_u16 = {}", a_min_u16);
     assert_eq!(a_min_u16, 0_u16);
 
@@ -14631,7 +14631,7 @@ fn small_uint_min()
     assert_eq!(b_min_u16, 0_u16);
 
     // Example for u32
-    let a_min_u32 = u32::MIN; // You are encouraged to use u32::MIN or 0_u32 rather than u32::min().
+    let a_min_u32 = u32::MIN; // You are encouraged to use u32::MIN or 0_u32 rather than u32::MIN.
     println!("a_min_u32 = {}", a_min_u32);
     assert_eq!(a_min_u32, 0_u32);
 
@@ -14640,7 +14640,7 @@ fn small_uint_min()
     assert_eq!(b_min_u32, 0_u32);
 
     // Example for u64
-    let a_min_u64 = u64::MIN; // You are encouraged to use u64::MIN or 0_u64 rather than u64::min().
+    let a_min_u64 = u64::MIN; // You are encouraged to use u64::MIN or 0_u64 rather than u64::MIN.
     println!("a_min_u64 = {}", a_min_u64);
     assert_eq!(a_min_u64, 0_u64);
 
@@ -14649,7 +14649,7 @@ fn small_uint_min()
     assert_eq!(b_min_u64, 0_u64);
 
     // Example for u128
-    let a_min_u128 = u128::MIN; // You are encouraged to use u128::MIN or 0_u128 rather than u128::min().
+    let a_min_u128 = u128::MIN; // You are encouraged to use u128::MIN or 0_u128 rather than u128::MIN.
     println!("a_min_u128 = {}", a_min_u128);
     assert_eq!(a_min_u128, 0_u128);
 
@@ -14658,7 +14658,7 @@ fn small_uint_min()
     assert_eq!(b_min_u128, 0_u128);
 
     // Example for usize
-    let a_min_usize = usize::MIN; // You are encouraged to use usize::MIN or 0_usize rather than usize::min().
+    let a_min_usize = usize::MIN; // You are encouraged to use usize::MIN or 0_usize rather than usize::MIN.
     println!("a_min_usize = {}", a_min_usize);
     assert_eq!(a_min_usize, 0_usize);
 
@@ -14667,7 +14667,7 @@ fn small_uint_min()
     assert_eq!(b_min_usize, 0_usize);
 
     // Example for ShortUnion
-    let a_min_shortunion = ShortUnion::min();
+    let a_min_shortunion = ShortUnion::MIN;
     println!("a_min_shortunion = {}", a_min_shortunion);
     assert_eq!(a_min_shortunion.get(), 0_u16);
 
@@ -14676,7 +14676,7 @@ fn small_uint_min()
     assert_eq!(b_min_shortunion.get(), 0_u16);
 
     // Example for IntUnion
-    let a_min_intunion = IntUnion::min();
+    let a_min_intunion = IntUnion::MIN;
     println!("a_min_intunion = {}", a_min_intunion);
     assert_eq!(a_min_intunion.get(), 0_u32);
 
@@ -14685,7 +14685,7 @@ fn small_uint_min()
     assert_eq!(b_min_intunion.get(), 0_u32);
 
     // Example for LongUnion
-    let a_min_longunion = LongUnion::min();
+    let a_min_longunion = LongUnion::MIN;
     println!("a_min_longunion = {}", a_min_longunion);
     assert_eq!(a_min_longunion.get(), 0_u64);
 
@@ -14694,7 +14694,7 @@ fn small_uint_min()
     assert_eq!(b_min_longunion.get(), 0_u64);
 
     // Example for LongerUnion
-    let a_min_longerunion = LongerUnion::min();
+    let a_min_longerunion = LongerUnion::MIN;
     println!("a_min_longerunion = {}", a_min_longerunion);
     assert_eq!(a_min_longerunion.get(), 0_u128);
 
@@ -14703,7 +14703,7 @@ fn small_uint_min()
     assert_eq!(b_min_longerunion.get(), 0_u128);
 
     // Example for SizeUnion
-    let a_min_sizeunion = SizeUnion::min();
+    let a_min_sizeunion = SizeUnion::MIN;
     println!("a_min_sizeunion = {}", a_min_sizeunion);
     assert_eq!(a_min_sizeunion.get(), 0_usize);
 
@@ -14715,7 +14715,7 @@ fn small_uint_min()
 
 fn small_uint_min_func<T: cryptocol::number::SmallUInt>() -> T
 {
-    T::min()
+    T::MIN
 }
 
 fn small_uint_u128_as_smalluint()

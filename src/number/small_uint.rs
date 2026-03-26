@@ -15,6 +15,13 @@
 // #![allow(missing_docs)]
 // #![allow(rustdoc::missing_doc_code_examples)]
 
+use std::fmt::{ Display, Debug };
+use std::cmp::{ PartialEq, PartialOrd };
+use std::ops::{ Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, Rem, RemAssign,
+                BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not,
+                Shl, ShlAssign, Shr, ShrAssign };
+use std::marker::{ Send, Sync };
+
 use crate::number::{ ShortUnion, IntUnion, LongUnion, LongerUnion, SizeUnion };
 
 /// # Introduction
@@ -148,7 +155,20 @@ use crate::number::{ ShortUnion, IntUnion, LongUnion, LongerUnion, SizeUnion };
 /// It is just experimental for big-endian CPUs. So, you are not encouraged
 /// to use it for big-endian CPUs for serious purpose.
 /// Only use this crate for big-endian CPUs with your own full responsibility.
-pub trait SmallUInt: Eq + PartialEq + Copy + Clone + Sized //+ Display + Debug + ToString
+pub trait SmallUInt:
+    // Basic traits
+    Eq + PartialEq + Ord + PartialOrd
+    + Copy + Clone + Sized + Send + Sync + 'static
+    // Output traits
+    + Display + Debug + ToString
+    // Arithmetic traits
+    + Add<Output = Self> + AddAssign + Sub<Output = Self> + SubAssign
+    + Mul<Output = Self> + MulAssign + Div<Output = Self> + DivAssign 
+    + Rem<Output = Self> + RemAssign
+    // Bit Operation traits
+    + BitAnd<Output = Self> + BitAndAssign + BitOr<Output = Self> + BitOrAssign 
+    + BitXor<Output = Self> + BitXorAssign + Not<Output = Self>
+    + Shl<Output = Self> + ShlAssign + Shr<Output = Self> + ShrAssign
 {
     /// The data type size of the corresponding actual data type.
     const BITS: u32;

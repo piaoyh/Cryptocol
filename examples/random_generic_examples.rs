@@ -14,19 +14,19 @@ use std::thread::{ spawn, available_parallelism };
 
 pub fn main()
 {
-    // random_quick_start();
-    // random_constructors();
-    // random_smalluint();
-    // random_biguint();
-    // random_prepare_primes();
-    // find_u128_primes();
-    // find_u256_primes();
-    // find_u512_primes();
-    // find_u1024_primes();
-    // find_u2048_primes();
+    random_quick_start();
+    random_constructors();
+    random_smalluint();
+    random_biguint();
+    random_prepare_primes();
+    find_u128_primes();
+    find_u256_primes();
+    find_u512_primes();
+    find_u1024_primes();
+    find_u2048_primes();
     find_u4096_primes();
-    // random_concurrency_test_for_random_primes_with_msb_set_using_miller_rabin_biguint();
-    // random_concurrency_test_for_random_prime_with_msb_set_using_miller_rabin_biguint();
+    random_concurrency_test_for_random_primes_with_msb_set_using_miller_rabin_biguint();
+    random_concurrency_test_for_random_prime_with_msb_set_using_miller_rabin_biguint();
 }
 
 fn do_simultaneously(jobs: Vec<fn()>)

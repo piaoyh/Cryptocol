@@ -12,7 +12,7 @@
 // #![allow(rustdoc::missing_doc_code_examples)]
 
 
-use crate::number::TraitsBigUInt;
+use crate::number::SmallUInt;
 
 
 
@@ -65,7 +65,7 @@ use crate::number::TraitsBigUInt;
 /// ```
 #[allow(non_camel_case_types)]
 pub trait BigUInt_Modular<T, const N: usize> : Clone + Sized //+ Display + + ToString
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     /*** ADDITION ***/
 
@@ -133,7 +133,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_add_uint)
     fn modular_add_uint<U>(&self, rhs: U, modulus: &Self) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn modular_add_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
     /// Calculates (`self` + `rhs`) % `modulus`,
@@ -211,7 +211,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_add_assign_uint)
     fn modular_add_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn modular_add(&self, rhs: &Self, modulus: &Self) -> Self
     /// Calculates (`self` + `rhs`) % `modulus`,
@@ -428,7 +428,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_sub_uint)
     fn modular_sub_uint<U>(&self, rhs: U, modulus: &Self) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn modular_sub_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
     /// Calculates (`self` - `rhs`) % `modulus`,
@@ -506,7 +506,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_sub_assign_uint)
     fn modular_sub_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn modular_sub(&self, rhs: &Self, modulus: &Self) -> Self
     /// Calculates (`self` - `rhs`) % `modulus`,
@@ -724,7 +724,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_mul_uint)
     fn modular_mul_uint<U>(&self, rhs: U, modulus: &Self) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn modular_mul_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
     /// Calculates (`self` * `rhs`) % `modulus`,
@@ -803,7 +803,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_mul_assign_uint)
     fn modular_mul_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn modular_mul(&self, rhs: &Self, modulus: &Self) -> Self
     /// Calculates (`self` * `rhs`) % `modulus`,
@@ -1014,7 +1014,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_div_uint)
     fn modular_div_uint<U>(&self, rhs: U, modulus: &Self) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn modular_div_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
     /// Divides (`self` % `modulus`) by (`rhs` % `modulus`),
@@ -1084,7 +1084,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_div_assign_uint)
     fn modular_div_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn modular_div(&self, rhs: &Self, modulus: &Self) -> Self
     /// Divides (`self` % `modulus`) by (`rhs` % `modulus`),
@@ -1269,7 +1269,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_rem_uint)
     fn modular_rem_uint<U>(&self, rhs: U, modulus: &Self) -> U
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn modular_rem_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
     /// Divides (`self` % `modulus`) by (`rhs` % `modulus`),
@@ -1339,7 +1339,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_rem_assign_uint)
     fn modular_rem_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn modular_rem(&self, rhs: &Self, modulus: &Self) -> Self
     /// Divides (`self` % `modulus`) by (`rhs` % `modulus`),
@@ -1538,7 +1538,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.modular_pow_uint)
     fn modular_pow_uint<U>(&self, exp: U, modulus: &Self) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn modular_pow_assign_uint<U>(&mut self, exp: U, modulus: &Self)
     /// Raises `BigUInt` type number to the power of `exp`, using
@@ -1611,7 +1611,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_other_calculation/struct.BigUInt.html#method.modular_pow_assign_uint)
     fn modular_pow_assign_uint<U>(&mut self, exp: U, modulus: &Self)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn modular_pow(&self, exp: &Self, modulus: &Self) -> Self
     /// Raises `BigUInt` type number to the power of `exp`, using
@@ -1823,7 +1823,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_next_multiple_of_uint)
     fn modular_next_multiple_of_uint<U>(&self, rhs: U, modulus: &Self) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
     /// Calculates the smallest value greater than or equal to `self`,
@@ -1905,7 +1905,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_modular/struct.BigUInt.html#method.modular_next_multiple_of_assign_uint)
     fn modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn modular_next_multiple_of(&self, rhs: &Self, modulus: &Self) -> Self
     /// Calculates the smallest value greater than or equal to `self`,

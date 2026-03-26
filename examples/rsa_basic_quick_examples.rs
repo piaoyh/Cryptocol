@@ -61,20 +61,20 @@ fn do_simultaneously(jobs: Vec<fn()>)
 
 pub fn main()
 {
-    // rsa_quick_start();
-    // rsa_new();
-    // rsa_new_with_automatic_keys();
-    // rsa_new_with_keys();
-    // rsa_new_with_primes();
-    // rsa_new_with_prepared_keys();
-    // rsa_set_keys();
-    // rsa_find_keys();
-    // calculate_keys();
-    // rsa_encrypt_biguint();
-    // rsa_decrypt_biguint();
-    // rsa_failure_decrypt_biguint();
-    // rsa_decrypt_array_biguint();
-    // rsa_decrypt_unit();
+    rsa_quick_start();
+    rsa_new();
+    rsa_new_with_automatic_keys();
+    rsa_new_with_keys();
+    rsa_new_with_primes();
+    rsa_new_with_prepared_keys();
+    rsa_set_keys();
+    rsa_find_keys();
+    calculate_keys();
+    rsa_encrypt_biguint();
+    rsa_decrypt_biguint();
+    rsa_failure_decrypt_biguint();
+    rsa_decrypt_array_biguint();
+    rsa_decrypt_unit();
     rsa_decrypt_array_unit();
 }
 

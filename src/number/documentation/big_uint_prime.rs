@@ -17,14 +17,14 @@ use std::ops::{ Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, 
                 BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not,
                 Shl, ShlAssign, Shr, ShrAssign };
 
-use crate::number::{ SmallUInt, TraitsBigUInt };
+use crate::number::SmallUInt;
 
 /// big_uint.rs was too big because of documentation and plenty of examples
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to big_uint_other_calculation.rs.
 pub struct BigUInt<T, const N: usize>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     // Dummy struct for documentation
     #[allow(dead_code)] number: [T; N],
@@ -32,7 +32,7 @@ where T: TraitsBigUInt<T>
 }
 
 impl<T, const N: usize> BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     /*** METHODS FOR MISCELLANEOUS ARITHMETIC OPERATIONS ***/
 
@@ -230,7 +230,7 @@ where T: TraitsBigUInt<T>
     /// let c_biguint = _a_biguint.gcd_uint(_b_biguint);
     /// ```
     pub fn gcd_uint<U>(&self, _other: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -484,7 +484,7 @@ where T: TraitsBigUInt<T>
     /// _a_biguint.gcd_assign_uint(_b_biguint);
     /// ```
     pub fn gcd_assign_uint<U>(&mut self, _other: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -687,7 +687,7 @@ where T: TraitsBigUInt<T>
     /// let c_biguint = _a_biguint.lcm_uint(_b_biguint);
     /// ```
     pub fn lcm_uint<U>(&self, _other: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -941,7 +941,7 @@ where T: TraitsBigUInt<T>
     /// _a_biguint.lcm_assign_uint(_b_biguint);
     /// ```
     pub fn lcm_assign_uint<U>(&mut self, _other: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }

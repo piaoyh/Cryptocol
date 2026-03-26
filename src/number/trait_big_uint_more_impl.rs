@@ -18,7 +18,7 @@ use std::ops::{ BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, 
                 Add, AddAssign, Sub, SubAssign, Mul, MulAssign,
                 Div, DivAssign, Rem, RemAssign };
 
-use crate::number::{ SmallUInt, TraitsBigUInt, BigUInt, BigUInt_More };
+use crate::number::{ SmallUInt, BigUInt, BigUInt_More };
 use crate::number::{ biguint_calc_assign_to_calc, biguint_checked_calc,
                      biguint_calc_assign_to_calc_div, biguint_calc_assign_to_calc_rem,
                      biguint_saturating_calc_assign };
@@ -79,7 +79,7 @@ macro_rules! safe_calc_assign {
 
 
 impl<T, const N: usize> BigUInt<T, N>
-where T: TraitsBigUInt<T>,
+where T: SmallUInt,
     Self: Sized + Clone + Display + Debug + ToString
         + Add<Output = Self> + AddAssign
         + Sub<Output = Self> + SubAssign
@@ -95,7 +95,7 @@ where T: TraitsBigUInt<T>,
         + From<T> + FromStr + From<[T; N]> + From<u32>
 {
     pub(super) fn common_next_multiple_of_assign_uint<U>(&mut self, rhs: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         if U::size_in_bytes() > T::size_in_bytes()
         {
@@ -121,12 +121,12 @@ where T: TraitsBigUInt<T>,
 
 
 impl<T, const N: usize> BigUInt_More<T, N> for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     /*** ADDITION UINT ***/
 
     fn checked_add_uint<U>(&self, rhs: U) -> Option<Self>
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         if rhs.length_in_bytes() > T::size_in_bytes()
             { self.checked_add(&Self::from_uint(rhs)) }
@@ -136,31 +136,31 @@ where T: TraitsBigUInt<T>
 
     #[inline]
     fn unchecked_add_uint<U>(&self, rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         self.checked_add_uint(rhs).unwrap()
     }
 
     fn saturating_add_uint<U>(&self, rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         biguint_calc_assign_to_calc!(self, Self::saturating_add_assign_uint, rhs);
     }
 
     fn saturating_add_assign_uint<U>(&mut self, rhs: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         biguint_saturating_calc_assign!(self, Self::overflowing_add_assign_uint, rhs);
     }
 
     fn safe_add_uint<U>(&self, rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         safe_calc!(self, Self::wrapping_add_uint, Self::unchecked_add_uint, rhs);
     }
 
     fn safe_add_assign_uint<U>(&mut self, rhs: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         safe_calc_assign!(self, Self::wrapping_add_assign_uint, Self::overflowing_add_assign_uint, rhs);
     }
@@ -170,7 +170,7 @@ where T: TraitsBigUInt<T>
     /*** SUBTRACTION UINT ***/
 
     fn checked_sub_uint<U>(&self, rhs: U) -> Option<Self>
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         if rhs.length_in_bytes() > T::size_in_bytes()
             { self.checked_sub(&Self::from_uint(rhs)) }
@@ -180,31 +180,31 @@ where T: TraitsBigUInt<T>
 
     #[inline]
     fn unchecked_sub_uint<U>(&self, rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         self.checked_sub_uint(rhs).unwrap()
     }
 
     fn saturating_sub_uint<U>(&self, rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         biguint_calc_assign_to_calc!(self, Self::saturating_sub_assign_uint, rhs);
     }
 
     fn saturating_sub_assign_uint<U>(&mut self, rhs: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         saturating_calc_sub_assign!(self, Self::overflowing_sub_assign_uint, rhs);
     }
 
     fn safe_sub_uint<U>(&self, rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         safe_calc!(self, Self::wrapping_sub_uint, Self::unchecked_sub_uint, rhs);
     }
 
     fn safe_sub_assign_uint<U>(&mut self, rhs: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         safe_calc_assign!(self, Self::wrapping_sub_assign_uint, Self::overflowing_sub_assign_uint, rhs);
     }
@@ -214,7 +214,7 @@ where T: TraitsBigUInt<T>
     /*** MULTIPLICATION UINT ***/
 
     fn checked_mul_uint<U>(&self, rhs: U) -> Option<Self>
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         if rhs.length_in_bytes() > T::size_in_bytes()
             { self.checked_mul(&Self::from_uint(rhs)) }
@@ -224,31 +224,31 @@ where T: TraitsBigUInt<T>
     
     #[inline]
     fn unchecked_mul_uint<U>(&self, rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         self.checked_mul_uint(rhs).unwrap()
     }
 
     fn saturating_mul_uint<U>(&self, rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         biguint_calc_assign_to_calc!(self, Self::saturating_mul_assign_uint, rhs);
     }
 
     fn saturating_mul_assign_uint<U>(&mut self, rhs: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         biguint_saturating_calc_assign!(self, Self::overflowing_mul_assign_uint, rhs);
     }
 
     fn safe_mul_uint<U>(&self, rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         safe_calc!(self, Self::wrapping_mul_uint, Self::unchecked_mul_uint, rhs);
     }
 
     fn safe_mul_assign_uint<U>(&mut self, rhs: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         safe_calc_assign!(self, Self::wrapping_mul_assign_uint, Self::overflowing_mul_assign_uint, rhs);
     }
@@ -258,55 +258,55 @@ where T: TraitsBigUInt<T>
     /*** DIVISION BIGUINT ***/
 
     fn checked_div_uint<U>(&self, rhs: U) -> Option<Self>
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         biguint_checked_calc!(self, Self::wrapping_div_uint, rhs, rhs.is_zero());
     }
 
     #[inline]
     fn unchecked_div_uint<U>(&self, rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         self.checked_div_uint(rhs).unwrap()
     }
 
     #[inline]
     fn saturating_div_uint<U>(&self, rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         self.wrapping_div_uint(rhs)
     }
 
     #[inline]
     fn saturating_div_assign_uint<U>(&mut self, rhs: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         self.wrapping_div_assign_uint(rhs)
     }
 
     fn checked_rem_uint<U>(&self, rhs: U) -> Option<U>
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
             biguint_checked_calc!(self, Self::wrapping_rem_uint, rhs, rhs.is_zero());
     }
 
     #[inline]
     fn unchecked_rem_uint<U>(&self, rhs: U) -> U
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
             self.checked_rem_uint(rhs).unwrap()
     }
 
     #[inline]
     fn saturating_rem_uint<U>(&self, rhs: U) -> U
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         self.wrapping_rem_uint(rhs)
     }
 
     #[inline]
     fn saturating_rem_assign_uint<U>(&mut self, rhs: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         self.wrapping_rem_assign_uint(rhs)
     }
@@ -462,13 +462,13 @@ where T: TraitsBigUInt<T>
     /*** MULTIPLE UINT ***/
     
     fn next_multiple_of_uint<U>(&self, rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         biguint_calc_assign_to_calc!(self, Self::next_multiple_of_assign_uint, rhs);
     }
 
     fn next_multiple_of_assign_uint<U>(&mut self, rhs: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         if rhs == U::zero()
             { panic!(); }
@@ -476,7 +476,7 @@ where T: TraitsBigUInt<T>
     }
 
     fn is_multiple_of_uint<U>(&self, rhs: U) -> bool
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         if rhs.is_zero()
             { self.is_zero() }
@@ -505,13 +505,13 @@ where T: TraitsBigUInt<T>
     }
 
     fn midpoint_uint<U>(&self, rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         biguint_calc_assign_to_calc!(self, Self::midpoint_assign_uint, rhs);
     }
     
     fn midpoint_assign_uint<U>(&mut self, rhs: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         if self.is_uint(rhs)
             { return; }
@@ -547,7 +547,7 @@ where T: TraitsBigUInt<T>
     }
 
     fn checked_pow_uint<U>(&self, exp: U) -> Option<Self>
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         if self.is_zero() && exp.is_zero()
             { return None; }
@@ -555,45 +555,45 @@ where T: TraitsBigUInt<T>
     }
 
     fn unchecked_pow_uint<U>(&self, exp: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         self.checked_pow_uint(exp).unwrap()
     }
 
     fn saturating_pow_uint<U>(&self, exp: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         biguint_calc_assign_to_calc!(self, Self::saturating_pow_assign_uint, exp);
     }
 
     fn saturating_pow_assign_uint<U>(&mut self, exp: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         biguint_saturating_calc_assign!(self, Self::overflowing_pow_assign_uint, exp);
     }
 
     fn checked_iroot_uint<U>(&self, exp: U) -> Option<Self>
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         biguint_checked_calc!(self, Self::iroot_uint, exp, exp.is_zero());
     }
 
     #[inline]
     fn unchecked_iroot_uint<U>(&self, exp: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         self.iroot_uint(exp)
     }
 
     fn checked_ilog_uint<U>(&self, base: U) -> Option<Self>
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         biguint_checked_calc!(self, Self::ilog_uint, base, self.is_zero() || (base.is_zero_or_one()));
     }
 
     #[inline]
     fn unchecked_ilog_uint<U>(&self, base: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         self.ilog_uint(base)
     }
@@ -666,27 +666,27 @@ where T: TraitsBigUInt<T>
     }
 
     fn checked_shift_left<U>(&self, n: U) -> Option<Self>
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         biguint_checked_calc!(self, Self::shift_left, n, Self::size_in_bits().into_u128() <= n.into_u128());
     }
 
     #[inline]
     fn unchecked_shift_left<U>(&self, n: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         self.checked_shift_left(n).unwrap()
     }
 
     fn checked_shift_right<U>(&self, n: U) -> Option<Self>
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         biguint_checked_calc!(self, Self::shift_right, n, Self::size_in_bits().into_u128() <= n.into_u128());
     }
 
     #[inline]
     fn unchecked_shift_right<U>(&self, n: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         self.checked_shift_right(n).unwrap()
     }

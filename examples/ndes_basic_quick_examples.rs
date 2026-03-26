@@ -25,7 +25,7 @@ fn ndes_quick_start_main()
 fn ndes_quick_start_instantiation_with_keys()
 {
     println!("des_quick_start_instantiation_with_keys()");
-    // use cryptocol::symmetric::{ BigCryptor64, SmallCryptor };
+    // use cryptocol::symmetric::{ BigCryptor64, SmallCryptor64 };
     println!("-------------------------------");
 }
 
@@ -39,9 +39,9 @@ fn ndes_basic_operation_main()
 fn ndes_new_with_keys()
 {
     println!("ndes_new_with_keys()");
-    use cryptocol::symmetric::{ BigCryptor64, DES, SmallCryptor };
+    use cryptocol::symmetric::{ BigCryptor64, DES, SmallCryptor64 };
 
-    let keys: [Box<dyn SmallCryptor<u64, 8>>; 3]
+    let keys: [Box<dyn SmallCryptor64>; 3]
             = [ Box::new(DES::encryptor_with_key_u64(0x1234567890ABCDEF_u64)),
                 Box::new(DES::decryptor_with_key_u64(0x_FEDCBA0987654321_u64)),
                 Box::new(DES::encryptor_with_key_u64(0x1234567890ABCDEF_u64)) ];

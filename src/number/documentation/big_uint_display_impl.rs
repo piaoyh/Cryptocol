@@ -17,14 +17,14 @@ use std::ops::{ BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, 
                 Add, AddAssign, Sub, SubAssign, Mul, MulAssign,
                 Div, DivAssign, Rem, RemAssign };
 
-use crate::number::{ SmallUInt, TraitsBigUInt };
+use crate::number::SmallUInt;
 
 /// big_uint.rs was too big because of documentation and plenty of examples
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to big_uint_arithmetic.rs.
 pub struct BigUInt<T, const N: usize>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     // Dummy struct for documentation
     #[allow(dead_code)] number: [T; N],
@@ -45,7 +45,7 @@ where T: TraitsBigUInt<T>
 /// - For more information on formatters,
 ///   see [the module-level documentation](https://doc.rust-lang.org/std/fmt/index.html).
 impl<T, const N: usize> Display for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     // fn fmt(&self, f: &mut Formatter) -> fmt::Result
     /// Formats the value using the given formatter.

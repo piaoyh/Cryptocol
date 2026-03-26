@@ -13,13 +13,12 @@
 
 use std::fmt::{ Display, Debug };
 use std::str::FromStr;
-use std::cmp::{ PartialEq, PartialOrd };
 use std::ops::{ BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not,
                 Shl, ShlAssign, Shr, ShrAssign, 
                 Add, AddAssign, Sub, SubAssign, Mul, MulAssign,
                 Div, DivAssign, Rem, RemAssign };
 
-use crate::number::{ SmallUInt, TraitsBigUInt, BigUInt, BigUInt_Modular };
+use crate::number::{ SmallUInt, BigUInt, BigUInt_Modular };
 use crate::number::biguint_calc_assign_to_calc;
 
 
@@ -71,7 +70,7 @@ macro_rules! biguint_general_modular_calc_pow_assign
 
 
 impl<T, const N: usize> BigUInt<T, N>
-where T: TraitsBigUInt<T>,
+where T: SmallUInt,
     Self: Sized + Clone + Display + Debug + ToString
         + Add<Output = Self> + AddAssign
         + Sub<Output = Self> + SubAssign
@@ -87,7 +86,7 @@ where T: TraitsBigUInt<T>,
         + From<T> + FromStr + From<[T; N]> + From<u32>
     {
     pub(super) fn common_modular_add_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         let mut flags = self.get_all_flags();
         if *self >= *modulus
@@ -140,14 +139,7 @@ where T: TraitsBigUInt<T>,
     }
 
     pub(super) fn common_modular_add_assign(&mut self, rhs: &Self, modulus: &Self)
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-            + Add<Output=T> + AddAssign + Sub<Output=T> + SubAssign
-            + Mul<Output=T> + MulAssign + Div<Output=T> + DivAssign
-            + Rem<Output=T> + RemAssign
-            + Shl<Output=T> + ShlAssign + Shr<Output=T> + ShrAssign
-            + BitAnd<Output=T> + BitAndAssign + BitOr<Output=T> + BitOrAssign
-            + BitXor<Output=T> + BitXorAssign + Not<Output=T>
-            + PartialEq + PartialOrd
+    where T: SmallUInt
     {
         let mut flags = self.get_all_flags();
         if *self >= *modulus
@@ -178,7 +170,7 @@ where T: TraitsBigUInt<T>,
     }
 
     pub(super) fn common_modular_sub_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         let mut flags = self.get_all_flags();
         if *self >= *modulus
@@ -265,7 +257,7 @@ where T: TraitsBigUInt<T>,
     }
 
     pub(super) fn common_modular_mul_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         let mut flags = self.get_all_flags();
         if *self >= *modulus
@@ -348,7 +340,7 @@ where T: TraitsBigUInt<T>,
     }
 
     pub(super) fn common_modular_pow_assign_uint<U>(&mut self, exp: U, modulus: &Self)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         biguint_general_modular_calc_pow_assign!(self, U::u8_as_smalluint(1), exp, modulus);
     }
@@ -359,7 +351,7 @@ where T: TraitsBigUInt<T>,
     }
 
     pub(super) fn common_modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         if *self >= *modulus
             { self.wrapping_rem_assign(modulus); }
@@ -399,19 +391,19 @@ where T: TraitsBigUInt<T>,
 
 
 impl<T, const N: usize> BigUInt_Modular<T, N> for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     /*** ADDITION UINT ***/
 
     fn modular_add_uint<U>(&self, rhs: U, modulus: &Self) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
 
     {
         biguint_calc_assign_to_calc!(self, Self::modular_add_assign_uint, rhs, modulus);
     }
 
     fn modular_add_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         biguint_modular_calc_assign!(self, Self::common_modular_add_assign_uint, rhs, modulus);
     }
@@ -431,13 +423,13 @@ where T: TraitsBigUInt<T>
     /*** SUBTRACTION ***/
 
     fn modular_sub_uint<U>(&self, rhs: U, modulus: &Self) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         biguint_calc_assign_to_calc!(self, Self::modular_sub_assign_uint, rhs, modulus);
     }
 
     fn modular_sub_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         biguint_modular_calc_assign!(self, Self::common_modular_sub_assign_uint, rhs, modulus);
     }
@@ -457,13 +449,13 @@ where T: TraitsBigUInt<T>
     /*** MULTIPLICATION ***/
 
     fn modular_mul_uint<U>(&self, rhs: U, modulus: &Self) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         biguint_calc_assign_to_calc!(self, Self::modular_mul_assign_uint, rhs, modulus);
     }
 
     fn modular_mul_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         biguint_modular_calc_assign!(self, Self::common_modular_mul_assign_uint, rhs, modulus);
     }
@@ -483,13 +475,13 @@ where T: TraitsBigUInt<T>
     /*** DIVISION ***/
 
     fn modular_div_uint<U>(&self, rhs: U, modulus: &Self) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         biguint_calc_assign_to_calc!(self, Self::modular_div_assign_uint, rhs, modulus);
     }
 
     fn modular_div_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         if modulus.is_zero_or_one() | rhs.is_zero()
             { panic!(); }
@@ -539,7 +531,7 @@ where T: TraitsBigUInt<T>
     }
 
     fn modular_rem_uint<U>(&self, rhs: U, modulus: &Self) -> U
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         let mut res = Self::from_array(self.get_number().clone());
         res.modular_rem_assign_uint(rhs, modulus);
@@ -547,7 +539,7 @@ where T: TraitsBigUInt<T>
     }
 
     fn modular_rem_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         if modulus.is_zero_or_one() | rhs.is_zero()
             { panic!(); }
@@ -601,13 +593,13 @@ where T: TraitsBigUInt<T>
     /*** METHODS FOR EXPONENTIATION AND LOGARITHM ***/
 
     fn modular_pow_uint<U>(&self, exp: U, modulus: &Self) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         biguint_calc_assign_to_calc!(self, Self::modular_pow_assign_uint, exp, modulus);
     }
 
     fn modular_pow_assign_uint<U>(&mut self, exp: U, modulus: &Self)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         if modulus.is_zero_or_one() || (self.is_zero() && exp.is_zero())
             { panic!(); }
@@ -650,13 +642,13 @@ where T: TraitsBigUInt<T>
     /*** MULTIPLE ***/
 
     fn modular_next_multiple_of_uint<U>(&self, rhs: U, modulus: &Self) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         biguint_calc_assign_to_calc!(self, Self::modular_next_multiple_of_assign_uint, rhs, modulus);
     }
 
     fn modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         biguint_modular_calc_assign!(self, Self::common_modular_next_multiple_of_assign_uint, rhs, modulus);
     }

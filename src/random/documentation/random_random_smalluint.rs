@@ -15,7 +15,7 @@
 // #![warn(rustdoc::missing_doc_code_examples)]
 
 
-use crate::number::TraitsBigUInt;
+use crate::number::SmallUInt;
 
 
 /// Random.rs may be too big
@@ -1267,7 +1267,7 @@ impl Random_Generic
     ///     { println!("{} Slapdash number (Slapdash) = {}", i, slapdash.random_uint::<u128>()); }
     /// ```
     pub fn random_uint<T>(&mut self) -> T
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1460,7 +1460,7 @@ impl Random_Generic
     /// ```
     #[inline]
     pub fn random_under_uint<T>(&mut self, ceiling: T) -> Option<T>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1770,7 +1770,7 @@ impl Random_Generic
     /// println!("Slapdash number u16 = {}", _num);
     /// ```
     pub fn random_under_uint_<T>(&mut self, ceiling: T) -> T
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1964,7 +1964,7 @@ impl Random_Generic
     /// ```
     #[inline]
     pub fn random_minmax_uint<T>(&mut self, from: T, ceiling: T) -> Option<T>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2281,7 +2281,7 @@ impl Random_Generic
     /// ```
     #[inline]
     pub fn random_minmax_uint_<T>(&mut self, from: T, ceiling: T) -> T
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2538,7 +2538,7 @@ impl Random_Generic
     /// println!("Slapdash odd number usize = {}", slapdash.random_odd_uint::<usize>());
     /// ```
     pub fn random_odd_uint<T>(&mut self) -> T
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -3005,7 +3005,7 @@ impl Random_Generic
     /// ```
     #[inline]
     pub fn random_odd_under_uint<T>(&mut self, ceiling: T) -> Option<T>
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -3635,7 +3635,7 @@ impl Random_Generic
     /// println!("Slapdash number u16 = {}", num);
     /// ```
     pub fn random_odd_under_uint_<T>(&mut self, ceiling: T) -> T
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -3892,7 +3892,7 @@ impl Random_Generic
     /// println!("Slapdash usize-sized number = {}", slapdash.random_with_msb_set_uint::<usize>());
     /// ```
     pub fn random_with_msb_set_uint<T>(&mut self) -> T
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -4149,7 +4149,7 @@ impl Random_Generic
     /// println!("Slapdash usize-sized odd number = {}", slapdash.random_odd_with_msb_set_uint::<usize>());
     /// ```
     pub fn random_odd_with_msb_set_uint<T>(&mut self) -> T
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -4432,7 +4432,7 @@ impl Random_Generic
     /// println!("Slapdash usize-sized prime number = {}", slapdash.random_prime_using_miller_rabin_uint::<usize>(5));
     /// ```
     pub fn random_prime_using_miller_rabin_uint<T>(&mut self, repetition: usize) -> T
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -4721,7 +4721,7 @@ impl Random_Generic
     /// println!("Slapdash usize-sized prime number = {}", slapdash.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
     /// ```
     pub fn random_prime_with_msb_set_using_miller_rabin_uint<T>(&mut self, repetition: usize) -> T
-    where T: TraitsBigUInt<T>
+    where T: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }

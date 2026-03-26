@@ -17,14 +17,14 @@ use std::ops::{ BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, 
                 Add, AddAssign, Sub, SubAssign, Mul, MulAssign,
                 Div, DivAssign, Rem, RemAssign };
 
-use crate::number::{ SmallUInt, TraitsBigUInt };
+use crate::number::SmallUInt;
 
 /// big_uint.rs was too big because of documentation and plenty of examples
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to big_uint_arithmetic.rs.
 pub struct BigUInt<T, const N: usize>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     // Dummy struct for documentation
     #[allow(dead_code)] number: [T; N],
@@ -124,7 +124,7 @@ where T: TraitsBigUInt<T>
 /// }
 /// ```
 impl<T, const N: usize> Add<T> for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     type Output = Self;
 
@@ -309,7 +309,7 @@ where T: TraitsBigUInt<T>
 /// }
 /// ```
 impl<T, const N: usize> AddAssign<T> for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     // fn add_assign(&mut self, rhs: T)
     /// Calculates `self` + `rhs`,
@@ -518,7 +518,7 @@ where T: TraitsBigUInt<T>
 /// }
 /// ```
 impl<T, const N: usize> Sub<T> for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     type Output = Self;
 
@@ -703,7 +703,7 @@ where T: TraitsBigUInt<T>
 /// }
 /// ```
 impl<T, const N: usize> SubAssign<T> for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     // fn sub_assign(&mut self, rhs: T)
     /// Calculates `self` - `rhs`,
@@ -908,7 +908,7 @@ where T: TraitsBigUInt<T>
 /// }
 /// ```
 impl<T, const N: usize> Mul<T> for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     type Output = Self;
 
@@ -1070,7 +1070,7 @@ where T: TraitsBigUInt<T>
 /// }
 /// ```
 impl<T, const N: usize> MulAssign<T> for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     // fn mul_assign(&mut self, rhs: T)
     /// Calculates `self` * `rhs`,
@@ -1251,7 +1251,7 @@ where T: TraitsBigUInt<T>
 /// }
 /// ```
 impl<T, const N: usize> Div<T> for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     type Output = Self;
 
@@ -1436,7 +1436,7 @@ where T: TraitsBigUInt<T>
 /// }
 /// ```
 impl<T, const N: usize> DivAssign<T> for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     // fn div_assign(&mut self, rhs: T)
     /// Divides `self` by `rhs`, and assigns the quotient to `self` back..
@@ -1636,7 +1636,7 @@ where T: TraitsBigUInt<T>
 /// }
 /// ```
 impl<T, const N: usize> Rem<T> for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     type Output = T;
 
@@ -1807,7 +1807,7 @@ where T: TraitsBigUInt<T>
 /// }
 /// ```
 impl<T, const N: usize> RemAssign<T> for BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     // fn rem_assign(&mut self, rhs: T)
     /// Divides `self` by `rhs`, and assigns the remainder to `self` back..
@@ -1926,7 +1926,7 @@ where T: TraitsBigUInt<T>
 ///   for types that do not have a full equivalence relation.
 /// For more information, [read more](https://doc.rust-lang.org/std/cmp/trait.PartialEq.html#).
 impl<T, U, const N: usize> PartialEq<U> for BigUInt<T, N>
-where T: TraitsBigUInt<T>,
+where T: SmallUInt,
     U: SmallUInt + Copy + Clone + Display + Debug + ToString
         + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
         + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
@@ -2020,7 +2020,7 @@ where T: TraitsBigUInt<T>,
 
 
 impl<T, U, const N: usize> PartialOrd<U> for BigUInt<T, N>
-where T: TraitsBigUInt<T>,
+where T: SmallUInt,
     U: SmallUInt + Copy + Clone + Display + Debug + ToString
         + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
         + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign
@@ -2384,7 +2384,7 @@ where T: TraitsBigUInt<T>,
 
 
 impl<T, U, const N: usize> From<U> for BigUInt<T, N>
-where T: TraitsBigUInt<T>,
+where T: SmallUInt,
     U: SmallUInt + Copy + Clone + Display + Debug + ToString
         + Add<Output=U> + AddAssign + Sub<Output=U> + SubAssign
         + Mul<Output=U> + MulAssign + Div<Output=U> + DivAssign

@@ -12,17 +12,17 @@
 // #[allow(dead_code)]``
 pub fn main()
 {
-    // biguint_prime_quick_start();
-    // biguint_prime_gcd_uint();
-    // biguint_prime_gcd_assign_uint();
-    // biguint_prime_lcm_uint();
-    // biguint_prime_lcm_assign_uint();
-    // biguint_prime_gcd();
-    // biguint_prime_gcd_assign();
-    // biguint_prime_extended_gcd();
-    // biguint_prime_lcm();
-    // biguint_prime_lcm_assign();
-    // biguint_prime_is_prime_using_miller_rabin();
+    biguint_prime_quick_start();
+    biguint_prime_gcd_uint();
+    biguint_prime_gcd_assign_uint();
+    biguint_prime_lcm_uint();
+    biguint_prime_lcm_assign_uint();
+    biguint_prime_gcd();
+    biguint_prime_gcd_assign();
+    biguint_prime_extended_gcd();
+    biguint_prime_lcm();
+    biguint_prime_lcm_assign();
+    biguint_prime_is_prime_using_miller_rabin();
     find_small_primes();
 }
 

@@ -17,14 +17,14 @@ use std::ops::{ Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, 
                 BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not,
                 Shl, ShlAssign, Shr, ShrAssign };
 
-use crate::number::{ SmallUInt, TraitsBigUInt };
+use crate::number::SmallUInt;
 
 /// big_uint.rs was too big because of documentation and plenty of examples
 /// So, in order to provide documentation without `docs.rs`'s failing
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to big_uint_other_calculation_uint.rs.
 pub struct BigUInt<T, const N: usize>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     // Dummy struct for documentation
     #[allow(dead_code)] number: [T; N],
@@ -32,7 +32,7 @@ where T: TraitsBigUInt<T>
 }
 
 impl<T, const N: usize> BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     /*** Addition ***/
 
@@ -130,7 +130,7 @@ where T: TraitsBigUInt<T>
     /// }
     /// ```
     pub fn checked_add_uint<U>(&self, _rhs: U) -> Option<Self>
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -193,7 +193,7 @@ where T: TraitsBigUInt<T>
     /// ```
     #[inline]
     pub fn unchecked_add_uint<U>(&self, _rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -281,7 +281,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(res.is_right_carry(), false);
     /// ```
     pub fn saturating_add_uint<U>(&self, _rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -399,7 +399,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     pub fn saturating_add_assign_uint<U>(&mut self, _rhs: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -517,7 +517,7 @@ where T: TraitsBigUInt<T>
     /// }
     /// ```
     pub fn safe_add_uint<U>(&self, _rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -636,7 +636,7 @@ where T: TraitsBigUInt<T>
     /// }
     /// ```
     pub fn safe_add_assign_uint<U>(&mut self, _rhs: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1324,7 +1324,7 @@ where T: TraitsBigUInt<T>
     /// }
     /// ```
     pub fn checked_sub_uint<U>(&self, _rhs: U) -> Option<Self>
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1387,7 +1387,7 @@ where T: TraitsBigUInt<T>
     /// ```
     #[inline]
     pub fn unchecked_sub_uint<U>(&self, _rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1475,7 +1475,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(res.is_right_carry(), false);
     /// ```
     pub fn saturating_sub_uint<U>(&self, _rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1593,7 +1593,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     pub fn saturating_sub_assign_uint<U>(&mut self, _rhs: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1681,7 +1681,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(res.is_right_carry(), false);
     /// ```
     pub fn abs_diff_uint<U>(&self, _other: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1796,7 +1796,7 @@ where T: TraitsBigUInt<T>
     /// }
     /// ```
     pub fn safe_sub_uint<U>(&self, _rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1960,7 +1960,7 @@ where T: TraitsBigUInt<T>
     /// }
     /// ```
     pub fn safe_sub_assign_uint<U>(&mut self, _rhs: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2741,7 +2741,7 @@ where T: TraitsBigUInt<T>
     /// }
     /// ```
     pub fn checked_mul_uint<U>(&self, _rhs: U) -> Option<Self>
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2804,7 +2804,7 @@ where T: TraitsBigUInt<T>
     /// ```
     #[inline]
     pub fn unchecked_mul_uint<U>(&self, _rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2875,7 +2875,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(res.is_right_carry(), false);
     /// ```
     pub fn saturating_mul_uint<U>(&self, _rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2962,7 +2962,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     pub fn saturating_mul_assign_uint<U>(&mut self, _rhs: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -3063,7 +3063,7 @@ where T: TraitsBigUInt<T>
     /// }
     /// ```
     pub fn safe_mul_uint<U>(&self, _rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -3204,7 +3204,7 @@ where T: TraitsBigUInt<T>
     /// }
     /// ```
     pub fn safe_mul_assign_uint<U>(&mut self, _rhs: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -3868,7 +3868,7 @@ where T: TraitsBigUInt<T>
     ///         },
     /// }
     pub fn checked_div_uint<U>(&self, _rhs: U) -> Option<Self>
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -3958,7 +3958,7 @@ where T: TraitsBigUInt<T>
     /// ```
     #[inline]
     pub fn unchecked_div_uint<U>(&self, _rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -4050,7 +4050,7 @@ where T: TraitsBigUInt<T>
     /// let quotient = _dividend.saturating_div_uint(_divisor);
     /// ```
     pub fn saturating_div_uint<U>(&self, _rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -4162,7 +4162,7 @@ where T: TraitsBigUInt<T>
     /// _a_biguint.saturating_div_assign_uint(_divisor);
     /// ```
     pub fn saturating_div_assign_uint<U>(&mut self, _rhs: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -4706,7 +4706,7 @@ where T: TraitsBigUInt<T>
     /// }
     /// ```
     pub fn checked_rem_uint<U>(&self, _rhs: U) -> Option<U>
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -4782,7 +4782,7 @@ where T: TraitsBigUInt<T>
     /// ```
     #[inline]
     pub fn unchecked_rem_uint<U>(&self, _rhs: U) -> U
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -4860,7 +4860,7 @@ where T: TraitsBigUInt<T>
     /// let remainder = _dividend.saturating_rem_uint(_divisor);
     /// ```
     pub fn saturating_rem_uint<U>(&self, _rhs: U) -> U
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -4972,7 +4972,7 @@ where T: TraitsBigUInt<T>
     /// _a_biguint.saturating_rem_assign_uint(_divisor);
     /// ```
     pub fn saturating_rem_assign_uint<U>(&mut self, _rhs: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -5488,7 +5488,7 @@ where T: TraitsBigUInt<T>
     /// let multiple = _a_biguint.next_multiple_of_uint(_num);
     /// ```
     pub fn next_multiple_of_uint<U>(&self, _rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -5591,7 +5591,7 @@ where T: TraitsBigUInt<T>
     /// _a_biguint.next_multiple_of_assign_uint(_num);
     /// ```
     pub fn next_multiple_of_assign_uint<U>(&mut self, _rhs: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -5676,7 +5676,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(ans, true);
     /// ```
     pub fn is_multiple_of_uint<U>(&self, _rhs: U) -> bool
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -6099,7 +6099,7 @@ where T: TraitsBigUInt<T>
     /// ```
     #[inline]
     pub fn midpoint_uint<U>(&self, _rhs: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -6273,7 +6273,7 @@ where T: TraitsBigUInt<T>
     /// ```
     #[inline]
     pub fn midpoint_assign_uint<U>(&mut self, _rhs: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -6737,7 +6737,7 @@ where T: TraitsBigUInt<T>
     /// }
     /// ```
     pub fn checked_pow_uint<U>(&self, _exp: U) -> Option<Self>
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -6849,7 +6849,7 @@ where T: TraitsBigUInt<T>
     /// let res = _a_biguint.unchecked_pow_uint(_exp);
     /// ```
     pub fn unchecked_pow_uint<U>(&self, _exp: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -6977,7 +6977,7 @@ where T: TraitsBigUInt<T>
     /// let res = _a_biguint.saturating_pow_uint(_exp);
     /// ```
     pub fn saturating_pow_uint<U>(&self, _exp: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -7140,7 +7140,7 @@ where T: TraitsBigUInt<T>
     /// _a_biguint.saturating_pow_assign_uint(_exp);
     /// ```
     pub fn saturating_pow_assign_uint<U>(&mut self, _exp: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -7315,7 +7315,7 @@ where T: TraitsBigUInt<T>
     /// let res = _a_biguint.iroot_uint(_exp);
     /// ```
     pub fn iroot_uint<U>(&self, _exp: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -7546,7 +7546,7 @@ where T: TraitsBigUInt<T>
     /// _a_biguint.iroot_assign_uint(_exp);
     /// ```
     pub fn iroot_assign_uint<U>(&mut self, _exp: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -7802,7 +7802,7 @@ where T: TraitsBigUInt<T>
     /// }
     /// ```
     pub fn checked_iroot_uint<U>(&self, _exp: U) -> Option<Self>
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -7985,7 +7985,7 @@ where T: TraitsBigUInt<T>
     /// ```
     #[inline]
     pub fn unchecked_iroot_uint<U>(&self, _exp: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -8221,7 +8221,7 @@ where T: TraitsBigUInt<T>
     /// }
     /// ```
     pub fn checked_ilog_uint<U>(&self, _base: U) -> Option<Self>
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -8354,7 +8354,7 @@ where T: TraitsBigUInt<T>
     /// ```
     #[inline]
     pub fn unchecked_ilog_uint<U>(&self, _base: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -10262,7 +10262,7 @@ where T: TraitsBigUInt<T>
     /// }
     /// ```
     pub fn checked_shift_left<U>(&self, _n: U) -> Option<Self>
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -10372,7 +10372,7 @@ where T: TraitsBigUInt<T>
     /// ```
     #[inline]
     pub fn unchecked_shift_left<U>(&self, _n: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -10530,7 +10530,7 @@ where T: TraitsBigUInt<T>
     /// }
     /// ```
     pub fn checked_shift_right<U>(&self, _n: U) -> Option<Self>
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -10640,7 +10640,7 @@ where T: TraitsBigUInt<T>
     /// ```
     #[inline]
     pub fn unchecked_shift_right<U>(&self, _n: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }

@@ -829,9 +829,9 @@ fn des_new_with_key_u64()
 fn des_encryptor_with_key()
 {
     println!("des_encryptor_with_key");
-    use cryptocol::symmetric::{ DES, BigCryptor64, SmallCryptor };
+    use cryptocol::symmetric::{ DES, BigCryptor64, SmallCryptor64 };
     
-    let keys: [Box<dyn SmallCryptor<u64, 8>>; 3]
+    let keys: [Box<dyn SmallCryptor64>; 3]
             = [ Box::new(DES::encryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])),
                 Box::new(DES::decryptor_with_key([0x21_u8, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE])),
                 Box::new(DES::encryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])) ];
@@ -913,9 +913,9 @@ fn des_encryptor_with_key_u64()
 fn des_decryptor_with_key()
 {
     println!("des_decryptor_with_key_u64");
-    use cryptocol::symmetric::{ DES, BigCryptor64, SmallCryptor };
+    use cryptocol::symmetric::{ DES, BigCryptor64, SmallCryptor64 };
     
-    let keys: [Box<dyn SmallCryptor<u64, 8>>; 3]
+    let keys: [Box<dyn SmallCryptor64>; 3]
             = [ Box::new(DES::encryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])),
                 Box::new(DES::decryptor_with_key([0x21_u8, 0x43, 0x65, 0x87, 0x09, 0xBA, 0xDC, 0xFE])),
                 Box::new(DES::encryptor_with_key([0xEF_u8, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12])) ];
@@ -1656,9 +1656,9 @@ fn des_set_key_u64()
 fn des_turn_inverse()
 {
     println!("des_turn_inverse");
-    use cryptocol::symmetric::{ BigCryptor64, DES, SmallCryptor };
+    use cryptocol::symmetric::{ BigCryptor64, DES, SmallCryptor64 };
 
-    let mut keys: [Box<dyn SmallCryptor<u64, 8>>; 3]
+    let mut keys: [Box<dyn SmallCryptor64>; 3]
                 = [ Box::new(DES::new_with_key_u64(0x_1234567890ABCDEF_u64)),
                     Box::new(DES::new_with_key_u64(0x_FEDCBA0987654321_u64)),
                     Box::new(DES::new_with_key_u64(0x_1234567890ABCDEF_u64)) ];
@@ -1703,9 +1703,9 @@ fn des_turn_inverse()
 fn des_turn_encryptor()
 {
     println!("des_turn_encryptor");
-    use cryptocol::symmetric::{ BigCryptor64, DES, SmallCryptor };
+    use cryptocol::symmetric::{ BigCryptor64, DES, SmallCryptor64 };
 
-    let mut keys: [Box<dyn SmallCryptor<u64, 8>>; 3]
+    let mut keys: [Box<dyn SmallCryptor64>; 3]
             = [ Box::new(DES::new_with_key_u64(0x_1234567890ABCDEF_u64)),
                 Box::new(DES::new_with_key_u64(0x_FEDCBA0987654321_u64)),
                 Box::new(DES::new_with_key_u64(0x_1234567890ABCDEF_u64)) ];
@@ -1750,9 +1750,9 @@ fn des_turn_encryptor()
 fn des_turn_decryptor()
 {
     println!("des_turn_decryptor");
-    use cryptocol::symmetric::{ BigCryptor64, DES, SmallCryptor };
+    use cryptocol::symmetric::{ BigCryptor64, DES, SmallCryptor64 };
 
-    let mut keys: [Box<dyn SmallCryptor<u64, 8>>; 3]
+    let mut keys: [Box<dyn SmallCryptor64>; 3]
                 = [ Box::new(DES::new_with_key_u64(0x_1234567890ABCDEF_u64)),
                     Box::new(DES::new_with_key_u64(0x_FEDCBA0987654321_u64)),
                     Box::new(DES::new_with_key_u64(0x_1234567890ABCDEF_u64)) ];

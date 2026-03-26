@@ -16,7 +16,7 @@
 
 use std::ptr::copy_nonoverlapping;
 
-use crate::number::{ LongUnion, TraitsBigUInt };
+use crate::number::{ LongUnion, SmallUInt };
 use crate::symmetric::{ PCBC_PKCS7, DES_Generic };
 use crate::symmetric::{ crypt_pcbc_with_padding_pkcs7, crypt_into_something_with_padding,
                         encrypt_into_array, encrypt_into_vec,

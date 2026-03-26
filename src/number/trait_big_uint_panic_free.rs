@@ -12,7 +12,7 @@
 // #![allow(rustdoc::missing_doc_code_examples)]
 
 
-use crate::number::TraitsBigUInt;
+use crate::number::SmallUInt;
 
 
 
@@ -65,7 +65,7 @@ use crate::number::TraitsBigUInt;
 /// ```
 #[allow(non_camel_case_types)]
 pub trait BigUInt_Panic_Free<T, const N: usize> : Clone + Sized //+ Display + + ToString
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     /*** ADDITION ***/
 
@@ -137,7 +137,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_add_uint)
     fn panic_free_modular_add_uint<U>(&self, rhs: U, modulus: &Self) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
 
     // fn panic_free_modular_add_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
@@ -223,7 +223,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_add_assign_uint)
     fn panic_free_modular_add_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
 
     // fn panic_free_modular_add(&self, rhs: &Self, modulus: &Self) -> Self
@@ -453,7 +453,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_sub_uint)
     fn panic_free_modular_sub_uint<U>(&self, rhs: U, modulus: &Self) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
 
     // fn panic_free_modular_sub_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
@@ -540,7 +540,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_sub_assign_uint)
     fn panic_free_modular_sub_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
 
     // fn panic_free_modular_sub(&self, rhs: &Self, modulus: &Self) -> Self
@@ -771,7 +771,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_mul_uint)
     fn panic_free_modular_mul_uint<U>(&self, rhs: U, modulus: &Self) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
 
     // fn panic_free_modular_mul_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
@@ -857,7 +857,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_mul_assign_uint)
     fn panic_free_modular_mul_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
 
     // pub fn panic_free_modular_mul(&self, rhs: &Self, modulus: &Self) -> Self
@@ -1102,7 +1102,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_divide_fully_uint)
     fn panic_free_divide_fully_uint<U>(&self, rhs: U) -> (Self, Self)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn panic_free_div_uint<U>(&self, rhs: U) -> Self
     /// Divides `self` by `rhs`, and returns the quotient.
@@ -1170,7 +1170,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_div_uint)
     fn panic_free_div_uint<U>(&self, rhs: U) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn panic_free_div_assign_uint<U>(&mut self, rhs: U)
     /// Divides `self` by `rhs`, and assigns the quotient to `self` back.
@@ -1245,7 +1245,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_div_assign_uint)
     fn panic_free_div_assign_uint<U>(&mut self, rhs: U)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn panic_free_modular_div_uint<U>(&self, rhs: U, modulus: &Self) -> Self
     /// Divides (`self` % `modulus`) by (`rhs` % `modulus`),
@@ -1325,7 +1325,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_div_uint)
     fn panic_free_modular_div_uint<U>(&self, rhs: U, modulus: &Self) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn panic_free_modular_div_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
     /// Divides (`self` % `modulus`) by (`rhs` % `modulus`),
@@ -1417,7 +1417,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_div_assign_uint)
     fn panic_free_modular_div_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn panic_free_divide_fully(&self, rhs: &Self) -> (Self, Self)
     /// Divides `self` by `rhs`,
@@ -1880,7 +1880,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_rem_uint)
     fn panic_free_rem_uint<U>(&self, rhs: U) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn panic_free_rem_assign_uint<U>(&mut self, rhs: U)
     /// Divides `self` by `rhs`, and assigns the remainder to `self` back.
@@ -1951,7 +1951,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_rem_assign_uint)
     fn panic_free_rem_assign_uint<U>(&mut self, rhs: U)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn panic_free_modular_rem_uint<U>(&self, rhs: U, modulus: &Self) -> Self
     /// Divides (`self` % `modulus`) by (`rhs` % `modulus`),
@@ -2026,7 +2026,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_rem_uint)
     fn panic_free_modular_rem_uint<U>(&self, rhs: U, modulus: &Self) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn panic_free_modular_rem_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
     /// Divides (`self` % `modulus`) by (`rhs` % `modulus`),
@@ -2113,7 +2113,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_rem_assign_uint)
     fn panic_free_modular_rem_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn panic_free_rem(&self, rhs: &Self) -> Self
     /// Divides `self` by `rhs`, and returns the remainder.
@@ -2479,7 +2479,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_pow_uint)
     fn panic_free_pow_uint<U>(&self, exp: U) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn panic_free_pow_assign_uint<U>(&self, exp: U) -> Self
     /// Raises `BigUInt` type number to the power of `exp`, using
@@ -2553,7 +2553,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_pow_assign_uint)
     fn panic_free_pow_assign_uint<U>(&mut self, exp: U)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn panic_free_modular_pow_uint<U>(&self, exp: U, modulus: &Self) -> Self
     /// Raises `BigUInt` type number to the power of `exp`, using
@@ -2623,7 +2623,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.carrying_add_assign_uint)
     fn panic_free_modular_pow_uint<U>(&self, exp: U, modulus: &Self) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn panic_free_modular_pow_assign_uint<U>(&mut self, exp: U, modulus: &Self)
     /// Raises `BigUInt` type number to the power of `exp`, using
@@ -2700,7 +2700,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_pow_assign_uint)
     fn panic_free_modular_pow_assign_uint<U>(&mut self, exp: U, modulus: &Self)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn panic_free_pow(&mut self, exp: &Self) -> Self
     /// Raises `BigUInt` type number to the power of `exp`, using
@@ -3050,7 +3050,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_iroot_uint)
     fn panic_free_iroot_uint<U>(&self, exp: U) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn panic_free_iroot_assign_uint<U>(&mut self, exp: U)
     /// Calculates the `exp`-th root of `self`, rounded down,
@@ -3128,7 +3128,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_iroot_assign_uint)
     fn panic_free_iroot_assign_uint<U>(&mut self, exp: U)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn panic_free_iroot(&self, exp: &Self) -> Self
     /// Calculates the `exp`-th root of `self`, rounded down,
@@ -3344,7 +3344,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_ilog_uint)
     fn panic_free_ilog_uint<U>(&self, base: U) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn panic_free_ilog_assign_uint<U>(&mut self, base: U)
     /// Calculates the logarithm of the number with respect to `base`,
@@ -3416,7 +3416,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_ilog_assign_uint)
     fn panic_free_ilog_assign_uint<U>(&mut self, base: U)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn panic_free_ilog(&self, base: &Self) -> Self
     /// Calculates the logarithm of the number with respect to `base`,
@@ -3817,7 +3817,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_gcd_uint)
     fn panic_free_gcd_uint<U>(&self, other: U) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn panic_free_gcd_assign_uint<U>(&mut self, other: U)
     /// Calculates the greatest common divisor of `self` and `other`,
@@ -3889,7 +3889,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_gcd_assign_uint)
     fn panic_free_gcd_assign_uint<U>(&mut self, other: U)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn panic_free_lcm_uint<U>(&self, other: U) -> Self
     /// Calculates the least common multiple of `self` and `other`,
@@ -3954,7 +3954,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_lcm_uint)
     fn panic_free_lcm_uint<U>(&self, other: U) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn panic_free_lcm_assign_uint<U>(&mut self, other: U)
     /// Calculates the least common multiple of `self` and `other`,
@@ -4025,7 +4025,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_lcm_assign_uint)
     fn panic_free_lcm_assign_uint<U>(&mut self, other: U)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
 
     // fn panic_free_gcd(&self, other: &Self) -> Self
@@ -4366,7 +4366,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_next_multiple_of_uint)
     fn panic_free_next_multiple_of_uint<U>(&self, rhs: U) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn panic_free_next_multiple_of_assign_uint<U>(&mut self, rhs: U)
     /// Calculates the smallest value greater than or equal to `self`,
@@ -4431,7 +4431,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_next_multiple_of_assign_uint)
     fn panic_free_next_multiple_of_assign_uint<U>(&mut self, rhs: U)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn panic_free_modular_next_multiple_of_uint<U>(&self, rhs: U, modulus: &Self) -> Self
     /// Calculates the smallest value greater than or equal to `self`,
@@ -4506,7 +4506,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_next_multiple_of_uint)
     fn panic_free_modular_next_multiple_of_uint<U>(&self, rhs: U, modulus: &Self) -> Self
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
     
     // fn panic_free_modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
     /// Calculates the smallest value greater than or equal to `self`,
@@ -4589,7 +4589,7 @@ where T: TraitsBigUInt<T>
     /// # For more examples,
     /// click [here](./documentation/big_uint_panic_free/struct.BigUInt.html#method.panic_free_modular_next_multiple_of_assign_uint)
     fn panic_free_modular_next_multiple_of_assign_uint<U>(&mut self, rhs: U, modulus: &Self)
-    where U: TraitsBigUInt<U>;
+    where U: SmallUInt;
 
     // fn panic_free_next_multiple_of(&self, rhs: &Self) -> Self
     /// Calculates the smallest value greater than or equal to `self`,

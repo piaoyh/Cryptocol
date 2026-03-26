@@ -752,6 +752,25 @@ crate::number::format_for_integer_unions_impl! { LongerUnion }
 
 
 
+impl Ord for LongerUnion
+{
+    // fn cmp(&self, other: &Self) -> Ordering
+    /// This method returns an Ordering between self and other.
+    /// 
+    /// # Returns
+    /// An Ordering between self and other.
+    /// 
+    /// # Features
+    /// By convention, self.cmp(&other) returns the ordering matching
+    /// the expression self <operator> other if true.
+    #[inline]
+    fn cmp(&self, other: &Self) -> Ordering
+    {
+        self.get().cmp(&other.get())
+    }
+}
+
+
 impl Debug for LongerUnion
 {
     // fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result

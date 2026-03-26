@@ -13,7 +13,7 @@
 #![allow(unused_variables)]
 // #![warn(rustdoc::missing_doc_code_examples)]
 
-use crate::number::{ TraitsBigUInt, BigUInt };
+use crate::number::{ SmallUInt, BigUInt };
 
 
 /// rsa.rs may be too big
@@ -23,7 +23,7 @@ use crate::number::{ TraitsBigUInt, BigUInt };
 /// examples were moved to rsa_basic.rs.
 #[allow(non_camel_case_types)]
 pub struct RSA_Generic<const N: usize, T, const MR: usize = 5>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     // Dummy struct for documentation
     #[allow(dead_code)] modulo: BigUInt<T, N>,
@@ -38,7 +38,7 @@ where T: TraitsBigUInt<T>
 /// examples were moved to rsa_basic.rs. And, most of generic parameters
 /// are omitted. It is not actual code but dummy code for compilation!!!
 impl<const N: usize, T, const MR: usize> RSA_Generic<N, T, MR>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     // pub fn new() -> Self
     /// Constructs a new object of the struct `RSA_Generic`.

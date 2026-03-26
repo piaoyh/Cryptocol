@@ -17,7 +17,7 @@ use std::ops::{ Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, 
                 BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not,
                 Shl, ShlAssign, Shr, ShrAssign };
 
-use crate::number::{ SmallUInt, TraitsBigUInt, NumberErr };
+use crate::number::{ SmallUInt, NumberErr };
 
 
 /// big_uint.rs was too big because of documentation and plenty of examples
@@ -25,7 +25,7 @@ use crate::number::{ SmallUInt, TraitsBigUInt, NumberErr };
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to big_uint_basic_operation.rs.
 pub struct BigUInt<T, const N: usize>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     // Dummy struct for documentation
     #[allow(dead_code)] number: [T; N],
@@ -33,7 +33,7 @@ where T: TraitsBigUInt<T>
 }
 
 impl<T, const N: usize> BigUInt<T, N>
-where T: TraitsBigUInt<T>
+where T: SmallUInt
 {
     /***** CONSTRUCTORS *****/
 
@@ -329,7 +329,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(f_from_usize.is_right_carry(), false);
     /// ```
     pub fn from_uint<U>(_val: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -483,7 +483,7 @@ where T: TraitsBigUInt<T>
     /// ```
     #[inline]
     pub fn from_biguint<U, const M: usize>(_biguint: &BigUInt<U, M>) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2328,7 +2328,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     pub fn set_uint<U>(&mut self, _val: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2364,7 +2364,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(a_biguint.is_uint(50_u16), false);
     /// ```
     pub fn is_uint<U>(&self, _val: U) -> bool
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2792,7 +2792,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(res, Ordering::Equal);
     /// ```
     pub fn partial_cmp_uint<U>(&self, _other: U) -> Option<Ordering>
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2858,7 +2858,7 @@ where T: TraitsBigUInt<T>
     /// ```
     #[inline]
     pub fn lt_uint<U>(&self, _other: U) -> bool
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2925,7 +2925,7 @@ where T: TraitsBigUInt<T>
     /// ```
     #[inline]
     pub fn gt_uint<U>(&self, _other: U) -> bool
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -2992,7 +2992,7 @@ where T: TraitsBigUInt<T>
     /// ```
     #[inline]
     pub fn le_uint<U>(&self, _other: U) -> bool
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -3059,7 +3059,7 @@ where T: TraitsBigUInt<T>
     /// ```
     #[inline]
     pub fn ge_uint<U>(&self, _other: U) -> bool
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -3110,7 +3110,7 @@ where T: TraitsBigUInt<T>
     /// ```
     #[inline]
     pub fn eq_uint<U>(&self, _other: U) -> bool
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -3643,7 +3643,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(res.is_right_carry(), false);
     /// ```
     pub fn shift_left<U>(&self, _n: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -3809,7 +3809,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(a_biguint.is_right_carry(), false);
     /// ```
     pub fn shift_left_assign<U>(&mut self, _n: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -3934,7 +3934,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(res.is_right_carry(), true);
     /// ```
     pub fn shift_right<U>(&self, _n: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -4100,7 +4100,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(a_biguint.is_right_carry(), true);
     /// ```
     pub fn shift_right_assign<U>(&mut self, _n: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -4219,7 +4219,7 @@ where T: TraitsBigUInt<T>
     /// ```
     #[inline]
     pub fn rotate_left<U>(&self, _n: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -4384,7 +4384,7 @@ where T: TraitsBigUInt<T>
     /// ```
     #[inline]
     pub fn rotate_left_assign<U>(&mut self, _n: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -4508,7 +4508,7 @@ where T: TraitsBigUInt<T>
     /// ```
     #[inline]
     pub fn rotate_right<U>(&self, _n: U) -> Self
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -4673,7 +4673,7 @@ where T: TraitsBigUInt<T>
     /// ```
     #[inline]
     pub fn rotate_right_assign<U>(&mut self, _n: U)
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -5911,7 +5911,7 @@ where T: TraitsBigUInt<T>
     /// ```
     #[inline]
     pub fn into_biguint<U, const M: usize>(&self) -> BigUInt<U, M>
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -5985,7 +5985,7 @@ where T: TraitsBigUInt<T>
     /// assert_eq!(b_u8, 0_u8);
     /// ```
     pub fn into_uint<U>(&self) -> U
-    where U: TraitsBigUInt<U>
+    where U: SmallUInt
     {
         unimplemented!(); // Dummy code for documentation
     }
