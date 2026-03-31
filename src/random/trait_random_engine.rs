@@ -1,4 +1,4 @@
-// Copyright 2024, 2025 PARK Youngho.
+// Copyright 2024, 2025, 2026 PARK Youngho.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -21,7 +21,7 @@ pub(super) const SALT: u64 = 0x9999_9999_9999_9999;
 #[allow(non_camel_case_types)]
 pub trait Random_Engine
 {
-    // fn sow_array<T, const N: usize>(&mut self, message: &[T; N])
+    // fn sow_array(&mut self, message: &[u64; 8], original: &[u64; 8]);
     /// Provides new seeds for `self`.
     /// 
     /// # Argument
@@ -76,7 +76,7 @@ pub trait Random_Engine
     #[allow(unused_variables)]
     fn sow_array(&mut self, message: &[u64; 8], original: &[u64; 8]);
 
-    // fn harvest(&mut self, count: u128) -> [u64; 8]
+    // fn harvest(&mut self, count: u128, message: &[u64; 8]) -> [u64; 8];
     /// Outputs the pseudo-random number array.
     /// 
     /// # Argument

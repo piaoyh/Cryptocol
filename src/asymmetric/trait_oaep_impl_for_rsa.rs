@@ -1,4 +1,4 @@
-// Copyright 2025 PARK Youngho.
+// Copyright 2025, 2026 PARK Youngho.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -128,17 +128,20 @@ macro_rules! crypt_into_something_with_padding {
 use std::ptr::copy_nonoverlapping;
 
 use crate::number::SmallUInt;
-use crate::random::Slapdash as Random;
-use crate::asymmetric::{ OAEP, RSA_Generic };
+use crate::random::Random;
+use crate::asymmetric::{ OAEP, RSA_Generic, Hash };
 
 
 impl<const N: usize, T, const MR: usize> RSA_Generic<N, T, MR>
 where T: SmallUInt
 {
-    fn MGF1<const L: usize, const M: usize>(seed: [u8; M]) -> [u8; L]
+    fn MGF1<const L: usize, const M: usize, H: Hash>(seed: [u8; M], hash: &H) -> Option<[u8; L]>
     {
+        if M != hash.get_default_length_in_bytes()
+            { return None; }
+        
         // let mut counter = 
-        [0u8; L]
+        Some([0u8; L])
     }
 }
 

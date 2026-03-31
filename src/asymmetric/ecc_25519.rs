@@ -53,7 +53,7 @@ type ECC_25519_u8 = ECC_25519<u8, 32>;
 struct ECC_25519<T, const N: usize, const A: usize = 486662, const B: usize = 1>
 where T: SmallUInt
 {
-    generatop: (BigUInt<T, N>, BigUInt<T, N>),
+    generator: (BigUInt<T, N>, BigUInt<T, N>),
     key_public: (BigUInt<T, N>, BigUInt<T, N>),
     key_private: BigUInt<T, N>
 }
@@ -65,7 +65,7 @@ where T: SmallUInt
     {
         Self
         {
-            generatop: (BigUInt::<T, N>::zero(), BigUInt::<T, N>::zero()),
+            generator: (BigUInt::<T, N>::zero(), BigUInt::<T, N>::zero()),
             key_public: (BigUInt::<T, N>::zero(), BigUInt::<T, N>::zero()),
             key_private: BigUInt::<T, N>::zero()
         }

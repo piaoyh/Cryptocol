@@ -1,4 +1,4 @@
-// Copyright 2023, 2024, 2025 PARK Youngho.
+// Copyright 2023, 2024, 2025, 2026 PARK Youngho.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -241,27 +241,21 @@
 //! 
 //! macro_rules! impl_hash_for
 //! {
-//!     ($f:ty) => {
-//!         impl Hash for $f
-//!         {
-//!             #[inline] fn digest_str(&mut self, message: &str)   { self.digest_str(message); }
-//!             #[inline] fn digest_vec<T>(&mut self, message: &Vec<T>) where T: SmallUInt + Copy + Clone + Display + Debug + ToString
-//!                         { self.digest_vec(message); }
-//!             #[inline] fn get_hash_value_in_string(&self) -> String  { self.get_hash_value_in_string() }
-//!         }
-//!     };
+//!     ($($f:ty),*) => {
+//!         $(
+//!               impl Hash for $f
+//!               {
+//!                   #[inline] fn digest_str(&mut self, message: &str)   { self.digest_str(message); }
+//!                   #[inline] fn digest_vec<T>(&mut self, message: &Vec<T>) where T: SmallUInt + Copy + Clone + Display + Debug + ToString
+//!                               { self.digest_vec(message); }
+//!                   #[inline] fn get_hash_value_in_string(&self) -> String  { self.get_hash_value_in_string() }
+//!               }
+//!         )* 
+//!     };  
 //! }
 //! 
-//! impl_hash_for!{MD4}
-//! impl_hash_for!{MD5}
-//! impl_hash_for!{SHA1}
-//! impl_hash_for!{SHA2_224}
-//! impl_hash_for!{SHA2_256}
-//! impl_hash_for!{SHA2_384}
-//! impl_hash_for!{SHA2_512}
-//! impl_hash_for!{SHA2_512_256}
-//! impl_hash_for!{SHA2_512_t_224}
-//! impl_hash_for!{SHA3_256}
+//! impl_hash_for!{ MD4, MD5, SHA1, SHA2_224, SHA2_256, SHA2_384,
+//!                 SHA2_512, SHA2_512_256, SHA2_512_t_224, SHA3_256 }
 //! ```
 
 mod md4;

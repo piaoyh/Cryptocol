@@ -16,7 +16,6 @@
 
 use crate::number::SmallUInt;
 
-
 /// This trait PKCS1V15 is based on PKCS #1 ver. 1.5. The RSA PKCS #1 v1.5
 /// padding format is designed to format a message before RSA encryption to
 /// ensure that the resulting block matches the length of the RSA modulus (`n`)
@@ -33,6 +32,7 @@ use crate::number::SmallUInt;
 /// | 2 to `k - m - 4`       | Padding String (PS) | Random bytes   | Non-zero random values (minimum 8 bytes).                              |
 /// | `k - m - 2`            | Separator           | 0x00           | Marks the end of padding and the start of the message.                 |
 /// | `k - m - 1` to `k - 1` | Data (D)            | Actual Message | The raw data to be encrypted.                                          |
+/// 
 /// - `k`: The length of the RSA modulus `n` in bytes (e.g., `k = 256`
 ///   for a 2048-bit key).
 /// - `m`: The length of the message `D` in bytes. So, the allowed maximum

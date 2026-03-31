@@ -160,6 +160,7 @@ mod trait_pkcs1v15;
 
 
 mod trait_oaep;
+mod trait_hash;
 
 
 mod trait_pkcs1v15_impl_for_rsa;
@@ -171,10 +172,29 @@ mod trait_oaep_impl_for_rsa;
 
 // mod operation_mode_macros;
 
-pub use rsa::*;
-pub use trait_pkcs1v15::*;
-pub use trait_oaep::*;
+pub use rsa::RSA_Generic;
+pub use rsa::RSA_4096_u128;
+pub use rsa::RSA_2048_u128;
+pub use rsa::RSA_1024_u128;
+pub use rsa::RSA_4096_u64;
+pub use rsa::RSA_2048_u64;
+pub use rsa::RSA_1024_u64;
+pub use rsa::RSA_4096_u32;
+pub use rsa::RSA_2048_u32;
+pub use rsa::RSA_1024_u32;
+pub use rsa::RSA_4096_u16;
+pub use rsa::RSA_2048_u16;
+pub use rsa::RSA_1024_u16;
+pub use rsa::RSA_4096_u8;
+pub use rsa::RSA_2048_u8;
+pub use rsa::RSA_1024_u8;
+pub use rsa::RSA_4096;
+pub use rsa::RSA_2048;
+pub use rsa::RSA_1024;
 
+pub use trait_pkcs1v15::PKCS1V15;
+pub use trait_oaep::OAEP;
+pub use trait_hash::Hash;
 // pub use ecc_25519::*;
 
 /// many *.rs was too big because of documentation and plenty of examples

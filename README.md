@@ -1,16 +1,3 @@
-<!--
-Copyright 2023, 2024, 2025, 2026 PARK Youngho.
-
-Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
-https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
-<LICENSE-MIT or https://opensource.org/licenses/MIT>, at your option.
-This file may not be copied, modified, or distributed
-except according to those terms.
- > int_union.rs를 참고하여 src/number/macros_for_integer_unions.rs의 3770행부터 
-   3829행까지의 독스트링의 영어를 다듬어 줘. 예제와 그 제목은 건드리지 마. 양이 
-   많으니까 한꺼번에 하지말고 차근차근 한 함수씩 독스트링을 교정해 줘. 누락된   
-   것 없이 정교하게 교정해 줘.  
--->
 # cryptocol: A Comprehensive Cryptography Library
 
 ## Endianness Support

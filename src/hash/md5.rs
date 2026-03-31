@@ -1,4 +1,4 @@
-// Copyright 2024, 2025 PARK Youngho.
+// Copyright 2024, 2025. 2026 PARK Youngho.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -1557,7 +1557,7 @@ MD5_Generic<N, H0, H1, H2, H3, ROUND,
     /// to use it for Big Endian CPUs for serious purpose. Only use this crate
     /// for Big-endian CPUs with your own full responsibility.
     pub fn put_hash_value_in_array<T, const M: usize>(&self, out: &mut [T; M])
-    where T: SmallUInt + Copy + Clone + Display + Debug + ToString
+    where T: SmallUInt
     {
         let res = self.get_hash_value_in_array();
         let out_size = T::size_in_bytes() * M as u32;

@@ -2710,6 +2710,11 @@ where T: SmallUInt
         self.get_hash_value(hash_value.as_mut_ptr(), N);
     }
 
+    pub fn put_hash_value_in_array<const N: usize>(&mut self, hash_value: &mut [u8; N])
+    {
+        self.get_hash_value(hash_value.as_mut_ptr(), N);
+    }
+
     // pub fn get_hash_value(&mut self, hash_value: *mut u8, length_in_bytes: usize)
     /// Stores the hash value into a certain memory area.
     /// 

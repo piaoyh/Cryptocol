@@ -128,7 +128,7 @@ macro_rules! crypt_into_something_with_padding {
 use std::ptr::copy_nonoverlapping;
 
 use crate::number::SmallUInt;
-use crate::random::Slapdash as Random;
+use crate::random::Random;
 use crate::asymmetric::{ PKCS1V15, RSA_Generic };
 
 impl<const N: usize, T> PKCS1V15 for RSA_Generic<N, T>
