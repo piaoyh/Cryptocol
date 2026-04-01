@@ -98,12 +98,12 @@ use crate::asymmetric::Hash;
 /// Therefore, RSA-OAEP is the current industry standard and the
 /// recommended choice for all modern RSA encryption implementations to
 /// ensure cryptographic robustness.
-pub trait OAEP
+pub trait OAEP<HashType>
+where HashType: Hash
 {
     const BT: u8 = 2;
-    type Hash;
 
-    fn set_hash<H: Hash>(&mut self, hash: H);
+    fn set_hash(&mut self, hash: HashType);
     
     fn encrypt(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;
 

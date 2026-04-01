@@ -14,6 +14,12 @@
 // #![warn(rustdoc::missing_doc_code_examples)]
 
 
+use std::ptr::copy_nonoverlapping;
+
+use crate::number::SmallUInt;
+use crate::random::Random;
+use crate::asymmetric::{ OAEP, RSA_Generic, Hash };
+
 
 macro_rules! pre_encrypt_into_array {
     ($to:expr, $length_in_bytes:expr, $type:ty) => {
@@ -125,14 +131,7 @@ macro_rules! crypt_into_something_with_padding {
 
 
 
-use std::ptr::copy_nonoverlapping;
-
-use crate::number::SmallUInt;
-use crate::random::Random;
-use crate::asymmetric::{ OAEP, RSA_Generic, Hash };
-
-
-// fn MGF1<const L: usize, const M: usize, H: Hash>(seed: [u8; M], hash: &mut H) -> Option<[u8; L]>
+// fn mgf1<const L: usize, const M: usize, H: Hash>(seed: [u8; M], hash: &mut H) -> Option<[u8; L]>
 /// Is Mask Generation Function 1 (MGF1).
 /// 
 /// # Arguments
@@ -141,7 +140,7 @@ use crate::asymmetric::{ OAEP, RSA_Generic, Hash };
 ///   and the security level is the best when `S::size_in_bytes() * M`
 ///   is equal to the output length of the hash function.
 /// - hash: is hash function object.
-fn MGF1<const L: usize, const M: usize, H: Hash>(seed: [u8; M], hash: &mut H) -> Option<[u8; L]>
+fn mgf1<const L: usize, const M: usize, H: Hash>(seed: [u8; M], hash: &mut H) -> Option<[u8; L]>
 {
     if M != hash.get_default_length_in_bytes()
         { return None; }
@@ -152,15 +151,21 @@ fn MGF1<const L: usize, const M: usize, H: Hash>(seed: [u8; M], hash: &mut H) ->
         let code = hash.calculate_hash_code(&seed, counter as u32);
         unsafe { copy_nonoverlapping(code.as_ptr(), mask.as_mut_ptr().add(counter * M), M); }
     }
-    let code = hash.calculate_hash_code(&seed, counter);
+    let code = hash.calculate_hash_code(&seed, (L / M) as u32);
     unsafe { copy_nonoverlapping(code.as_ptr(), mask.as_mut_ptr().add(L / M * M), L % M); }
     Some(mask)
 }
 
 
-impl<const N: usize, T, const MR: usize> OAEP for RSA_Generic<N, T, MR>
-where T: SmallUInt
+impl<const N: usize, T, const MR: usize, HashType> OAEP<HashType> for RSA_Generic<N, T, MR, HashType>
+where T: SmallUInt, HashType: Hash
 {
+    #[inline]
+    fn set_hash(&mut self, hash: HashType)
+    {
+        self.set_hash(hash);
+    }
+
     fn encrypt(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
     {
         let size = T::size_in_bytes() as usize * N;
@@ -212,3 +217,12 @@ where T: SmallUInt
 
     crypt_into_something_with_padding!{}
 }
+
+// impl<const N: usize, T, H, const MR: usize> RSA_Generic<N, T, H, MR>
+// where T: SmallUInt, H: Hash
+// {
+//     pub(super) fn set_hash(&mut self, hash: H)
+//     {
+//         self.hash = hash;
+//     }
+// }

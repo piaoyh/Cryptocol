@@ -13,8 +13,11 @@
 #![allow(non_camel_case_types)]
 // #![warn(rustdoc::missing_doc_code_examples)]
 
+
 use crate::number::{ SmallUInt, BigUInt, BigUInt_Modular, BigUInt_Prime };
+use crate::hash::SHA3_512;
 use crate::random::Random;
+use crate::asymmetric::Hash;
 
 
 pub type RSA_4096_u128 = RSA_Generic<32, u128>;
@@ -147,17 +150,17 @@ pub type RSA_1024 = RSA_1024_u32;
 /// 
 /// # Notice for Practical Use
 /// 
-
-pub struct RSA_Generic<const N: usize, T, const MR: usize = 7>
-where T: SmallUInt
+pub struct RSA_Generic<const N: usize, T, const MR: usize = 7, HashType = SHA3_512>
+where T: SmallUInt, HashType: Hash
 {
     modulus: BigUInt<T, N>,
     key_public: BigUInt<T, N>,
     key_private: BigUInt<T, N>,
+    hash: HashType,
 }
 
-impl<const N: usize, T, const MR: usize> RSA_Generic<N, T, MR>
-where T: SmallUInt
+impl<const N: usize, T, const MR: usize, HashType> RSA_Generic<N, T, MR, HashType>
+where T: SmallUInt, HashType: Hash
 {
     // pub fn new() -> Self
     /// Constructs a new object of the struct `RSA_Generic`.
@@ -186,6 +189,7 @@ where T: SmallUInt
             modulus: BigUInt::<T, N>::new(),
             key_public: BigUInt::<T, N>::new(),
             key_private: BigUInt::<T, N>::new(),
+            hash: HashType::new(),
         }
     }
 
@@ -221,6 +225,7 @@ where T: SmallUInt
             modulus: BigUInt::<T, N>::new(),
             key_public: BigUInt::<T, N>::new(),
             key_private: BigUInt::<T, N>::new(),
+            hash: HashType::new(),
         };
         rsa.find_keys();
         rsa
@@ -267,6 +272,7 @@ where T: SmallUInt
             modulus,
             key_public,
             key_private,
+            hash: HashType::new(),
         }
     }
 
@@ -312,6 +318,7 @@ where T: SmallUInt
             modulus: BigUInt::<T, N>::new(),
             key_public: BigUInt::<T, N>::new(),
             key_private: BigUInt::<T, N>::new(),
+            hash: HashType::new(),
         };
         rsa.calculate_keys(prime_1, prime_2);
         rsa
@@ -485,6 +492,11 @@ where T: SmallUInt
     pub fn set_modulus(&mut self, modulus: BigUInt<T, N>)
     {
         self.modulus = modulus;
+    }
+
+    pub(super) fn set_hash(&mut self, hash: HashType)
+    {
+        self.hash = hash;
     }
 
     #[inline]

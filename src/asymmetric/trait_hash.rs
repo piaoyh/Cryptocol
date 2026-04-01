@@ -17,6 +17,7 @@ use crate::hash::{  MD4, MD5, SHA0, SHA1,
 #[allow(non_camel_case_types)]
 pub trait Hash
 {
+    fn new() -> Self;
     fn get_default_length_in_bytes(&self) -> usize;
     fn calculate_hash_code<const N: usize>(&mut self, message: &[u8; N], counter: u32) -> [u8; N];
 }
@@ -26,9 +27,16 @@ macro_rules! trait_Hash_impl {
         $(
             impl Hash for $hash_type
             {
+                fn new() -> Self
+                {
+                    Self::new()
+                }
+
                 #[inline]
                 fn get_default_length_in_bytes(&self) -> usize
-                    { Self::DEFUALT_OUTPUT_LENGTH_IN_BYTES }
+                {
+                    Self::DEFUALT_OUTPUT_LENGTH_IN_BYTES
+                }
 
                 fn calculate_hash_code<const N: usize>(&mut self, message: &[u8; N], counter: u32) -> [u8; N]
                 {
@@ -62,8 +70,8 @@ Keccak_Generic<RATE, PADDING, ROUNDS, T, LFSR,
                 RHO_MUL_X, RHO_MUL_Y, RHO_T,
                 PI_MUL_X, PI_MUL_Y, CHI_ADD_1, CHI_ADD_2>
 where T: SmallUInt
-{                  
-    pub fn put_hash_value_in_array<const N: usize>(&mut self, hash_value: &mut [u8; N])
+{
+    fn put_hash_value_in_array<const N: usize>(&mut self, hash_value: &mut [u8; N])
     {
         self.get_hash_value(hash_value.as_mut_ptr(), N);
     }
