@@ -15,6 +15,7 @@
 
 
 use crate::number::SmallUInt;
+use crate::asymmetric::Hash;
 
 /// This trait OAEP is based on PKCS #1 ver. 2.1. The RSA OAEP (Optimal
 /// Asymmetric Encryption Padding) format is a Feistel network-based padding
@@ -100,6 +101,9 @@ use crate::number::SmallUInt;
 pub trait OAEP
 {
     const BT: u8 = 2;
+    type Hash;
+
+    fn set_hash<H: Hash>(&mut self, hash: H);
     
     fn encrypt(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;
 

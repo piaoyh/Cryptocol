@@ -132,18 +132,31 @@ use crate::random::Random;
 use crate::asymmetric::{ OAEP, RSA_Generic, Hash };
 
 
-impl<const N: usize, T, const MR: usize> RSA_Generic<N, T, MR>
-where T: SmallUInt
+// fn MGF1<const L: usize, const M: usize, H: Hash>(seed: [u8; M], hash: &mut H) -> Option<[u8; L]>
+/// Is Mask Generation Function 1 (MGF1).
+/// 
+/// # Arguments
+/// - seed: is desirable that `S::size_in_bytes() * M` is greater than or
+///   equal to the output length of the hash function used in this method,
+///   and the security level is the best when `S::size_in_bytes() * M`
+///   is equal to the output length of the hash function.
+/// - hash: is hash function object.
+fn MGF1<const L: usize, const M: usize, H: Hash>(seed: [u8; M], hash: &mut H) -> Option<[u8; L]>
 {
-    fn MGF1<const L: usize, const M: usize, H: Hash>(seed: [u8; M], hash: &H) -> Option<[u8; L]>
+    if M != hash.get_default_length_in_bytes()
+        { return None; }
+
+    let mut mask = [0u8; L];
+    for counter in 0..L/M
     {
-        if M != hash.get_default_length_in_bytes()
-            { return None; }
-        
-        // let mut counter = 
-        Some([0u8; L])
+        let code = hash.calculate_hash_code(&seed, counter as u32);
+        unsafe { copy_nonoverlapping(code.as_ptr(), mask.as_mut_ptr().add(counter * M), M); }
     }
+    let code = hash.calculate_hash_code(&seed, counter);
+    unsafe { copy_nonoverlapping(code.as_ptr(), mask.as_mut_ptr().add(L / M * M), L % M); }
+    Some(mask)
 }
+
 
 impl<const N: usize, T, const MR: usize> OAEP for RSA_Generic<N, T, MR>
 where T: SmallUInt
@@ -198,32 +211,4 @@ where T: SmallUInt
     }
 
     crypt_into_something_with_padding!{}
-}
-
-
-
-use crate::random::Random_Engine;
-
-impl<const N: usize, T, const MR: usize> RSA_Generic<N, T, MR>
-where T: SmallUInt
-{
-    /// fn mgf1<S, U, const M: usize>(&self, seed: [S; M], hash: U, length: u64)
-    /// where S: SmallUInt<S>, U: Random_Engine
-    ///
-    /// # Arguments
-    /// - seed: is desirable that `S::size_in_bytes() * M` is greater than or
-    ///   equal to the output length of the hash function used in this method,
-    ///   and the security level is the best when `S::size_in_bytes() * M`
-    ///   is equal to the output length of the hash function.
-    /// -
-    fn mgf1<S, const M: usize, U, O, const L: usize>(&self, seed: [S; M], hash: U) -> [O; L]
-    where S: SmallUInt, U: Random_Engine, O: SmallUInt
-    {
-        let mask = [O::zero(); L];
-        for i in 0..4
-        {
-
-        }
-        mask
-    }
 }
