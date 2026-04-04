@@ -15,6 +15,7 @@
 
 
 use crate::number::SmallUInt;
+use crate::random::RandGen;
 use crate::asymmetric::Hash;
 
 /// This trait OAEP is based on PKCS #1 ver. 2.1. The RSA OAEP (Optimal
@@ -103,6 +104,8 @@ where HashType: Hash
 {
     const BT: u8 = 2;
 
+    fn set_prng(&mut self, prng: RandGen);
+    
     fn set_hash(&mut self, hash: HashType);
     
     fn encrypt(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;

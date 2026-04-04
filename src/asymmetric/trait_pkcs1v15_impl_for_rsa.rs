@@ -14,6 +14,12 @@
 // #![warn(rustdoc::missing_doc_code_examples)]
 
 
+use std::ptr::copy_nonoverlapping;
+
+use crate::random::RandGen;
+use crate::number::SmallUInt;
+use crate::asymmetric::{ PKCS1V15, RSA_Generic };
+
 
 macro_rules! pre_encrypt_into_array {
     ($to:expr, $length_in_bytes:expr, $type:ty) => {
@@ -125,15 +131,14 @@ macro_rules! crypt_into_something_with_padding {
 
 
 
-use std::ptr::copy_nonoverlapping;
-
-use crate::number::SmallUInt;
-use crate::random::Random;
-use crate::asymmetric::{ PKCS1V15, RSA_Generic };
-
 impl<const N: usize, T> PKCS1V15 for RSA_Generic<N, T>
 where T: SmallUInt
 {
+    fn set_prng(&mut self, prng: RandGen)
+    {
+        self.set_prng(prng);
+    }
+
     fn encrypt(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64
     {
         let size = T::size_in_bytes() as usize * N;
@@ -144,12 +149,11 @@ where T: SmallUInt
         let count = size - length_in_bytes as usize;
         unsafe {
             *((m.as_mut_ptr() as *mut u8).add(1)) = Self::BT;
-            let mut any = Random::new();
             for i in 2..count-1
             {
-                let mut r = any.random_u8();
+                let mut r = self.random_u8();
                 while r == 0
-                    { r = any.random_u8(); }
+                    { r = self.random_u8(); }
                 *((m.as_mut_ptr() as *mut u8).add(i)) = r;
             }
             let ptr = (m.as_mut_ptr() as *mut u8).add(count);

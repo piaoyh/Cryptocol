@@ -16,7 +16,7 @@
 
 use crate::number::{ SmallUInt, BigUInt, BigUInt_Modular, BigUInt_Prime };
 use crate::hash::SHA3_512;
-use crate::random::Random;
+use crate::random::{ RandGen, Random };
 use crate::asymmetric::Hash;
 
 
@@ -156,6 +156,7 @@ where T: SmallUInt, HashType: Hash
     modulus: BigUInt<T, N>,
     key_public: BigUInt<T, N>,
     key_private: BigUInt<T, N>,
+    prng: RandGen,
     hash: HashType,
 }
 
@@ -189,6 +190,7 @@ where T: SmallUInt, HashType: Hash
             modulus: BigUInt::<T, N>::new(),
             key_public: BigUInt::<T, N>::new(),
             key_private: BigUInt::<T, N>::new(),
+            prng: Random::new(),
             hash: HashType::new(),
         }
     }
@@ -220,13 +222,7 @@ where T: SmallUInt, HashType: Hash
     /// click [here](./documentation/rsa_basic/struct.RSA_Generic.html#method.new_with_automatic_keys)
     pub fn new_with_automatic_keys() -> Self
     {
-        let mut rsa = Self
-        {
-            modulus: BigUInt::<T, N>::new(),
-            key_public: BigUInt::<T, N>::new(),
-            key_private: BigUInt::<T, N>::new(),
-            hash: HashType::new(),
-        };
+        let mut rsa = Self::new();
         rsa.find_keys();
         rsa
     }
@@ -272,6 +268,7 @@ where T: SmallUInt, HashType: Hash
             modulus,
             key_public,
             key_private,
+            prng: Random::new(),
             hash: HashType::new(),
         }
     }
@@ -313,13 +310,7 @@ where T: SmallUInt, HashType: Hash
     /// click [here](./documentation/rsa_basic/struct.RSA_Generic.html#method.new_with_primes)
     pub fn new_with_primes(prime_1: BigUInt<T, N>, prime_2: BigUInt<T, N>) -> Self
     {
-        let mut rsa = Self
-        {
-            modulus: BigUInt::<T, N>::new(),
-            key_public: BigUInt::<T, N>::new(),
-            key_private: BigUInt::<T, N>::new(),
-            hash: HashType::new(),
-        };
+        let mut rsa = Self::new();
         rsa.calculate_keys(prime_1, prime_2);
         rsa
     }
@@ -492,6 +483,11 @@ where T: SmallUInt, HashType: Hash
     pub fn set_modulus(&mut self, modulus: BigUInt<T, N>)
     {
         self.modulus = modulus;
+    }
+
+    pub(super) fn set_prng(&mut self, prng: RandGen)
+    {
+        self.prng = prng;
     }
 
     pub(super) fn set_hash(&mut self, hash: HashType)
@@ -1036,6 +1032,12 @@ where T: SmallUInt, HashType: Hash
         for i in 0..M
             { message[i] = self.decrypt_unit(&cipher[i]); }
         message
+    }
+
+    #[inline]
+    pub(super) fn random_u8(&mut self) -> u8
+    {
+        self.prng.random_u8()
     }
 
     // // pub fn sign_unit(&self, message: &BigUInt<T, N>) -> BigUInt<T, N>

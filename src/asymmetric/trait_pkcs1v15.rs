@@ -14,6 +14,7 @@
 // #![warn(rustdoc::missing_doc_code_examples)]
 
 
+use crate::random::RandGen;
 use crate::number::SmallUInt;
 
 /// This trait PKCS1V15 is based on PKCS #1 ver. 1.5. The RSA PKCS #1 v1.5
@@ -84,6 +85,8 @@ pub trait PKCS1V15
     const BT: u8 = 2;
     // const BT: u8 = 1;
     // const PS: u8 = 0xFF_u8;
+
+    fn set_prng(&mut self, prng: RandGen);
 
     // fn encrypt(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;
     /// Encrypts the data with the padding defined
