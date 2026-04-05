@@ -17,8 +17,8 @@
 use std::ptr::copy_nonoverlapping;
 
 use crate::number::SmallUInt;
-use crate::random::{ RandGen, Random };
-use crate::asymmetric::{ OAEP, RSA_Generic, Hash };
+use crate::random::Random;
+use crate::asymmetric::{ RSA_Generic, OAEP, PRNG, Hash };
 
 
 macro_rules! pre_encrypt_into_array {
@@ -157,11 +157,11 @@ fn mgf1<const L: usize, const M: usize, H: Hash>(seed: [u8; M], hash: &mut H) ->
 }
 
 
-impl<const N: usize, T, const MR: usize, HashType> OAEP<HashType> for RSA_Generic<N, T, MR, HashType>
-where T: SmallUInt, HashType: Hash
+impl<const N: usize, T, const MR: usize, RNG, HashType> OAEP<RNG, HashType> for RSA_Generic<N, T, MR, RNG, HashType>
+where T: SmallUInt, RNG: PRNG, HashType: Hash
 {
     #[inline]
-    fn set_prng(&mut self, prng: RandGen)
+    fn set_prng(&mut self, prng: RNG)
     {
         self.set_prng(prng);
     }

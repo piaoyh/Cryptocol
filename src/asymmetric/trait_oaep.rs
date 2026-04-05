@@ -15,8 +15,7 @@
 
 
 use crate::number::SmallUInt;
-use crate::random::RandGen;
-use crate::asymmetric::Hash;
+use crate::asymmetric::{ PRNG, Hash };
 
 /// This trait OAEP is based on PKCS #1 ver. 2.1. The RSA OAEP (Optimal
 /// Asymmetric Encryption Padding) format is a Feistel network-based padding
@@ -99,12 +98,13 @@ use crate::asymmetric::Hash;
 /// Therefore, RSA-OAEP is the current industry standard and the
 /// recommended choice for all modern RSA encryption implementations to
 /// ensure cryptographic robustness.
-pub trait OAEP<HashType>
-where HashType: Hash
+pub trait OAEP<RNG, HashType>
+where RNG: PRNG, HashType: Hash
 {
     const BT: u8 = 2;
 
-    fn set_prng(&mut self, prng: RandGen);
+    // fn set_prng(&mut self, prng: RNG)
+    fn set_prng(&mut self, prng: RNG);
     
     fn set_hash(&mut self, hash: HashType);
     

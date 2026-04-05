@@ -161,6 +161,7 @@ mod trait_pkcs1v15;
 
 mod trait_oaep;
 mod trait_hash;
+mod trait_prng;
 
 
 mod trait_pkcs1v15_impl_for_rsa;
@@ -195,6 +196,7 @@ pub use rsa::RSA_1024;
 pub use trait_pkcs1v15::PKCS1V15;
 pub use trait_oaep::OAEP;
 pub use trait_hash::Hash;
+use trait_prng::PRNG;
 // pub use ecc_25519::*;
 
 /// many *.rs was too big because of documentation and plenty of examples

@@ -189,10 +189,18 @@ mod trait_key_impl_for_big_cryptor64;
 mod trait_key_impl_for_big_cryptor128;
 
 pub use random::*;
-pub use random_specific::*;
+pub use random_specific::{ Random,
+                            Random_BIG_KECCAK_1024, Random_SHA3_512, 
+                            Random_SHA2_512, Random_Rijndael,
+                        Any,
+                            Any_SHA3_512, Any_SHA3_256, Any_SHAKE_256, Any_SHAKE_128, 
+                            Any_SHA2_512, Any_SHA2_256, Any_Rijndael,
+                        Slapdash,
+                            Slapdash_SHA1, Slapdash_SHA0, Slapdash_MD5,
+                            Slapdash_MD4, Slapdash_DES, Slapdash_Num_C };
 pub use any_number_engine_c_generic::{ AnyNumber_Engine_C_Generic, AnyNumber_Engine_C };
-pub use trait_random_engine::*;
-
+pub use trait_random_engine::Random_Engine;
+use trait_random_engine::SALT;
 use trait_key::Key;
 
 

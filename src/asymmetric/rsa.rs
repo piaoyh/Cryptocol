@@ -17,8 +17,7 @@
 use crate::number::{ SmallUInt, BigUInt, BigUInt_Modular, BigUInt_Prime };
 use crate::hash::SHA3_512;
 use crate::random::{ RandGen, Random };
-use crate::asymmetric::Hash;
-
+use crate::asymmetric::{ PRNG, Hash };
 
 pub type RSA_4096_u128 = RSA_Generic<32, u128>;
 pub type RSA_2048_u128 = RSA_Generic<16, u128>;
@@ -150,18 +149,18 @@ pub type RSA_1024 = RSA_1024_u32;
 /// 
 /// # Notice for Practical Use
 /// 
-pub struct RSA_Generic<const N: usize, T, const MR: usize = 7, HashType = SHA3_512>
-where T: SmallUInt, HashType: Hash
+pub struct RSA_Generic<const N: usize, T, const MR: usize = 7, RNG = RandGen, HashType = SHA3_512>
+where T: SmallUInt, RNG: PRNG, HashType: Hash
 {
     modulus: BigUInt<T, N>,
     key_public: BigUInt<T, N>,
     key_private: BigUInt<T, N>,
-    prng: RandGen,
+    prng: RNG,
     hash: HashType,
 }
 
-impl<const N: usize, T, const MR: usize, HashType> RSA_Generic<N, T, MR, HashType>
-where T: SmallUInt, HashType: Hash
+impl<const N: usize, T, const MR: usize, RNG, HashType> RSA_Generic<N, T, MR, RNG, HashType>
+where T: SmallUInt, RNG: PRNG, HashType: Hash
 {
     // pub fn new() -> Self
     /// Constructs a new object of the struct `RSA_Generic`.
@@ -190,7 +189,7 @@ where T: SmallUInt, HashType: Hash
             modulus: BigUInt::<T, N>::new(),
             key_public: BigUInt::<T, N>::new(),
             key_private: BigUInt::<T, N>::new(),
-            prng: Random::new(),
+            prng: PRNG::new(),
             hash: HashType::new(),
         }
     }
@@ -268,7 +267,7 @@ where T: SmallUInt, HashType: Hash
             modulus,
             key_public,
             key_private,
-            prng: Random::new(),
+            prng: PRNG::new(),
             hash: HashType::new(),
         }
     }
@@ -485,7 +484,7 @@ where T: SmallUInt, HashType: Hash
         self.modulus = modulus;
     }
 
-    pub(super) fn set_prng(&mut self, prng: RandGen)
+    pub(super) fn set_prng(&mut self, prng: RNG)
     {
         self.prng = prng;
     }

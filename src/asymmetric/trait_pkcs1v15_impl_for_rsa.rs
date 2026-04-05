@@ -16,9 +16,8 @@
 
 use std::ptr::copy_nonoverlapping;
 
-use crate::random::RandGen;
 use crate::number::SmallUInt;
-use crate::asymmetric::{ PKCS1V15, RSA_Generic };
+use crate::asymmetric::{ PKCS1V15, PRNG, RSA_Generic };
 
 
 macro_rules! pre_encrypt_into_array {
@@ -131,10 +130,11 @@ macro_rules! crypt_into_something_with_padding {
 
 
 
-impl<const N: usize, T> PKCS1V15 for RSA_Generic<N, T>
-where T: SmallUInt
+impl<const N: usize, T, const MR: usize, RNG> PKCS1V15<RNG> for RSA_Generic<N, T, MR, RNG>
+where T: SmallUInt, RNG: PRNG
 {
-    fn set_prng(&mut self, prng: RandGen)
+    #[inline]
+    fn set_prng(&mut self, prng: RNG)
     {
         self.set_prng(prng);
     }

@@ -14,7 +14,6 @@
 // #![warn(rustdoc::missing_doc_code_examples)]
 
 
-use crate::random::RandGen;
 use crate::number::SmallUInt;
 
 /// This trait PKCS1V15 is based on PKCS #1 ver. 1.5. The RSA PKCS #1 v1.5
@@ -80,13 +79,26 @@ use crate::number::SmallUInt;
 /// Therefore, PKCS #1 v1.5 is considered not to be cryptographically secure
 /// enough so that you are not encouraged to use this trait. Instead, you are
 /// encouraged to use the trait OAEP.
-pub trait PKCS1V15
+pub trait PKCS1V15<RNG>
 {
     const BT: u8 = 2;
     // const BT: u8 = 1;
     // const PS: u8 = 0xFF_u8;
 
-    fn set_prng(&mut self, prng: RandGen);
+    // fn set_prng<RNG: PRNG>(&mut self, prng: RNG)
+    /// Sets pseudo-random generator engine.
+    /// 
+    /// # Argument
+    /// - **prngn**: an object of pseudo-random generator engine.
+    /// 
+    /// # Available Pseudo-Random Generator Engines
+    /// There are provided as follows:
+    /// - `Random` (= `Random_BIG_KECCAK_1024`)
+    /// - [`Random_BIG_KECCAK_1024`](../random/struct.Random_BIG_KECCAK_1024.html#struct.Random_BIG_KECCAK_1024)
+    /// - [`Random_SHA3_512`](random/struct.Random_SHA3_512.html#struct.Random_SHA3_512),
+    /// - [`Random_SHA2_512`](random/struct.Random_SHA2_512.html#struct.Random_SHA2_512)
+    /// - [`Random_Rijndael`](random/struct.Random_Rijndael.html#struct.Random_Rijndael)
+    fn set_prng(&mut self, prng: RNG);
 
     // fn encrypt(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;
     /// Encrypts the data with the padding defined
