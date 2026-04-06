@@ -16,7 +16,7 @@
 
 use crate::number::{ SmallUInt, BigUInt, BigUInt_Modular, BigUInt_Prime };
 use crate::hash::SHA3_512;
-use crate::random::{ RandGen, Random };
+use crate::random::{ RandGen, Random, Random_Generic };
 use crate::asymmetric::{ PRNG, Hash };
 
 pub type RSA_4096_u128 = RSA_Generic<32, u128>;
@@ -42,6 +42,11 @@ pub type RSA_1024_u8 = RSA_Generic<128, u8>;
 pub type RSA_4096 = RSA_4096_u32;
 pub type RSA_2048 = RSA_2048_u32;
 pub type RSA_1024 = RSA_1024_u32;
+
+/// RSA_PRNG is the Random_Generic for RSA with u64::MAX limitation.
+pub type RSA_PRNG = Random_Generic<{u64::MAX as u128}>;
+
+
 
 /// RSA (Ron Rivest, Adi Shamir, Leonard Adleman) is asymmetric-key
 /// encryption/decryption algorithm for the encryption of digital data

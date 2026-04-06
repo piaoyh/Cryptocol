@@ -1,4 +1,4 @@
-// Copyright 2025 PARK Youngho.
+// Copyright 2025, 2026 PARK Youngho.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -11,11 +11,14 @@
 // #[allow(non_camel_case_types)]
 // #[allow(non_snake_case)]
 
+use cryptocol::random::Slapdash_DES;
+
 
 
 
 pub fn main()
 {
+    rsa_set_prng();
     rsa_encrypt_string();
     rsa_encrypt_string_into_vec();
     rsa_encrypt_string_into_array();
@@ -36,6 +39,20 @@ pub fn main()
     rsa_composites_test();
     rsa_composite_prime_test();
     prime_test();
+}
+
+fn rsa_set_prng()
+{
+    println!("rsa_set_prng");
+    use cryptocol::random::Random;
+    use cryptocol::asymmetric::{ RSA_1024, PKCS1V15 };
+    use cryptocol::define_utypes_with;
+    define_utypes_with!(u32);
+
+    let prng = Slapdash_DES::new();
+    let mut rsa = RSA_1024::new();
+    rsa.set_prng(prng);
+    println!("-------------------------------");
 }
 
 fn rsa_encrypt_string()

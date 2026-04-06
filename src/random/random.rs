@@ -567,13 +567,8 @@ pub(crate) const NUM_STR: [[&str; COLUMN]; ROW] = [
 /// - COUNT: The length of the period of pseudo-random number sequence.
 ///   If `COUNT` is `1000`, a new seed will be used every `1000` pseudo-random
 ///   numbers, for example. The default value of `COUNT` is `u128::MAX`.
-/// - NTR: How many bytes of the true random numbers to be used as a seed.
-///   If `NTR` is `32`, thirty-two bytes of the true random number will be
-///   used as a seed. The default value of `NTR` is `64`.
-///   `NTR` cannot exceed `64`. Even if `NTR` is `100`, only sixty-four bytes
-///   of the true random numbers will be used, for example.
 /// 
-/// # Feature
+/// # Features
 /// - The generic parameter `COUNT` should be `1` ~ `u128::MAX` inclusively.
 /// - The default value of `COUNT` is `340282366920938463463374607431768211455`
 ///   which is `u128::MAX` and far less than theoretical period of pseudo-random
@@ -639,10 +634,11 @@ pub(crate) const NUM_STR: [[&str; COLUMN]; ROW] = [
 ///   secure and uses true random numbers far less often than `Random` does.
 /// - Slapdash: a synonym of `Slapdash_Num_C` at the moment,
 ///   and is NOT cryptographically secure.
-/// - Random_* are cryptographically secure and uses true random numbers far
+/// - Random_* are cryptographically secure but changes random seeds far
 ///   more frequently than `Any_*` do.
-/// - Any_* are cryptographically secure and uses true random numbers far
+/// - Any_* are cryptographically secure buty changes random seeds far
 ///   less often than `Random_*` do.
+/// - Slapdash_* are NOT cryptographically secure.
 /// 
 /// # QUICK START
 /// You can use either struct `Random` or `Any` or `Slapdash` depending on your
@@ -1524,6 +1520,16 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     pub fn reset_seed_collector(&mut self)
     {
         self.collect_seed = Self::collect_seed;
+    }
+
+    pub(crate) fn get_main_generator(&mut self) -> Box<dyn Random_Engine>
+    {
+        self.main_generator.clone()
+    }
+
+    pub(crate) fn get_aux_generator(&mut self) ->  Box<dyn Random_Engine>
+    {
+        Box::new(self.aux_generator.as_mut().clone())
     }
 
     // pub fn random_u8(&mut self) -> u8

@@ -38,18 +38,18 @@
 //!   - [`Any_SHA3_256`](struct@Any_SHA3_256): uses a hash algorithm SHA3_256.
 //!   - [`Any_SHA2_512`](struct@Any_SHA2_512): uses a hash algorithm SHA2_512.
 //!   - [`Any_SHA2_256`](struct@Any_SHA2_256): uses a hash algorithm SHA2_256.
-//!   - [`Any_SHA1`](struct@Any_SHA1): uses a hash algorithm SHA1.
-//!   - [`Any_SHA0`](struct@Any_SHA0): uses a hash algorithm SHA0.
-//!   - [`Any_MD5`](struct@Any_MD5): uses a hash algorithm MD5.
-//!   - [`Any_MD4`](struct@Any_MD4): uses a hash algorithm MD4.
+//!   - [`Slapdash_SHA1`](struct@Slapdash_SHA1): uses a hash algorithm SHA1.
+//!   - [`Slapdash_SHA0`](struct@Slapdash_SHA0): uses a hash algorithm SHA0.
+//!   - [`Slapdash_MD5`](struct@Slapdash_MD5): uses a hash algorithm MD5.
+//!   - [`Slapdash_MD4`](struct@Slapdash_MD4): uses a hash algorithm MD4.
 //! ## Pseudo-random number generator engines using symmetric-key encryption
 //!   algorithms
 //!   - [`Random_Rijndael`](struct@Random_Rijndael): uses a symmetric-key encryption algorithm Rijndael.
 //!   - [`Any_Rijndael`](struct@Any_Rijndael): uses a symmetric-key encryption algorithm Rijndael.
-//!   - [`Any_DES`](struct@Any_DES): uses a symmetric-key encryption algorithm DES.
+//!   - [`Slapdash_DES`](struct@Slapdash_DES): uses a symmetric-key encryption algorithm DES.
 //! ## Pseudo-random number generator engines using simple randomization
 //!   algorithm
-//!   - [`Any_Num_C`](struct@Any_Num_C): uses a pseudo-random number generator
+//!   - [`Slapdash_Num_C`](struct@Slapdash_Num_C): uses a pseudo-random number generator
 //!     algorithm of the function rand() of C standard library at the moment. 
 //! ## Synonyms
 //!   - Random: is a synonym of Random_SHA2_512 at the moment and can be
@@ -64,13 +64,13 @@
 //!     use Any_SHA2_256. If you are happy that you will automatically use the
 //!     better algotrithm in the future, you may want to use `Any`.
 //!     Read [here](type@Any).
-//!   - Any_Num: is a synonym of Any_Num_C at the moment and can be __silently
+//!   - Slapdash: is a synonym of Slapdash_Num_C at the moment and can be __silently
 //!     changed__ to have better algorithm in the future. If you want to keep
 //!     using the algorithm of C standard libraray for a pseudo-random number
-//!     generator, you may want to use Any_Num_C. If you are happy that you
+//!     generator, you may want to use Slapdash_Num_C. If you are happy that you
 //!     will automatically use the better algotrithm in the future, you may
-//!     want to use `Any_Num`.
-//!     Read [here](type@Any_Num).
+//!     want to use `Slapdash`.
+//!     Read [here](type@Slapdash).
 //! 
 //! # Quality Issues and Debate
 //! The pseudo-random number generators in this module use hash algorithms,
