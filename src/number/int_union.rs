@@ -508,7 +508,7 @@ impl Ord for IntUnion
     /// 
     /// # Features
     /// By convention, self.cmp(&other) returns the ordering matching
-    /// the expression self <operator> other if true.
+    /// the expression self `<operator>` other if true.
     #[inline]
     fn cmp(&self, other: &Self) -> Ordering
     {

@@ -25,7 +25,7 @@ use std::thread::{ available_parallelism, scope };
 #[cfg(not(target_family = "windows"))] use std::io::Read;
 
 use crate::number::{ SmallUInt, LongUnion, LongerUnion, BigUInt, BigUInt_Prime, A_LIST };
-use crate::random::{PRNG_Engine, Random_PRNG_Creator};
+use crate::random::{ PRNG_Engine, Random_PRNG_Creator };
 
 
 pub(crate) const SECURE_COUNT: u64 = u16::MAX as u64;

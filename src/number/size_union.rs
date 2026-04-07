@@ -418,6 +418,7 @@ pub union SizeUnion
 /// assert_eq!(a.get_sbyte_(5), 104_i8);
 /// assert_eq!(a.get_sbyte_(6), -93_i8);
 /// assert_eq!(a.get_sbyte_(7), -67_i8);
+/// ```
 /// 
 /// Note that `get_usize()` and `get_ssize()` (including their indexed 
 /// variants) are available only on architectures with supported pointer 
@@ -1228,7 +1229,7 @@ impl Ord for SizeUnion
     /// 
     /// # Features
     /// By convention, self.cmp(&other) returns the ordering matching
-    /// the expression self <operator> other if true.
+    /// the expression self `<operator>` other if true.
     #[inline]
     fn cmp(&self, other: &Self) -> Ordering
     {

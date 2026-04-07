@@ -9,3 +9,5 @@ pub mod random_random_biguint;
 /// generating documentation, dummy codes were made and documentation and
 /// examples were moved to random_random_smalluint.rs.
 pub mod random_random_smalluint;
+
+pub mod random_random_specific;

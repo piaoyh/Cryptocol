@@ -4477,6 +4477,7 @@ where T: SmallUInt
     /// [`overflowing_add_assign()`](struct@BigUInt#method.overflowing_add_assign).
     /// 
     /// # Example 1
+    /// ```
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 

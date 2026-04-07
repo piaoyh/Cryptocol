@@ -29,25 +29,25 @@
 //!   - struct [`Random_Generic`](struct@Random_Generic)
 //!   - trait [PRNG_Engine](trait@PRNG_Engine)
 //! ## Wizards to create a pseudo-random number generator with an engine of a hash algorithm
-//!   - [`Random_PRNG_Creator_BIG_KECCAK_1024`](struct@Random_PRNG_Creator_BIG_KECCAK_1024): creates a PRNG that uses a hash algorithm BIG_KECCAK_1024.
-//!   - [`Random_PRNG_Creator_SHA3_512`](struct@Random_PRNG_Creator_SHA3_512): creates a PRNG that uses a hash algorithm SHA3_512.
-//!   - [`Random_PRNG_Creator_SHA2_512`](struct@Random_PRNG_Creator_SHA2_512): creates a PRNG that uses a hash algorithm SHA2_512.
-//!   - [`Any_PRNG_Creator_SHAKE_256`](struct@Any_PRNG_Creator_SHAKE_256)`: creates a PRNG that uses a hash algorithm SSHAKE_256.
-//!   - [`Any_PRNG_Creator_SHAKE_128`](struct@Any_PRNG_Creator_SHAKE_128)`: creates a PRNG that uses a hash algorithm SSHAKE_128.
-//!   - [`Any_PRNG_Creator_SHA3_512`](struct@Any_PRNG_Creator_SHA3_512): creates a PRNG that uses a hash algorithm SHA3_512.
-//!   - [`Any_PRNG_Creator_SHA3_256`](struct@Any_PRNG_Creator_SHA3_256): creates a PRNG that uses a hash algorithm SHA3_256.
-//!   - [`Any_PRNG_Creator_SHA2_512`](struct@Any_PRNG_Creator_SHA2_512): creates a PRNG that uses a hash algorithm SHA2_512.
-//!   - [`An_PRNG_Creatory_SHA2_256`](struct@Any_PRNG_Creator_SHA2_256): creates a PRNG that uses a hash algorithm SHA2_256.
-//!   - [`Slapdash_PRNG_Creator_SHA1`](struct@Slapdash_PRNG_Creator_SHA1): creates a PRNG that uses a hash algorithm SHA1.
-//!   - [`Slapdash_PRNG_Creator_SHA0`](struct@Slapdash_PRNG_Creator_SHA0): creates a PRNG that uses a hash algorithm SHA0.
-//!   - [`Slapdash_PRNG_Creator_MD5`](struct@Slapdash_PRNG_Creator_MD5): creates a PRNG that uses a hash algorithm MD5.
-//!   - [`Slapdash_PRNG_Creator_MD4`](struct@Slapdash_PRNG_Creator_MD4): creates a PRNG that uses a hash algorithm MD4.
+//!   - [`Random_PRNG_Creator_BIG_KECCAK_1024`](type@Random_PRNG_Creator_BIG_KECCAK_1024): creates a PRNG that uses a hash algorithm BIG_KECCAK_1024.
+//!   - [`Random_PRNG_Creator_SHA3_512`](type@Random_PRNG_Creator_SHA3_512): creates a PRNG that uses a hash algorithm SHA3_512.
+//!   - [`Random_PRNG_Creator_SHA2_512`](type@Random_PRNG_Creator_SHA2_512): creates a PRNG that uses a hash algorithm SHA2_512.
+//!   - [`Any_PRNG_Creator_SHAKE_256`](type@Any_PRNG_Creator_SHAKE_256)`: creates a PRNG that uses a hash algorithm SSHAKE_256.
+//!   - [`Any_PRNG_Creator_SHAKE_128`](type@Any_PRNG_Creator_SHAKE_128)`: creates a PRNG that uses a hash algorithm SSHAKE_128.
+//!   - [`Any_PRNG_Creator_SHA3_512`](type@Any_PRNG_Creator_SHA3_512): creates a PRNG that uses a hash algorithm SHA3_512.
+//!   - [`Any_PRNG_Creator_SHA3_256`](type@Any_PRNG_Creator_SHA3_256): creates a PRNG that uses a hash algorithm SHA3_256.
+//!   - [`Any_PRNG_Creator_SHA2_512`](type@Any_PRNG_Creator_SHA2_512): creates a PRNG that uses a hash algorithm SHA2_512.
+//!   - [`An_PRNG_Creatory_SHA2_256`](type@Any_PRNG_Creator_SHA2_256): creates a PRNG that uses a hash algorithm SHA2_256.
+//!   - [`Slapdash_PRNG_Creator_SHA1`](type@Slapdash_PRNG_Creator_SHA1): creates a PRNG that uses a hash algorithm SHA1.
+//!   - [`Slapdash_PRNG_Creator_SHA0`](type@Slapdash_PRNG_Creator_SHA0): creates a PRNG that uses a hash algorithm SHA0.
+//!   - [`Slapdash_PRNG_Creator_MD5`](type@Slapdash_PRNG_Creator_MD5): creates a PRNG that uses a hash algorithm MD5.
+//!   - [`Slapdash_PRNG_Creator_MD4`](type@Slapdash_PRNG_Creator_MD4): creates a PRNG that uses a hash algorithm MD4.
 //! ## Wizards to create a pseudo-random number generator with an engine of symmetric-key encryption algorithm
-//!   - [`Random_PRNG_Creator_Rijndael`](struct@Random_PRNG_Creator_Rijndael): uses a symmetric-key encryption algorithm Rijndael.
-//!   - [`Any_PRNG_Creator_Rijndael`](struct@Any_PRNG_Creator_Rijndael): uses a symmetric-key encryption algorithm Rijndael.
-//!   - [`Slapdash_PRNG_Creator_DES`](struct@Slapdash_PRNG_Creator_DES): uses a symmetric-key encryption algorithm DES.
+//!   - [`Random_PRNG_Creator_Rijndael`](type@Random_PRNG_Creator_Rijndael): uses a symmetric-key encryption algorithm Rijndael.
+//!   - [`Any_PRNG_Creator_Rijndael`](type@Any_PRNG_Creator_Rijndael): uses a symmetric-key encryption algorithm Rijndael.
+//!   - [`Slapdash_PRNG_Creator_DES`](type@Slapdash_PRNG_Creator_DES): uses a symmetric-key encryption algorithm DES.
 //! ## Wizards to create a pseudo-random number generator with a simple engine of C standard libraray
-//!   - [`Slapdash_PRNG_Creator_CPRNG_Engine`](struct@Slapdash_PRNG_Creator_CPRNG_Engine): uses a pseudo-random number generator
+//!   - [`Slapdash_PRNG_Creator_CPRNG_Engine`](type@Slapdash_PRNG_Creator_CPRNG_Engine): uses a pseudo-random number generator
 //!     algorithm of the function rand() of C standard library at the moment. 
 //! ## Synonyms
 //!   - **Random_PRNG_Creator**: is a synonym of Random_PRNG_Creator_BIG_KECCAK_1024
@@ -106,24 +106,6 @@
 //! purposes,__ all the pseudo-random number generators in this module are
 //! completely fine to use.
 //! 
-//! So, if you really want one of the best quality pseudo-random number
-//! generator rather than this module for serious cryptographical purpose,
-//! you are encouraged to use the crate
-//! [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)
-//! which is well known to be a good pseudo-random number generator for
-//! _cryptographical_ security purpose. The module of implementation of
-//! `Random_Generic<GenFunc: PRNG + 'static>` to use
-//! [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)
-//! as a pseudo-random number generator is not implemented in this crate in
-//! order to keep small number of dependencies, but how to embed
-//! [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)
-//! in a module of `Random_Generic<GenFunc: PRNG + 'static>`to use
-//! [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)
-//! is shown below in the section 'HOW TO EMBED OsRng IN THIS MODULE' in order
-//! to help you implement a module to use
-//! [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)
-//! as a pseudo-random number generator in your project by yourself. 
-//! 
 //! # QUICK START
 //! You can use either struct `Random_PRNG_Creator`, `Any_PRNG_Creator` or
 //! `Slapdash_PRNG_Creator` to create a PRNG depending on your purpose.
@@ -134,7 +116,24 @@
 //! function is fed back to the hash function as its message, and a new hash
 //! value is gotten from it, and then the new hash value is fed back to the
 //! hash function as its message again, and this process is repeated.
-
+// ! 
+// ! So, if you really want one of the best quality pseudo-random number
+// ! generator rather than this module for serious cryptographical purpose,
+// ! you are encouraged to use the crate
+// ! [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)
+// ! which is well known to be a good pseudo-random number generator for
+// ! _cryptographical_ security purpose. The module of implementation of
+// ! `Random_Generic<GenFunc: PRNG + 'static>` to use
+// ! [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)
+// ! as a pseudo-random number generator is not implemented in this crate in
+// ! order to keep small number of dependencies, but how to embed
+// ! [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)
+// ! in a module of `Random_Generic<GenFunc: PRNG + 'static>`to use
+// ! [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)
+// ! is shown below in the section 'HOW TO EMBED OsRng IN THIS MODULE' in order
+// ! to help you implement a module to use
+// ! [rand::rngs::OsRng](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html)
+// ! as a pseudo-random number generator in your project by yourself. 
 
 /// The module that contains struct `Random_Generic`
 mod random;
@@ -201,6 +200,8 @@ pub use random_specific::{ Random_PRNG_Creator,
                             Slapdash_PRNG_Creator_SHA1, Slapdash_PRNG_Creator_SHA0,
                             Slapdash_PRNG_Creator_MD5, Slapdash_PRNG_Creator_MD4,
                             Slapdash_PRNG_Creator_DES, Slapdash_PRNG_Creator_CPRNG_Engine };
+pub(crate) use random_specific::{ PRNG_Creator, PRNG_Creator_methods };
+
 pub use cprng_engine_generic::{ CPRNG_Engine_Generic, CPRNG_Engine };
 pub use trait_prng_engine::PRNG_Engine;
 use trait_prng_engine::SALT;

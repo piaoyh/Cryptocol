@@ -266,13 +266,36 @@ mod sha2_512;
 mod sha2_512_t;
 mod keccak;
 
-pub use md4::*;
-pub use md5::*;
-pub use sha1::*;
-pub use sha2_256::*;
-pub use sha2_512::*;
-pub use sha2_512_t::*;
-pub use keccak::*;
+pub use md4::{ MD4, MD4_Generic, MD4_Expanded, MD4_Generic_HR_fixed };
+pub use md5::{ MD5, MD5_Generic, MD5_Expanded, MD5_Generic_HR_fixed };
+pub use sha1::{ SHA1, SHA1_Generic, SHA1_Expanded, SHA1_Generic_HR_fixed,
+                SHA0, SHA0_Expanded, SHA0_Generic_HR_fixed };
+pub use sha2_256::{ SHA2_256, SHA2_256_Generic, SHA2_256_Expanded, SHA2_256_Generic_HRS_fixed,
+                    SHA2_224, SHA2_224_Expanded, SHA2_224_Generic_HRS_fixed };
+pub use sha2_512::{ SHA2_512, SHA2_512_Generic, SHA2_512_Expanded, SHA2_512_Generic_HRS_fixed,
+                    SHA2_384, SHA2_384_Expanded, SHA2_384_Generic_HRS_fixed,
+                    SHA2_512_256, SHA2_512_256_Expanded };
+pub use sha2_512_t::{ SHA2_512_t, SHA2_512_t_Generic, SHA2_512_t_Expanded, SHA2_512_t_Generic_HRS_fixed,
+                      SHA2_512_t_256, SHA2_512_t_256_Expanded, SHA2_512_t_224, SHA2_512_t_224_Expanded,
+                      SHA2_512_0 };
+pub use keccak::{ Keccak_Generic, BIG_KECCAK_1536, BIG_KECCAK_1024, BIG_KECCAK_768,
+                  BIG_KECCAK_512, BIG_KECCAK_384, BIG_KECCAK_256, BIG_KECCAK_224, 
+                  BIG_SHA3_1536, BIG_SHA3_1024, BIG_SHA3_768, BIG_SHA3_512, BIG_SHA3_384,
+                  BIG_SHA3_256, BIG_SHA3_224,
+                  BIG_SHAKE_1536, BIG_SHAKE_1024, BIG_SHAKE_768, BIG_SHAKE_512,
+                  BIG_SHAKE_384, BIG_SHAKE_256, BIG_SHAKE_224, BIG_SHAKE_128,
+                  BIG_cSHAKE_1536, BIG_cSHAKE_1024, BIG_cSHAKE_768, BIG_cSHAKE_512,
+                  BIG_cSHAKE_384, BIG_cSHAKE_256, BIG_cSHAKE_224, BIG_cSHAKE_128,
+                  KECCAK_768, KECCAK_512, KECCAK_384, KECCAK_256, KECCAK_224, 
+                  SHA3_768, SHA3_512, SHA3_384, SHA3_256, SHA3_224,
+                  SHAKE_768, SHAKE_512, SHAKE_384, SHAKE_256, SHAKE_224, SHAKE_128,
+                  cSHAKE_768, cSHAKE_512, cSHAKE_384, cSHAKE_256, cSHAKE_224, cSHAKE_128,
+                  SMALL_KECCAK_384, SMALL_KECCAK_256, SMALL_KECCAK_224, 
+                  SMALL_SHA3_384, SMALL_SHA3_256, SMALL_SHA3_224,
+                  SMALL_SHAKE_256, SMALL_SHAKE_224, SMALL_SHAKE_128,
+                  SMALL_cSHAKE_256, SMALL_cSHAKE_224, SMALL_cSHAKE_128,
+                  SMALLER_KECCAK_128, SMALLER_SHA3_128, SMALLER_SHAKE_128, SMALLER_cSHAKE_128,
+                  TINY_KECCAK_64, TINY_SHA3_64, TINY_SHAKE_64, TINY_cSHAKE_64 };
 
 /// many *.rs was too big because of documentation and plenty of examples
 /// So, in order to provide documentation without `docs.rs`'s failing

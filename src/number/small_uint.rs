@@ -25234,8 +25234,8 @@ pub trait SmallUInt:
     /// In this case, this method will panic.
     /// 
     /// # Example 1 for normal case
-    /// ```
-    /// 
+    /// ```text
+    /// // To do
     /// ```
     fn gcd(&self, other: Self) -> Self;
 
@@ -25259,8 +25259,8 @@ pub trait SmallUInt:
     /// In this case, this method will panic.
     /// 
     /// # Example 1 for normal case
-    /// ```
-    /// 
+    /// ```text
+    /// // to do
     /// ```
     fn gcd_assign(&mut self, other: Self);
 
@@ -25318,8 +25318,8 @@ pub trait SmallUInt:
     /// In this case, this method will panic.
     /// 
     /// # Example 1 for normal case
-    /// ```
-    /// 
+    /// ```text
+    /// // to do
     /// ```
     fn lcm(&self, other: Self) -> Self;
 
@@ -25343,8 +25343,8 @@ pub trait SmallUInt:
     /// In this case, this method will panic.
     /// 
     /// # Example 1 for normal case
-    /// ```
-    /// 
+    /// ```text
+    /// // to do
     /// ```
     fn lcm_assign(&mut self, other: Self);
 
