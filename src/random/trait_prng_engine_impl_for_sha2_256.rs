@@ -8,7 +8,7 @@
 
 
 use crate::hash::SHA2_256_Generic;
-use crate::random::{ Random_Engine, SALT };
+use crate::random::{ PRNG_Engine, SALT };
 
 
 impl<const H0: u32, const H1: u32, const H2: u32, const H3: u32,
@@ -33,7 +33,7 @@ impl<const H0: u32, const H1: u32, const H2: u32, const H3: u32,
     const RR2: u32, const RR6: u32, const RR7: u32, const RR11: u32, 
     const RR13: u32, const RR17: u32, const RR18: u32, const RR19: u32, 
     const RR22: u32, const RR25: u32, const SR3: i32, const SR10: i32>
-Random_Engine for SHA2_256_Generic<8, H0, H1, H2, H3, H4, H5, H6, H7, ROUND,
+PRNG_Engine for SHA2_256_Generic<8, H0, H1, H2, H3, H4, H5, H6, H7, ROUND,
                                     K00, K01, K02, K03, K04, K05, K06, K07,
                                     K08, K09, K10, K11, K12, K13, K14, K15,
                                     K16, K17, K18, K19, K20, K21, K22, K23,
@@ -53,7 +53,7 @@ Random_Engine for SHA2_256_Generic<8, H0, H1, H2, H3, H4, H5, H6, H7, ROUND,
         self.digest_array(&m);
     }
 
-    fn harvest(&mut self, count: u128, message: &[u64; 8]) -> [u64; 8]
+    fn harvest(&mut self, count: u64, message: &[u64; 8]) -> [u64; 8]
     {
         self.digest_array(message);
         let salt1: u64;

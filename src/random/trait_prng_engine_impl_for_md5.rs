@@ -8,7 +8,7 @@
 
 
 use crate::hash::MD5_Generic;
-use crate::random::{ Random_Engine, SALT };
+use crate::random::{ PRNG_Engine, SALT };
 
 impl<const H0: u32, const H1: u32, const H2: u32, const H3: u32, const ROUND: usize, 
         const K00: u32, const K01: u32, const K02: u32, const K03: u32,
@@ -31,7 +31,7 @@ impl<const H0: u32, const H1: u32, const H2: u32, const H3: u32, const ROUND: us
         const R10: u32, const R11: u32, const R12: u32, const R13: u32,
         const R20: u32, const R21: u32, const R22: u32, const R23: u32,
         const R30: u32, const R31: u32, const R32: u32, const R33: u32>
-Random_Engine for MD5_Generic<4, H0, H1, H2, H3, ROUND,
+PRNG_Engine for MD5_Generic<4, H0, H1, H2, H3, ROUND,
                                 K00, K01, K02, K03, K04, K05, K06, K07,
                                 K08, K09, K10, K11, K12, K13, K14, K15,
                                 K16, K17, K18, K19, K20, K21, K22, K23,
@@ -51,7 +51,7 @@ Random_Engine for MD5_Generic<4, H0, H1, H2, H3, ROUND,
         self.digest_array(&m);
     }
 
-    fn harvest(&mut self, count: u128, message: &[u64; 8]) -> [u64; 8]
+    fn harvest(&mut self, count: u64, message: &[u64; 8]) -> [u64; 8]
     {
         self.digest_array(message);
         let mut salt = [0_u64; 4];

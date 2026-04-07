@@ -1,5 +1,46 @@
 # Breaking Changes
 
+## Breaking changes from ver. 0.19.8 to ver. 0.19.9
+
+| Ver. 0.19.8                                                                                                            | Ver. 0.19.9                                                                                                                             |
+|------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| Random                                                                                                                 | Random_PRNG_Creator                                                                                                                     |
+| Random_BIG_KECCAK_1024                                                                                                 | Random_PRNG_Creator_BIG_KECCAK_1024                                                                                                     |
+| Random_SHA3_512                                                                                                        | Random_PRNG_Creator_SHA3_512                                                                                                            |
+| Random_SHA2_512                                                                                                        | Random_PRNG_Creator_SHA2_512                                                                                                            |
+| Random_Rijndael                                                                                                        | Random_PRNG_Creator_Rijndael                                                                                                            |
+| Any                                                                                                                    | Any_PRNG_Creator                                                                                                                        |
+| Any_SHA3_512                                                                                                           | Any_PRNG_Creator_SHA2_512                                                                                                               |
+| Any_SHA3_256                                                                                                           | Any_PRNG_Creator_SHA3_256                                                                                                               |
+| Any_SHAKE_256                                                                                                          | Any_PRNG_Creator_SHAKE_256                                                                                                              |
+| Any_SHAKE_128                                                                                                          | Any_PRNG_Creator_SHAKE_128                                                                                                              |
+| Any_SHA2_512                                                                                                           | Any_PRNG_Creator_SHA2_512                                                                                                               |
+| Any_SHA2_256                                                                                                           | Any_PRNG_Creator_SHA2_256                                                                                                               |
+| Any_Rijndael                                                                                                           | Any_PRNG_Creator_Rijndael                                                                                                               |
+| Slapdash                                                                                                               | Slapdash_PRNG_Creator                                                                                                                   |
+| Slapdash_SHA1                                                                                                          | Slapdash_PRNG_Creator_SHA1                                                                                                              |
+| Slapdash_SHA0                                                                                                          | Slapdash_PRNG_Creator_SHA0                                                                                                              |
+| Slapdash_MD5                                                                                                           | Slapdash_PRNG_Creator_MD5                                                                                                               |
+| Slapdash_MD4                                                                                                           | Slapdash_PRNG_Creator_MD4                                                                                                               |
+| Slapdash_DES                                                                                                           | Slapdash_PRNG_Creator_DES                                                                                                               |
+| Slapdash_Num_C                                                                                                         | Slapdash_PRNG_Creator_CPRNG_Engine                                                                                                      |
+| Random_Engine                                                                                                          | PRNG_Engine                                                                                                                             |
+| AnyNumber_Engine_C                                                                                                     | CPRNG_Engine                                                                                                                            |
+| AnyNumber_Engine_C_Generic                                                                                             | CPRNG_Engine_Generic                                                                                                                    |
+| RandGen                                                                                                                | Random                                                                                                                                  |
+| AnyGen                                                                                                                 | Any                                                                                                                                     |
+| SlapdashGen                                                                                                            | Slapdash                                                                                                                                |
+| pub fn new() -> RandGen                                                                                                | pub fn create() -> Random_Generic<COUNT>                                                                                                |
+| pub fn new_with_seeds(seed: u64, aux: u64) -> RandGen                                                                  | pub fn create_with_seeds(seed: u64, aux: u64) -> Random_Generic<COUNT>                                                                  |
+| pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> RandGen                                                  | pub fn create_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<COUNT>                                                  |
+| pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> RandGen                                            | pub fn create_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<COUNT>                                            |
+| pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> RandGen                 | pub fn create_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<COUNT>                 |
+| pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> RandGen | pub fn create_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<COUNT> |
+
+- Type names have been changed to remove confusion between PRNG and PRNG creator.
+- Method names have been changed to remove confusion between PRNG constructor and PRNG  creator.
+
+
 ## Breaking changes from ver. 0.18.2 to ver. 0.18.3
 
 | Ver. 0.18.2                                                                                                                           | Ver. 0.18.3 |

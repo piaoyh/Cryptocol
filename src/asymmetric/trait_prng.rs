@@ -8,7 +8,7 @@
 
 
 use crate::hash::BIG_KECCAK_1024;
-use crate::random::Random_Generic;
+use crate::random::{ Random_Generic, LESS_SECURE_COUNT };
 
 pub trait PRNG
 {
@@ -16,7 +16,7 @@ pub trait PRNG
     fn random_u8(&mut self) -> u8;
 }
 
-impl PRNG for Random_Generic<{u64::MAX as u128}>
+impl PRNG for Random_Generic<LESS_SECURE_COUNT>
 {
     #[inline] fn new() -> Self { Self::new_with(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new())}
     #[inline] fn random_u8(&mut self) -> u8 { self.random_u8() }

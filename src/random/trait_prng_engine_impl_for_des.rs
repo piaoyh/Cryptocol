@@ -8,7 +8,7 @@
 
 
 use crate::symmetric::{ DES_Generic, CTR };
-use crate::random::{ Random_Engine, Key };
+use crate::random::{ PRNG_Engine, Key };
 
 
 impl <const ROUND: usize, const SHIFT: u128,
@@ -202,7 +202,7 @@ impl <const ROUND: usize, const SHIFT: u128,
         const S752: u8, const S753: u8, const S754: u8, const S755: u8,
         const S756: u8, const S757: u8, const S758: u8, const S759: u8,
         const S760: u8, const S761: u8, const S762: u8, const S763: u8>
-Random_Engine for DES_Generic<ROUND, SHIFT,
+PRNG_Engine for DES_Generic<ROUND, SHIFT,
                         PC101, PC102, PC103, PC104, PC105, PC106, PC107, PC108,
                         PC109, PC110, PC111, PC112, PC113, PC114, PC115, PC116,
                         PC117, PC118, PC119, PC120, PC121, PC122, PC123, PC124,
@@ -304,7 +304,7 @@ Random_Engine for DES_Generic<ROUND, SHIFT,
         self.change_key(original);
     }
 
-    fn harvest(&mut self, count: u128, message: &[u64; 8]) -> [u64; 8]
+    fn harvest(&mut self, count: u64, message: &[u64; 8]) -> [u64; 8]
     {
         if count == 0
             { self.change_key(message); }

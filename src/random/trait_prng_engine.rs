@@ -19,7 +19,7 @@ pub(super) const SALT: u64 = 0x9999_9999_9999_9999;
 /// You will hardly use the object that has this trait except in the case
 /// that you use it in order to plug it in the `Random_Generic`.
 #[allow(non_camel_case_types)]
-pub trait Random_Engine
+pub trait PRNG_Engine
 {
     // fn sow_array(&mut self, message: &[u64; 8], original: &[u64; 8]);
     /// Provides new seeds for `self`.
@@ -107,5 +107,5 @@ pub trait Random_Engine
     ///     }
     /// }
     /// ```
-    fn harvest(&mut self, count: u128, message: &[u64; 8]) -> [u64; 8];
+    fn harvest(&mut self, count: u64, message: &[u64; 8]) -> [u64; 8];
 }

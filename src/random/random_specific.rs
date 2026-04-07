@@ -14,10 +14,410 @@
 
 use crate::hash::{ MD4, MD5, SHA0, SHA1, SHA2_256, SHA2_512,
                     SHA3_256, SHA3_512, SHAKE_128, SHAKE_256, BIG_KECCAK_1024 };
-use crate::symmetric::{ Rijndael_64_64, AES_128, DES };
-use crate::random::{ Random_Generic, RandGen, AnyGen, SlapdashGen,
-                        AnyNumber_Engine_C };
+use crate::symmetric::{ AES_128, DES };
+use crate::random::{ Random_Generic, CPRNG_Engine,
+                    SECURE_COUNT, LESS_SECURE_COUNT, INSECURE_COUNT };
 
+
+
+
+macro_rules! PRNG_Creator {
+    ($creator:ident, $engine:ident, $count:expr) => {
+        #[doc = PRNG_Creator!{PRNG_Creator_BIG_KECCAK_1024}]
+        #[allow(non_camel_case_types)]
+        pub struct $creator<const COUNT: u64 = $count> {}
+        impl<const COUNT: u64> $creator<COUNT>
+        {
+            // pub fn create() -> Random_Generic
+            /// Creates a new `Random_Generic` object.
+            /// 
+            /// # Returns
+            /// It returns a new object of `Random_Generic`.
+            /// 
+            /// # Example 1 for PRNG_Creator_BIG_KECCAK_1024
+            /// ```
+            /// use cryptocol::random::PRNG_Creator_BIG_KECCAK_1024;
+            /// use cryptocol::define_utypes_with;
+            /// define_utypes_with!(u64);
+            /// 
+            /// let mut rand = PRNG_Creator_BIG_KECCAK_1024::create();
+            /// let num: U1024 = rand.random_with_msb_set_biguint();
+            /// println!("Random number = {}", num);
+            /// ```
+            /// 
+            /// # For more examples,
+            /// click [here](./documentation/random_specific/struct.PRNG_Creator.html#method.create)
+            #[inline]
+            pub fn create() -> Random_Generic<COUNT>
+            {
+                Random_Generic::<COUNT>::new_with($engine::new(), $engine::new())
+            }
+
+            // pub fn create_with_seeds(seed: u64, aux: u64) -> Random_Generic<COUNT>
+            /// Creates a new struct Random_Generic with two seeds of type `u64`.
+            /// 
+            /// # Arguments
+            /// - `seed` is the seed number of the type `u64`.
+            /// - `aux` is the seed number of the type `u64`.
+            /// 
+            /// # Returns
+            /// It returns a new object of `Random_Generic`.
+            /// 
+            /// # Cryptographical Security
+            /// You are highly recommended to use the method `Creates_with_seed_arrays()`
+            /// rather than this method for security reason. It is because the default
+            /// seed collector function collects 1024 bits as a seed. If you use this
+            /// method, it results that you give only '128' bits (= '64' bits + '64'
+            /// bits) as a seed and the other '896' bits will be made out of the '128'
+            /// bits that you provided.
+            /// 
+            /// # Example 1 for PRNG_Creator_BIG_KECCAK_1024
+            /// ```
+            /// use cryptocol::random::PRNG_Creator_BIG_KECCAK_1024;
+            /// use cryptocol::define_utypes_with;
+            /// define_utypes_with!(u64);
+            /// 
+            /// let mut rand = PRNG_Creator_BIG_KECCAK_1024::create_with_seeds(0, 0);
+            /// let num: U1024 = rand.random_with_msb_set_biguint();
+            /// println!("Random number = {}", num);
+            /// ```
+            /// 
+            /// # For more examples,
+            /// click [here](./documentation/random_specific/struct.PRNG_Creator.html#method.create_with_seeds)
+            #[inline]
+            pub fn create_with_seeds(seed: u64, aux: u64) -> Random_Generic<COUNT>
+            {
+                Random_Generic::<COUNT>::new_with_generators_seeds($engine::new(), $engine::new(), seed, aux)
+            }
+
+            // pub fn create_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<COUNT>
+            /// Creates a new struct Random_Generic with two seed arrays of type `u64`.
+            /// 
+            /// # Arguments
+            /// - `seed` is the seed array and is of `[u64; 8]`.
+            /// - `aux` is the seed array and is of `[u64; 8]`.
+            /// 
+            /// # Returns
+            /// It returns a new object of `Random_Generic`.
+            /// 
+            /// # Cryptographical Security
+            /// You are highly recommended to use this method rather than the method
+            /// create_with_seed_collector_seeds for security reason. It is because the
+            /// default seed collector function collects 1024 bits as a seed. If you
+            /// use this method, it results that you give full '1024' bits (= '64'
+            /// bits X '8' X '2') as a seed and it is equivalent to use a seed
+            /// collector function.
+            /// 
+            /// # Example 1 for PRNG_Creator_BIG_KECCAK_1024
+            /// ```
+            /// use cryptocol::random::PRNG_Creator_BIG_KECCAK_1024;
+            /// use cryptocol::define_utypes_with;
+            /// define_utypes_with!(u64);
+            /// 
+            /// let seed = [777777777777_u64, 10500872879054459758_u64, 12_u64, 555555555555_u64, 123456789_u64, 987654321_u64, 852648791354687_u64, 741258963_u64];
+            /// let aux = [789456123_u64, 15887751380961987625_u64, 789654123_u64, 5_u64, 9632587414_u64, 58976541235_u64, 9513574682_u64, 369258147_u64];
+            /// let mut rand = PRNG_Creator_BIG_KECCAK_1024::create_with_seed_arrays(seed, aux);
+            /// let num: U1024 = rand.random_with_msb_set_biguint();
+            /// ```
+            /// 
+            /// # For more examples,
+            /// click [here](./documentation/random_specific/struct.PRNG_Creator.html#method.create_with_seeds)
+            #[inline]
+            pub fn create_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<COUNT> 
+            {
+                Random_Generic::<COUNT>::new_with_generators_seed_arrays($engine::new(), $engine::new(), seed, aux)
+            }
+            
+            // pub fn create_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<COUNT>
+            /// Creates a new `Random_Generic` object with a seed collector function.
+            /// 
+            /// # Arguments
+            /// `seed_collector` is a seed collector function to collect seeds, and
+            /// is of the type `fn() -> [u64; 8]`.
+            /// 
+            /// # Returns
+            /// It returns a new object of `Random_Generic`.
+            /// 
+            /// # Example 1 for PRNG_Creator_BIG_KECCAK_1024
+            /// ```
+            /// use cryptocol::random::PRNG_Creator_BIG_KECCAK_1024;
+            /// use cryptocol::define_utypes_with;
+            /// define_utypes_with!(u64);
+            /// 
+            /// fn seed_collector() -> [u64; 8]
+            /// {
+            ///     use std::time::{ SystemTime, UNIX_EPOCH };
+            ///     use cryptocol::number::LongerUnion;
+            /// 
+            ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+            ///     let mut seed_buffer = [ptr; 8];
+            ///     for i in 0..8
+            ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+            /// 
+            ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+            ///     {
+            ///         let common = LongerUnion::new_with(nanos.as_nanos());
+            ///         for i in 0..4
+            ///         {
+            ///             let j = i << 1;
+            ///             seed_buffer[j] = common.get_ulong_(0);
+            ///             seed_buffer[j + 1] = common.get_ulong_(1);
+            ///         }
+            ///     }
+            ///     seed_buffer
+            /// }
+            /// 
+            /// let mut rand = PRNG_Creator_BIG_KECCAK_1024::create_with_seed_collector(seed_collector);
+            /// let num: U1024 = rand.random_with_msb_set_biguint();
+            /// println!("Random number = {}", num);
+            /// ```
+            /// 
+            /// # For more examples,
+            /// click [here](./documentation/random_specific/struct.PRNG_Creator.html#method.create_with_seed_collector)
+            #[inline]
+            pub fn create_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<COUNT>
+            {
+                Random_Generic::<COUNT>::new_with_generators_seed_collector($engine::new(), $engine::new(), seed_collector)
+            }
+
+            // pub fn create_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<COUNT>
+            /// Creates a new struct Random_Generic with a seed collector function
+            /// and two seeds of type `u64`.
+            /// 
+            /// # Arguments
+            /// - `seed_collector` is a seed collector function to collect seeds, and
+            ///   is of the type `fn() -> [u64; 8]`.
+            /// - `seed` is the seed number of the type `u64`.
+            /// - `aux` is the seed number of the type `u64`.
+            /// 
+            /// # Returns
+            /// It returns a new object of `Random_Generic`.
+            /// 
+            /// # Cryptographical Security
+            /// You are highly recommended to use the method `create_with_collector_seed_arrays()`
+            /// rather than this method for security reason. It is because the default
+            /// seed collector function collects 1024 bits as a seed. If you use this
+            /// method, it results that you give only '128' bits (= '64' bits + '64'
+            /// bits) as a seed and the other '896' bits will be made out of the '128'
+            /// bits that you provided.
+            /// 
+            /// # Example 1 for PRNG_Creator_BIG_KECCAK_1024
+            /// ```
+            /// use cryptocol::random::PRNG_Creator_BIG_KECCAK_1024;
+            /// use cryptocol::define_utypes_with;
+            /// define_utypes_with!(u64);
+            /// 
+            /// fn seed_collector() -> [u64; 8]
+            /// {
+            ///     use std::time::{ SystemTime, UNIX_EPOCH };
+            ///     use cryptocol::number::LongerUnion;
+            /// 
+            ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+            ///     let mut seed_buffer = [ptr; 8];
+            ///     for i in 0..8
+            ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+            /// 
+            ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+            ///     {
+            ///         let common = LongerUnion::new_with(nanos.as_nanos());
+            ///         for i in 0..4
+            ///         {
+            ///             let j = i << 1;
+            ///             seed_buffer[j] = common.get_ulong_(0);
+            ///             seed_buffer[j + 1] = common.get_ulong_(1);
+            ///         }
+            ///     }
+            ///     seed_buffer
+            /// }
+            /// 
+            /// let mut rand = PRNG_Creator_BIG_KECCAK_1024::create_with_seed_collector_seeds(seed_collector, 0, 0);
+            /// let num: U1024 = rand.random_with_msb_set_biguint();
+            /// println!("Random number = {}", num);
+            /// ```
+            /// 
+            /// # For more examples,
+            /// click [here](./documentation/random_specific/struct.PRNG_Creator.html#method.create_with_seed_collector_seeds)
+            #[inline]
+            pub fn create_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<COUNT>
+            {
+                Random_Generic::<COUNT>::new_with_generators_seed_collector_seeds($engine::new(), $engine::new(), seed_collector, seed, aux)
+            }
+
+            // pub fn create_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<COUNT>
+            /// Creates a new struct Random_Generic with a seed collector function
+            /// and two seed arrays of type `u64`.
+            /// 
+            /// # Arguments
+            /// - `seed_collector` is a seed collector function to collect seeds, and
+            ///   is of the type `fn() -> [u64; 8]`.
+            /// - `seed` is the seed array and is of `[u64; 8]`.
+            /// - `aux` is the seed array and is of `[u64; 8]`.
+            /// 
+            /// # Returns
+            /// It returns a new object of `Random_Generic`.
+            /// 
+            /// # Cryptographical Security
+            /// You are highly recommended to use this method rather than the method
+            /// create_with_seed_collector_seeds for security reason. It is because the
+            /// default seed collector function collects 1024 bits as a seed. If you
+            /// use this method, it results that you give full '1024' bits (= '64'
+            /// bits X '8' X '2') as a seed and it is equivalent to use a seed
+            /// collector function.
+            /// 
+            /// # Example 1 for PRNG_Creator_BIG_KECCAK_1024
+            /// ```
+            /// use cryptocol::random::PRNG_Creator_BIG_KECCAK_1024;
+            /// use cryptocol::define_utypes_with;
+            /// define_utypes_with!(u64);
+            /// 
+            /// fn seed_collector() -> [u64; 8]
+            /// {
+            ///     use std::time::{ SystemTime, UNIX_EPOCH };
+            ///     use cryptocol::number::LongerUnion;
+            /// 
+            ///     let ptr = seed_collector as *const fn() -> [u64; 8] as u64;
+            ///     let mut seed_buffer = [ptr; 8];
+            ///     for i in 0..8
+            ///         { seed_buffer[i] ^= ptr.swap_bytes().rotate_left(i as u32); }
+            /// 
+            ///     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+            ///     {
+            ///         let common = LongerUnion::new_with(nanos.as_nanos());
+            ///         for i in 0..4
+            ///         {
+            ///             let j = i << 1;
+            ///             seed_buffer[j] = common.get_ulong_(0);
+            ///             seed_buffer[j + 1] = common.get_ulong_(1);
+            ///         }
+            ///     }
+            ///     seed_buffer
+            /// }
+            /// 
+            /// let seed = [777777777777_u64, 10500872879054459758_u64, 12_u64, 555555555555_u64, 123456789_u64, 987654321_u64, 852648791354687_u64, 741258963_u64];
+            /// let aux = [789456123_u64, 15887751380961987625_u64, 789654123_u64, 5_u64, 9632587414_u64, 58976541235_u64, 9513574682_u64, 369258147_u64];
+            /// let mut rand = PRNG_Creator_BIG_KECCAK_1024::create_with_seed_collector_seed_arrays(seed_collector, seed, aux);
+            /// let num: U1024 = rand.random_with_msb_set_biguint();
+            /// println!("Random number = {}", num);
+            /// ```
+            /// 
+            /// # For more examples,
+            /// click [here](./documentation/random_specific/struct.PRNG_Creator.html#method.create_with_seed_collector_seed_arrays)
+            #[inline]
+            pub fn create_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<COUNT>
+            {
+                Random_Generic::<COUNT>::new_with_generators_seed_collector_seed_arrays($engine::new(), $engine::new(), seed_collector, seed, aux)
+            }
+        }
+    };
+
+    (PRNG_Creator_BIG_KECCAK_1024) => {
+        r###"The struct `PRNG_Creator_BIG_KECCAK_1024` that creates the
+        [`Random_Generic`](struct@Random_Generic) 
+        object for implementing a pseudo-random number generator both for primitive
+        unsigned integers such as `u8`, `u16`, `u32`, `u64`, `u128`, and `usize`,
+        and for `BigUInt`. The object which this `Random_BIG_KECCAK_1024` constructs
+        uses the hash algorithm `BIG_KECCAK_1024` as a pseudo-random number engine
+        generator.
+        
+        # QUICK START
+        You can use `Random_BIG_KECCAK_1024` to create an if you use random number
+        for cryptographic purpose. `Random_BIG_KECCAK_1024` is for normal
+        cryptographical purpose Look into the following examples.
+        
+        ## Example
+        ```
+        use cryptocol::random::Random_BIG_KECCAK_1024;
+        use cryptocol::define_utypes_with;
+        define_utypes_with!(u64);
+        
+        let mut rand = Random_BIG_KECCAK_1024::new();
+        println!("Random number = {}", rand.random_u128());
+        println!("Random number = {}", rand.random_u64());
+        println!("Random number = {}", rand.random_u32());
+        println!("Random number = {}", rand.random_u16());
+        println!("Random number = {}", rand.random_u8());
+        
+        if let Some(num) = rand.random_under_uint(1234567890123456_u64)
+            { println!("Random number u64 = {}", num); }
+        
+        if let Some(num) = rand.random_minmax_uint(1234_u16, 6321)
+            { println!("Random number u16 = {}", num); }
+        
+        println!("Random odd number usize = {}", rand.random_odd_uint::<usize>());
+        if let Some(num) = rand.random_odd_under_uint(1234_u16)
+            { println!("Random odd number u16 = {}", num); }
+        
+        println!("Random 128-bit number u128 = {}", rand.random_with_msb_set_uint::<u128>());
+        println!("Random 16-bit odd number u16 = {}", rand.random_with_msb_set_uint::<u16>());
+        println!("Random prime number u64 = {}", rand.random_prime_using_miller_rabin_uint::<u64>(5));
+        println!("Random usize-sized prime number usize = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<usize>(5));
+        
+        let num: [u128; 20] = rand.random_array();
+        for i in 0..20
+            { println!("Random number {} => {}", i, num[i]); }
+        
+        let mut num = [0_u64; 32];
+        rand.put_random_in_array(&mut num);
+        for i in 0..32
+            { println!("Random number {} => {}", i, num[i]); }
+        
+        let mut biguint: U512 = rand.random_biguint();
+        println!("Random Number: {}", biguint);
+        
+        let mut ceiling = U1024::max().wrapping_div_uint(3_u8);
+        if let Some(r) = rand.random_under_biguint(&ceiling)
+        {
+            println!("Random Number less than {} is\n{}", ceiling, r);
+            assert!(r < ceiling);
+        }
+        
+        ceiling = U1024::max().wrapping_div_uint(5_u8);
+        let r = rand.random_under_biguint_(&ceiling);
+        println!("Random Number less than {} is\n{}", ceiling, r);
+        assert!(r < ceiling);
+        
+        ceiling = U1024::max().wrapping_div_uint(4_u8);
+        if let Some(r) = rand.random_odd_under_biguint(&ceiling)
+        {
+            println!("Random odd Number less than {} is\n{}", ceiling, r);
+            assert!(r < ceiling);
+        }
+        
+        biguint = rand.random_with_msb_set_biguint();
+        println!("Random Number: {}", biguint);
+        
+        biguint = rand.random_odd_with_msb_set_biguint();
+        println!("512-bit Random Odd Number = {}", biguint);
+        assert!(biguint > U512::halfmax());
+        assert!(biguint.is_odd());
+        
+        biguint = rand.random_prime_using_miller_rabin_biguint(5);
+        println!("Random Prime Number = {}", biguint);
+        assert!(biguint.is_odd());
+        
+        biguint = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
+        println!("512-bit Random Prime Number = {}", biguint);
+        assert!(biguint.is_odd());
+        ```"###
+    };
+}
+
+
+
+PRNG_Creator!{ PRNG_Creator_BIG_KECCAK_1024, BIG_KECCAK_1024, SECURE_COUNT }
+PRNG_Creator!{ PRNG_Creator_SHA3_512, SHA3_512, SECURE_COUNT }
+PRNG_Creator!{ PRNG_Creator_SHA2_512, SHA2_512, SECURE_COUNT }
+PRNG_Creator!{ PRNG_Creator_Rijndael, AES_128, SECURE_COUNT }
+PRNG_Creator!{ PRNG_Creator_SHA3_256, SHA3_256, LESS_SECURE_COUNT }
+PRNG_Creator!{ PRNG_Creator_SHAKE_256, SHAKE_256, LESS_SECURE_COUNT }
+PRNG_Creator!{ PRNG_Creator_SHAKE_128, SHAKE_128, LESS_SECURE_COUNT }
+PRNG_Creator!{ PRNG_Creator_SHA2_256, SHA2_256, LESS_SECURE_COUNT }
+PRNG_Creator!{ PRNG_Creator_SHA1, SHA1, INSECURE_COUNT }
+PRNG_Creator!{ PRNG_Creator_SHA0, SHA0, INSECURE_COUNT }
+PRNG_Creator!{ PRNG_Creator_MD5, MD5, INSECURE_COUNT }
+PRNG_Creator!{ PRNG_Creator_MD4, MD4, INSECURE_COUNT }
+PRNG_Creator!{ PRNG_Creator_DES, DES, INSECURE_COUNT }
+PRNG_Creator!{ PRNG_Creator_CPRNG_Engine, CPRNG_Engine, INSECURE_COUNT }
 
 /// The type `Random` which is a random number generator and is a synonym of
 /// [`Random_BIG_KECCAK_1024`](type@Random_BIG_KECCAK_1024) at the moment.
@@ -28,7 +428,21 @@ use crate::random::{ Random_Generic, RandGen, AnyGen, SlapdashGen,
 /// for a pseudo-random number generator, you may want to use
 /// Random_BIG_KECCAK_1024. If you are happy that you will automatically use
 /// the better algotrithm in the future, you may want to use `Random`.
-pub type Random = Random_BIG_KECCAK_1024;
+#[allow(non_camel_case_types)]
+pub type Random_PRNG_Creator = Random_PRNG_Creator_BIG_KECCAK_1024;
+
+#[allow(non_camel_case_types)]
+pub type Random_PRNG_Creator_BIG_KECCAK_1024 = PRNG_Creator_BIG_KECCAK_1024;
+
+#[allow(non_camel_case_types)]
+pub type Random_PRNG_Creator_SHA3_512 = PRNG_Creator_SHA3_512;
+
+#[allow(non_camel_case_types)]
+pub type Random_PRNG_Creator_SHA2_512 = PRNG_Creator_SHA2_512;
+
+#[allow(non_camel_case_types)]
+pub type Random_PRNG_Creator_Rijndael = PRNG_Creator_Rijndael;
+
 
 /// The type `Any` which is a random number generator and is a synonym of
 /// [`Any_SHA2_512`](type@Any_SHA2_512) at the moment. It means `Any` uses
@@ -39,7 +453,30 @@ pub type Random = Random_BIG_KECCAK_1024;
 /// you may want to use Any_SHA2_512. If you are happy that you will
 /// automatically use the better algotrithm in the future, you may want
 /// to use `Any`.
-pub type Any = Any_SHA2_512;
+#[allow(non_camel_case_types)]
+pub type Any_PRNG_Creator = Any_PRNG_Creator_SHA2_512;
+
+#[allow(non_camel_case_types)]
+pub type Any_PRNG_Creator_SHA3_512 = PRNG_Creator_SHA3_512<LESS_SECURE_COUNT>;
+
+#[allow(non_camel_case_types)]
+pub type Any_PRNG_Creator_SHA3_256 = PRNG_Creator_SHA3_256<LESS_SECURE_COUNT>;
+
+#[allow(non_camel_case_types)]
+pub type Any_PRNG_Creator_SHAKE_256 = PRNG_Creator_SHAKE_256<LESS_SECURE_COUNT>;
+
+#[allow(non_camel_case_types)]
+pub type Any_PRNG_Creator_SHAKE_128 = PRNG_Creator_SHAKE_128<LESS_SECURE_COUNT>;
+
+#[allow(non_camel_case_types)]
+pub type Any_PRNG_Creator_SHA2_512 = PRNG_Creator_SHA2_512<LESS_SECURE_COUNT>;
+
+#[allow(non_camel_case_types)]
+pub type Any_PRNG_Creator_SHA2_256 = PRNG_Creator_SHA2_256<LESS_SECURE_COUNT>;
+
+#[allow(non_camel_case_types)]
+pub type Any_PRNG_Creator_Rijndael = PRNG_Creator_Rijndael<LESS_SECURE_COUNT>;
+
 
 /// The type `Slapdash` which is a random number generator and is
 /// a synonym of [`Slapdash_Num_C`](type@Slapdash_Num_C) at the moment.
@@ -53,11 +490,30 @@ pub type Any = Any_SHA2_512;
 /// If you are happy that you will automatically use the better algotrithm in
 /// the future, you may want to use `Slapdash`.
 #[allow(non_camel_case_types)]
-pub type Slapdash = Slapdash_Num_C;
+pub type Slapdash_PRNG_Creator = Slapdash_PRNG_Creator_CPRNG_Engine;
+
+#[allow(non_camel_case_types)]
+pub type Slapdash_PRNG_Creator_SHA1 = PRNG_Creator_SHA1;
+
+#[allow(non_camel_case_types)]
+pub type Slapdash_PRNG_Creator_SHA0 = PRNG_Creator_SHA0;
+
+#[allow(non_camel_case_types)]
+pub type Slapdash_PRNG_Creator_MD5 = PRNG_Creator_MD5;
+
+#[allow(non_camel_case_types)]
+pub type Slapdash_PRNG_Creator_MD4 = PRNG_Creator_MD4;
+
+#[allow(non_camel_case_types)]
+pub type Slapdash_PRNG_Creator_DES = PRNG_Creator_DES;
+
+#[allow(non_camel_case_types)]
+pub type Slapdash_PRNG_Creator_CPRNG_Engine = PRNG_Creator_CPRNG_Engine;
 
 
 
-/// The struct `Random_BIG_KECCAK_1024` that constructs the
+/*
+/// The struct `PRNG_Creator_BIG_KECCAK_1024` that creates the
 /// [`Random_Generic`](struct@Random_Generic) 
 /// object for implementing a pseudo-random number generator both for primitive
 /// unsigned integers such as `u8`, `u16`, `u32`, `u64`, `u128`, and `usize`,
@@ -146,7 +602,7 @@ pub type Slapdash = Slapdash_Num_C;
 /// assert!(biguint.is_odd());
 /// ```
 #[allow(non_camel_case_types)] 
-pub struct Random_BIG_KECCAK_1024 {}
+pub struct Random_BIG_KECCAK_1024<const COUNT: u128 = SECURE_COUNT> {}
 impl Random_BIG_KECCAK_1024
 {
     // pub fn new() -> RandGen
@@ -862,8 +1318,8 @@ impl Random_SHA3_512
 /// assert!(biguint.is_odd());
 /// ```
 #[allow(non_camel_case_types)] 
-pub struct Random_SHA2_512 {}
-impl Random_SHA2_512
+pub struct Random_SHA2_512<const COUNT: u128 = SECURE_COUNT> {}
+impl<const COUNT: u128 = SECURE_COUNT> Random_SHA2_512<COUNT>
 {
     // pub fn new_with_seeds(seed: u64, aux: u64) -> RandGen
     /// Constructs a new struct Random_Generic with two seeds of type `u64`.
@@ -6305,3 +6761,4 @@ impl Slapdash_Num_C
         Random_Generic::<{u32::MAX as u128}>::new_with_generators_seed_collector_seed_arrays(AnyNumber_Engine_C::new(), AnyNumber_Engine_C::new(), seed_collector, seed, aux)
     }
 }
+*/

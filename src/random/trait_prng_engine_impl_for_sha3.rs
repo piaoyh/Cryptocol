@@ -9,7 +9,7 @@
 
 use crate::number::{ SmallUInt, SharedArrays };
 use crate::hash::Keccak_Generic;
-use crate::random::{ Random_Engine, SALT };
+use crate::random::{ PRNG_Engine, SALT };
 
 
 impl<const RATE: usize, const PADDING: usize, const ROUNDS: usize, T, const LFSR: u8,
@@ -17,7 +17,7 @@ impl<const RATE: usize, const PADDING: usize, const ROUNDS: usize, T, const LFSR
         const RHO_MUL_X: usize, const RHO_MUL_Y: usize, const RHO_T: u32,
         const PI_MUL_X: usize, const PI_MUL_Y: usize,
         const CHI_ADD_1: usize, const CHI_ADD_2: usize>
-Random_Engine for Keccak_Generic<RATE, PADDING, ROUNDS, T, LFSR,
+PRNG_Engine for Keccak_Generic<RATE, PADDING, ROUNDS, T, LFSR,
                                     THETA_SUB, THETA_ADD, THETA_ROT,
                                     RHO_MUL_X, RHO_MUL_Y, RHO_T,
                                     PI_MUL_X, PI_MUL_Y, CHI_ADD_1, CHI_ADD_2>
@@ -31,7 +31,7 @@ where T: SmallUInt
         self.digest_array(&m);
     }
 
-    fn harvest(&mut self, count: u128, message: &[u64; 8]) -> [u64; 8]
+    fn harvest(&mut self, count: u64, message: &[u64; 8]) -> [u64; 8]
     {
         self.digest_array(message);
         self.tangle(if count == 0 {SALT} else {0});

@@ -16,7 +16,7 @@
 
 
 use crate::number::{ SmallUInt, BigUInt };
-use crate::random::Random_Engine;
+use crate::random::PRNG_Engine;
 
 /// Random.rs may be too big
 /// because of documentation and plenty of examples.
@@ -255,10 +255,10 @@ impl Random_Generic
     /// 
     /// # Arguments
     /// - `main_generator` is a main random number generator engine
-    ///   which is of `Random_Engine`-type and
+    ///   which is of `PRNG_Engine`-type and
     ///   for generating main pseudo-random numbers.
     /// - `aux_generator` is an auxiliary random number generator engine
-    ///   which is of `Random_Engine`-type and
+    ///   which is of `PRNG_Engine`-type and
     ///   for generating auxiliary pseudo-random numbers to use in
     ///   generating the main pseudo-random numbers.
     /// 
@@ -391,7 +391,7 @@ impl Random_Generic
     /// println!("Any number = {}", slapdashGen.random_u8());
     /// ```
     pub fn new_with<SG, AG>(mut main_generator: SG, mut aux_generator: AG) -> Self
-    where SG: Random_Engine + 'static, AG: Random_Engine + 'static
+    where SG: PRNG_Engine + 'static, AG: PRNG_Engine + 'static
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -589,10 +589,10 @@ impl Random_Generic
     /// 
     /// # Arguments
     /// - `main_generator` is a main random number generator engine
-    ///   which is of `Random_Engine`-type and
+    ///   which is of `PRNG_Engine`-type and
     ///   for generating main pseudo-random numbers.
     /// - `aux_generator` is an auxiliary random number generator engine
-    ///   which is of `Random_Engine`-type and
+    ///   which is of `PRNG_Engine`-type and
     ///   for generating auxiliary pseudo-random numbers to use in
     ///   generating the main pseudo-random numbers.
     /// - `seed` is the seed number of any type that has the trait `SmallUInt`
@@ -730,7 +730,7 @@ impl Random_Generic
     /// println!("SlapdashGen number = {}", slapdashGen.random_u8());
     /// ```
     pub fn new_with_generators_seeds<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed: u64, aux: u64) -> Self
-    where SG: Random_Engine + 'static, AG: Random_Engine + 'static
+    where SG: PRNG_Engine + 'static, AG: PRNG_Engine + 'static
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -741,10 +741,10 @@ impl Random_Generic
     /// 
     /// # Arguments
     /// - `main_generator` is a main random number generator engine
-    ///   which is of `Random_Engine`-type and
+    ///   which is of `PRNG_Engine`-type and
     ///   for generating main pseudo-random numbers.
     /// - `aux_generator` is an auxiliary random number generator engine
-    ///   which is of `Random_Engine`-type and
+    ///   which is of `PRNG_Engine`-type and
     ///   for generating auxiliary pseudo-random numbers to use in
     ///   generating the main pseudo-random numbers.
     /// - `seed` is the seed array and is of `[u64; 8]`.
@@ -877,7 +877,7 @@ impl Random_Generic
     /// println!("Slapdash number = {}", slapdash.random_u8());
     /// ```
     pub fn new_with_generators_seed_arrays<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed: [u64; 8], aux: [u64; 8]) -> Self
-    where SG: Random_Engine + 'static, AG: Random_Engine + 'static
+    where SG: PRNG_Engine + 'static, AG: PRNG_Engine + 'static
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -888,10 +888,10 @@ impl Random_Generic
     /// 
     /// # Arguments
     /// - `main_generator` is a main random number generator engine
-    ///   which is of `Random_Engine`-type and
+    ///   which is of `PRNG_Engine`-type and
     ///   for generating main pseudo-random numbers.
     /// - `aux_generator` is an auxiliary random number generator engine
-    ///   which is of `Random_Engine`-type and
+    ///   which is of `PRNG_Engine`-type and
     ///   for generating auxiliary pseudo-random numbers to use in
     ///   generating the main pseudo-random numbers.
     /// - `seed_collector` is a seed collector function to collect seeds, and
@@ -1286,7 +1286,7 @@ impl Random_Generic
     /// println!("Slapdash number = {}", slapdash.random_u8());
     /// ```
     pub fn new_with_generators_seed_collector<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed_collector: fn() -> [u64; 8]) -> Self
-    where SG: Random_Engine + 'static, AG: Random_Engine + 'static
+    where SG: PRNG_Engine + 'static, AG: PRNG_Engine + 'static
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1298,10 +1298,10 @@ impl Random_Generic
     /// 
     /// # Arguments
     /// - `main_generator` is a main random number generator engine
-    ///   which is of `Random_Engine`-type and
+    ///   which is of `PRNG_Engine`-type and
     ///   for generating main pseudo-random numbers.
     /// - `aux_generator` is an auxiliary random number generator engine
-    ///   which is of `Random_Engine`-type and
+    ///   which is of `PRNG_Engine`-type and
     ///   for generating auxiliary pseudo-random numbers to use in
     ///   generating the main pseudo-random numbers.
     /// - `seed_collector` is a seed collector function to collect seeds, and
@@ -1715,7 +1715,7 @@ impl Random_Generic
     /// println!("Slapdash number = {}", slapdash.random_u8());
     /// ```
     pub fn new_with_generators_seed_collector_seeds<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Self
-    where SG: Random_Engine + 'static, AG: Random_Engine + 'static
+    where SG: PRNG_Engine + 'static, AG: PRNG_Engine + 'static
     {
         unimplemented!(); // Dummy code for documentation
     }
@@ -1726,10 +1726,10 @@ impl Random_Generic
     /// 
     /// # Arguments
     /// - `main_generator` is a main random number generator engine
-    ///   which is of `Random_Engine`-type and
+    ///   which is of `PRNG_Engine`-type and
     ///   for generating main pseudo-random numbers.
     /// - `aux_generator` is an auxiliary random number generator engine
-    ///   which is of `Random_Engine`-type and
+    ///   which is of `PRNG_Engine`-type and
     ///   for generating auxiliary pseudo-random numbers to use in
     ///   generating the main pseudo-random numbers.
     /// - `seed_collector` is a seed collector function to collect seeds, and
@@ -2164,7 +2164,7 @@ impl Random_Generic
     /// println!("Slapdash number = {}", slapdash.random_u8());
     /// ```
     pub fn new_with_generators_seed_collector_seed_arrays<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Self
-    where SG: Random_Engine + 'static, AG: Random_Engine + 'static
+    where SG: PRNG_Engine + 'static, AG: PRNG_Engine + 'static
     {
         unimplemented!(); // Dummy code for documentation
     }

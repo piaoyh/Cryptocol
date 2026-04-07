@@ -25,9 +25,9 @@
 //! indicates cryptographically secure.
 //! 
 //! There are provided predefined pseudo-random number generators:
-//! ## Pseudo-random number generator
+//! ## Pseudo-random number generator and trait for pseudo-random number generator engines
 //!   - struct [`Random_Generic`](struct@Random_Generic)
-//!   - trait [Random_Engine](trait@Random_Engine)
+//!   - trait [PRNG_Engine](trait@PRNG_Engine)
 //! ## Pseudo-random number generator engines using hash algorithms
 //!   - [`Random_BIG_KECCAK_1024`](struct@Random_BIG_KECCAK_1024): uses a hash algorithm BIG_KECCAK_1024.
 //!   - [`Random_SHA3_512`](struct@Random_SHA3_512): uses a hash algorithm SHA3_512.
@@ -144,43 +144,43 @@ mod random;
 mod random_specific;
 
 /// The module that contains struct `AnyMumber_C_Generic`
-mod any_number_engine_c_generic;
+mod cprng_engine_generic;
 
-/// The module that contains trait `Random_Engine`
-mod trait_random_engine;
+/// The module that contains trait `PRNG_Engine`
+mod trait_prng_engine;
 
-/// The module that contains implementation of trait `Random_Engine` for `MD4`
-mod trait_random_engine_impl_for_md4;
+/// The module that contains implementation of trait `PRNG_Engine` for `MD4`
+mod trait_prng_engine_impl_for_md4;
 
-/// The module that contains implementation of trait `Random_Engine` for `MD5`
-mod trait_random_engine_impl_for_md5;
+/// The module that contains implementation of trait `PRNG_Engine` for `MD5`
+mod trait_prng_engine_impl_for_md5;
 
-/// The module that contains implementation of trait `Random_Engine` for `SHA1`
-mod trait_random_engine_impl_for_sha1;
+/// The module that contains implementation of trait `PRNG_Engine` for `SHA1`
+mod trait_prng_engine_impl_for_sha1;
 
-/// The module that contains implementation of trait `Random_Engine` for `SHA2_256`
-mod trait_random_engine_impl_for_sha2_256;
+/// The module that contains implementation of trait `PRNG_Engine` for `SHA2_256`
+mod trait_prng_engine_impl_for_sha2_256;
 
-/// The module that contains implementation of trait `Random_Engine` for `SHA2_512`
-mod trait_random_engine_impl_for_sha2_512;
+/// The module that contains implementation of trait `PRNG_Engine` for `SHA2_512`
+mod trait_prng_engine_impl_for_sha2_512;
 
-/// The module that contains implementation of trait `Random_Engine` for `SHA3`
-mod trait_random_engine_impl_for_sha3;
+/// The module that contains implementation of trait `PRNG_Engine` for `SHA3`
+mod trait_prng_engine_impl_for_sha3;
 
-/// The module that contains implementation of trait `Random_Engine` for `AnyNumber`
-mod trait_random_engine_impl_for_any_number;
+/// The module that contains implementation of trait `PRNG_Engine` for `AnyNumber`
+mod trait_prng_engine_impl_for_cprng_engine;
 
-/// The module that contains implementation of trait `Random_Engine` for `DES`
-mod trait_random_engine_impl_for_des;
+/// The module that contains implementation of trait `PRNG_Engine` for `DES`
+mod trait_prng_engine_impl_for_des;
 
-/// The module that contains implementation of trait `Random_Engine` for `Rijndael`
-mod trait_random_engine_impl_for_rijndael;
+/// The module that contains implementation of trait `PRNG_Engine` for `Rijndael`
+mod trait_prng_engine_impl_for_rijndael;
 
-/// The module that contains implementation of trait `Random_Engine` for `BigCryptor64`
-mod trait_random_engine_impl_for_big_cryptor64;
+/// The module that contains implementation of trait `PRNG_Engine` for `BigCryptor64`
+mod trait_prng_engine_impl_for_big_cryptor64;
 
-/// The module that contains implementation of trait `Random_Engine` for `BigCryptor128`
-mod trait_random_engine_impl_for_big_cryptor128;
+/// The module that contains implementation of trait `PRNG_Engine` for `BigCryptor128`
+mod trait_prng_engine_impl_for_big_cryptor128;
 
 mod trait_key;
 mod trait_key_impl_for_des;
@@ -188,19 +188,24 @@ mod trait_key_impl_for_rijndael;
 mod trait_key_impl_for_big_cryptor64;
 mod trait_key_impl_for_big_cryptor128;
 
-pub use random::*;
-pub use random_specific::{ Random,
-                            Random_BIG_KECCAK_1024, Random_SHA3_512, 
-                            Random_SHA2_512, Random_Rijndael,
-                        Any,
-                            Any_SHA3_512, Any_SHA3_256, Any_SHAKE_256, Any_SHAKE_128, 
-                            Any_SHA2_512, Any_SHA2_256, Any_Rijndael,
-                        Slapdash,
-                            Slapdash_SHA1, Slapdash_SHA0, Slapdash_MD5,
-                            Slapdash_MD4, Slapdash_DES, Slapdash_Num_C };
-pub use any_number_engine_c_generic::{ AnyNumber_Engine_C_Generic, AnyNumber_Engine_C };
-pub use trait_random_engine::Random_Engine;
-use trait_random_engine::SALT;
+pub use random::{ Random, Any, Slapdash, Random_Generic };
+// pub(crate) use random::{ COLUMN, ROW, NUM_STR };
+pub(crate) use random::{ SECURE_COUNT, LESS_SECURE_COUNT, INSECURE_COUNT };
+
+pub use random_specific::{ Random_PRNG_Creator,
+                            Random_PRNG_Creator_BIG_KECCAK_1024, Random_PRNG_Creator_SHA3_512, 
+                            Random_PRNG_Creator_SHA2_512, Random_PRNG_Creator_Rijndael,
+                        Any_PRNG_Creator,
+                            Any_PRNG_Creator_SHA3_512, Any_PRNG_Creator_SHA3_256,
+                            Any_PRNG_Creator_SHAKE_256, Any_PRNG_Creator_SHAKE_128, 
+                            Any_PRNG_Creator_SHA2_512, Any_PRNG_Creator_SHA2_256, Any_PRNG_Creator_Rijndael,
+                        Slapdash_PRNG_Creator,
+                            Slapdash_PRNG_Creator_SHA1, Slapdash_PRNG_Creator_SHA0,
+                            Slapdash_PRNG_Creator_MD5, Slapdash_PRNG_Creator_MD4,
+                            Slapdash_PRNG_Creator_DES, Slapdash_PRNG_Creator_CPRNG_Engine };
+pub use cprng_engine_generic::{ CPRNG_Engine_Generic, CPRNG_Engine };
+pub use trait_prng_engine::PRNG_Engine;
+use trait_prng_engine::SALT;
 use trait_key::Key;
 
 

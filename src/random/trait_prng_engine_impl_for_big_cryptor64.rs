@@ -8,9 +8,9 @@
 
 
 use crate::symmetric::{ BigCryptor64, CTR };
-use crate::random::{ Random_Engine, Key };
+use crate::random::{ PRNG_Engine, Key };
 
-impl Random_Engine for BigCryptor64
+impl PRNG_Engine for BigCryptor64
 {
     fn sow_array(&mut self, _: &[u64; 8], original: &[u64; 8])
     {
@@ -18,7 +18,7 @@ impl Random_Engine for BigCryptor64
             { self.move_to_next_key(); }
     }
 
-    fn harvest(&mut self, count: u128, message: &[u64; 8]) -> [u64; 8]
+    fn harvest(&mut self, count: u64, message: &[u64; 8]) -> [u64; 8]
     {
         let mut cipher = [0_u64; 8];
         if count == 0

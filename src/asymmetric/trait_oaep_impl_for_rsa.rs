@@ -17,7 +17,7 @@
 use std::ptr::copy_nonoverlapping;
 
 use crate::number::SmallUInt;
-use crate::random::Random;
+use crate::random::Random_PRNG_Creator;
 use crate::asymmetric::{ RSA_Generic, OAEP, PRNG, Hash };
 
 
@@ -182,7 +182,7 @@ where T: SmallUInt, RNG: PRNG, HashType: Hash
         let count = size - length_in_bytes as usize;
         unsafe {
             *((m.as_mut_ptr() as *mut u8).add(1)) = Self::BT;
-            let mut any = Random::new();
+            let mut any = Random_PRNG_Creator::create();
             for i in 2..count-1
             {
                 let mut r = any.random_u8();

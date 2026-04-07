@@ -16,7 +16,7 @@
 
 use crate::number::{ SmallUInt, BigUInt, BigUInt_Modular, BigUInt_Prime };
 use crate::hash::SHA3_512;
-use crate::random::{ RandGen, Random, Random_Generic };
+use crate::random::{ Random_PRNG_Creator, Random_Generic, INSECURE_COUNT };
 use crate::asymmetric::{ PRNG, Hash };
 
 pub type RSA_4096_u128 = RSA_Generic<32, u128>;
@@ -44,7 +44,7 @@ pub type RSA_2048 = RSA_2048_u32;
 pub type RSA_1024 = RSA_1024_u32;
 
 /// RSA_PRNG is the Random_Generic for RSA with u64::MAX limitation.
-pub type RSA_PRNG = Random_Generic<{u64::MAX as u128}>;
+pub type RSA_PRNG = Random_Generic<INSECURE_COUNT>;
 
 
 
@@ -154,7 +154,7 @@ pub type RSA_PRNG = Random_Generic<{u64::MAX as u128}>;
 /// 
 /// # Notice for Practical Use
 /// 
-pub struct RSA_Generic<const N: usize, T, const MR: usize = 7, RNG = RandGen, HashType = SHA3_512>
+pub struct RSA_Generic<const N: usize, T, const MR: usize = 7, RNG = Random_Generic, HashType = SHA3_512>
 where T: SmallUInt, RNG: PRNG, HashType: Hash
 {
     modulus: BigUInt<T, N>,
@@ -352,7 +352,7 @@ where T: SmallUInt, RNG: PRNG, HashType: Hash
     pub fn new_with_prepared_keys() -> Self
     {
         let length = T::size_in_bytes() as usize * N;
-        let mut rand = Random::new();
+        let mut rand = Random_PRNG_Creator::create();
         let prime_1: BigUInt<T, N> = rand.prepared_random_prime_with_half_length();
         let mut prime_2 = rand.prepared_random_prime_with_half_length();
         while prime_1 == prime_2
@@ -502,7 +502,7 @@ where T: SmallUInt, RNG: PRNG, HashType: Hash
     #[inline]
     fn choose_prime_numbers() -> (BigUInt<T, N>, BigUInt<T, N>)
     {
-        crate::random::Random::new().random_prime_with_half_length_using_rsa_biguint(MR)
+        crate::random::Random_PRNG_Creator::create().random_prime_with_half_length_using_rsa_biguint(MR)
     }
 
     // pub fn find_keys(&mut self)

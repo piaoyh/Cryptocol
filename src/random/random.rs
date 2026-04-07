@@ -25,19 +25,21 @@ use std::thread::{ available_parallelism, scope };
 #[cfg(not(target_family = "windows"))] use std::io::Read;
 
 use crate::number::{ SmallUInt, LongUnion, LongerUnion, BigUInt, BigUInt_Prime, A_LIST };
-use crate::random::{ Random, Random_Engine };
+use crate::random::{PRNG_Engine, Random_PRNG_Creator};
 
 
-pub(super) const SECURE_COUNT: u128 = u16::MAX as u128;
+pub(crate) const SECURE_COUNT: u64 = u16::MAX as u64;
+pub(crate) const LESS_SECURE_COUNT: u64 = u32::MAX as u64;
+pub(crate) const INSECURE_COUNT: u64 = u64::MAX;
 
 /// RandGen is the Random_Generic with the generic parameter u16::MAX which is 65535.
-pub type RandGen = Random_Generic<SECURE_COUNT>;
+pub type Random = Random_Generic<SECURE_COUNT>;
 
 /// AnyGen is the Random_Generic with the default generic parameter.
-pub type AnyGen = Random_Generic;
+pub type Any = Random_Generic;
 
 /// SlapdashGen is the Random_Generic with the default generic parameter.
-pub type SlapdashGen = Random_Generic<{u64::MAX as u128}>;
+pub type Slapdash = Random_Generic<INSECURE_COUNT>;
 
 
 pub(crate) const COLUMN: usize = 100;
@@ -723,19 +725,19 @@ pub(crate) const NUM_STR: [[&str; COLUMN]; ROW] = [
 /// assert!(biguint.is_odd());
 /// ```
 #[allow(non_camel_case_types)]
-pub struct Random_Generic<const COUNT: u128 = {u128::MAX}>
+pub struct Random_Generic<const COUNT: u64 = LESS_SECURE_COUNT>
 {
     original_seed: [u64; 8],
     original_aux: [u64; 8],
     main_state: [u64; 8],
     aux_state: [u64; 8],
-    count: u128,
+    count: u64,
     collect_seed: fn() -> [u64; 8],
-    main_generator: Box<dyn Random_Engine>,
-    aux_generator: Box<dyn Random_Engine>,
+    main_generator: Box<dyn PRNG_Engine>,
+    aux_generator: Box<dyn PRNG_Engine>,
 }
 
-impl<const COUNT: u128> Random_Generic<COUNT>
+impl<const COUNT: u64> Random_Generic<COUNT>
 {
     // pub fn new_with<SG, AG>(mut main_generator: SG, mut aux_generator: AG) -> Self
     /// Constructs a new `Random_Generic` object
@@ -743,10 +745,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// 
     /// # Arguments
     /// - `main_generator` is a main random number generator engine
-    ///   which is of `Random_Engine`-type and
+    ///   which is of `PRNG_Engine`-type and
     ///   for generating main pseudo-random numbers.
     /// - `aux_generator` is an auxiliary random number generator engine
-    ///   which is of `Random_Engine`-type and
+    ///   which is of `PRNG_Engine`-type and
     ///   for generating auxiliary pseudo-random numbers to use in
     ///   generating the main pseudo-random numbers.
     /// 
@@ -777,7 +779,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.new_with)
     pub fn new_with<SG, AG>(mut main_generator: SG, mut aux_generator: AG) -> Self
-    where SG: Random_Engine + 'static, AG: Random_Engine + 'static
+    where SG: PRNG_Engine + 'static, AG: PRNG_Engine + 'static
     {
         if COUNT == 0
             { panic!("COUNT should be greater than 0."); }
@@ -812,10 +814,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// 
     /// # Arguments
     /// - `main_generator` is a main random number generator engine
-    ///   which is of `Random_Engine`-type and
+    ///   which is of `PRNG_Engine`-type and
     ///   for generating main pseudo-random numbers.
     /// - `aux_generator` is an auxiliary random number generator engine
-    ///   which is of `Random_Engine`-type and
+    ///   which is of `PRNG_Engine`-type and
     ///   for generating auxiliary pseudo-random numbers to use in
     ///   generating the main pseudo-random numbers.
     /// - `seed` is the seed number of `u64`.
@@ -854,7 +856,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.new_with_generators_seeds)
     pub fn new_with_generators_seeds<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed: u64, aux: u64) -> Self
-    where SG: Random_Engine + 'static, AG: Random_Engine + 'static
+    where SG: PRNG_Engine + 'static, AG: PRNG_Engine + 'static
     {
         if COUNT == 0
             { panic!("COUNT should be greater than 0."); }
@@ -895,10 +897,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// 
     /// # Arguments
     /// - `main_generator` is a main random number generator engine
-    ///   which is of `Random_Engine`-type and
+    ///   which is of `PRNG_Engine`-type and
     ///   for generating main pseudo-random numbers.
     /// - `aux_generator` is an auxiliary random number generator engine
-    ///   which is of `Random_Engine`-type and
+    ///   which is of `PRNG_Engine`-type and
     ///   for generating auxiliary pseudo-random numbers to use in
     ///   generating the main pseudo-random numbers.
     /// - `seed` is the seed array and is of `[u64; 8]`.
@@ -939,7 +941,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.new_with_generators_seed_arrays)
     pub fn new_with_generators_seed_arrays<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed: [u64; 8], aux: [u64; 8]) -> Self
-    where SG: Random_Engine + 'static, AG: Random_Engine + 'static
+    where SG: PRNG_Engine + 'static, AG: PRNG_Engine + 'static
     {
         if COUNT == 0
             { panic!("COUNT should be greater than 0."); }
@@ -968,10 +970,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// 
     /// # Arguments
     /// - `main_generator` is a main random number generator engine
-    ///   which is of `Random_Engine`-type and
+    ///   which is of `PRNG_Engine`-type and
     ///   for generating main pseudo-random numbers.
     /// - `aux_generator` is an auxiliary random number generator engine
-    ///   which is of `Random_Engine`-type and
+    ///   which is of `PRNG_Engine`-type and
     ///   for generating auxiliary pseudo-random numbers to use in
     ///   generating the main pseudo-random numbers.
     /// - `seed_collector` is a seed collector function to collect seeds, and
@@ -1034,7 +1036,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.new_with_generators_seed_collector)
     pub fn new_with_generators_seed_collector<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed_collector: fn() -> [u64; 8]) -> Self
-    where SG: Random_Engine + 'static, AG: Random_Engine + 'static
+    where SG: PRNG_Engine + 'static, AG: PRNG_Engine + 'static
     {
         if COUNT == 0
             { panic!("COUNT should be greater than 0."); }
@@ -1070,10 +1072,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// 
     /// # Arguments
     /// - `main_generator` is a main random number generator engine
-    ///   which is of `Random_Engine`-type and
+    ///   which is of `PRNG_Engine`-type and
     ///   for generating main pseudo-random numbers.
     /// - `aux_generator` is an auxiliary random number generator engine
-    ///   which is of `Random_Engine`-type and
+    ///   which is of `PRNG_Engine`-type and
     ///   for generating auxiliary pseudo-random numbers to use in
     ///   generating the main pseudo-random numbers.
     /// - `seed_collector` is a seed collector function to collect seeds, and
@@ -1145,7 +1147,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.new_with_generators_seed_collector_seeds)
     pub fn new_with_generators_seed_collector_seeds<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Self
-    where SG: Random_Engine + 'static, AG: Random_Engine + 'static
+    where SG: PRNG_Engine + 'static, AG: PRNG_Engine + 'static
     {
         if COUNT == 0
             { panic!("COUNT should be greater than 0."); }
@@ -1186,10 +1188,10 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// 
     /// # Arguments
     /// - `main_generator` is a main random number generator engine
-    ///   which is of `Random_Engine`-type and
+    ///   which is of `PRNG_Engine`-type and
     ///   for generating main pseudo-random numbers.
     /// - `aux_generator` is an auxiliary random number generator engine
-    ///   which is of `Random_Engine`-type and
+    ///   which is of `PRNG_Engine`-type and
     ///   for generating auxiliary pseudo-random numbers to use in
     ///   generating the main pseudo-random numbers.
     /// - `seed_collector` is a seed collector function to collect seeds, and
@@ -1262,7 +1264,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     /// # For more examples,
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.new_with_generators_seed_collector_seed_arrays)
     pub fn new_with_generators_seed_collector_seed_arrays<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Self
-    where SG: Random_Engine + 'static, AG: Random_Engine + 'static
+    where SG: PRNG_Engine + 'static, AG: PRNG_Engine + 'static
     {
         if COUNT == 0
             { panic!("COUNT should be greater than 0."); }
@@ -1329,37 +1331,37 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         seed_buffer
     }
 
-    // fn collect_seed_u64() -> u64
-    /// Collects eight-byte seed from a system.
-    /// 
-    /// # Output
-    /// It returns a true random number `u64` made as a seed.
-    pub(super) fn collect_seed_u64() -> u64
-    {
-        #[cfg(not(target_family = "windows"))]
-        {
-            if let Ok(mut file) = File::open("/dev/random")
-            {
-                let mut buffer = [0u8; 8];
-                if let Ok(_) = file.read(&mut buffer)
-                {
-                    let seed = LongUnion::new_with_ubytes(buffer);
-                    return seed.get();
-                }
-            }
-        }
-        if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
-        {
-            let common = LongerUnion::new_with(nanos.as_nanos());
-            let idx = (common.get_ulong_(0) & 1) as usize;
-            common.get_ulong_(idx)
-        }
-        else
-        {
-            let common = LongUnion::new_with(RandomState::new().build_hasher().finish());
-            common.get()
-        }
-    }
+    // // fn collect_seed_u64() -> u64
+    // /// Collects eight-byte seed from a system.
+    // /// 
+    // /// # Output
+    // /// It returns a true random number `u64` made as a seed.
+    // pub(super) fn collect_seed_u64() -> u64
+    // {
+    //     #[cfg(not(target_family = "windows"))]
+    //     {
+    //         if let Ok(mut file) = File::open("/dev/random")
+    //         {
+    //             let mut buffer = [0u8; 8];
+    //             if let Ok(_) = file.read(&mut buffer)
+    //             {
+    //                 let seed = LongUnion::new_with_ubytes(buffer);
+    //                 return seed.get();
+    //             }
+    //         }
+    //     }
+    //     if let Ok(nanos) = SystemTime::now().duration_since(UNIX_EPOCH)
+    //     {
+    //         let common = LongerUnion::new_with(nanos.as_nanos());
+    //         let idx = (common.get_ulong_(0) & 1) as usize;
+    //         common.get_ulong_(idx)
+    //     }
+    //     else
+    //     {
+    //         let common = LongUnion::new_with(RandomState::new().build_hasher().finish());
+    //         common.get()
+    //     }
+    // }
 
     // fn produce_main_state(&mut self) -> [u64; 8]
     /// Runs the registered pseudo-random number generator to prepare for
@@ -1369,7 +1371,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         self.change_count();
         for i in 0..8
             { self.main_state[i] ^= self.original_seed[i]; }
-        let xor = self.count ^ (self.original_aux[0] as u128 | (self.original_aux[1] as u128) << 64);
+        let xor = self.count ^ ((self.original_aux[0] & 0xFFFFFFFF) | (self.original_aux[1] << 32));
         let count = if (self.count == 0) || (xor == 0) {self.count} else {xor};
         self.main_state = self.main_generator.harvest(count, &self.main_state);
     }
@@ -1382,7 +1384,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
         self.change_count();
         for i in 0..8
             { self.aux_state[i] ^= self.original_aux[i]; }
-        let xor = self.count ^ (self.original_seed[0] as u128 | (self.original_seed[1] as u128) << 64);
+        let xor = self.count ^ ((self.original_seed[0] & 0xFFFFFFFF) | (self.original_seed[1] << 32));
         let count = if (self.count == 0) || (xor == 0) {self.count} else {xor};
         self.aux_state = self.aux_generator.harvest(count, &self.aux_state);
     }
@@ -1520,16 +1522,6 @@ impl<const COUNT: u128> Random_Generic<COUNT>
     pub fn reset_seed_collector(&mut self)
     {
         self.collect_seed = Self::collect_seed;
-    }
-
-    pub(crate) fn get_main_generator(&mut self) -> Box<dyn Random_Engine>
-    {
-        self.main_generator.clone()
-    }
-
-    pub(crate) fn get_aux_generator(&mut self) ->  Box<dyn Random_Engine>
-    {
-        Box::new(self.aux_generator.as_mut().clone())
     }
 
     // pub fn random_u8(&mut self) -> u8
@@ -3293,7 +3285,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
             for _ in 0..number_of_threads
             {
                 s.spawn(|| {
-                    let mut rand = Random::new();
+                    let mut rand = Random_PRNG_Creator::create();
                     loop
                     {
                         let mut prime = { prime_like.lock().unwrap().pop_front().unwrap() };
@@ -3560,7 +3552,7 @@ impl<const COUNT: u128> Random_Generic<COUNT>
             for _ in 0..number_of_threads
             {
                 s.spawn(|| {
-                    let mut rand = Random::new();
+                    let mut rand = Random_PRNG_Creator::create();
                     loop
                     {
                         let mut prime = { prime_like.lock().unwrap().pop_front().unwrap() };

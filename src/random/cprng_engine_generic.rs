@@ -19,12 +19,12 @@ use std::fmt::Debug;
 /// SERIOUS CRYPTOGRAPHIC PURPOSE__ because it does not guarrantee the
 /// cryptographic security.
 #[allow(non_camel_case_types)]
-pub type AnyNumber_Engine_C = AnyNumber_Engine_C_Generic;
+pub type CPRNG_Engine = CPRNG_Engine_Generic;
 
-/// This struct `AnyNumber_Engine_C_Generic` is for just creating simple
+/// This struct `CPRNG_Engine_Generic` is for just creating simple
 /// pseudo-random numbers. __It is designed to be used to plug as
 /// `Random_Engine` in the struct `Random_Generic`.__ It is low chance
-/// that you will use this struct `AnyNumber_Engine_C_Generic` directly.
+/// that you will use this struct `CPRNG_Engine_Generic` directly.
 /// You may want to use
 /// [`Any_Num_C`](random/type.Any_Num_C.html#type.Any_Num_C)
 /// instead if you want to use a pseudo-random number generator rather
@@ -41,7 +41,7 @@ pub type AnyNumber_Engine_C = AnyNumber_Engine_C_Generic;
 /// operation and overflow, this formula produce pseudo-random numbers
 /// non-linearly. 
 /// 
-/// However, this struct `AnyNumber_Engine_C_Generic` is better than the
+/// However, this struct `CPRNG_Engine_Generic` is better than the
 /// algoriithm of the rand() function of C standard library though it is
 /// still cryptographically not secure enough. It is because it
 /// has eight sets of 64-bit pseudo-random number sequences and allows
@@ -81,9 +81,9 @@ pub type AnyNumber_Engine_C = AnyNumber_Engine_C_Generic;
 /// cryptographic security.
 #[derive(Debug, Clone)]
 #[allow(non_camel_case_types)]
-pub struct AnyNumber_Engine_C_Generic<const MULTIPLIER: u64 = 1103515245_u64, const ADDER: u64 = 12345_u64> {}
+pub struct CPRNG_Engine_Generic<const MULTIPLIER: u64 = 1103515245_u64, const ADDER: u64 = 12345_u64> {}
 
-impl<const MULTIPLIER: u64, const ADDER: u64> AnyNumber_Engine_C_Generic<MULTIPLIER, ADDER>
+impl<const MULTIPLIER: u64, const ADDER: u64> CPRNG_Engine_Generic<MULTIPLIER, ADDER>
 {
     // pub fn new() -> Self
     /// Contructs a new AnyNumber object.
