@@ -24,53 +24,56 @@
 //! in this module, `Any` indicates cryptographically insecure while `Random`
 //! indicates cryptographically secure.
 //! 
-//! There are provided predefined pseudo-random number generators:
-//! ## Pseudo-random number generator and trait for pseudo-random number generator engines
+//! There are provided predefined pseudo-random number generators (PRNGs):
+//! ## Pseudo-random number generator (PRNG) and trait for pseudo-random number generator engines
 //!   - struct [`Random_Generic`](struct@Random_Generic)
 //!   - trait [PRNG_Engine](trait@PRNG_Engine)
-//! ## Pseudo-random number generator engines using hash algorithms
-//!   - [`Random_BIG_KECCAK_1024`](struct@Random_BIG_KECCAK_1024): uses a hash algorithm BIG_KECCAK_1024.
-//!   - [`Random_SHA3_512`](struct@Random_SHA3_512): uses a hash algorithm SHA3_512.
-//!   - [`Random_SHA2_512`](struct@Random_SHA2_512): uses a hash algorithm SHA2_512.
-//!   - [`Any_SHAKE_256`](struct@Any_SHAKE_256)`: uses a hash algorithm SSHAKE_256.
-//!   - [`Any_SHAKE_128`](struct@Any_SHAKE_128)`: uses a hash algorithm SSHAKE_128.
-//!   - [`Any_SHA3_512`](struct@Any_SHA3_512): uses a hash algorithm SHA3_512.
-//!   - [`Any_SHA3_256`](struct@Any_SHA3_256): uses a hash algorithm SHA3_256.
-//!   - [`Any_SHA2_512`](struct@Any_SHA2_512): uses a hash algorithm SHA2_512.
-//!   - [`Any_SHA2_256`](struct@Any_SHA2_256): uses a hash algorithm SHA2_256.
-//!   - [`Slapdash_SHA1`](struct@Slapdash_SHA1): uses a hash algorithm SHA1.
-//!   - [`Slapdash_SHA0`](struct@Slapdash_SHA0): uses a hash algorithm SHA0.
-//!   - [`Slapdash_MD5`](struct@Slapdash_MD5): uses a hash algorithm MD5.
-//!   - [`Slapdash_MD4`](struct@Slapdash_MD4): uses a hash algorithm MD4.
-//! ## Pseudo-random number generator engines using symmetric-key encryption
-//!   algorithms
-//!   - [`Random_Rijndael`](struct@Random_Rijndael): uses a symmetric-key encryption algorithm Rijndael.
-//!   - [`Any_Rijndael`](struct@Any_Rijndael): uses a symmetric-key encryption algorithm Rijndael.
-//!   - [`Slapdash_DES`](struct@Slapdash_DES): uses a symmetric-key encryption algorithm DES.
-//! ## Pseudo-random number generator engines using simple randomization
-//!   algorithm
-//!   - [`Slapdash_Num_C`](struct@Slapdash_Num_C): uses a pseudo-random number generator
+//! ## Wizards to create a pseudo-random number generator with an engine of a hash algorithm
+//!   - [`Random_PRNG_Creator_BIG_KECCAK_1024`](struct@Random_PRNG_Creator_BIG_KECCAK_1024): creates a PRNG that uses a hash algorithm BIG_KECCAK_1024.
+//!   - [`Random_PRNG_Creator_SHA3_512`](struct@Random_PRNG_Creator_SHA3_512): creates a PRNG that uses a hash algorithm SHA3_512.
+//!   - [`Random_PRNG_Creator_SHA2_512`](struct@Random_PRNG_Creator_SHA2_512): creates a PRNG that uses a hash algorithm SHA2_512.
+//!   - [`Any_PRNG_Creator_SHAKE_256`](struct@Any_PRNG_Creator_SHAKE_256)`: creates a PRNG that uses a hash algorithm SSHAKE_256.
+//!   - [`Any_PRNG_Creator_SHAKE_128`](struct@Any_PRNG_Creator_SHAKE_128)`: creates a PRNG that uses a hash algorithm SSHAKE_128.
+//!   - [`Any_PRNG_Creator_SHA3_512`](struct@Any_PRNG_Creator_SHA3_512): creates a PRNG that uses a hash algorithm SHA3_512.
+//!   - [`Any_PRNG_Creator_SHA3_256`](struct@Any_PRNG_Creator_SHA3_256): creates a PRNG that uses a hash algorithm SHA3_256.
+//!   - [`Any_PRNG_Creator_SHA2_512`](struct@Any_PRNG_Creator_SHA2_512): creates a PRNG that uses a hash algorithm SHA2_512.
+//!   - [`An_PRNG_Creatory_SHA2_256`](struct@Any_PRNG_Creator_SHA2_256): creates a PRNG that uses a hash algorithm SHA2_256.
+//!   - [`Slapdash_PRNG_Creator_SHA1`](struct@Slapdash_PRNG_Creator_SHA1): creates a PRNG that uses a hash algorithm SHA1.
+//!   - [`Slapdash_PRNG_Creator_SHA0`](struct@Slapdash_PRNG_Creator_SHA0): creates a PRNG that uses a hash algorithm SHA0.
+//!   - [`Slapdash_PRNG_Creator_MD5`](struct@Slapdash_PRNG_Creator_MD5): creates a PRNG that uses a hash algorithm MD5.
+//!   - [`Slapdash_PRNG_Creator_MD4`](struct@Slapdash_PRNG_Creator_MD4): creates a PRNG that uses a hash algorithm MD4.
+//! ## Wizards to create a pseudo-random number generator with an engine of symmetric-key encryption algorithm
+//!   - [`Random_PRNG_Creator_Rijndael`](struct@Random_PRNG_Creator_Rijndael): uses a symmetric-key encryption algorithm Rijndael.
+//!   - [`Any_PRNG_Creator_Rijndael`](struct@Any_PRNG_Creator_Rijndael): uses a symmetric-key encryption algorithm Rijndael.
+//!   - [`Slapdash_PRNG_Creator_DES`](struct@Slapdash_PRNG_Creator_DES): uses a symmetric-key encryption algorithm DES.
+//! ## Wizards to create a pseudo-random number generator with a simple engine of C standard libraray
+//!   - [`Slapdash_PRNG_Creator_CPRNG_Engine`](struct@Slapdash_PRNG_Creator_CPRNG_Engine): uses a pseudo-random number generator
 //!     algorithm of the function rand() of C standard library at the moment. 
 //! ## Synonyms
-//!   - Random: is a synonym of Random_SHA2_512 at the moment and can be
-//!     __silently changed__ to have better algorithm in the future. If you want
-//!     to keep using SHA2_512 for a pseudo-random number generator, you may
-//!     want to use Random_SHA2_512. If you are happy that you will automatically
-//!     use the better algotrithm in the future, you may want to use `Random`.
-//!     Read [here](type@Random).
-//!   - Any: is a synonym of Any_SHA2_256 at the moment and can be __silently
-//!     changed__ to have better algorithm in the future. If you want to keep
-//!     using SHA2_256 for a pseudo-random number generator, you may want to
-//!     use Any_SHA2_256. If you are happy that you will automatically use the
-//!     better algotrithm in the future, you may want to use `Any`.
-//!     Read [here](type@Any).
-//!   - Slapdash: is a synonym of Slapdash_Num_C at the moment and can be __silently
-//!     changed__ to have better algorithm in the future. If you want to keep
-//!     using the algorithm of C standard libraray for a pseudo-random number
-//!     generator, you may want to use Slapdash_Num_C. If you are happy that you
-//!     will automatically use the better algotrithm in the future, you may
-//!     want to use `Slapdash`.
-//!     Read [here](type@Slapdash).
+//!   - **Random_PRNG_Creator**: is a synonym of Random_PRNG_Creator_BIG_KECCAK_1024
+//!     at the moment and can be __silently changed__ to create a better PRNG
+//!     in the future. If you want to keep creating a PRNG that uses
+//!     BIG_KECCAK_1024 for a pseudo-random number generator, you may want to
+//!     use Random_PRNG_Creator_BIG_KECCAK_1024. If you are happy that you will
+//!     automatically use the better algotrithm in the future, you may want to
+//!     use `Random_PRNG_Creator`.
+//!     Read [here](type@Random_PRNG_Creator).
+//!   - **Any_PRNG_Creator**: is a synonym of Any_PRNG_Creator_SHA2_512 at the
+//!     moment and can be __silently changed__ to create a better PRNG in the
+//!     future. If you want to keep creating a PRNG that uses SHA2_256 for a
+//!     pseudo-random number generator, you may want to use
+//!     Any_PRNG_Creator_SHA2_512. If you are happy that you will automatically
+//!     use the better algotrithm in the future, you may want to use
+//!     `Any_PRNG_Creator`.
+//!     Read [here](type@Random_PRNG_Creator).
+//!   - **Slapdash_PRNG_Creator**: is a synonym of Slapdash_PRNG_Creator_CPRNG_Engine
+//!     at the moment and can be __silently changed__ to create a better PRNG
+//!     in the future. If you want to keep creating a PRNG that uses the
+//!     algorithm of C standard libraray for a pseudo-random number generator,
+//!     you may want to use Slapdash_PRNG_Creator_CPRNG_Engine. If you are happy
+//!     that you will automatically use the better algotrithm in the future, you
+//!     may want to use `Slapdash_PRNG_Creator`.
+//!     Read [here](type@Slapdash_PRNG_Creator).
 //! 
 //! # Quality Issues and Debate
 //! The pseudo-random number generators in this module use hash algorithms,
@@ -122,19 +125,15 @@
 //! as a pseudo-random number generator in your project by yourself. 
 //! 
 //! # QUICK START
-//! You can use either struct `Any` or `Random` depending on your purpose.
-//! `Any` is for normal non-cryptographical purpose while `Random` is for
-//! cryptographical purpose if you are fine to use hash algorithm for
-//! pseudo-random number generator for cryptographical purpose.
-//! 
-//! - For `Random_Generic`, read [here](struct@Random_Generic#quick-start).
-//! - For `Random_Generic`, read [here](struct@Random_Generic).
+//! You can use either struct `Random_PRNG_Creator`, `Any_PRNG_Creator` or
+//! `Slapdash_PRNG_Creator` to create a PRNG depending on your purpose.
+//! `Random_PRNG_Creator` and `Any_PRNG_Creator` is for cryptographical purpose
+//! while `Slapdash_PRNG_Creator` is for normal non-cryptographical purpose.
 //! 
 //! [^note]: Here, 'recursively' means that the output hash value of a hash
 //! function is fed back to the hash function as its message, and a new hash
 //! value is gotten from it, and then the new hash value is fed back to the
 //! hash function as its message again, and this process is repeated.
-//! 
 
 
 /// The module that contains struct `Random_Generic`
@@ -189,7 +188,6 @@ mod trait_key_impl_for_big_cryptor64;
 mod trait_key_impl_for_big_cryptor128;
 
 pub use random::{ Random, Any, Slapdash, Random_Generic };
-// pub(crate) use random::{ COLUMN, ROW, NUM_STR };
 pub(crate) use random::{ SECURE_COUNT, LESS_SECURE_COUNT, INSECURE_COUNT };
 
 pub use random_specific::{ Random_PRNG_Creator,

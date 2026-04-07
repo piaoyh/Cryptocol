@@ -10,6 +10,20 @@
 use crate::hash::BIG_KECCAK_1024;
 use crate::random::{ Random_Generic, LESS_SECURE_COUNT };
 
+/*
+pub type PRNG_BIG_KECCAK_1024 ,
+                            Random_PRNG_Creator_BIG_KECCAK_1024, Random_PRNG_Creator_SHA3_512, 
+                            Random_PRNG_Creator_SHA2_512, Random_PRNG_Creator_Rijndael,
+                        Any_PRNG_Creator,
+                            Any_PRNG_Creator_SHA3_512, Any_PRNG_Creator_SHA3_256,
+                            Any_PRNG_Creator_SHAKE_256, Any_PRNG_Creator_SHAKE_128, 
+                            Any_PRNG_Creator_SHA2_512, Any_PRNG_Creator_SHA2_256, Any_PRNG_Creator_Rijndael,
+                        Slapdash_PRNG_Creator,
+                            Slapdash_PRNG_Creator_SHA1, Slapdash_PRNG_Creator_SHA0,
+                            Slapdash_PRNG_Creator_MD5, Slapdash_PRNG_Creator_MD4,
+                            Slapdash_PRNG_Creator_DES, Slapdash_PRNG_Creator_CPRNG_Engine
+*/
+
 pub trait PRNG
 {
     fn new() -> Self;

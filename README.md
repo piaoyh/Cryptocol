@@ -208,29 +208,29 @@ _Note: While supported, using native AES-256 or specific Rijndael variants is ge
 -->
 
 ### 5. Pseudo-Random Number Generators (PRNG)
-- [X] **Generic PRNG Framework:** --
+- [X] **Generic PRNG Framework:**
       struct [Random_Generic](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Random_Generic.html#struct.Random_Generic) and
       trait [Random_Engine](https://docs.rs/cryptocol/latest/cryptocol/random/trait_random_engine/trait.Random_Engine.html#trait.Random_Engine)
-- [X] **Hash-based PRNGs:** Engines leveraging Keccak, SHA-3, SHA-2, and others. --
-      [Random_BIG_KECCAK_1024](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Random_BIG_KECCAK_1024.html#struct.Random_BIG_KECCAK_1024),
-      [Random_SHA3_512](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Random_SHA3_512.html#struct.Random_SHA3_512),
-      [Random_SHA2_512](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Random_SHA2_512.html#struct.Random_SHA2_512),
-      [Any_SHAKE_256](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_SHAKE_256.html#struct.Any_SHAKE_256),
-      [Any_SHAKE_128](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_SHAKE_128.html#struct.Any_SHAKE_128),
-      [Any_SHA3_512](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_SHA3_512.html#struct.Any_SHA3_512),
-      [Any_SHA3_256](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_SHA3_256.html#struct.Any_SHA3_256),
-      [Any_SHA2_512](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_SHA2_512.html#struct.Any_SHA2_512),
-      [Any_SHA2_256](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_SHA2_256.html#struct.Any_SHA2_256),
-      [Slapdash_SHA1](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Slapdash_SHA1.html#struct.Slapdash_SHA1),
-      [Slapdash_SHA0](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Slapdash_SHA0.html#struct.Slapdash_SHA0),
-      [Slapdash_MD5](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Slapdash_MD5.html#struct.Slapdash_MD5), and
-      [Slapdash_MD4](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Slapdash_MD4.html#struct.Slapdash_MD4).
-- [X] **Cipher-based PRNGs:** Engines leveraging Rijndael and DES. --
-      [Random_Rijndael](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Random_Rijndael.html#struct.Random_Rijndael),
-      [Any_Rijndael](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_Rijndael.html#struct.Any_Rijndael), and
-      [Slapdash_DES](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Slapdash_DES.html#struct.Slapdash_DES).
-- [X] **Simple PRNGs:** Basic randomization algorithms like
-      [Slapdash_Num_C](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Slapdash_Num_C.html#struct.Slapdash_Num_C).
+- [X] **Creators for Hash-based PRNGs:** Engines leveraging Keccak, SHA-3, SHA-2, and others. --
+      [Random_PRNG_Creator_BIG_KECCAK_1024](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Random_PRNG_Creator_BIG_KECCAK_1024.html#struct.Random_PRNG_Creator_BIG_KECCAK_1024),
+      [Random_PRNG_Creator_SHA3_512](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Random_PRNG_Creator_SHA3_512.html#struct.Random_PRNG_Creator_SHA3_512),
+      [Random_PRNG_Creator_SHA2_512](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Random_PRNG_Creator_SHA2_512.html#struct.Random_PRNG_Creator_SHA2_512),
+      [Any_PRNG_Creator_SHAKE_256](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_PRNG_Creator_SHAKE_256.html#struct.Any_PRNG_Creator_SHAKE_256),
+      [Any_PRNG_Creator_SHAKE_128](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_PRNG_Creator_SHAKE_128.html#struct.Any_PRNG_Creator_SHAKE_128),
+      [Any_PRNG_Creator_SHA3_512](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_PRNG_Creator_SHA3_512.html#struct.Any_PRNG_Creator_SHA3_512),
+      [Any_PRNG_Creator_SHA3_256](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_PRNG_Creator_SHA3_256.html#struct.Any_PRNG_Creator_SHA3_256),
+      [Any_PRNG_Creator_SHA2_512](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_PRNG_Creator_SHA2_512.html#struct.Any_PRNG_Creator_SHA2_512),
+      [An_PRNG_Creatory_SHA2_256](https://docs.rs/cryptocol/latest/cryptocol/random/struct.An_PRNG_Creatory_SHA2_256.html#struct.An_PRNG_Creatory_SHA2_256),
+      [Slapdash_PRNG_Creator_SHA1](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Slapdash_PRNG_Creator_SHA1.html#struct.Slapdash_PRNG_Creator_SHA1),
+      [Slapdash_PRNG_Creator_SHA0](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Slapdash_PRNG_Creator_SHA0.html#struct.Slapdash_PRNG_Creator_SHA0),
+      [Slapdash_PRNG_Creator_MD5](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Slapdash_PRNG_Creator_MD5.html#struct.Slapdash_PRNG_Creator_MD5), and
+      [Slapdash_PRNG_Creator_MD4](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Slapdash_PRNG_Creator_MD4.html#struct.Slapdash_PRNG_Creator_MD4).
+- [X] **Creators for Cipher-based PRNGs:** Engines leveraging Rijndael and DES. --
+      [Random_PRNG_Creator_Rijndael](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Random_PRNG_Creator_Rijndael.html#struct.Random_PRNG_Creator_Rijndael),
+      [Any_PRNG_Creator_Rijndael](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Any_PRNG_Creator_Rijndael.html#struct.Any_PRNG_Creator_Rijndael), and
+      [Slapdash_PRNG_Creator_DES](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Slapdash_PRNG_Creator_DES.html#struct.Slapdash_PRNG_Creator_DES).
+- [X] **Creators for Simple PRNGs:** Basic randomization algorithms like
+      [Slapdash_PRNG_Creator_CPRNG_Engine](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Slapdash_PRNG_Creator_CPRNG_Engine.html#struct.Slapdash_PRNG_Creator_CPRNG_Engine).
 
 ### 6. Asymmetric-Key Algorithms
 
