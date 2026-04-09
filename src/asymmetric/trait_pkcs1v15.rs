@@ -91,29 +91,25 @@ pub trait PKCS1V15<RNG>
     /// # Argument
     /// - **prngn**: an object of pseudo-random generator engine.
     /// 
-    /// # Available Pseudo-Random Generator Engines
-    /// There are provided as follows:
-    /// - [`Random_Generic`](../random/struct.Random_Generic.html#struct.Random_Generic)
-    /// - `Random` (= `Random_BIG_KECCAK_1024`)
-    /// - [`Random_BIG_KECCAK_1024`](../random/struct.Random_BIG_KECCAK_1024.html#struct.Random_BIG_KECCAK_1024)
-    /// - [`Random_SHA3_512`](../random/struct.Random_SHA3_512.html#struct.Random_SHA3_512)
-    /// - [`Random_SHA2_512`](../random/struct.Random_SHA2_512.html#struct.Random_SHA2_512)
-    /// - [`Random_Rijndael`](../random/struct.Random_Rijndael.html#struct.Random_Rijndael)
-    /// - `Any` (= `Any_SHA2_512`)
-    /// - [`Any_SHA3_512`](../random/struct.Any_SHA3_512.html#struct.Any_SHA3_512)
-    /// - [`Any_SHA3_256`](../random/struct.Any_SHA3_256.html#struct.Any_SHA3_256)
-    /// - [`Any_SHAKE_256`](../random/struct.Any_SHAKE_256.html#struct.Any_SHAKE_256)
-    /// - [`Any_SHAKE_128`](../random/struct.Any_SHAKE_128.html#struct.Any_SHAKE_128)
-    /// - [`Any_SHA2_512`](../random/struct.Any_SHA2_512.html#struct.Any_SHA2_512)
-    /// - [`Any_SHA2_256`](../random/struct.Any_SHA2_256.html#struct.Any_SHA2_256)
-    /// - [`Any_Rijndael`](../random/struct.Any_Rijndael.html#struct.Any_Rijndael)
-    /// - `Slapdash` (= `Slapdash_Num_C`)
-    /// - [`Slapdash_SHA1`](../random/struct.Slapdash_SHA1.html#struct.Slapdash_SHA1)
-    /// - [`Slapdash_SHA0`](../random/struct.Slapdash_SHA0.html#struct.Slapdash_SHA0)
-    /// - [`Slapdash_MD5`](../random/struct.Slapdash_MD5.html#struct.Slapdash_MD5)
-    /// - [`Slapdash_MD4`](../random/struct.Slapdash_MD4.html#struct.Slapdash_MD4)
-    /// - [`Slapdash_DES`](../random/struct.Slapdash_DES.html#struct.Slapdash_DES)
-    /// - [`Slapdash_Num_C`](../random/struct.Slapdash_Num_C.html#struct.Slapdash_Num_C)
+    /// # Available Pseudo-Random Number Generators (PRNGs)
+    /// The available prngs are all `Random_Generic<LESS_SECURE_COUNT>`.
+    /// - [`Random_Generic<LESS_SECURE_COUNT>`](../random/struct.Random_Generic.html#struct.Random_Generic)
+    /// 
+    /// ## You can get a specific PRNG with the following PRNG_Creators:
+    /// - [`Asymmetric_PRNG_Creator_BIG_KECCAK_1024`](struct.Asymmetric_PRNG_Creator_BIG_KECCAK_1024.html#struct.Asymmetric_PRNG_Creator_BIG_KECCAK_1024)
+    /// - [`Asymmetric_PRNG_Creator_SHA3_512`](struct.Asymmetric_PRNG_Creator_BIG_KECCAK_1024.html#struct.Asymmetric_PRNG_Creator_BIG_KECCAK_1024)
+    /// - [`Asymmetric_PRNG_Creator_SHA3_256`](struct.Asymmetric_PRNG_Creator_SHA3_256.html#struct.Asymmetric_PRNG_Creator_SHA3_256)
+    /// - [`Asymmetric_PRNG_Creator_SHAKE_256`](struct.Asymmetric_PRNG_Creator_SHAKE_256.html#struct.Asymmetric_PRNG_Creator_SHAKE_256)
+    /// - [`Asymmetric_PRNG_Creator_SHAKE_128`](struct.Asymmetric_PRNG_Creator_SHAKE_128.html#struct.Asymmetric_PRNG_Creator_SHAKE_128)
+    /// - [`Asymmetric_PRNG_Creator_SHA2_512`](struct.Asymmetric_PRNG_Creator_SHA2_512.html#struct.Asymmetric_PRNG_Creator_SHA2_512)
+    /// - [`Asymmetric_PRNG_Creator_SHA2_256`](struct.Asymmetric_PRNG_Creator_SHA2_256.html#struct.Asymmetric_PRNG_Creator_SHA2_256)
+    /// - [`Asymmetric_PRNG_Creator_SHA1`](struct.Asymmetric_PRNG_Creator_SHA1.html#struct.Asymmetric_PRNG_Creator_SHA1)
+    /// - [`Asymmetric_PRNG_Creator_SHA0`](struct.Asymmetric_PRNG_Creator_SHA0.html#struct.Asymmetric_PRNG_Creator_SHA0)
+    /// - [`Asymmetric_PRNG_Creator_MD5`](struct.Asymmetric_PRNG_Creator_MD5.html#struct.Asymmetric_PRNG_Creator_MD5)
+    /// - [`Asymmetric_PRNG_Creator_MD4`](struct.Asymmetric_PRNG_Creator_MD4.html#struct.Asymmetric_PRNG_Creator_MD4)
+    /// - [`Asymmetric_PRNG_Creator_AES_128`](struct.Asymmetric_PRNG_Creator_AES_128.html#struct.Asymmetric_PRNG_Creator_AES_128)
+    /// - [`Asymmetric_PRNG_Creator_DES`](struct.Asymmetric_PRNG_Creator_DES.html#struct.Asymmetric_PRNG_Creator_DES)
+    /// - [`Asymmetric_PRNG_Creator_CPRNG_Engine`](struct.Asymmetric_PRNG_Creator_CPRNG_Engine.html#struct.Asymmetric_PRNG_Creator_CPRNG_Engine)
     fn set_prng(&mut self, prng: RNG);
 
     // fn encrypt(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;

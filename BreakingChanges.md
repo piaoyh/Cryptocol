@@ -30,33 +30,43 @@
 | RandGen                                                                                                                | Random                                                                                                                                  |
 | AnyGen                                                                                                                 | Any                                                                                                                                     |
 | SlapdashGen                                                                                                            | Slapdash                                                                                                                                |
-| pub fn new() -> RandGen                                                                                                | pub fn create() -> Random_Generic<COUNT>                                                                                                |
-| pub fn new_with_seeds(seed: u64, aux: u64) -> RandGen                                                                  | pub fn create_with_seeds(seed: u64, aux: u64) -> Random_Generic<COUNT>                                                                  |
-| pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> RandGen                                                  | pub fn create_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<COUNT>                                                  |
-| pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> RandGen                                            | pub fn create_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<COUNT>                                            |
-| pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> RandGen                 | pub fn create_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<COUNT>                 |
-| pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> RandGen | pub fn create_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<COUNT> |
+| pub fn new() -> RandGen                                                                                                | pub fn create() -> Random_Generic<COUNT\>                                                                                                |
+| pub fn new_with_seeds(seed: u64, aux: u64) -> RandGen                                                                  | pub fn create_with_seeds(seed: u64, aux: u64) -> Random_Generic<COUNT\>                                                                  |
+| pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> RandGen                                                  | pub fn create_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<COUNT\>                                                  |
+| pub fn new_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> RandGen                                            | pub fn create_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<COUNT\>                                            |
+| pub fn new_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> RandGen                 | pub fn create_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<COUNT\>                 |
+| pub fn new_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> RandGen | pub fn create_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<COUNT\> |
 
 - Type names have been changed to remove confusion between PRNG and PRNG creator.
 - Method names have been changed to remove confusion between PRNG constructor and PRNG  creator.
 
 
+## Breaking changes from ver. 0.18.7 to ver. 0.18.8
+
+| Ver. 0.18.7                                                       |                                                           |
+|-------------------------------------------------------------------|-----------------------------------------------------------|
+| pub struct BigUInt<T, const N: usize\> where T: TraitsBigUInt<T\> | pub struct BigUInt<T, const N: usize\> where T: SmallUInt |
+
+- Trait bound for BigUInt has been changed.
+
+
 ## Breaking changes from ver. 0.18.2 to ver. 0.18.3
 
-| Ver. 0.18.2                                                                                                                           | Ver. 0.18.3 |
-|---------------------------------------------------------------------------------------------------------------------------------------|-------------|
-| pub fn random_prime_with_msb_set_using_rsa_biguint<T, const N: usize>(&mut self, repetition: usize) -> (BigUInt<T, N>, BigUInt<T, N>) | removed     |
-| pub fn random_prime_using_rsa_biguint<T, const N: usize>(&mut self, repetition: usize) -> (BigUInt<T, N>, BigUInt<T, N>)              | removed     |
+| Ver. 0.18.2                                                                                                                              | Ver. 0.18.3 |
+|------------------------------------------------------------------------------------------------------------------------------------------|-------------|
+| pub fn random_prime_with_msb_set_using_rsa_biguint<T, const N: usize\>(&mut self, repetition: usize) -> (BigUInt<T, N\>, BigUInt<T, N\>) | removed     |
+| pub fn random_prime_using_rsa_biguint<T, const N: usize\>(&mut self, repetition: usize) -> (BigUInt<T, N\>, BigUInt<T, N\>)              | removed     |
 
 - The methods above have been removed from the struct Random_Generic.
 
-| Ver. 0.18.2                                          | Ver. 0.18.3                                           |
-|------------------------------------------------------|-------------------------------------------------------|
-| pub fn get_modulo(&self) -> BigUInt<T, N>            | pub fn get_modulus(&self) -> BigUInt<T, N>            |
-| pub fn set_modulo(&mut self, modulus: BigUInt<T, N>) | pub fn set_modulus(&mut self, modulus: BigUInt<T, N>) |
-| pub fn set_modulo(&mut self, modulo: BigUInt<T, N>)  | pub fn set_modulus(&mut self, modulus: BigUInt<T, N>) |
+| Ver. 0.18.2                                           | Ver. 0.18.3                                            |
+|-------------------------------------------------------|--------------------------------------------------------|
+| pub fn get_modulo(&self) -> BigUInt<T, N\>            | pub fn get_modulus(&self) -> BigUInt<T, N\>            |
+| pub fn set_modulo(&mut self, modulus: BigUInt<T, N\>) | pub fn set_modulus(&mut self, modulus: BigUInt<T, N\>) |
+| pub fn set_modulo(&mut self, modulo: BigUInt<T, N\>)  | pub fn set_modulus(&mut self, modulus: BigUInt<T, N\>) |
 
 - The methods above have been changed in its names in RSA_Generic.
+
 
 ## Breaking changes from ver. 0.17.3 to ver. 0.18.0
 
@@ -72,20 +82,22 @@
 
 - The names of the above types of Random_Generic has been changed.
 
+
 ## Breaking changes from ver. 0.17.1 to ver. 0.17.2
 
-| Ver. 0.17.1                                                                            | Ver. 0.17.2                                                                                             |
-|----------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
-| pub fn encrypt_unit(&self, message: &BigUInt<T, N>) -> BigUInt<T, N>                   | pub fn encrypt_biguint(&self, message: &BigUInt<T, N>) -> BigUInt<T, N>                                 |
-| pub fn decrypt_unit(&self, cipher: &BigUInt<T, N>) -> BigUInt<T, N>                    | pub fn decrypt_biguint(&self, cipher: &BigUInt<T, N>) -> BigUInt<T, N>                                  |
-| pub fn encrypt_array_unit(&self, message: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]   | pub fn encrypt_array_biguint<const M: usize>(&self, message: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M] |
-| pub fn decrypt_array_unit(&self, cipher: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]    | pub fn decrypt_array_biguint<const M: usize>(&self, cipher: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]  |
-| pub fn encrypt_chunck(&self, message: &BigUInt<T, N>) -> BigUInt<T, N>                 | pub fn encrypt_unit(&self, message: &BigUInt<T, N>) -> BigUInt<T, N>                                    |
-| pub fn decrypt_chunck(&self, cipher: &BigUInt<T, N>) -> BigUInt<T, N>                  | pub fn decrypt_unit(&self, cipher: &BigUInt<T, N>) -> BigUInt<T, N>                                     |
-| pub fn encrypt_array_chunck(&self, message: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M] | pub fn encrypt_array_unit<const M: usize>(&self, message: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]    |
-| pub fn decrypt_array_chunck(&self, cipher: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]  | pub fn decrypt_array_unit<const M: usize>(&self, cipher: &[BigUInt<T, N>; M]) -> [BigUInt<T, N>; M]     |
+| Ver. 0.17.1                                                                              | Ver. 0.17.2                                                                                                |
+|------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|
+| pub fn encrypt_unit(&self, message: &BigUInt<T, N\>) -> BigUInt<T, N\>                   | pub fn encrypt_biguint(&self, message: &BigUInt<T, N\>) -> BigUInt<T, N\>                                  |
+| pub fn decrypt_unit(&self, cipher: &BigUInt<T, N\>) -> BigUInt<T, N\>                    | pub fn decrypt_biguint(&self, cipher: &BigUInt<T, N\>) -> BigUInt<T, N\>                                   |
+| pub fn encrypt_array_unit(&self, message: &[BigUInt<T, N\>; M]) -> [BigUInt<T, N\>; M]   | pub fn encrypt_array_biguint<const M: usize\>(&self, message: &[BigUInt<T, N\>; M]) -> [BigUInt<T, N\>; M] |
+| pub fn decrypt_array_unit(&self, cipher: &[BigUInt<T, N\>; M]) -> [BigUInt<T, N\>; M]    | pub fn decrypt_array_biguint<const M: usize\>(&self, cipher: &[BigUInt<T, N\>; M]) -> [BigUInt<T, N\>; M]  |
+| pub fn encrypt_chunck(&self, message: &BigUInt<T, N\>) -> BigUInt<T, N\>                 | pub fn encrypt_unit(&self, message: &BigUInt<T, N\>) -> BigUInt<T, N\>                                     |
+| pub fn decrypt_chunck(&self, cipher: &BigUInt<T, N\>) -> BigUInt<T, N\>                  | pub fn decrypt_unit(&self, cipher: &BigUInt<T, N\>) -> BigUInt<T, N\>                                      |
+| pub fn encrypt_array_chunck(&self, message: &[BigUInt<T, N\>; M]) -> [BigUInt<T, N\>; M] | pub fn encrypt_array_unit<const M: usize\>(&self, message: &[BigUInt<T, N\>; M]) -> [BigUInt<T, N\>; M]    |
+| pub fn decrypt_array_chunck(&self, cipher: &[BigUInt<T, N\>; M]) -> [BigUInt<T, N\>; M]  | pub fn decrypt_array_unit<const M: usize\>(&self, cipher: &[BigUInt<T, N\>; M]) -> [BigUInt<T, N\>; M]     |
 
 - The names of the above methods of the struct RSA_Generic has been changed.
+
 
 ## Breaking changes from ver. 0.16.1 to ver. 0.16.2
 
@@ -101,14 +113,16 @@
 
 - The above method of the trait Key has been changed.
 
+
 ## Breaking changes from ver. 0.15.1 to ver. 0.16.0
 
-| Ver. 0.15.1                                       | Ver. 0.15.2 |
-|---------------------------------------------------|-------------|
-| pub fn new() -> Self                              | removed     |
-| pub fn new_with_seeds<T>(seed: T, aux: T) -> Self | removed     |
+| Ver. 0.15.1                                        | Ver. 0.15.2 |
+|----------------------------------------------------|-------------|
+| pub fn new() -> Self                               | removed     |
+| pub fn new_with_seeds<T\>(seed: T, aux: T) -> Self | removed     |
 
 - The methods above have been removed from the struct Random_Generic.
+
 
 ## Breaking changes from ver. 0.14.1 to ver. 0.15.0
 
@@ -119,6 +133,7 @@
 
 - The methods above have been removed from the trait SmallCryptor.
 
+
 ## Breaking changes from ver. 0.13.0 to ver. 0.13.1
 
 | Ver. 0.13.0                      | Ver. 0.13.1                             |
@@ -127,6 +142,7 @@
 | pub fn set_failed(&mut self)     | pub(super) fn set_failed(&mut self)     |
 
 - The attribute of the above functions of BigCryptor64 and BigCryptor128 has been changed from `pub` into `pub(super)` for the security reason. 
+
 
 ## Breaking changes from ver. 0.12.1 to ver. 0.12.2
 
@@ -139,10 +155,10 @@
 
 | Ver. 0.12.1                                                               | Ver. 0.12.2                                                                |
 |---------------------------------------------------------------------------|----------------------------------------------------------------------------|
-| pub fn new_with_key<const K: usize\>(key: [u8; K]) -> Self                 | pub fn new_with_key<const K: usize\>(key: &[u8; K]) -> Self                 |
-| pub fn encryptor_with_key<const K: usize\>(key: [u8; K]) -> Self           | pub fn encryptor_with_key<const K: usize\>(key: &[u8; K]) -> Self           |
-| pub fn decryptor_with_key<const K: usize\>(key: [u8; K]) -> Self           | pub fn decryptor_with_key<const K: usize\>(key: &[u8; K]) -> Self           |
-| pub fn set_key<const K: usize\>(&mut self, key: [u8; K])                   | pub fn set_key<const K: usize\>(&mut self, key: &[u8; K])                   |
+| pub fn new_with_key<const K: usize\>(key: [u8; K]) -> Self                | pub fn new_with_key<const K: usize\>(key: &[u8; K]) -> Self                |
+| pub fn encryptor_with_key<const K: usize\>(key: [u8; K]) -> Self          | pub fn encryptor_with_key<const K: usize\>(key: &[u8; K]) -> Self          |
+| pub fn decryptor_with_key<const K: usize\>(key: [u8; K]) -> Self          | pub fn decryptor_with_key<const K: usize\>(key: &[u8; K]) -> Self          |
+| pub fn set_key<const K: usize\>(&mut self, key: [u8; K])                  | pub fn set_key<const K: usize\>(&mut self, key: &[u8; K])                  |
 | pub fn encrypt_unit(&mut self, message: [IntUnion; NB]) -> [IntUnion; NB] | pub fn encrypt_unit(&mut self, message: &[u32; NB]) -> [u32; NB]           |
 | pub fn decrypt_unit(&mut self, cipher: [IntUnion; NB]) -> [IntUnion; NB]  | pub fn decrypt_unit(&mut self, cipher: &[IntUnion; NB]) -> [IntUnion; NB]  |
 
@@ -154,6 +170,7 @@
 
 - The function name of the above functions of Rijndael_Generic has been changed from `get_desirable_ROUND` into `get_desirable_round`.
 
+
 ## Breaking changes from ver. 0.12.0 to ver. 0.12.1
 
 | Ver. 0.12.0                                     | Ver. 0.12.1                                            |
@@ -161,7 +178,8 @@
 | pub fn _encrypt(&mut self, message: u64) -> u64 | pub(super) fn _encrypt(&mut self, message: u64) -> u64 |
 | pub fn _decrypt(&mut self, cipher: u64) -> u64  | pub(super) fn _decrypt(&mut self, cipher: u64) -> u64  |
 
-- The attribute of the above functions of DES_Generic has been changed from `pub` into `pub(super)` for the security reason. 
+- The attribute of the above functions of DES_Generic has been changed from `pub` into `pub(super)` for the security reason.
+
 
 ## Breaking changes from ver. 0.11.5 to ver. 0.11.6
 
@@ -288,40 +306,43 @@
 
 - The constant SmallUInt::BYTES has been renamed to SmallUInt::BITS, and its datatype has also been changed from `usize` to `u32` for consistancy with the primitive datatyes such as `u8`, `u16`, `u32`, `u64`, `u128`, and `usize`.
 
+
 ### Four methods in BigUInt
 
-| Ver. 0.11.2                                                | Ver. 0.11.3                                              |
-|------------------------------------------------------------|----------------------------------------------------------|
-| pub fn submax(size_in_bits: usize) -> Self                 | pub fn submax(size_in_bits: u32) -> Self                 |
-| pub const fn size_in_bytes() -> usize                      | pub const fn size_in_bytes() -> u32                      |
-| pub const fn size_in_bits() -> usize                       | pub const fn size_in_bits() -> u32                       |
-| pub fn length_in_bytes(&self) -> usize                     | pub fn length_in_bytes(&self) -> u32                     |
-| pub fn length_in_bits(&self) -> usize                      | pub fn length_in_bits(&self) -> u32                      |
-| pub fn set_submax(&mut self, size_in_bits: usize)          | pub fn set_submax(&mut self, size_in_bits: u32)          |
+| Ver. 0.11.2                                                 | Ver. 0.11.3                                               |
+|-------------------------------------------------------------|-----------------------------------------------------------|
+| pub fn submax(size_in_bits: usize) -> Self                  | pub fn submax(size_in_bits: u32) -> Self                  |
+| pub const fn size_in_bytes() -> usize                       | pub const fn size_in_bytes() -> u32                       |
+| pub const fn size_in_bits() -> usize                        | pub const fn size_in_bits() -> u32                        |
+| pub fn length_in_bytes(&self) -> usize                      | pub fn length_in_bytes(&self) -> u32                      |
+| pub fn length_in_bits(&self) -> usize                       | pub fn length_in_bits(&self) -> u32                       |
+| pub fn set_submax(&mut self, size_in_bits: usize)           | pub fn set_submax(&mut self, size_in_bits: u32)           |
 | pub fn is_bit_set(self, bit_pos: usize) -> Option<bool\>    | pub fn is_bit_set(self, bit_pos: u32) -> Option<bool\>    |
-| pub fn is_bit_set_(self, bit_pos: usize) -> bool           | pub fn is_bit_set_(self, bit_pos: u32) -> bool           |
+| pub fn is_bit_set_(self, bit_pos: usize) -> bool            | pub fn is_bit_set_(self, bit_pos: u32) -> bool            |
 | pub fn generate_check_bits(bit_pos: usize) -> Option<Self\> | pub fn generate_check_bits(bit_pos: u32) -> Option<Self\> |
-| pub fn generate_check_bits_(bit_pos: usize) -> Self        | pub fn generate_check_bits_(bit_pos: u32) -> Self        |
-| pub fn get_lower_portion(portion: usize) -> Self           | pub fn get_lower_portion(portion: u32) -> Self           |
+| pub fn generate_check_bits_(bit_pos: usize) -> Self         | pub fn generate_check_bits_(bit_pos: u32) -> Self         |
+| pub fn get_lower_portion(portion: usize) -> Self            | pub fn get_lower_portion(portion: u32) -> Self            |
 | 
 
 - The return types and the arguments of the above methods has been changed from `usize` to `u32` for consistancy with the primitive datatyes such as `u8`, `u16`, `u32`, `u64`, `u128`, and `usize`.
 
+
 ### Four methods in SmallUInt
 
-| Ver. 0.11.2                                            | Ver. 0.11.3                                          |
-|--------------------------------------------------------|------------------------------------------------------|
-| fn size_in_bytes() -> usize                            | fn size_in_bytes() -> u32                            |
-| fn size_in_bits() -> usize                             | fn size_in_bits() -> u32                             |
-| fn length_in_bytes(&self) -> usize                     | fn length_in_bytes(&self) -> u32                     |
-| fn length_in_bits(&self) -> usize                      | fn length_in_bits(&self) -> u32                      |
-| fn set_submax(&mut self, size_in_bits: usize)          | fn set_submax(&mut self, size_in_bits: u32)          |
+| Ver. 0.11.2                                             | Ver. 0.11.3                                           |
+|---------------------------------------------------------|-------------------------------------------------------|
+| fn size_in_bytes() -> usize                             | fn size_in_bytes() -> u32                             |
+| fn size_in_bits() -> usize                              | fn size_in_bits() -> u32                              |
+| fn length_in_bytes(&self) -> usize                      | fn length_in_bytes(&self) -> u32                      |
+| fn length_in_bits(&self) -> usize                       | fn length_in_bits(&self) -> u32                       |
+| fn set_submax(&mut self, size_in_bits: usize)           | fn set_submax(&mut self, size_in_bits: u32)           |
 | fn is_bit_set(self, bit_pos: usize) -> Option<bool\>    | fn is_bit_set(self, bit_pos: u32) -> Option<bool\>    |
-| fn is_bit_set_(self, bit_pos: usize) -> bool           | fn is_bit_set_(self, bit_pos: u32) -> bool           |
+| fn is_bit_set_(self, bit_pos: usize) -> bool            | fn is_bit_set_(self, bit_pos: u32) -> bool            |
 | fn generate_check_bits(bit_pos: usize) -> Option<Self\> | fn generate_check_bits(bit_pos: u32) -> Option<Self\> |
-| fn generate_check_bits_(bit_pos: usize) -> Self        | fn generate_check_bits_(bit_pos: u32) -> Self        |
+| fn generate_check_bits_(bit_pos: usize) -> Self         | fn generate_check_bits_(bit_pos: u32) -> Self         |
 
 - The return types and the arguments of the above methods has been changed from `usize` to `u32` for consistancy with the primitive datatyes such as `u8`, `u16`, `u32`, `u64`, `u128`, and `usize`.
+
 
 ### methods in SHA_2_512_Generic and SHA_2_512_t_Generic
 
@@ -334,6 +355,7 @@
 
 - The arguments of the above method has been changed from `u128` to `u64` for consistancy with the methods digest() of other hash modules.
 
+
 ## Breaking changes from ver. 0.10.1 to ver. 0.10.2
 
 | Methods                                       |
@@ -344,6 +366,7 @@
 | pub fn decrypt\_\*\_with_padding_*(..) -> u64 |
 
 - The methods above have been moved from struct DES_Generic to implementation of the traits ECB_PKCS7, ECB_ISO, CBC_PKCS7, CBC_ISO, PCBC_PKCS7, PCBC_ISO, CFB, OFB, and CTR.
+
 
 ## Breaking changes from ver. 0.9.3 to ver. 0.9.4
 
@@ -371,32 +394,33 @@
 | fn midpoint_assign_uint<U\>(&mut self, rhs: U)                                           |
 | fn midpoint(&self, rhs: &Self) -> Self                                                   |
 | fn midpoint_assign(&mut self, rhs: &Self)                                                |
-| fn checked_pow_uint<U\>(&self, exp: U) -> Option<Self\>                                   |
+| fn checked_pow_uint<U\>(&self, exp: U) -> Option<Self\>                                  |
 | fn unchecked_pow_uint<U\>(&self, exp: U) -> Self                                         |
 | fn saturating_pow_uint<U\>(&self, exp: U) -> Self                                        |
 | fn saturating_pow_assign_uint<U\>(&mut self, exp: U)                                     |
-| fn checked_pow(&self, exp: &Self) -> Option<Self\>                                        |
+| fn checked_pow(&self, exp: &Self) -> Option<Self\>                                       |
 | fn unchecked_pow(&self, exp: &Self) -> Self                                              |
 | fn saturating_pow(&self, exp: &Self) -> Self                                             |
 | fn saturating_pow_assign(&mut self, exp: &Self)                                          |
-| fn checked_iroot_uint<U\>(&self, exp: U) -> Option<Self\>                                 |
+| fn checked_iroot_uint<U\>(&self, exp: U) -> Option<Self\>                                |
 | fn unchecked_iroot_uint<U\>(&self, exp: U) -> Self                                       |
-| fn checked_ilog_uint<U\>(&self, base: U) -> Option<Self\>                                 |
+| fn checked_ilog_uint<U\>(&self, base: U) -> Option<Self\>                                |
 | fn unchecked_ilog_uint<U\>(&self, base: U) -> Self                                       |
-| fn checked_iroot(&self, exp: &Self) -> Option<Self\>                                      |
+| fn checked_iroot(&self, exp: &Self) -> Option<Self\>                                     |
 | fn unchecked_iroot(&self, exp: &Self) -> Self                                            |
 | fn checked_ilog(&self, base: &Self) -> Self                                              |
 | fn unchecked_ilog(&self, base: &Self) -> Self                                            |
-| fn checked_ilog2(&self) -> Option<Self\>                                                  |
+| fn checked_ilog2(&self) -> Option<Self\>                                                 |
 | fn unchecked_ilog2(&self) -> Self                                                        |
-| fn checked_ilog10(&self) -> Option<Self\>                                                 |
+| fn checked_ilog10(&self) -> Option<Self\>                                                |
 | fn unchecked_ilog10(&self) -> Self                                                       |
-| fn checked_shift_left<U\>(&self, n: U) -> Option<Self\>                                   |
+| fn checked_shift_left<U\>(&self, n: U) -> Option<Self\>                                  |
 | fn unchecked_shift_left<U\>(&self, n: U) -> Self                                         |
-| fn checked_shift_right<U\>(&self, n: U) -> Option<Self\>                                  |
+| fn checked_shift_right<U\>(&self, n: U) -> Option<Self\>                                 |
 | fn unchecked_shift_right<U\>(&self, n: U) -> Self                                        |
 
 - The methods above have been moved from struct BigUInt to trait BigUInt_More because docs.rs failed in generating struct.bigUInt.html.
+
 
 ## Breaking changes from ver. 0.9.2 to ver. 0.9.3
 
@@ -457,6 +481,7 @@
 
 - The methods above have been moved from struct BigUInt to trait BigUInt_More because docs.rs failed in generating struct.bigUInt.html.
 
+
 ## Breaking changes from ver. 0.9.0 to ver. 0.9.1
 
 | Ver. 0.9.0                                             | Ver. 0.9.1 |
@@ -468,7 +493,9 @@
 
 - The methods above have been removed because they are redundant because of pow_uint(), pow_assign_uint(), pow(), and pow_assign().
 
+
 ## Breaking changes from ver. 0.8.6 to ver. 0.8.7
+
 ### Arithmetic operators for SmallUInt, ShortUnion, IntUnion, LongUnion, and LongerUnion
 
 | Methods                                                        |
@@ -526,23 +553,25 @@
 
 - In order to prevent confusion, how the arithmetic operators for SmallUint, ShortUnion, IntUnion, LongUnion, and LongerUnion work have been changed for those to work the same way as the operators for `u8`, `u16`, `u32`, `u64`, `u128`, and `usize` work. 
 
+
 ### Bit manipulation methods of BigUInt
 
-| Methods                                                     |
-|-------------------------------------------------------------|
-| pub fn shift_left<U\>(&self, n: U) -> Self                  |
-| pub fn shift_left_assign<U\>(&mut self, n: U)               |
+| Methods                                                      |
+|--------------------------------------------------------------|
+| pub fn shift_left<U\>(&self, n: U) -> Self                   |
+| pub fn shift_left_assign<U\>(&mut self, n: U)                |
 | pub fn checked_shift_left<U\>(&self, n: U) -> Option<Self\>  |
-| pub fn unchecked_shift_left<U\>(&self, n: U) -> Self        |
-| pub fn shift_right<U\>(&self, n: U) -> Self                 |
-| pub fn shift_right_assign<U\>(&mut self, n: U)              |
+| pub fn unchecked_shift_left<U\>(&self, n: U) -> Self         |
+| pub fn shift_right<U\>(&self, n: U) -> Self                  |
+| pub fn shift_right_assign<U\>(&mut self, n: U)               |
 | pub fn checked_shift_right<U\>(&self, n: U) -> Option<Self\> |
-| pub fn unchecked_shift_right<U\>(&self, n: U) -> Self       |       
+| pub fn unchecked_shift_right<U\>(&self, n: U) -> Self        |
 
 - These methods have been changed to set tbe flag `LEFT_CARRY` instead of the flag `OVERFLOW` when a bit `1` is pushed out to the left, and to set tbe flag `RIGHT_CARRY` instead of the flag `UNDERFLOW` when a bit `1` is pushed out to the right.
 
 
 ## Breaking changes from ver. 0.8.5 to ver. 0.8.6
+
 ### Four methods of BigUInt
 
 | Ver. 0.8.5                                            | Ver. 0.8.6                                                       |
@@ -555,6 +584,7 @@
 - The method name to_string_with_radix_and_delimiter has been changed into to_string_with_radix_and_stride_and_delimiter for preventing confusion of usage.
 - The three methods set_flag_bit(), reset_flag_bit(), and is_flag_bit_on() have be changed to be private because they are meaningless unless all the private constants OVERFLOW, UNDERFLOW, INFINITY, DIVIDED_BY_ZERO, and UNDEFINED of struct BigUInt are changed to be public.
 
+
 ### Three methods of BigUInt
 
 | Ver. 0.8.5                           | Ver. 0.8.6 |
@@ -564,6 +594,7 @@
 | pub fn is_untrustable(&self) -> bool | removed    |
 
 - The methods above have been removed because they are not used.
+
 
 ## Breaking changes from ver. 0.8.4 to ver. 0.8.5
 
@@ -585,6 +616,7 @@
 | pub fn unchecked_ilog10_uint(&self) -> Self       | removed    |
 
 - The methods above have been removed because they are meaningless.
+
 
 ### Seven methods of BigUInt
 
@@ -650,7 +682,8 @@
 
 - The methods above have been removed because they never overflow.
 
-### Seven methods of BigUInt
+
+### Seven (7) methods of BigUInt
 
 | Ver. 0.8.1                                                      | Ver. 0.8.2                                                       |
 |-----------------------------------------------------------------|------------------------------------------------------------------|
@@ -741,6 +774,7 @@
 
 - The method name root has been changed into iroot for the name consistancy with the methods isqrt, ilog, ilog10, ilog2, etc.
 
+
 ### Two methods of unions ShortUnion, IntUnion, LongUnion, LongerUnion, and SizeUnion
 
 | Ver. 0.7.6                             | Ver. 0.8.0 |
@@ -752,7 +786,7 @@
 
 ## Breaking changes from ver. 0.7.2 to ver. 0.7.3
 
-### Five methods of BigUInt
+### Five (5) methods of BigUInt
 
 | Ver. 0.7.2                                      | Ver. 0.7.3                                     |
 |-------------------------------------------------|------------------------------------------------|
@@ -766,6 +800,7 @@
 - The reason of the exception to keep the arguments of BigUInt::from_string() and BigUInt::from_str_radix() to be borrowed is to keep the consistency with String::from().
 - The reason of the exception to keep the arguments of BigUInt::from_biguint() to be borrowed is for the performance and the convenience.
 - The reason of the exception to keep the arguments of SharedArrays::from_src() to be borrowed is for its purpose and the convenience.
+
 
 ### 2 methods of unions ShortUnion, IntUnion, LongUnion, LongerUnion, and SizeUnion
 
@@ -785,6 +820,7 @@
 |-----------------------------------------------------|------------|
 | pub fn into_des(&mut self, pos: usize) -> Option&lt;D&gt; | removed    |
 
+
 ### A method of union SharedArray
 
 | Ver. 0.7.1                                   | Ver. 0.7.2                                       |
@@ -802,6 +838,7 @@
 | define_Utypes_with_utypes | removed    |
 
 - The macro name `define_Utypes_with_utypes` should not have been exposed to the outside of this crate so it was removed rather than recommending not to use it at documentation.
+
 
 ### fields of ShortUnion, IntUnion, LongUnion, LongerUnion, and SizeUnion
 
@@ -825,6 +862,7 @@
 | pub s_size  | s_size     |
 
 - All the fields of all the unions such as ShortUnion, IntUnion, LongUnion, LongerUnion, and SizeUnion are changed from public into private in order that users cannot access them directly instead of warning users not to access them directly in documentation.
+
 
 ### Names of struct `Share` and `Common`
 
@@ -850,6 +888,7 @@
 - A breaking change has been made to change the function name from `number::SmallUInt::sqrt(self) -> Self;` to `number::SmallUInt::isqrt(self) -> Self;` in order to keep consistency with primitive data types such as `u8`, `u16`, `u32`, `u64`, `u128`, and `usize`.
 - Breaking changes has been made to change the function arguement from `&self` into `self` in order to keep consistency with other functions.
 - reverse_bits_assign(&mut self) has been removed to keep consistency with primitive data types such as `u8`, `u16`, `u32`, `u64`, `u128`, and `usize`.
+
 
 ### Methods of unions ShortUnion, IntUnion, LongUnion, LongerUnion, and SizeUnion
 
@@ -884,9 +923,11 @@
 
 - Breaking changes have been made to remove the redundant methods from `ShortUnion`, `IntUnion`, `LongUnion`, `LongerUnion`, and `SizeUnions` since there are the same methods in the trait `number::SmallUInt` and its implementation, and/or in order to keep consistency with primitive data types such as `u8`, `u16`, `u32`, `u64`, `u128`, and `usize`.
 
+
 ## Breaking change from ver. 0.6.2 to ver. 0.6.3
 
 A breaking change has been made to change the function `number::BigUInt::copy_within<R\>(&mut self, src: R, dest: usize)` from public to private since it should have been private from the beginning for security reason because it is high chance that this function will be missused or even abused.
+
 
 ### A method of struct BigUInt
 
@@ -894,9 +935,11 @@ A breaking change has been made to change the function `number::BigUInt::copy_wi
 |----------------------------------------------------|------------------------------------------------|
 | pub fn copy_within(&mut self, src: R, dest: usize) | fn copy_within(&mut self, src: R, dest: usize) |
 
+
 ## Breaking changes from ver. 0.5.0 to ver. 0.6.0
 
 Breaking changes have been made to change the source code according to Rust convention and in order to remove all warnings.
+
 
 ### Methods of trait SmallUInt and its implementation for u8, u16, u32, u64, u128, usize, ShortUnion, IntUnion, LongUnion, LongerUnion, and SizeUnion
 
@@ -915,6 +958,7 @@ Breaking changes have been made to change the source code according to Rust conv
 | fn set_LSB(&mut self)                                           | fn set_lsb(&mut self)                                           |
 | fn is_MSB_set(self) -> bool                                     | fn is_msb_set(self) -> bool                                     |
 
+
 ### Five methods of struct BigUInt functions
 
 | Ver. 0.5.0                                                      | Ver. 0.6.0                                                      |
@@ -924,6 +968,7 @@ Breaking changes have been made to change the source code according to Rust conv
 | fn set_MSB(&mut self)                                           | fn set_msb(&mut self)                                           |
 | fn set_LSB(&mut self)                                           | fn set_lsb(&mut self)                                           |
 | fn is_MSB_set(self) -> bool                                     | fn is_msb_set(self) -> bool                                     |
+
 
 ### types of struct BigUInt
 
@@ -1007,12 +1052,14 @@ Breaking changes have been made to change the source code according to Rust conv
 | type u8192_with_u128  | type U8192_with_u128  |
 | type u16384_with_u128 | type U16384_with_u128 |
 
+
 ### Two methods of trait SmallSInt and its implementation for i8, i16, i32, i64, i128, and isize
 
 | Ver. 0.5.0       | Ver. 0.6.0       |
 |------------------|------------------|
 | fn Max() -> Self | fn max() -> Self |
 | fn Min() -> Self | fn min() -> Self |
+
 
 ### Methods of struct MD4_Generic, MD5_Generic, SHA1_Generic, SHA2_256_Generic, SHA2_512_Generic, and SHA2_512_t_Generic
 
@@ -1025,6 +1072,7 @@ Breaking changes have been made to change the source code according to Rust conv
 | fn put_HashValue_in_array(&self, out: &mut [T; M])         | fn put_hash_value_in_array(&self, out: &mut [T; M])          |
 | fn digest_C(&mut self, ...)                                | fn digest_c(&mut self, ...)                                  |
 
+
 ### Three methods of struct SHA2_512_t_Generic
 
 | Ver. 0.5.0                                    | Ver. 0.6.0                                     |
@@ -1033,21 +1081,22 @@ Breaking changes have been made to change the source code according to Rust conv
 | fn new_with_seedText(seed_text: &str) -> Self | fn new_with_seed_text(seed_text: &str) -> Self |
 | fn new_with_H(h: &[u64; 8]) -> Self           | fn new_with_h(h: &[u64; 8]) -> Self            |
 
+
 ### Methods of struct Random
 
-| Ver. 0.5.0                                                      | Ver. 0.6.0                                                      |
-|-----------------------------------------------------------------|-----------------------------------------------------------------|
-| fn random_with_MSB_set_uint(&mut self) -> T                     | fn random_with_msb_set_uint(&mut self) -> T                     |
-| fn random_odd_with_MSB_set_uint(&mut self) -> T                 | fn random_odd_with_msb_set_uint(&mut self) -> T                 |
-| fn random_prime_using_Miller_Rabin_uint(&mut self, ... ) -> T   | fn random_prime_using_miller_rabin_uint(&mut self, ... ) -> T   |
-| fn random_prime_with_MSB_set_using_Miller_Rabin_uint(...) -> T  | fn random_prime_with_msb_set_using_miller_rabin_uint(...) -> T  |
+| Ver. 0.5.0                                                       | Ver. 0.6.0                                                       |
+|------------------------------------------------------------------|------------------------------------------------------------------|
+| fn random_with_MSB_set_uint(&mut self) -> T                      | fn random_with_msb_set_uint(&mut self) -> T                      |
+| fn random_odd_with_MSB_set_uint(&mut self) -> T                  | fn random_odd_with_msb_set_uint(&mut self) -> T                  |
+| fn random_prime_using_Miller_Rabin_uint(&mut self, ... ) -> T    | fn random_prime_using_miller_rabin_uint(&mut self, ... ) -> T    |
+| fn random_prime_with_MSB_set_using_Miller_Rabin_uint(...) -> T   | fn random_prime_with_msb_set_using_miller_rabin_uint(...) -> T   |
 | fn random_BigUInt(&mut self) -> BigUInt<T, N\>                   | fn random_biguint(&mut self) -> BigUInt<T, N\>                   |
-| fn random_under_BigUInt( ... ) -> Option<BigUInt<T, N\>\>         | fn random_under_biguint( ... ) -> Option<BigUInt<T, N\>\>         |
-| fn random_under_BigUInt_( ... ) -> Option<BigUInt<T, N\>\>        | fn random_under_biguint_( ... ) -> Option<BigUInt<T, N\>\>        |
+| fn random_under_BigUInt( ... ) -> Option<BigUInt<T, N\>\>        | fn random_under_biguint( ... ) -> Option<BigUInt<T, N\>\>        |
+| fn random_under_BigUInt_( ... ) -> Option<BigUInt<T, N\>\>       | fn random_under_biguint_( ... ) -> Option<BigUInt<T, N\>\>       |
 | fn random_odd_BigUInt(&mut self) -> BigUInt<T, N\>               | fn random_odd_biguint(&mut self) -> BigUInt<T, N\>               |
-| fn random_odd_under_BigUInt( ... ) -> Option<BigUInt<T, N\>\>     | fn random_odd_under_biguint( ... ) -> Option<BigUInt<T, N\>\>     |
-| fn random_odd_under_BigUInt_( ... ) -> Option<BigUInt<T, N\>\>    | fn random_odd_under_biguint_( ... ) -> Option<BigUInt<T, N\>\>    |
+| fn random_odd_under_BigUInt( ... ) -> Option<BigUInt<T, N\>\>    | fn random_odd_under_biguint( ... ) -> Option<BigUInt<T, N\>\>    |
+| fn random_odd_under_BigUInt_( ... ) -> Option<BigUInt<T, N\>\>   | fn random_odd_under_biguint_( ... ) -> Option<BigUInt<T, N\>\>   |
 | fn random_with_MSB_set_BigUInt(&mut self) -> BigUInt<T, N\>      | fn random_with_msb_set_biguint(&mut self) -> BigUInt<T, N\>      |
 | fn random_odd_with_MSB_set_BigUInt(&mut self) -> BigUInt<T, N\>  | fn random_odd_with_msb_set_biguint(&mut self) -> BigUInt<T, N\>  |
 | fn random_prime_using_Miller_Rabin_BigUInt(..) -> BigUInt<T, N\> | fn random_prime_using_miller_rabin_biguint(..) -> BigUInt<T, N\> |
-| fn random_prime_with_MSB_set_using_Miller_Rabin_BigUInt(.)-> .. | fn random_prime_with_msb_set_using_miller_rabin_biguint(.)-> .. |
+| fn random_prime_with_MSB_set_using_Miller_Rabin_BigUInt(.)-> ..  | fn random_prime_with_msb_set_using_miller_rabin_biguint(.)-> ..  |

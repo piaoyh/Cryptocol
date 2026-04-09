@@ -43,8 +43,8 @@
 //!   - [`Slapdash_PRNG_Creator_MD5`](type@Slapdash_PRNG_Creator_MD5): creates a PRNG that uses a hash algorithm MD5.
 //!   - [`Slapdash_PRNG_Creator_MD4`](type@Slapdash_PRNG_Creator_MD4): creates a PRNG that uses a hash algorithm MD4.
 //! ## Wizards to create a pseudo-random number generator with an engine of symmetric-key encryption algorithm
-//!   - [`Random_PRNG_Creator_Rijndael`](type@Random_PRNG_Creator_Rijndael): uses a symmetric-key encryption algorithm Rijndael.
-//!   - [`Any_PRNG_Creator_Rijndael`](type@Any_PRNG_Creator_Rijndael): uses a symmetric-key encryption algorithm Rijndael.
+//!   - [`Random_PRNG_Creator_AES_128`](type@Random_PRNG_Creator_AES_128): uses a symmetric-key encryption algorithm Rijndael.
+//!   - [`Any_PRNG_Creator_AES_128`](type@Any_PRNG_Creator_AES_128): uses a symmetric-key encryption algorithm Rijndael.
 //!   - [`Slapdash_PRNG_Creator_DES`](type@Slapdash_PRNG_Creator_DES): uses a symmetric-key encryption algorithm DES.
 //! ## Wizards to create a pseudo-random number generator with a simple engine of C standard libraray
 //!   - [`Slapdash_PRNG_Creator_CPRNG_Engine`](type@Slapdash_PRNG_Creator_CPRNG_Engine): uses a pseudo-random number generator
@@ -191,16 +191,17 @@ pub(crate) use random::{ SECURE_COUNT, LESS_SECURE_COUNT, INSECURE_COUNT };
 
 pub use random_specific::{ Random_PRNG_Creator,
                             Random_PRNG_Creator_BIG_KECCAK_1024, Random_PRNG_Creator_SHA3_512, 
-                            Random_PRNG_Creator_SHA2_512, Random_PRNG_Creator_Rijndael,
+                            Random_PRNG_Creator_SHA2_512, Random_PRNG_Creator_AES_128,
                         Any_PRNG_Creator,
                             Any_PRNG_Creator_SHA3_512, Any_PRNG_Creator_SHA3_256,
                             Any_PRNG_Creator_SHAKE_256, Any_PRNG_Creator_SHAKE_128, 
-                            Any_PRNG_Creator_SHA2_512, Any_PRNG_Creator_SHA2_256, Any_PRNG_Creator_Rijndael,
+                            Any_PRNG_Creator_SHA2_512, Any_PRNG_Creator_SHA2_256,
+                            Any_PRNG_Creator_AES_128,
                         Slapdash_PRNG_Creator,
                             Slapdash_PRNG_Creator_SHA1, Slapdash_PRNG_Creator_SHA0,
                             Slapdash_PRNG_Creator_MD5, Slapdash_PRNG_Creator_MD4,
                             Slapdash_PRNG_Creator_DES, Slapdash_PRNG_Creator_CPRNG_Engine };
-pub(crate) use random_specific::{ PRNG_Creator, PRNG_Creator_methods };
+pub(crate) use random_specific::{ PRNG_Creator_methods, DOC_STRING };
 
 pub use cprng_engine_generic::{ CPRNG_Engine_Generic, CPRNG_Engine };
 pub use trait_prng_engine::PRNG_Engine;

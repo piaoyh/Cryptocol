@@ -179,14 +179,14 @@ pub use trait_pkcs1v15::PKCS1V15;
 pub use trait_oaep::OAEP;
 pub use trait_hash::Hash;
 
-pub use trait_prng::{ ASYMMETRIC_PRNG_Creator_BIG_KECCAK_1024,
-                      ASYMMETRIC_PRNG_Creator_SHA3_512, ASYMMETRIC_PRNG_Creator_SHA3_256,
-                      ASYMMETRIC_PRNG_Creator_SHAKE_256, ASYMMETRIC_PRNG_Creator_SHAKE_128,
-                      ASYMMETRIC_PRNG_Creator_SHA2_512, ASYMMETRIC_PRNG_Creator_SHA2_256,
-                      ASYMMETRIC_PRNG_Creator_SHA1, ASYMMETRIC_PRNG_Creator_SHA0,
-                      ASYMMETRIC_PRNG_Creator_MD5, ASYMMETRIC_PRNG_Creator_MD4,
-                      ASYMMETRIC_PRNG_Creator_Rijndael, ASYMMETRIC_PRNG_Creator_DES,
-                      ASYMMETRIC_PRNG_Creator_CPRNG_Engine };
+pub use trait_prng::{ Asymmetric_PRNG_Creator_BIG_KECCAK_1024,
+                      Asymmetric_PRNG_Creator_SHA3_512, Asymmetric_PRNG_Creator_SHA3_256,
+                      Asymmetric_PRNG_Creator_SHAKE_256, Asymmetric_PRNG_Creator_SHAKE_128,
+                      Asymmetric_PRNG_Creator_SHA2_512, Asymmetric_PRNG_Creator_SHA2_256,
+                      Asymmetric_PRNG_Creator_SHA1, Asymmetric_PRNG_Creator_SHA0,
+                      Asymmetric_PRNG_Creator_MD5, Asymmetric_PRNG_Creator_MD4,
+                      Asymmetric_PRNG_Creator_AES_128, Asymmetric_PRNG_Creator_DES,
+                      Asymmetric_PRNG_Creator_CPRNG_Engine };
 use trait_prng::PRNG;
 
 // pub use ecc_25519::*;
