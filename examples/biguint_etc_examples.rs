@@ -101,11 +101,11 @@ fn biguint_random_number_main()
 fn biguint_any()
 {
     println!("biguint_any");
-    use cryptocol::random::Any;
+    use cryptocol::random::Any_PRNG_Creator;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u128);
 
-    let any: U1024 = Any::new().random_biguint();
+    let any: U1024 = Any_PRNG_Creator::create().random_biguint();
     println!("Random Number: {}", any);
     println!("---------------------------");
 }
@@ -113,11 +113,11 @@ fn biguint_any()
 fn biguint_any_odd()
 {
     println!("biguint_any_odd");
-    use cryptocol::random::Any;
+    use cryptocol::random::Any_PRNG_Creator;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u64);
 
-    let any: U1024 = Any::new().random_odd_biguint();
+    let any: U1024 = Any_PRNG_Creator::create().random_odd_biguint();
     println!("Random Odd Number: {}", any);
     assert!(any.is_odd());
     println!("---------------------------");
@@ -126,12 +126,12 @@ fn biguint_any_odd()
 fn biguint_any_less_than()
 {
     println!("biguint_any_less_than");
-    use cryptocol::random::Any;
+    use cryptocol::random::Any_PRNG_Creator;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u32);
 
     let ceiling = U1024::max() / U1024::from_uint::<u32>(3);
-    let any = Any::new().random_under_biguint(&ceiling).unwrap();
+    let any = Any_PRNG_Creator::create().random_under_biguint(&ceiling).unwrap();
     println!("Random Number less than {} is {}", ceiling, any);
     assert!(any < ceiling);
     println!("---------------------------");
@@ -140,12 +140,12 @@ fn biguint_any_less_than()
 fn biguint_any_odd_less_than()
 {
     println!("biguint_any_odd_less_than");
-    use cryptocol::random::Any;
+    use cryptocol::random::Any_PRNG_Creator;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u16);
 
     let ceiling = U1024::max() / U1024::from_uint::<u32>(3);
-    let any = Any::new().random_odd_under_biguint(&ceiling).unwrap();
+    let any = Any_PRNG_Creator::create().random_odd_under_biguint(&ceiling).unwrap();
     println!("Random Odd Number less than {} is {}", ceiling, any);
     assert!(any < ceiling);
     assert!(any.is_odd());
@@ -155,11 +155,11 @@ fn biguint_any_odd_less_than()
 fn biguint_any_with_msb_set()
 {
     println!("biguint_any_with_msb_set");
-    use cryptocol::random::Any;
+    use cryptocol::random::Any_PRNG_Creator;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u8);
 
-    let any = Any::new().random_with_msb_set_biguint();
+    let any = Any_PRNG_Creator::create().random_with_msb_set_biguint();
     println!("Random Number = {}", any);
     println!("1024-bit Random Number = {}", any);
     assert!(any > U1024::submax(1023));
@@ -169,11 +169,11 @@ fn biguint_any_with_msb_set()
 fn biguint_any_odd_with_msb_set()
 {
     println!("biguint_any_odd_with_msb_set");
-    use cryptocol::random::Any;
+    use cryptocol::random::Any_PRNG_Creator;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u128);
 
-    let any = Any::new().random_odd_with_msb_set_biguint();
+    let any = Any_PRNG_Creator::create().random_odd_with_msb_set_biguint();
     println!("Random Number = {}", any);
     println!("1024-bit Random Odd Number = {}", any);
     assert!(any > U1024::submax(1023));
@@ -185,11 +185,11 @@ fn biguint_any_prime_using_miller_rabin()
 {
     println!("biguint_any_prime_using_miller_rabin");
     use cryptocol::number::BigUInt_Prime;
-    use cryptocol::random::Any;
+    use cryptocol::random::Any_PRNG_Creator;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u64);
 
-    let any: U1024 = Any::new().random_prime_using_miller_rabin_biguint(5);
+    let any: U1024 = Any_PRNG_Creator::create().random_prime_using_miller_rabin_biguint(5);
     println!("Random Prime Number = {}", any);
     assert!(any.is_prime_using_miller_rabin(5));
     println!("---------------------------");
@@ -198,11 +198,11 @@ fn biguint_any_prime_using_miller_rabin()
 fn biguint_random()
 {
     println!("biguint_random");
-    use cryptocol::random::Random;
+    use cryptocol::random::Random_PRNG_Creator;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u64);
 
-    let rand: U512 = Random::new().random_biguint();
+    let rand: U512 = Random_PRNG_Creator::create().random_biguint();
     println!("Random Number: {}", rand);
     println!("---------------------------");
 }
@@ -210,11 +210,11 @@ fn biguint_random()
 fn biguint_random_odd()
 {
     println!("biguint_random_odd");
-    use cryptocol::random::Random;
+    use cryptocol::random::Random_PRNG_Creator;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u128);
 
-    let rand: U1024 = Random::new().random_odd_biguint();
+    let rand: U1024 = Random_PRNG_Creator::create().random_odd_biguint();
     println!("Random Odd Number: {}", rand);
     assert!(rand.is_odd());
     println!("---------------------------");
@@ -223,12 +223,12 @@ fn biguint_random_odd()
 fn biguint_random_less_than()
 {
     println!("biguint_random_less_than");
-    use cryptocol::random::Random;
+    use cryptocol::random::Random_PRNG_Creator;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u32);
 
     let ceiling = U1024::max() / U1024::from_uint::<u32>(3);
-    let rand = Random::new().random_odd_under_biguint(&ceiling).unwrap();
+    let rand = Random_PRNG_Creator::create().random_odd_under_biguint(&ceiling).unwrap();
     println!("Random Number less than {} is {}", ceiling, rand);
     assert!(rand < ceiling);
     println!("---------------------------");
@@ -237,12 +237,12 @@ fn biguint_random_less_than()
 fn biguint_random_odd_less_than()
 {
     println!("biguint_random_odd_less_than");
-    use cryptocol::random::Random;
+    use cryptocol::random::Random_PRNG_Creator;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u16);
 
     let ceiling = U1024::max() / U1024::from_uint::<u32>(3);
-    let rand = Random::new().random_odd_under_biguint(&ceiling).unwrap();
+    let rand = Random_PRNG_Creator::create().random_odd_under_biguint(&ceiling).unwrap();
     println!("Random Odd Number less than {} is {}", ceiling, rand);
     assert!(rand < ceiling);
     assert!(rand.is_odd());
@@ -252,11 +252,11 @@ fn biguint_random_odd_less_than()
 fn biguint_random_with_msb_set()
 {
     println!("biguint_random_with_msb_set");
-    use cryptocol::random::Random;
+    use cryptocol::random::Random_PRNG_Creator;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u8);
 
-    let mut rand = Random::new();
+    let mut rand = Random_PRNG_Creator::create();
     let num: U1024 = rand.random_biguint();
     let num2: U1024 = rand.random_with_msb_set_biguint();
     println!("Random Number = {}", num);
@@ -268,11 +268,11 @@ fn biguint_random_with_msb_set()
 fn biguint_random_odd_with_msb_set()
 {
     println!("biguint_random_odd_with_msb_set");
-    use cryptocol::random::Random;
+    use cryptocol::random::Random_PRNG_Creator;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u128);
 
-    let mut rand = Random::new();
+    let mut rand = Random_PRNG_Creator::create();
     let num: U1024 = rand.random_biguint();
     let num2: U1024 = rand.random_odd_with_msb_set_biguint();
     println!("Random Number = {}", num);
@@ -286,11 +286,11 @@ fn biguint_random_prime_using_miller_rabin()
 {
     println!("biguint_random_prime_using_miller_rabin");
     use cryptocol::number::BigUInt_Prime;
-    use cryptocol::random::Random;
+    use cryptocol::random::Random_PRNG_Creator;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u64);
     
-    let rand: U1024 = Random::new().random_prime_using_miller_rabin_biguint(5);
+    let rand: U1024 = Random_PRNG_Creator::create().random_prime_using_miller_rabin_biguint(5);
     assert!(rand.is_prime_using_miller_rabin(5));
     println!("Random Prime Number = {}", rand);
     println!("---------------------------");

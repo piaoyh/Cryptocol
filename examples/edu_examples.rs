@@ -1,7 +1,7 @@
 
-use cryptocol::number::SmallUInt;
-use cryptocol::symmetric::DES;
-use cryptocol::random::Slapdash;
+// use cryptocol::number::SmallUInt;
+// use cryptocol::symmetric::DES;
+// use cryptocol::random::Slapdash_PRNG_Creator;
 
 
 fn main()
@@ -18,6 +18,8 @@ fn main()
 fn complement()
 {
     println!("Complement case");
+    use cryptocol::symmetric::DES;
+
     let key = 0x_1234567890ABCDEF_u64;
     println!("K =\t{:#018X}", key);
     let mut a_des = DES::new_with_key_u64(key);
@@ -53,6 +55,8 @@ fn complement()
 fn avalanche()
 {
     println!("Avalanche case");
+    use cryptocol::symmetric::DES;
+
     let key = 0x_1234567890ABCDEF_u64;
     println!("K =\t{:#018X}", key);
     let mut a_des = DES::new_with_key_u64(key);
@@ -80,6 +84,8 @@ fn avalanche()
 fn normal_keys()
 {
     println!("Normal key case");
+    use cryptocol::symmetric::DES;
+
     let key = 0x_1234567890ABCDEF_u64;
     println!("K =\t\t{:#018X}", key);
     let mut a_des = DES::new_with_key_u64(key);
@@ -98,6 +104,8 @@ fn normal_keys()
 fn weak_keys()
 {
     println!("Weak key case");
+    use cryptocol::symmetric::DES;
+    
     let key = 0x_0101010101010101_u64.to_be();
     println!("K =\t\t{:#018X}", key);
     let mut a_des = DES::new_with_key_u64(key);
@@ -116,6 +124,8 @@ fn weak_keys()
 fn semi_weak_keys()
 {
     println!("Semi-Weak key case");
+    use cryptocol::symmetric::DES;
+
     let key1 = 0x_011F011F010E010E_u64.to_be();
     let key2 = 0x_1F011F010E010E01_u64.to_be();
     println!("K1 =\t\t{:#018X}", key1);
@@ -137,8 +147,10 @@ fn semi_weak_keys()
 fn small_rsa()
 {
     println!("small_rsa");
-
-    let mut slapdash = Slapdash::new();
+    use cryptocol::number::SmallUInt;
+    use cryptocol::random::Slapdash_PRNG_Creator;
+    
+    let mut slapdash = Slapdash_PRNG_Creator::create();
     let mut prime1 = slapdash.random_u32();
     let mut prime2 = slapdash.random_u32();
 

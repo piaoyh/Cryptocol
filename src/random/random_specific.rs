@@ -42,9 +42,9 @@ macro_rules! PRNG_Creator_methods {
         /// # For more examples,
         /// click [here](./documentation/random_random_specific/struct.PRNG_Creator.html#method.create)
         #[inline]
-        pub fn create() -> Random_Generic<COUNT>
+        pub fn create() -> Random_Generic<$count>
         {
-            Random_Generic::<COUNT>::new_with($engine::new(), $engine::new())
+            Random_Generic::<$count>::new_with($engine::new(), $engine::new())
         }
 
         // pub fn create_with_seeds(seed: u64, aux: u64) -> Random_Generic<COUNT>
@@ -79,9 +79,9 @@ macro_rules! PRNG_Creator_methods {
         /// # For more examples,
         /// click [here](./documentation/random_specific/struct.PRNG_Creator.html#method.create_with_seeds)
         #[inline]
-        pub fn create_with_seeds(seed: u64, aux: u64) -> Random_Generic<COUNT>
+        pub fn create_with_seeds(seed: u64, aux: u64) -> Random_Generic<$count>
         {
-            Random_Generic::<COUNT>::new_with_generators_seeds($engine::new(), $engine::new(), seed, aux)
+            Random_Generic::<$count>::new_with_generators_seeds($engine::new(), $engine::new(), seed, aux)
         }
 
         // pub fn create_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<COUNT>
@@ -117,9 +117,9 @@ macro_rules! PRNG_Creator_methods {
         /// # For more examples,
         /// click [here](./documentation/random_specific/struct.PRNG_Creator.html#method.create_with_seeds)
         #[inline]
-        pub fn create_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<COUNT> 
+        pub fn create_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<$count> 
         {
-            Random_Generic::<COUNT>::new_with_generators_seed_arrays($engine::new(), $engine::new(), seed, aux)
+            Random_Generic::<$count>::new_with_generators_seed_arrays($engine::new(), $engine::new(), seed, aux)
         }
         
         // pub fn create_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<COUNT>
@@ -169,9 +169,9 @@ macro_rules! PRNG_Creator_methods {
         /// # For more examples,
         /// click [here](./documentation/random_specific/struct.PRNG_Creator.html#method.create_with_seed_collector)
         #[inline]
-        pub fn create_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<COUNT>
+        pub fn create_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<$count>
         {
-            Random_Generic::<COUNT>::new_with_generators_seed_collector($engine::new(), $engine::new(), seed_collector)
+            Random_Generic::<$count>::new_with_generators_seed_collector($engine::new(), $engine::new(), seed_collector)
         }
 
         // pub fn create_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<COUNT>
@@ -232,9 +232,9 @@ macro_rules! PRNG_Creator_methods {
         /// # For more examples,
         /// click [here](./documentation/random_specific/struct.PRNG_Creator.html#method.create_with_seed_collector_seeds)
         #[inline]
-        pub fn create_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<COUNT>
+        pub fn create_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<$count>
         {
-            Random_Generic::<COUNT>::new_with_generators_seed_collector_seeds($engine::new(), $engine::new(), seed_collector, seed, aux)
+            Random_Generic::<$count>::new_with_generators_seed_collector_seeds($engine::new(), $engine::new(), seed_collector, seed, aux)
         }
 
         // pub fn create_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<COUNT>
@@ -297,9 +297,9 @@ macro_rules! PRNG_Creator_methods {
         /// # For more examples,
         /// click [here](./documentation/random_specific/struct.PRNG_Creator.html#method.create_with_seed_collector_seed_arrays)
         #[inline]
-        pub fn create_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<COUNT>
+        pub fn create_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<$count>
         {
-            Random_Generic::<COUNT>::new_with_generators_seed_collector_seed_arrays($engine::new(), $engine::new(), seed_collector, seed, aux)
+            Random_Generic::<$count>::new_with_generators_seed_collector_seed_arrays($engine::new(), $engine::new(), seed_collector, seed, aux)
         }
     };
 }
@@ -478,10 +478,10 @@ pub(crate) use DOC_STRING;
 /// assert!(biguint.is_odd());
 /// ```
 #[allow(non_camel_case_types)]
-pub struct Random_PRNG_Creator_BIG_KECCAK_1024<const COUNT: u64 = SECURE_COUNT> {}
-impl<const COUNT: u64> Random_PRNG_Creator_BIG_KECCAK_1024<COUNT>
+pub struct Random_PRNG_Creator_BIG_KECCAK_1024 {}
+impl Random_PRNG_Creator_BIG_KECCAK_1024
 {
-    PRNG_Creator_methods!{BIG_KECCAK_1024, COUNT}
+    PRNG_Creator_methods!{BIG_KECCAK_1024, SECURE_COUNT}
 }
 
 
@@ -563,10 +563,10 @@ impl<const COUNT: u64> Random_PRNG_Creator_BIG_KECCAK_1024<COUNT>
 /// assert!(biguint.is_odd());
 /// ```
 #[allow(non_camel_case_types)] 
-pub struct Random_PRNG_Creator_SHA3_512<const COUNT: u64 = SECURE_COUNT> {}
-impl<const COUNT: u64> Random_PRNG_Creator_SHA3_512<COUNT>
+pub struct Random_PRNG_Creator_SHA3_512 {}
+impl Random_PRNG_Creator_SHA3_512
 {
-    PRNG_Creator_methods!{SHA3_512, COUNT}
+    PRNG_Creator_methods!{SHA3_512, SECURE_COUNT}
 }
 
 
@@ -648,10 +648,10 @@ impl<const COUNT: u64> Random_PRNG_Creator_SHA3_512<COUNT>
 /// assert!(biguint.is_odd());
 /// ```
 #[allow(non_camel_case_types)] 
-pub struct Random_PRNG_Creator_SHA2_512<const COUNT: u64 = SECURE_COUNT> {}
-impl<const COUNT: u64> Random_PRNG_Creator_SHA2_512<COUNT>
+pub struct Random_PRNG_Creator_SHA2_512 {}
+impl Random_PRNG_Creator_SHA2_512
 {
-    PRNG_Creator_methods!{SHA2_512, COUNT}
+    PRNG_Creator_methods!{SHA2_512, SECURE_COUNT}
 }
 
 
@@ -733,10 +733,10 @@ impl<const COUNT: u64> Random_PRNG_Creator_SHA2_512<COUNT>
 /// assert!(biguint.is_odd());
 /// ```
 #[allow(non_camel_case_types)] 
-pub struct Random_PRNG_Creator_AES_128<const COUNT: u64 = SECURE_COUNT> {}
-impl<const COUNT: u64> Random_PRNG_Creator_AES_128<COUNT>
+pub struct Random_PRNG_Creator_AES_128 {}
+impl Random_PRNG_Creator_AES_128
 {
-    PRNG_Creator_methods!{AES_128, COUNT}
+    PRNG_Creator_methods!{AES_128, SECURE_COUNT}
 }
 
 
@@ -819,9 +819,9 @@ impl<const COUNT: u64> Random_PRNG_Creator_AES_128<COUNT>
 /// ```
 #[allow(non_camel_case_types)] 
 pub struct Any_PRNG_Creator_SHA3_512<const COUNT: u64 = LESS_SECURE_COUNT> {}
-impl<const COUNT: u64> Any_PRNG_Creator_SHA3_512<COUNT>
+impl Any_PRNG_Creator_SHA3_512
 {
-    PRNG_Creator_methods!{SHA3_512, COUNT}
+    PRNG_Creator_methods!{SHA3_512, LESS_SECURE_COUNT}
 }
 
 
@@ -904,9 +904,9 @@ impl<const COUNT: u64> Any_PRNG_Creator_SHA3_512<COUNT>
 /// ```
 #[allow(non_camel_case_types)] 
 pub struct Any_PRNG_Creator_SHA3_256<const COUNT: u64 = LESS_SECURE_COUNT> {}
-impl<const COUNT: u64> Any_PRNG_Creator_SHA3_256<COUNT>
+impl Any_PRNG_Creator_SHA3_256
 {
-    PRNG_Creator_methods!{SHA3_256, COUNT}
+    PRNG_Creator_methods!{SHA3_256, LESS_SECURE_COUNT}
 }
 
 
@@ -988,9 +988,9 @@ impl<const COUNT: u64> Any_PRNG_Creator_SHA3_256<COUNT>
 /// ```
 #[allow(non_camel_case_types)] 
 pub struct Any_PRNG_Creator_SHAKE_256<const COUNT: u64 = LESS_SECURE_COUNT> {}
-impl<const COUNT: u64> Any_PRNG_Creator_SHAKE_256<COUNT>
+impl Any_PRNG_Creator_SHAKE_256
 {
-    PRNG_Creator_methods!{SHAKE_256, COUNT}
+    PRNG_Creator_methods!{SHAKE_256, LESS_SECURE_COUNT}
 }
 
 
@@ -1073,9 +1073,9 @@ impl<const COUNT: u64> Any_PRNG_Creator_SHAKE_256<COUNT>
 /// ```
 #[allow(non_camel_case_types)] 
 pub struct Any_PRNG_Creator_SHAKE_128<const COUNT: u64 = LESS_SECURE_COUNT> {}
-impl<const COUNT: u64> Any_PRNG_Creator_SHAKE_128<COUNT>
+impl Any_PRNG_Creator_SHAKE_128
 {
-    PRNG_Creator_methods!{SHAKE_128, COUNT}
+    PRNG_Creator_methods!{SHAKE_128, LESS_SECURE_COUNT}
 }
 
 
@@ -1158,9 +1158,9 @@ impl<const COUNT: u64> Any_PRNG_Creator_SHAKE_128<COUNT>
 /// ```
 #[allow(non_camel_case_types)] 
 pub struct Any_PRNG_Creator_SHA2_512<const COUNT: u64 = LESS_SECURE_COUNT> {}
-impl<const COUNT: u64> Any_PRNG_Creator_SHA2_512<COUNT>
+impl Any_PRNG_Creator_SHA2_512
 {
-    PRNG_Creator_methods!{SHA2_512, COUNT}
+    PRNG_Creator_methods!{SHA2_512, LESS_SECURE_COUNT}
 }
 
 
@@ -1243,9 +1243,9 @@ impl<const COUNT: u64> Any_PRNG_Creator_SHA2_512<COUNT>
 /// ```
 #[allow(non_camel_case_types)] 
 pub struct Any_PRNG_Creator_SHA2_256<const COUNT: u64 = LESS_SECURE_COUNT> {}
-impl<const COUNT: u64> Any_PRNG_Creator_SHA2_256<COUNT>
+impl Any_PRNG_Creator_SHA2_256
 {
-    PRNG_Creator_methods!{SHA2_256, COUNT}
+    PRNG_Creator_methods!{SHA2_256, LESS_SECURE_COUNT}
 }
 
 
@@ -1328,9 +1328,9 @@ impl<const COUNT: u64> Any_PRNG_Creator_SHA2_256<COUNT>
 /// ```
 #[allow(non_camel_case_types)]
 pub struct Any_PRNG_Creator_AES_128<const COUNT: u64 = LESS_SECURE_COUNT> {}
-impl<const COUNT: u64> Any_PRNG_Creator_AES_128<COUNT>
+impl Any_PRNG_Creator_AES_128
 {
-    PRNG_Creator_methods!{AES_128, COUNT}
+    PRNG_Creator_methods!{AES_128, LESS_SECURE_COUNT}
 }
 
 
@@ -1413,9 +1413,9 @@ impl<const COUNT: u64> Any_PRNG_Creator_AES_128<COUNT>
 /// ```
 #[allow(non_camel_case_types)] 
 pub struct Slapdash_PRNG_Creator_SHA1<const COUNT: u64 = INSECURE_COUNT> {}
-impl<const COUNT: u64> Slapdash_PRNG_Creator_SHA1<COUNT>
+impl Slapdash_PRNG_Creator_SHA1
 {
-    PRNG_Creator_methods!{SHA1, COUNT}
+    PRNG_Creator_methods!{SHA1, INSECURE_COUNT}
 }
 
 
@@ -1497,10 +1497,10 @@ impl<const COUNT: u64> Slapdash_PRNG_Creator_SHA1<COUNT>
 /// assert!(biguint.is_odd());
 /// ```
 #[allow(non_camel_case_types)] 
-pub struct Slapdash_PRNG_Creator_SHA0<const COUNT: u64 = INSECURE_COUNT> {}
-impl<const COUNT: u64> Slapdash_PRNG_Creator_SHA0<COUNT>
+pub struct Slapdash_PRNG_Creator_SHA0 {}
+impl Slapdash_PRNG_Creator_SHA0
 {
-    PRNG_Creator_methods!{SHA0, COUNT}
+    PRNG_Creator_methods!{SHA0, INSECURE_COUNT}
 }
 
 
@@ -1582,10 +1582,10 @@ impl<const COUNT: u64> Slapdash_PRNG_Creator_SHA0<COUNT>
 /// assert!(biguint.is_odd());
 /// ```
 #[allow(non_camel_case_types)]
-pub struct Slapdash_PRNG_Creator_MD5<const COUNT: u64 = INSECURE_COUNT> {}
-impl<const COUNT: u64> Slapdash_PRNG_Creator_MD5<COUNT>
+pub struct Slapdash_PRNG_Creator_MD5 {}
+impl Slapdash_PRNG_Creator_MD5
 {
-    PRNG_Creator_methods!{MD5, COUNT}
+    PRNG_Creator_methods!{MD5, INSECURE_COUNT}
 }
 
 
@@ -1667,10 +1667,10 @@ impl<const COUNT: u64> Slapdash_PRNG_Creator_MD5<COUNT>
 /// assert!(biguint.is_odd());
 /// ```
 #[allow(non_camel_case_types)]
-pub struct Slapdash_PRNG_Creator_MD4<const COUNT: u64 = INSECURE_COUNT> {}
-impl<const COUNT: u64> Slapdash_PRNG_Creator_MD4<COUNT>
+pub struct Slapdash_PRNG_Creator_MD4 {}
+impl Slapdash_PRNG_Creator_MD4
 {
-    PRNG_Creator_methods!{MD4, COUNT}
+    PRNG_Creator_methods!{MD4, INSECURE_COUNT}
 }
 
 
@@ -1752,10 +1752,10 @@ impl<const COUNT: u64> Slapdash_PRNG_Creator_MD4<COUNT>
 /// assert!(biguint.is_odd());
 /// ```
 #[allow(non_camel_case_types)] 
-pub struct Slapdash_PRNG_Creator_DES<const COUNT: u64 = INSECURE_COUNT> {}
-impl<const COUNT: u64> Slapdash_PRNG_Creator_DES<COUNT>
+pub struct Slapdash_PRNG_Creator_DES {}
+impl Slapdash_PRNG_Creator_DES
 {
-    PRNG_Creator_methods!{DES, COUNT}
+    PRNG_Creator_methods!{DES, INSECURE_COUNT}
 }
 
 
@@ -1837,8 +1837,8 @@ impl<const COUNT: u64> Slapdash_PRNG_Creator_DES<COUNT>
 /// assert!(biguint.is_odd());
 /// ```
 #[allow(non_camel_case_types)]
-pub struct Slapdash_PRNG_Creator_CPRNG_Engine<const COUNT: u64 = INSECURE_COUNT> {}
-impl<const COUNT: u64> Slapdash_PRNG_Creator_CPRNG_Engine<COUNT>
+pub struct Slapdash_PRNG_Creator_CPRNG_Engine {}
+impl Slapdash_PRNG_Creator_CPRNG_Engine
 {
-    PRNG_Creator_methods!{CPRNG_Engine, COUNT}
+    PRNG_Creator_methods!{CPRNG_Engine, INSECURE_COUNT}
 }

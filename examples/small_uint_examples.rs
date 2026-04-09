@@ -7429,9 +7429,9 @@ fn small_uint_test_miller_rabin()
 {
     println!("small_uint_test_miller_rabin");
     use cryptocol::number::SmallUInt;
-    use cryptocol::random::Any;
+    use cryptocol::random::Any_PRNG_Creator;
     // Example for u8
-    let mut a_u8 = Any::new().random_u8();
+    let mut a_u8 = Any_PRNG_Creator::create().random_u8();
     a_u8.set_lsb();
     let prime = a_u8.test_miller_rabin(2_u8);
     if prime
@@ -7439,7 +7439,7 @@ fn small_uint_test_miller_rabin()
     else
         { println!("It is 100% certain that {} is a composite number.", a_u8); }
 
-    let mut b_u8 = Any::new().random_u8();
+    let mut b_u8 = Any_PRNG_Creator::create().random_u8();
     b_u8.set_lsb();
     let prime = small_uint_test_miller_rabin_func(b_u8, 2_u8);
     if prime
@@ -7448,7 +7448,7 @@ fn small_uint_test_miller_rabin()
         { println!("It is 100% certain that {} is a composite number.", b_u8); }
 
     // Example for u16
-    let mut a_u16 = Any::new().random_u16();
+    let mut a_u16 = Any_PRNG_Creator::create().random_u16();
     a_u16.set_lsb();
     let prime = a_u16.test_miller_rabin(7_u16);
     if prime
@@ -7456,7 +7456,7 @@ fn small_uint_test_miller_rabin()
     else
         { println!("It is 100% certain that {} is a composite number.", a_u16); }
 
-    let mut b_u16 = Any::new().random_u16();
+    let mut b_u16 = Any_PRNG_Creator::create().random_u16();
     b_u16.set_lsb();
     let prime = small_uint_test_miller_rabin_func(b_u16, 7_u16);
     if prime
@@ -7465,7 +7465,7 @@ fn small_uint_test_miller_rabin()
         { println!("It is 100% certain that {} is a composite number.", b_u16); }
 
     // Example for u32
-    let mut a_u32 = Any::new().random_u32();
+    let mut a_u32 = Any_PRNG_Creator::create().random_u32();
     a_u32.set_lsb();
     let prime = a_u32.test_miller_rabin(61_u32);
     if prime
@@ -7473,7 +7473,7 @@ fn small_uint_test_miller_rabin()
     else
         { println!("It is 100% certain that {} is a composite number.", a_u32); }
 
-    let mut b_u32 = Any::new().random_u32();
+    let mut b_u32 = Any_PRNG_Creator::create().random_u32();
     b_u32.set_lsb();
     let prime = small_uint_test_miller_rabin_func(b_u32, 61_u32);
     if prime
@@ -7482,7 +7482,7 @@ fn small_uint_test_miller_rabin()
         { println!("It is 100% certain that {} is a composite number.", b_u32); }
 
     // Example for u64
-    let mut a_u64 = Any::new().random_u64();
+    let mut a_u64 = Any_PRNG_Creator::create().random_u64();
     a_u64.set_lsb();
     let prime = a_u64.test_miller_rabin(325_u64);
     if prime
@@ -7490,7 +7490,7 @@ fn small_uint_test_miller_rabin()
     else
         { println!("It is 100% certain that {} is a composite number.", a_u64); }
 
-    let mut b_u64 = Any::new().random_u64();
+    let mut b_u64 = Any_PRNG_Creator::create().random_u64();
     b_u64.set_lsb();
     let prime = small_uint_test_miller_rabin_func(b_u64, 325_u64);
     if prime
@@ -7499,7 +7499,7 @@ fn small_uint_test_miller_rabin()
         { println!("It is 100% certain that {} is a composite number.", b_u64); }
 
     // Example for u128
-    let mut a_u128 = Any::new().random_u128();
+    let mut a_u128 = Any_PRNG_Creator::create().random_u128();
     a_u128.set_lsb();
     let prime = a_u128.test_miller_rabin(9375_u128);
     if prime
@@ -7507,7 +7507,7 @@ fn small_uint_test_miller_rabin()
     else
         { println!("It is 100% certain that {} is a composite number.", a_u128); }
 
-    let mut b_u128 = Any::new().random_u128();
+    let mut b_u128 = Any_PRNG_Creator::create().random_u128();
     b_u128.set_lsb();
     let prime = small_uint_test_miller_rabin_func(b_u128, 9375_u128);
     if prime
@@ -7516,7 +7516,7 @@ fn small_uint_test_miller_rabin()
         { println!("It is 100% certain that {} is a composite number.", b_u128); }
 
     // Example for usize
-    let mut a_usize = Any::new().random_usize();
+    let mut a_usize = Any_PRNG_Creator::create().random_usize();
     a_usize.set_lsb();
     let prime = a_usize.test_miller_rabin(28178_usize);
     if prime
@@ -7524,7 +7524,7 @@ fn small_uint_test_miller_rabin()
     else
         { println!("It is 100% certain that {} is a composite number.", a_usize); }
 
-    let mut b_usize = Any::new().random_usize();
+    let mut b_usize = Any_PRNG_Creator::create().random_usize();
     b_usize.set_lsb();
     let prime = small_uint_test_miller_rabin_func(b_usize, 28178_usize);
     if prime
@@ -7533,7 +7533,7 @@ fn small_uint_test_miller_rabin()
         { println!("It is 100% certain that {} is a composite number.", b_usize); }
 
     // Example for ShortUnion
-    let mut a_shortunion = Any::new().random_u16().into_shortunion();
+    let mut a_shortunion = Any_PRNG_Creator::create().random_u16().into_shortunion();
     a_shortunion.set_lsb();
     let prime = a_shortunion.test_miller_rabin(7_u16.into_shortunion());
     if prime
@@ -7541,7 +7541,7 @@ fn small_uint_test_miller_rabin()
     else
         { println!("It is 100% certain that {} is a composite number.", a_shortunion); }
 
-    let mut b_shortunion = Any::new().random_u16().into_shortunion();
+    let mut b_shortunion = Any_PRNG_Creator::create().random_u16().into_shortunion();
     b_shortunion.set_lsb();
     let prime = small_uint_test_miller_rabin_func(b_shortunion, 7_u16.into_shortunion());
     if prime
@@ -7550,7 +7550,7 @@ fn small_uint_test_miller_rabin()
         { println!("It is 100% certain that {} is a composite number.", b_shortunion); }
 
     // Example for IntUnion
-    let mut a_intunion = Any::new().random_u32().into_intunion();
+    let mut a_intunion = Any_PRNG_Creator::create().random_u32().into_intunion();
     a_intunion.set_lsb();
     let prime = a_intunion.test_miller_rabin(61_u32.into_intunion());
     if prime
@@ -7558,7 +7558,7 @@ fn small_uint_test_miller_rabin()
     else
         { println!("It is 100% certain that {} is a composite number.", a_intunion); }
 
-    let mut b_intunion = Any::new().random_u32().into_intunion();
+    let mut b_intunion = Any_PRNG_Creator::create().random_u32().into_intunion();
     b_intunion.set_lsb();
     let prime = small_uint_test_miller_rabin_func(b_intunion, 61_u32.into_intunion());
     if prime
@@ -7567,7 +7567,7 @@ fn small_uint_test_miller_rabin()
         { println!("It is 100% certain that {} is a composite number.", b_intunion); }
 
     // Example for LongUnion
-    let mut a_longunion = Any::new().random_u64().into_longunion();
+    let mut a_longunion = Any_PRNG_Creator::create().random_u64().into_longunion();
     a_longunion.set_lsb();
     let prime = a_longunion.test_miller_rabin(325_u64.into_longunion());
     if prime
@@ -7575,7 +7575,7 @@ fn small_uint_test_miller_rabin()
     else
         { println!("It is 100% certain that {} is a composite number.", a_longunion); }
 
-    let mut b_longunion = Any::new().random_u64().into_longunion();
+    let mut b_longunion = Any_PRNG_Creator::create().random_u64().into_longunion();
     b_longunion.set_lsb();
     let prime = small_uint_test_miller_rabin_func(b_longunion, 325_u64.into_longunion());
     if prime
@@ -7584,7 +7584,7 @@ fn small_uint_test_miller_rabin()
         { println!("It is 100% certain that {} is a composite number.", b_longunion); }
 
     // Example for LongerUnion
-    let mut a_longerunion = Any::new().random_u128().into_longerunion();
+    let mut a_longerunion = Any_PRNG_Creator::create().random_u128().into_longerunion();
     a_longerunion.set_lsb();
     let prime = a_longerunion.test_miller_rabin(9375_u128.into_longerunion());
     if prime
@@ -7592,7 +7592,7 @@ fn small_uint_test_miller_rabin()
     else
         { println!("It is 100% certain that {} is a composite number.", a_longerunion); }
 
-    let mut b_longerunion = Any::new().random_u128().into_longerunion();
+    let mut b_longerunion = Any_PRNG_Creator::create().random_u128().into_longerunion();
     b_longerunion.set_lsb();
     let prime = small_uint_test_miller_rabin_func(b_longerunion, 9375_u128.into_longerunion());
     if prime
@@ -7601,7 +7601,7 @@ fn small_uint_test_miller_rabin()
         { println!("It is 100% certain that {} is a composite number.", b_longerunion); }
 
     // Example for SizeUnion
-    let mut a_sizeunion = Any::new().random_usize().into_sizeunion();
+    let mut a_sizeunion = Any_PRNG_Creator::create().random_usize().into_sizeunion();
     a_sizeunion.set_lsb();
     let prime = a_sizeunion.test_miller_rabin(28178_usize.into_sizeunion());
     if prime
@@ -7609,7 +7609,7 @@ fn small_uint_test_miller_rabin()
     else
         { println!("It is 100% certain that {} is a composite number.", a_sizeunion); }
 
-    let mut b_sizeunion = Any::new().random_usize().into_sizeunion();
+    let mut b_sizeunion = Any_PRNG_Creator::create().random_usize().into_sizeunion();
     b_sizeunion.set_lsb();
     let prime = small_uint_test_miller_rabin_func(b_sizeunion, 28178_usize.into_sizeunion());
     if prime
@@ -7628,10 +7628,10 @@ fn small_uint_is_prime_using_miller_rabin()
 {
     println!("small_uint_is_prime_using_miller_rabin");
     use cryptocol::number::SmallUInt;
-    use cryptocol::random::Any;
+    use cryptocol::random::Any_PRNG_Creator;
 
     // Example for u8
-    let mut a_u8 = Any::new().random_u8();
+    let mut a_u8 = Any_PRNG_Creator::create().random_u8();
     a_u8.set_lsb();
 
     // For performance, if the number is less than 10000,
@@ -7643,7 +7643,7 @@ fn small_uint_is_prime_using_miller_rabin()
     else
         { println!("It is 100% certain that {} is a composite number.", a_u8); }
 
-    let mut b_u8 = Any::new().random_u8();
+    let mut b_u8 = Any_PRNG_Creator::create().random_u8();
     b_u8.set_lsb();
 
     // For performance, if the number is less than 10000,
@@ -7656,7 +7656,7 @@ fn small_uint_is_prime_using_miller_rabin()
         { println!("It is 100% certain that {} is a composite number.", b_u8); }
 
     // Example for u16
-    let mut a_u16 = Any::new().random_u16();
+    let mut a_u16 = Any_PRNG_Creator::create().random_u16();
     a_u16.set_lsb();
 
     // If the number is less than u32::MAX (= 4294967295_u32),
@@ -7668,7 +7668,7 @@ fn small_uint_is_prime_using_miller_rabin()
     else
         { println!("It is 100% certain that {} is a composite number.", a_u16); }
 
-    let mut b_u16 = Any::new().random_u16();
+    let mut b_u16 = Any_PRNG_Creator::create().random_u16();
     b_u16.set_lsb();
 
     // If the number is less than u32::MAX (= 4294967295_u32),
@@ -7681,7 +7681,7 @@ fn small_uint_is_prime_using_miller_rabin()
         { println!("It is 100% certain that {} is a composite number.", b_u16); }
 
     // Example for u32
-    let mut a_u32 = Any::new().random_u32();
+    let mut a_u32 = Any_PRNG_Creator::create().random_u32();
     a_u32.set_lsb();
 
     // If the number is less than u32::MAX (= 4294967295_u32),
@@ -7693,7 +7693,7 @@ fn small_uint_is_prime_using_miller_rabin()
     else
         { println!("It is 100% certain that {} is a composite number.", a_u32); }
 
-    let mut b_u32 = Any::new().random_u32();
+    let mut b_u32 = Any_PRNG_Creator::create().random_u32();
     b_u32.set_lsb();
 
     // If the number is less than u32::MAX (= 4294967295_u32),
@@ -7706,7 +7706,7 @@ fn small_uint_is_prime_using_miller_rabin()
         { println!("It is 100% certain that {} is a composite number.", b_u32); }
 
     // Example for u64
-    let mut a_u64 = Any::new().random_u64();
+    let mut a_u64 = Any_PRNG_Creator::create().random_u64();
     a_u64.set_lsb();
 
     // If the number is less than u64::MAX (= 18446744073709551615_u64),
@@ -7718,7 +7718,7 @@ fn small_uint_is_prime_using_miller_rabin()
     else
         { println!("It is 100% certain that {} is a composite number.", a_u64); }
 
-    let mut b_u64 = Any::new().random_u64();
+    let mut b_u64 = Any_PRNG_Creator::create().random_u64();
     b_u64.set_lsb();
 
     // If the number is less than u64::MAX (= 18446744073709551615_u64),
@@ -7731,7 +7731,7 @@ fn small_uint_is_prime_using_miller_rabin()
         { println!("It is 100% certain that {} is a composite number.", b_u64); }
 
     // Example for u128
-    let mut a_u128 = Any::new().random_u128();
+    let mut a_u128 = Any_PRNG_Creator::create().random_u128();
     a_u128.set_lsb();
     let prime = a_u128.is_prime_using_miller_rabin(5_usize);
     if prime
@@ -7739,7 +7739,7 @@ fn small_uint_is_prime_using_miller_rabin()
     else
         { println!("It is 100% certain that {} is a composite number.", a_u128); }
 
-    let mut b_u128 = Any::new().random_u128();
+    let mut b_u128 = Any_PRNG_Creator::create().random_u128();
     b_u128.set_lsb();
     let prime = small_uint_is_prime_using_miller_rabin_func(b_u128, 5_usize);
     if prime
@@ -7748,7 +7748,7 @@ fn small_uint_is_prime_using_miller_rabin()
         { println!("It is 100% certain that {} is a composite number.", b_u128); }
 
     // Example for usize
-    let mut a_usize = Any::new().random_usize();
+    let mut a_usize = Any_PRNG_Creator::create().random_usize();
     a_usize.set_lsb();
 
     // If the number is less than u64::MAX (= 18446744073709551615_u64),
@@ -7760,7 +7760,7 @@ fn small_uint_is_prime_using_miller_rabin()
     else
         { println!("It is 100% certain that {} is a composite number.", a_usize); }
 
-    let mut b_usize = Any::new().random_usize();
+    let mut b_usize = Any_PRNG_Creator::create().random_usize();
     b_usize.set_lsb();
 
     // If the number is less than u64::MAX (= 18446744073709551615_u64),
@@ -7773,7 +7773,7 @@ fn small_uint_is_prime_using_miller_rabin()
         { println!("It is 100% certain that {} is a composite number.", b_usize); }
 
     // Example for ShortUnion
-    let mut a_shortunion = Any::new().random_u16().into_shortunion();
+    let mut a_shortunion = Any_PRNG_Creator::create().random_u16().into_shortunion();
     a_shortunion.set_lsb();
 
     // If the number is less than u32::MAX (= 4294967295_u32),
@@ -7785,7 +7785,7 @@ fn small_uint_is_prime_using_miller_rabin()
     else
         { println!("It is 100% certain that {} is a composite number.", a_shortunion); }
 
-    let mut b_shortunion = Any::new().random_u16().into_shortunion();
+    let mut b_shortunion = Any_PRNG_Creator::create().random_u16().into_shortunion();
     b_shortunion.set_lsb();
 
     // If the number is less than u32::MAX (= 4294967295_u32),
@@ -7798,7 +7798,7 @@ fn small_uint_is_prime_using_miller_rabin()
         { println!("It is 100% certain that {} is a composite number.", b_shortunion); }
 
     // Example for IntUnion
-    let mut a_intunion = Any::new().random_u32().into_intunion();
+    let mut a_intunion = Any_PRNG_Creator::create().random_u32().into_intunion();
     a_intunion.set_lsb();
 
     // If the number is less than u32::MAX (= 4294967295_u32),
@@ -7810,7 +7810,7 @@ fn small_uint_is_prime_using_miller_rabin()
     else
         { println!("It is 100% certain that {} is a composite number.", a_intunion); }
 
-    let mut b_intunion = Any::new().random_u32().into_intunion();
+    let mut b_intunion = Any_PRNG_Creator::create().random_u32().into_intunion();
     b_intunion.set_lsb();
 
     // If the number is less than u32::MAX (= 4294967295_u32),
@@ -7823,7 +7823,7 @@ fn small_uint_is_prime_using_miller_rabin()
         { println!("It is 100% certain that {} is a composite number.", b_intunion); }
 
     // Example for LongUnion
-    let mut a_longunion = Any::new().random_u64().into_longunion();
+    let mut a_longunion = Any_PRNG_Creator::create().random_u64().into_longunion();
     a_longunion.set_lsb();
 
     // If the number is less than u64::MAX (= 18446744073709551615_u64),
@@ -7835,7 +7835,7 @@ fn small_uint_is_prime_using_miller_rabin()
     else
         { println!("It is 100% certain that {} is a composite number.", a_longunion); }
 
-    let mut b_longunion = Any::new().random_u64().into_longunion();
+    let mut b_longunion = Any_PRNG_Creator::create().random_u64().into_longunion();
     b_longunion.set_lsb();
 
     // If the number is less than u64::MAX (= 18446744073709551615_u64),
@@ -7848,7 +7848,7 @@ fn small_uint_is_prime_using_miller_rabin()
         { println!("It is 100% certain that {} is a composite number.", b_longunion); }
 
     // Example for LongerUnion
-    let mut a_longerunion = Any::new().random_u128().into_longerunion();
+    let mut a_longerunion = Any_PRNG_Creator::create().random_u128().into_longerunion();
     a_longerunion.set_lsb();
     let prime = a_longerunion.is_prime_using_miller_rabin(5_usize);
     if prime
@@ -7856,7 +7856,7 @@ fn small_uint_is_prime_using_miller_rabin()
     else
         { println!("It is 100% certain that {} is a composite number.", a_longerunion); }
 
-    let mut b_longerunion = Any::new().random_u128().into_longerunion();
+    let mut b_longerunion = Any_PRNG_Creator::create().random_u128().into_longerunion();
     b_longerunion.set_lsb();
     let prime = small_uint_is_prime_using_miller_rabin_func(b_longerunion, 5_usize);
     if prime
@@ -7865,7 +7865,7 @@ fn small_uint_is_prime_using_miller_rabin()
         { println!("It is 100% certain that {} is a composite number.", b_longerunion); }
 
     // Example for SizeUnion
-    let mut a_sizeunion = Any::new().random_usize().into_sizeunion();
+    let mut a_sizeunion = Any_PRNG_Creator::create().random_usize().into_sizeunion();
     a_sizeunion.set_lsb();
 
     // If the number is less than u64::MAX (= 18446744073709551615_u64),
@@ -7877,7 +7877,7 @@ fn small_uint_is_prime_using_miller_rabin()
     else
         { println!("It is 100% certain that {} is a composite number.", a_sizeunion); }
 
-    let mut b_sizeunion = Any::new().random_usize().into_sizeunion();
+    let mut b_sizeunion = Any_PRNG_Creator::create().random_usize().into_sizeunion();
     b_sizeunion.set_lsb();
 
     // If the number is less than u64::MAX (= 18446744073709551615_u64),

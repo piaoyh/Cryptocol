@@ -41,12 +41,11 @@ pub fn main()
 fn rsa_set_prng()
 {
     println!("rsa_set_prng");
-    use cryptocol::random::Random;
-    use cryptocol::asymmetric::{ RSA_1024, PKCS1V15 };
+    use cryptocol::asymmetric::{ RSA_1024, PKCS1V15, Asymmetric_PRNG_Creator_BIG_KECCAK_1024 };
     use cryptocol::define_utypes_with;
     define_utypes_with!(u32);
 
-    let prng = Slapdash_DES::new();
+    let prng = Asymmetric_PRNG_Creator_BIG_KECCAK_1024::create();
     let mut rsa = RSA_1024::new();
     rsa.set_prng(prng);
     println!("-------------------------------");
@@ -1195,11 +1194,11 @@ fn rsa_composite_prime_test()
 
 fn prime_test()
 {
-    use cryptocol::random::Random;
+    use cryptocol::random::Random_PRNG_Creator;
     use cryptocol::define_utypes_with;
     define_utypes_with!(u32);
 
-    let mut r = Random::new();
+    let mut r = Random_PRNG_Creator::create();
     let (p, q): (U1024, U1024) = r.random_prime_with_half_length_using_rsa_biguint(7);
     println!("{}\n{}", p, q);
 }

@@ -581,10 +581,6 @@ pub(crate) const NUM_STR: [[&str; COLUMN]; ROW] = [
 ///   with a new seed. In other words, it uses new seeds every `COUNT` times of
 ///   generation of pseudo-random numbers.
 /// 
-/// # Panics
-/// If `COUNT` is `0`, the constructor methods
-/// such as `new()` and `new_with_seeds()` will panic!
-/// 
 /// # Predetermined Provided Specific `struct`s
 /// - Random_BIG_KECCAK_1024: uses a hash algorithm BIG_KECCAK_1024,
 ///   and is cryptographically secure.
@@ -650,12 +646,11 @@ pub(crate) const NUM_STR: [[&str; COLUMN]; ROW] = [
 /// ## Example
 /// ```
 /// use cryptocol::number::BigUInt_Prime;
-/// use cryptocol::random::Random;
+/// use cryptocol::random::Random_PRNG_Creator;
 /// use cryptocol::define_utypes_with;
 /// define_utypes_with!(u64);
 /// 
-/// let mut rand = Random::new();
-/// // let mut rand = Any::new();
+/// let mut rand = Random_PRNG_Creator::create();
 /// println!("Random number = {}", rand.random_u128());
 /// println!("Random number = {}", rand.random_u64());
 /// println!("Random number = {}", rand.random_u32());
@@ -1426,8 +1421,8 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
-    /// let rand = Random::new();
+    /// use cryptocol::random::Random_PRNG_Creator;
+    /// let rand = Random_PRNG_Creator::create();
     /// let seed = rand.get_seed_collector()();
     /// print!("seed = ");
     /// for i in 0..8
@@ -1452,7 +1447,7 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
+    /// use cryptocol::random::Random_PRNG_Creator;
     /// fn seed_collector() -> [u64; 8]
     /// {
     ///     use std::time::{ SystemTime, UNIX_EPOCH };
@@ -1477,7 +1472,7 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// }
     /// type Func = *const fn() -> [u64; 8];
     /// 
-    /// let mut rand = Random::new();
+    /// let mut rand = Random_PRNG_Creator::create();
     /// rand.set_seed_collector(seed_collector);
     /// assert_eq!(seed_collector as Func, rand.get_seed_collector() as Func);
     /// println!("seed = {}", rand.random_u128());
@@ -1507,8 +1502,8 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// }
     /// type Func = *const fn() -> [u64; 8];
     /// 
-    /// use cryptocol::random::Random;
-    /// let mut rand = Random::new();
+    /// use cryptocol::random::Random_PRNG_Creator;
+    /// let mut rand = Random_PRNG_Creator::create();
     /// let collector = rand.get_seed_collector();
     /// rand.set_seed_collector(seed_collector);
     /// assert_eq!(seed_collector as Func, rand.get_seed_collector() as Func);
@@ -1538,8 +1533,8 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
-    /// let mut rand = Random::new();
+    /// use cryptocol::random::Random_PRNG_Creator;
+    /// let mut rand = Random_PRNG_Creator::create();
     /// for i in 0..10
     ///     { println!("{} Random number (Random) = {}", i, rand.random_u8()); }
     /// ```
@@ -1571,8 +1566,8 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
-    /// let mut rand = Random::new();
+    /// use cryptocol::random::Random_PRNG_Creator;
+    /// let mut rand = Random_PRNG_Creator::create();
     /// for i in 0..10
     ///     { println!("{} Random number (Random) = {}", i, rand.random_u16()); }
     /// ```
@@ -1604,8 +1599,8 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
-    /// let mut rand = Random::new();
+    /// use cryptocol::random::Random_PRNG_Creator;
+    /// let mut rand = Random_PRNG_Creator::create();
     /// for i in 0..10
     ///     { println!("{} Random number (Random) = {}", i, rand.random_u32()); }
     /// ```
@@ -1637,8 +1632,8 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
-    /// let mut rand = Random::new();
+    /// use cryptocol::random::Random_PRNG_Creator;
+    /// let mut rand = Random_PRNG_Creator::create();
     /// for i in 0..10
     ///     { println!("{} Random number (Random) = {}", i, rand.random_u64()); }
     /// ```
@@ -1668,8 +1663,8 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
-    /// let mut rand = Random::new();
+    /// use cryptocol::random::Random_PRNG_Creator;
+    /// let mut rand = Random_PRNG_Creator::create();
     /// for i in 0..10
     ///     { println!("{} Random number (Random) = {}", i, rand.random_u128()); }
     /// ```
@@ -1704,8 +1699,8 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
-    /// let mut rand = Random::new();
+    /// use cryptocol::random::Random_PRNG_Creator;
+    /// let mut rand = Random_PRNG_Creator::create();
     /// for i in 0..10
     ///     { println!("{} Random number (Random) = {}", i, rand.random_usize()); }
     /// ```
@@ -1736,8 +1731,8 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
-    /// let mut rand = Random::new();
+    /// use cryptocol::random::Random_PRNG_Creator;
+    /// let mut rand = Random_PRNG_Creator::create();
     /// for i in 0..10
     ///     { println!("{} Random number (Random) = {}", i, rand.random_uint::<u8>()); }
     /// ```
@@ -1780,8 +1775,8 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
-    /// let mut rand = Random::new();
+    /// use cryptocol::random::Random_PRNG_Creator;
+    /// let mut rand = Random_PRNG_Creator::create();
     /// if let Some(num) = rand.random_under_uint(12_u8)
     ///     { println!("Random number u8 = {}", num); }
     /// ```
@@ -1819,8 +1814,8 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
-    /// let mut rand = Random::new();
+    /// use cryptocol::random::Random_PRNG_Creator;
+    /// let mut rand = Random_PRNG_Creator::create();
     /// let num = rand.random_under_uint_(12_u8);
     /// println!("Random number u8 = {}", num);
     /// ```
@@ -1858,8 +1853,8 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1
     /// ```
-    /// use cryptocol::random::Random;
-    /// let mut rand = Random::new();
+    /// use cryptocol::random::Random_PRNG_Creator;
+    /// let mut rand = Random_PRNG_Creator::create();
     /// if let Some(num) = rand.random_minmax_uint(12_u8, 21)
     ///     { println!("Random number u8 = {}", num); }
     /// ```
@@ -1903,8 +1898,8 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
-    /// let mut rand = Random::new();
+    /// use cryptocol::random::Random_PRNG_Creator;
+    /// let mut rand = Random_PRNG_Creator::create();
     /// let num = rand.;random_minmax_uint_(12_u8, 21)
     /// println!("Random number u8 = {}", num);
     /// ```
@@ -1932,8 +1927,8 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
-    /// let mut rand = Random::new();
+    /// use cryptocol::random::Random_PRNG_Creator;
+    /// let mut rand = Random_PRNG_Creator::create();
     /// println!("Random odd number u8 = {}", rand.random_odd_uint::<u8>());
     /// println!("Random odd number u16 = {}", rand.random_odd_uint::<u16>());
     /// println!("Random odd number u32 = {}", rand.random_odd_uint::<u32>());
@@ -1975,8 +1970,8 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
-    /// let mut rand = Random::new();
+    /// use cryptocol::random::Random_PRNG_Creator;
+    /// let mut rand = Random_PRNG_Creator::create();
     /// if let Some(num) = rand.random_odd_under_uint(12_u8)
     ///     { println!("Random odd number u8 = {}", num); }
     /// if let Some(num) = rand.random_odd_under_uint(1234_u16)
@@ -2028,8 +2023,8 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
-    /// let mut rand = Random::new();
+    /// use cryptocol::random::Random_PRNG_Creator;
+    /// let mut rand = Random_PRNG_Creator::create();
     /// 
     /// let num = rand.random_odd_under_uint_(12_u8);
     /// println!("Random odd number u8 = {}", num);
@@ -2077,8 +2072,8 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
-    /// let mut rand = Random::new();
+    /// use cryptocol::random::Random_PRNG_Creator;
+    /// let mut rand = Random_PRNG_Creator::create();
     /// println!("Random 8-bit number = {}", rand.random_with_msb_set_uint::<u8>());
     /// println!("Random 16-bit number = {}", rand.random_with_msb_set_uint::<u16>());
     /// println!("Random 32-bit number = {}", rand.random_with_msb_set_uint::<u32>());
@@ -2111,8 +2106,8 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
-    /// let mut rand = Random::new();
+    /// use cryptocol::random::Random_PRNG_Creator;
+    /// let mut rand = Random_PRNG_Creator::create();
     /// println!("Random 8-bit odd number = {}", rand.random_odd_with_msb_set_uint::<u8>());
     /// println!("Random 16-bit odd number = {}", rand.random_odd_with_msb_set_uint::<u16>());
     /// println!("Random 32-bit odd number = {}", rand.random_odd_with_msb_set_uint::<u32>());
@@ -2171,8 +2166,8 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
-    /// let mut rand = Random::new();
+    /// use cryptocol::random::Random_PRNG_Creator;
+    /// let mut rand = Random_PRNG_Creator::create();
     /// println!("Random 8-bit prime number = {}", rand.random_prime_using_miller_rabin_uint::<u8>(5));
     /// println!("Random 16-bit prime number = {}", rand.random_prime_using_miller_rabin_uint::<u16>(5));
     /// println!("Random 32-bit prime number = {}", rand.random_prime_using_miller_rabin_uint::<u32>(5));
@@ -2238,8 +2233,8 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
-    /// let mut rand = Random::new();
+    /// use cryptocol::random::Random_PRNG_Creator;
+    /// let mut rand = Random_PRNG_Creator::create();
     /// println!("Random 8-bit prime number = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u8>(5));
     /// println!("Random 16-bit prime number = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u16>(5));
     /// println!("Random 32-bit prime number = {}", rand.random_prime_with_msb_set_using_miller_rabin_uint::<u32>(5));
@@ -2284,8 +2279,8 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
-    /// let mut rand = Random::new();
+    /// use cryptocol::random::Random_PRNG_Creator;
+    /// let mut rand = Random_PRNG_Creator::create();
     /// let num: [u128; 5] = rand.random_array();
     /// for i in 0..5
     ///     { println!("Random number {} => {}", i, num[i]); }
@@ -2326,8 +2321,8 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
-    /// let mut rand = Random::new();
+    /// use cryptocol::random::Random_PRNG_Creator;
+    /// let mut rand = Random_PRNG_Creator::create();
     /// let mut num = [0_u128; 5];
     /// rand.put_random_in_array(&mut num);
     /// for i in 0..5
@@ -2405,11 +2400,11 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
+    /// use cryptocol::random::Random_PRNG_Creator;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
-    /// let mut rand = Random::new();
+    /// let mut rand = Random_PRNG_Creator::create();
     /// let biguint: U256 = rand.random_biguint();
     /// println!("Random Number: {}", biguint);
     /// ```
@@ -2480,11 +2475,11 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
+    /// use cryptocol::random::Random_PRNG_Creator;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
-    /// let mut rand = Random::new();
+    /// let mut rand = Random_PRNG_Creator::create();
     /// let ceiling = U16384::max().wrapping_div_uint(3_u8);
     /// if let Some(r) = rand.random_under_biguint(&ceiling)
     /// {
@@ -2564,11 +2559,11 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
+    /// use cryptocol::random::Random_PRNG_Creator;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
-    /// let mut rand = Random::new();
+    /// let mut rand = Random_PRNG_Creator::create();
     /// let ceiling = U16384::max().wrapping_div_uint(3_u8);
     /// let r = rand.random_under_biguint_(&ceiling);
     /// println!("Random Number less than {} is\n{}", ceiling, r);
@@ -2645,11 +2640,11 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
+    /// use cryptocol::random::Random_PRNG_Creator;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
-    /// let mut rand = Random::new();
+    /// let mut rand = Random_PRNG_Creator::create();
     /// let r: U16384 = rand.random_odd_biguint();
     /// println!("Random odd number is {}.", r);
     /// assert!(r.is_odd());
@@ -2723,11 +2718,11 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
+    /// use cryptocol::random::Random_PRNG_Creator;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
-    /// let mut rand = Random::new();
+    /// let mut rand = Random_PRNG_Creator::create();
     /// let ceiling = U16384::max().wrapping_div_uint(3_u8);
     /// if let Some(r) = rand.random_odd_under_biguint(&ceiling)
     /// {
@@ -2809,11 +2804,11 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
+    /// use cryptocol::random::Random_PRNG_Creator;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
-    /// let mut rand = Random::new();
+    /// let mut rand = Random_PRNG_Creator::create();
     /// let ceiling = U16384::max().wrapping_div_uint(3_u8);
     /// let r = rand.random_odd_under_biguint_(&ceiling);
     /// println!("Random odd number less than {} is\n{}", ceiling, r);
@@ -2892,11 +2887,11 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
+    /// use cryptocol::random::Random_PRNG_Creator;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
-    /// let mut rand = Random::new();
+    /// let mut rand = Random_PRNG_Creator::create();
     /// let r: u64384 = rand.random_with_msb_set_biguint();
     /// println!("Random number is {}.", r);
     /// assert!(r > u64384::halfmax());
@@ -2970,11 +2965,11 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
+    /// use cryptocol::random::Random_PRNG_Creator;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
-    /// let mut rand = Random::new();
+    /// let mut rand = Random_PRNG_Creator::create();
     /// let r: U16384 = rand.random_odd_with_msb_set_biguint();
     /// println!("Random number is {}.", r);
     /// assert!(r > U16384::halfmax());
@@ -3050,11 +3045,11 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
+    /// use cryptocol::random::Random_PRNG_Creator;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u16);
     /// 
-    /// let mut rand = Random::new();
+    /// let mut rand = Random_PRNG_Creator::create();
     /// let prime: U256 = rand.random_prime_using_miller_rabin_biguint(5);
     /// println!("Random prime number: {}", prime);
     /// ```
@@ -3157,11 +3152,11 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
+    /// use cryptocol::random::Random_PRNG_Creator;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
-    /// let mut rand = Random::new();
+    /// let mut rand = Random_PRNG_Creator::create();
     /// let prime: U256 = rand.random_prime_with_msb_set_using_miller_rabin_biguint(5);
     /// println!("Random prime number: {}", prime);
     /// ```
@@ -3205,11 +3200,11 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
+    /// use cryptocol::random::Random_PRNG_Creator;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u8);
     /// 
-    /// let mut rand = Random::new();
+    /// let mut rand = Random_PRNG_Creator::create();
     /// let prime: U256 = rand.random_prime_with_msb_set_using_miller_rabin_biguint_sequentially(5);
     /// println!("Random prime number: {}", prime);
     /// ```
@@ -3466,11 +3461,11 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
+    /// use cryptocol::random::Random_PRNG_Creator;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u128);
     /// 
-    /// let mut rand = Random::new();
+    /// let mut rand = Random_PRNG_Creator::create();
     /// let prime: U256 = rand.random_prime_with_half_length_using_miller_rabin_biguint(5);
     /// println!("Random prime number: {}", prime);
     /// ```
@@ -3685,11 +3680,11 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example
     /// ```
-    /// use cryptocol::random::Random;
+    /// use cryptocol::random::Random_PRNG_Creator;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
-    /// let mut prng = Random::new();
+    /// let mut prng = Random_PRNG_Creator::create();
     /// let (prime1, prime2): (U1024, U1024) = prng.random_prime_with_half_length_using_rsa_biguint(7);
     /// let (prime1, prime2): (U512, U512) = (prime1.into_biguint(), prime2.into_biguint());
     /// println!("U512 Prime number: {}", prime1);
@@ -3752,11 +3747,11 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
+    /// use cryptocol::random::Random_PRNG_Creator;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u64);
     /// 
-    /// let mut rand = Random::new();
+    /// let mut rand = Random_PRNG_Creator::create();
     /// let biguint: U256 = rand.prepared_random_prime_with_msb_set();
     /// println!("Random Number: {}", biguint);
     /// ```
@@ -3797,11 +3792,11 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # Example 1 for Random
     /// ```
-    /// use cryptocol::random::Random;
+    /// use cryptocol::random::Random_PRNG_Creator;
     /// use cryptocol::define_utypes_with;
     /// define_utypes_with!(u32);
     /// 
-    /// let mut rand = Random::new();
+    /// let mut rand = Random_PRNG_Creator::create();
     /// let biguint: U256 = rand.prepared_random_prime_with_half_length();
     /// println!("Random Number: {}", biguint);
     /// ```

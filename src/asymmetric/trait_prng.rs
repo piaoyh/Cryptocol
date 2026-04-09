@@ -49,8 +49,8 @@ macro_rules! PRNG_Creator {
         #[doc = DOC_STRING!($engine, ASYMMETRIC)]
         #[doc = DOC_EXAMPLE!($engine)]
         #[allow(non_camel_case_types)]
-        pub struct $creator<const COUNT: u64 = $count> {}
-        impl<const COUNT: u64> $creator<COUNT>
+        pub struct $creator {}
+        impl $creator
         {
             PRNG_Creator_methods!{$engine, $count}
         }
