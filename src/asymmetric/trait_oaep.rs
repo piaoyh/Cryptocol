@@ -103,9 +103,9 @@ pub trait OAEP
     const BT: u8 = 2;
 
     // fn set_prng(&mut self, prng: RNG)
-    fn set_prng(&mut self, prng: impl PRNG);
+    fn set_prng(&mut self, prng:  Box<dyn PRNG>);
     
-    fn set_hash(&mut self, hash: impl Hash);
+    fn set_hash(&mut self, hash:  Box<dyn Hash>);
     
     fn encrypt(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;
 

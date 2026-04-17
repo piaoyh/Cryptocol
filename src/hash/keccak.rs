@@ -1773,8 +1773,24 @@ where T: SmallUInt
         Self { state: [[T::MIN; 5]; 5] }
     }
 
+    // pub fn box_new() -> Box<Self>
+    /// Creates the new object of `Self` wrapped by Box.
+    /// 
+    /// # Output
+    /// A new object of `Self` wrapped by Box.
+    /// 
+    /// # Example 1 for SHA3_512
+    /// ```
+    /// use cryptocol::hash::SHA3_512;
+    /// let hash = SHA3_512::box_new();
+    /// println!("Hash =\t{}", hash);
+    /// assert_eq!(hash.to_string(), "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/hash_sha3/struct.Keccak_Generic.html#method.box_new)
     #[inline]
-    pub(crate) fn box_new() -> Box<Self>
+    pub fn box_new() -> Box<Self>
     {
         Box::new(Self::new())
     }

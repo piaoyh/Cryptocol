@@ -64,6 +64,41 @@ impl<const N: usize> MD4_Generic<N>
         unimplemented!(); // Dummy code for documentation
     }
 
+    // pub fn box_new() -> Box<Self>
+    /// Constructs a new `MD4` object wrapped by Box
+    /// or a new MD4-based hash object wrapped by Box.
+    /// 
+    /// # Output
+    /// A new object of `MD4` wrapped by Box
+    /// or a new MD4-based hash object wrapped by Box.
+    /// 
+    /// # Initialization
+    /// All the attributes of the constructed object, which is initial hash
+    /// value, will be initialized with `0x0123456789ABCDEFFEDCBA9876543210` for
+    /// MD4. However, if you use your own MD4-expanded version, it will be
+    /// initialized with your special values H0 ~ H3.
+    /// 
+    /// # Example 1 for MD4
+    /// ```
+    /// use cryptocol::hash::MD4;
+    /// let hash = MD4::box_new();
+    /// println!("Hash =\t{}", hash);
+    /// assert_eq!(hash.to_string(), "0123456789ABCDEFFEDCBA9876543210");
+    /// ```
+    /// 
+    /// # Exmaple 2 for MD4_Expanded
+    /// ```
+    /// use cryptocol::hash::MD4_Expanded;
+    /// type MyMD4 = MD4_Expanded<4, 0x1111_1111, 0x4444_4444, 0x8888_8888, 0xffff_ffff, 96>;
+    /// let my_hash = MyMD4::box_new();
+    /// println!("Hash =\t{}", my_hash);
+    /// assert_eq!(my_hash.to_string(), "111111114444444488888888FFFFFFFF");
+    /// ```
+    pub fn box_new() -> Box<Self>
+    {
+        unimplemented!(); // Dummy code for documentation
+    }
+
     // pub fn digest(&mut self, message: *const u8, length_in_bytes: u64)
     /// Computes hash value.
     /// 

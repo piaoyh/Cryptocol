@@ -7,11 +7,10 @@
 // except according to those terms.
 
 
-use crate::number::SmallUInt;
 use crate::hash::{  MD4, MD5, SHA0, SHA1,
                     SHA2_224, SHA2_256, SHA2_384,
                     SHA2_512, SHA2_512_256, SHA2_512_t_224,
-                    Keccak_Generic, SHA3_256, SHA3_384, SHA3_512 };
+                    SHA3_256, SHA3_384, SHA3_512 };
 
 
 #[allow(non_camel_case_types)]
@@ -27,7 +26,8 @@ macro_rules! trait_Hash_impl {
         $(
             impl Hash for $hash_type
             {
-                fn box_new() -> Box<Self> where Self: Sized
+                fn box_new() -> Box<Self>
+                where Self: Sized
                 {
                     Box::new(Self::new())
                 }
@@ -45,9 +45,7 @@ macro_rules! trait_Hash_impl {
                     for i in 0..4
                         { message_array.push(counter[i]); }
                     self.digest_vec(&message_array);
-                    let mut a = self.get_hash_value_in_vec();
-                    let b = Vec::<u32>::new();
-                    b.
+                    self.get_hash_value_in_vec().into_iter().flat_map(|x| x.to_le_bytes()).collect()
                 }
             }
         )*
@@ -59,7 +57,7 @@ trait_Hash_impl!{ MD4, MD5, SHA0, SHA1,
                   SHA3_256, SHA3_384, SHA3_512 }
 
 
-
+/*
 impl<const RATE: usize, const PADDING: usize, const ROUNDS: usize, T, const LFSR: u8,
     const THETA_SUB: usize, const THETA_ADD: usize, const THETA_ROT: u32,
     const RHO_MUL_X: usize, const RHO_MUL_Y: usize, const RHO_T: u32,
@@ -76,3 +74,4 @@ where T: SmallUInt
         self.get_hash_value(hash_value.as_mut_ptr(), N);
     }
 }
+*/

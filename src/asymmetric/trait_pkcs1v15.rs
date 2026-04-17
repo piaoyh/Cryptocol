@@ -111,7 +111,7 @@ pub trait PKCS1V15
     /// - [`Asymmetric_PRNG_Creator_AES_128`](struct.Asymmetric_PRNG_Creator_AES_128.html#struct.Asymmetric_PRNG_Creator_AES_128)
     /// - [`Asymmetric_PRNG_Creator_DES`](struct.Asymmetric_PRNG_Creator_DES.html#struct.Asymmetric_PRNG_Creator_DES)
     /// - [`Asymmetric_PRNG_Creator_CPRNG_Engine`](struct.Asymmetric_PRNG_Creator_CPRNG_Engine.html#struct.Asymmetric_PRNG_Creator_CPRNG_Engine)
-    fn set_prng(&mut self, prng: impl PRNG);
+    fn set_prng(&mut self, prng: Box<dyn PRNG>);
 
     // fn encrypt(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;
     /// Encrypts the data with the padding defined

@@ -44,7 +44,7 @@ macro_rules! PRNG_Creator_methods {
         #[inline]
         pub fn create() -> Random_Generic<$count>
         {
-            Random_Generic::<$count>::new_with($engine::new(), $engine::new())
+            Random_Generic::<$count>::new_with(Box::new($engine::new()), Box::new($engine::new()))
         }
 
         // pub fn create_with_seeds(seed: u64, aux: u64) -> Random_Generic<COUNT>
@@ -81,7 +81,7 @@ macro_rules! PRNG_Creator_methods {
         #[inline]
         pub fn create_with_seeds(seed: u64, aux: u64) -> Random_Generic<$count>
         {
-            Random_Generic::<$count>::new_with_generators_seeds($engine::new(), $engine::new(), seed, aux)
+            Random_Generic::<$count>::new_with_generators_seeds(Box::new($engine::new()), Box::new($engine::new()), seed, aux)
         }
 
         // pub fn create_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<COUNT>
@@ -234,7 +234,7 @@ macro_rules! PRNG_Creator_methods {
         #[inline]
         pub fn create_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<$count>
         {
-            Random_Generic::<$count>::new_with_generators_seed_collector_seeds(($engine::new()), Box::new($engine::new()), seed_collector, seed, aux)
+            Random_Generic::<$count>::new_with_generators_seed_collector_seeds(Box::new($engine::new()), Box::new($engine::new()), seed_collector, seed, aux)
         }
 
         // pub fn create_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<COUNT>
@@ -299,7 +299,7 @@ macro_rules! PRNG_Creator_methods {
         #[inline]
         pub fn create_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<$count>
         {
-            Random_Generic::<$count>::new_with_generators_seed_collector_seed_arrays(($engine::new()), Box::new($engine::new()), seed_collector, seed, aux)
+            Random_Generic::<$count>::new_with_generators_seed_collector_seed_arrays(Box::new($engine::new()), Box::new($engine::new()), seed_collector, seed, aux)
         }
     };
 }

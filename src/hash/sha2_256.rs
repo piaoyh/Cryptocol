@@ -695,8 +695,57 @@ SHA2_256_Generic<N, H0, H1, H2, H3, H4, H5, H6, H7, ROUND,
         }
     }
 
+    // pub fn box_new() -> Box<Self>
+    /// Constructs a new object of `SHA2_256` or `SHA2_224` wrapped by Box,
+    /// or a new SHA2_256-based object wrapped by Box.
+    /// 
+    /// # Output
+    /// A new object of `SHA2_256` or `SHA2_224` wrapped by Box,
+    /// or a new SHA2_256-based object wrapped by Box.
+    /// 
+    /// # Initialization
+    /// All the attributes of the constructed object of SHA2_256, which is
+    /// initial hash value, will be initialized with
+    /// `0x6A09E667BB67AE853C6EF372A54FF53A510E527F9B05688C1F83D9AB5BE0CD19`.
+    /// All the attributes of the constructed object of SHA2_224, which is
+    /// initial hash value, will be initialized with
+    /// `0xC1059ED8367CD5073070DD17F70E5939FFC00B316858151164F98FA7`.
+    /// 
+    /// # Example 1 for SHA2_256
+    /// ```
+    /// use cryptocol::hash::SHA2_256;
+    /// let hash = SHA2_256::box_new();
+    /// println!("Hash =\t{}", hash);
+    /// assert_eq!(hash.to_string(), "6A09E667BB67AE853C6EF372A54FF53A510E527F9B05688C1F83D9AB5BE0CD19");
+    /// ```
+    /// 
+    /// # Example 2 for SHA2_256_Expanded
+    /// ```
+    /// use cryptocol::hash::SHA2_256_Expanded;
+    /// type MySHA2 = SHA2_256_Expanded<0x1111_1111, 0x2222_2222, 0x4444_4444, 0x6666_6666, 0x8888_8888, 0xaaaa_aaaa, 0xcccc_cccc, 0xeeee_eeee, 128>;
+    /// let my_hash = MySHA2::box_new();
+    /// println!("Hash =\t{}", my_hash);
+    /// assert_eq!(my_hash.to_string(), "1111111122222222444444446666666688888888AAAAAAAACCCCCCCCEEEEEEEE");
+    /// ```
+    /// 
+    /// # Example 3 for SHA2_224
+    /// ```
+    /// use cryptocol::hash::SHA2_224;
+    /// let hash = SHA2_224::box_new();
+    /// println!("Hash =\t{}", hash);
+    /// assert_eq!(hash.to_string(), "C1059ED8367CD5073070DD17F70E5939FFC00B316858151164F98FA7");
+    /// ```
+    /// 
+    /// # Example 4 for SHA2_224_Expanded
+    /// ```
+    /// use cryptocol::hash::SHA2_224_Expanded;
+    /// type MySHA2 = SHA2_224_Expanded<128>;
+    /// let my_hash = MySHA2::box_new();
+    /// println!("Hash =\t{}", my_hash);
+    /// assert_eq!(my_hash.to_string(), "C1059ED8367CD5073070DD17F70E5939FFC00B316858151164F98FA7");
+    /// ```
     #[inline]
-    pub(crate) fn box_new() -> Box<Self>
+    pub fn box_new() -> Box<Self>
     {
         Box::new(Self::new())
     }

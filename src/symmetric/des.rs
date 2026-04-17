@@ -1653,8 +1653,37 @@ impl <const ROUND: usize, const SHIFT: u128,
         Self::new_with_key([0_u8; 8])
     }
 
+    // pub fn box_new() -> Box<Self>
+    /// Constructs a new object DES_Generic wrapped by Box.
+    ///
+    /// # Features
+    /// - In order to encrypt data, object should be instantiated mutable.
+    /// - This method sets the key to be [0_u8, 0, 0, 0, 0, 0, 0, 0].
+    /// - Do not use this default key [0_u8, 0, 0, 0, 0, 0, 0, 0]
+    ///   because it is known as one of the weak keys.
+    ///
+    /// # Example 1
+    /// ```
+    /// use cryptocol::symmetric::DES;
+    ///
+    /// let mut des = DES::box_new();   // The default key is 0x0000000000000000 which is a weak key.
+    /// let plaintext = 0x1234567890ABCDEF_u64;
+    /// let ciphertext = des.encrypt_u64(plaintext);
+    ///
+    /// println!("Plaintext:\t\t{:#018X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#018X}", ciphertext);
+    /// assert_eq!(ciphertext, 0x1E32B46B44C69201_u64);
+    ///
+    /// let cipher_cipher_text = des.encrypt_u64(ciphertext);
+    /// println!("Cipher-ciphertext:\t{:#018X}", cipher_cipher_text);
+    /// assert_eq!(cipher_cipher_text, 0x1234567890ABCDEF_u64);
+    /// assert_eq!(cipher_cipher_text, plaintext);  // So, you can't use the default key!!!
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/des_basic/struct.DES_Generic.html#method.box_new)
     #[inline]
-    pub(crate) fn box_new() -> Box<Self>
+    pub fn box_new() -> Box<Self>
     {
         Box::new(Self::new())
     }

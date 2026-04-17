@@ -104,6 +104,81 @@ impl<const RATE: usize> Keccak_Generic<RATE>
         unimplemented!(); // Dummy code for documentation
     }
 
+    // pub fn box_new() -> Box<Self>
+    /// Creates the new object of `Self` wrapped by Box.
+    /// 
+    /// # Output
+    /// A new object of `Self` wrapped by Box.
+    /// 
+    /// # Example 1 for SHA3_512
+    /// ```
+    /// use cryptocol::hash::SHA3_512;
+    /// let hash = SHA3_512::box_new();
+    /// println!("Hash =\t{}", hash);
+    /// assert_eq!(hash.to_string(), "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+    /// ```
+    /// 
+    /// # Example 2 for SHAKE_256
+    /// ```
+    /// use cryptocol::hash::SHAKE_256;
+    /// let hash = SHAKE_256::box_new();
+    /// println!("Hash =\t{}", hash);
+    /// assert_eq!(hash.to_string(), "0000000000000000000000000000000000000000000000000000000000000000");
+    /// ```
+    /// 
+    /// # Example 3 for cSHAKE_128
+    /// ```
+    /// use cryptocol::hash::cSHAKE_128;
+    /// let hash = cSHAKE_128::box_new();
+    /// println!("Hash =\t{}", hash);
+    /// assert_eq!(hash.to_string(), "00000000000000000000000000000000");
+    /// ```
+    /// 
+    /// # Example 4 for KECCAK_384
+    /// ```
+    /// use cryptocol::hash::KECCAK_384;
+    /// let hash = KECCAK_384::box_new();
+    /// println!("Hash =\t{}", hash);
+    /// assert_eq!(hash.to_string(), "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+    /// ```
+    /// 
+    /// # Example 5 for BIG_SHA3_1536
+    /// ```
+    /// use cryptocol::hash::BIG_SHA3_1536;
+    /// let hash = BIG_SHA3_1536::box_new();
+    /// println!("Hash =\t{}", hash);
+    /// assert_eq!(hash.to_string(), "00000000000000000000000000000000547969F9071B9AF02278D128944DD59C6BCCB273DBC1100F794F6488CB39D8EEB7953D954C8AC24A261368E226EA56166AA0B320613AAC9FD788A774ACBA3C71500157FE72A09D4F8C8198FF48495991D3DE92E4767FAACBB34AFB7786536E07DEF4A123AA97BC1BCFE2E34CDD60D15505B6DAA4FCF38CF9C206E86C18BE03AE31B1ADB2D0996CD729A4962E8B5EA592E3BBC024F2A0C9266A2005A25E82AE87583FE906E44469BDC2FC79C8A8B881F2");
+    /// ```
+    /// 
+    /// # Example 6 for SMALL_KECCAK_384
+    /// ```
+    /// use cryptocol::hash::SMALL_KECCAK_384;
+    /// let hash = SMALL_KECCAK_384::box_new();
+    /// println!("Hash =\t{}", hash);
+    /// assert_eq!(hash.to_string(), "0000000073309BF748B9DB9AC2563DABAFA463E1B027E3AC9BF40564EA67E3C85221FD7F8565B7B6FCF438DF69A3EE9F");
+    /// ```
+    /// 
+    /// # Example 7 for SMALLER_SHAKE_128
+    /// ```
+    /// use cryptocol::hash::SMALLER_SHAKE_128;
+    /// let hash = SMALLER_SHAKE_128::box_new();
+    /// println!("Hash =\t{}", hash);
+    /// assert_eq!(hash.to_string(), "00000000000000000000000000000000");
+    /// ```
+    /// 
+    /// # Example 8 for TINY_cSHAKE_64
+    /// ```
+    /// use cryptocol::hash::TINY_cSHAKE_64;
+    /// let hash = TINY_cSHAKE_64::box_new();
+    /// println!("Hash =\t{}", hash);
+    /// assert_eq!(hash.to_string(), "0000000000000000");
+    /// ```
+    #[inline]
+    pub fn box_new() -> Box<Self>
+    {
+        unimplemented!(); // Dummy code for documentation
+    }
+
     // pub fn digest(&mut self, message: *const u8, length_in_bytes: u64)
     /// Computes hash value.
     /// 

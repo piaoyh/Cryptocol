@@ -674,8 +674,38 @@ MD5_Generic<N, H0, H1, H2, H3, ROUND,
         }
     }
 
+    // pub fn box_new() -> Box<Self>
+    /// Constructs a new `MD5` object wrapped by Box
+    /// or a new MD5-based hash object wrapped by Box.
+    /// 
+    /// # Output
+    /// A new object of `MD5` wrapped by Box
+    /// or a new MD5-based hash object wrapped by Box.
+    /// 
+    /// # Initialization
+    /// All the attributes of the constructed object, which is initial hash
+    /// value, will be initialized with `0x0123456789ABCDEFFEDCBA9876543210` for
+    /// MD5. However, if you use your own MD5-expanded version, it will be
+    /// initialized with your special values H0 ~ H3.
+    /// 
+    /// # Example for MD5
+    /// ```
+    /// use cryptocol::hash::MD5;
+    /// let hash = MD5::box_new();
+    /// println!("Hash =\t{}", hash);
+    /// assert_eq!(hash.to_string(), "0123456789ABCDEFFEDCBA9876543210");
+    /// ```
+    /// 
+    /// # Exmaple for MD5_Expanded
+    /// ```
+    /// use cryptocol::hash::MD5_Expanded;
+    /// type MyMD5 = MD5_Expanded<4, 0x1111_1111, 0x4444_4444, 0x8888_8888, 0xffff_ffff, 128>;
+    /// let my_hash = MyMD5::box_new();
+    /// println!("Hash =\t{}", my_hash);
+    /// assert_eq!(my_hash.to_string(), "111111114444444488888888FFFFFFFF");
+    /// ```
     #[inline]
-    pub(crate) fn box_new() -> Box<Self>
+    pub fn box_new() -> Box<Self>
     {
         Box::new(Self::new())
     }

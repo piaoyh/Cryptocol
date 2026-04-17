@@ -134,7 +134,7 @@ impl<const N: usize, T, const MR: usize> PKCS1V15 for RSA_Generic<N, T, MR>
 where T: SmallUInt
 {
     #[inline]
-    fn set_prng(&mut self, prng: impl PRNG)
+    fn set_prng(&mut self, prng: Box<dyn PRNG>)
     {
         self.set_prng(prng);
     }

@@ -511,7 +511,7 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
     /// 
     /// # Initialization
     /// All the attributes of the constructed object, which is initial hash
-    /// value, will be initialized with `0123456789ABCDEFFEDCBA9876543210` for
+    /// value, will be initialized with `0x0123456789ABCDEFFEDCBA9876543210` for
     /// MD4. However, if you use your own MD4-expanded version, it will be
     /// initialized with your special values H0 ~ H3.
     /// 
@@ -539,8 +539,32 @@ MD4_Generic<N, H0, H1, H2, H3, ROUND, K0, K1, K2,
         }
     }
 
+    // pub fn box_new() -> Box<Self>
+    /// Constructs a new `MD4` object wrapped by Box
+    /// or a new MD4-based hash object wrapped by Box.
+    /// 
+    /// # Output
+    /// A new object of `MD4` wrapped by Box
+    /// or a new MD4-based hash object wrapped by Box.
+    /// 
+    /// # Initialization
+    /// All the attributes of the constructed object, which is initial hash
+    /// value, will be initialized with `0x0123456789ABCDEFFEDCBA9876543210` for
+    /// MD4. However, if you use your own MD4-expanded version, it will be
+    /// initialized with your special values H0 ~ H3.
+    /// 
+    /// # Example 1 for MD4
+    /// ```
+    /// use cryptocol::hash::MD4;
+    /// let hash = MD4::box_new();
+    /// println!("Hash =\t{}", hash);
+    /// assert_eq!(hash.to_string(), "0123456789ABCDEFFEDCBA9876543210");
+    /// ```
+    /// 
+    /// # For more examples,
+    /// click [here](./documentation/hash_md4/struct.MD4_Generic.html#method.box_new)
     #[inline]
-    pub(crate) fn box_new() -> Box<Self>
+    pub fn box_new() -> Box<Self>
     {
         Box::new(Self::new())
     }

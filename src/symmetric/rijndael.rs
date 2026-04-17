@@ -1014,8 +1014,35 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         rijndael
     }
 
+    // pub fn box_new() -> Box<Self>
+    /// Constructs a new object Rijndael_Generic wrapped by Box.
+    ///
+    /// # Features
+    /// - In order to encrypt data, object should be instantiated mutable.
+    /// - This method sets the key to have all bits zeros.
+    /// - The default key which has all bits zeros is not a weak key unlike DES.
+    ///
+    /// # Example 1
+    /// ```
+    /// use cryptocol::symmetric::AES_128;
+    /// let mut _a_aes = AES_128::box_new();
+    /// let plaintext = 0x1234567890ABCDEF1234567890ABCDEF_u128;
+    /// let ciphertext = _a_aes.encrypt_u128(plaintext);
+    ///
+    /// println!("Plaintext:\t\t{:#032X}", plaintext);
+    /// println!("Ciphertext:\t\t{:#032X}", ciphertext);
+    /// assert_eq!(ciphertext, 0xE2C8CD3BFD4D72366A4806B100659867);
+    ///
+    /// let recovered_cipher_text = _a_aes.decrypt_u128(ciphertext);
+    /// println!("Recovered-ciphertext:\t{:#032X}", recovered_cipher_text);
+    /// assert_eq!(recovered_cipher_text, 0x1234567890ABCDEF1234567890ABCDEF_u128);
+    /// assert_eq!(recovered_cipher_text, plaintext);
+    /// ```
+    ///
+    /// # For more examples,
+    /// click [here](./documentation/rijndael_basic/struct.Rijndael_Generic.html#method.box_new)
     #[inline]
-    pub(crate) fn box_new() -> Box<Self>
+    pub fn box_new() -> Box<Self>
     {
         Box::new(Self::new())
     }

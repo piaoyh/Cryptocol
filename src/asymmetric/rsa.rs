@@ -16,7 +16,7 @@
 
 use crate::number::{ SmallUInt, BigUInt, BigUInt_Modular, BigUInt_Prime };
 use crate::hash::SHA3_512;
-use crate::random::{ Random_PRNG_Creator, Any };
+use crate::random::{ Any_PRNG_Creator, Random_PRNG_Creator };
 use crate::asymmetric::{ PRNG, Hash };
 
 pub type RSA_4096_u128 = RSA_Generic<32, u128>;
@@ -191,7 +191,7 @@ where T: SmallUInt
             modulus: BigUInt::<T, N>::new(),
             key_public: BigUInt::<T, N>::new(),
             key_private: BigUInt::<T, N>::new(),
-            prng: Box::new(Any::new()),
+            prng: Box::new(Any_PRNG_Creator::create()),
             hash: Box::new(SHA3_512::new()),
         }
     }
@@ -269,7 +269,7 @@ where T: SmallUInt
             modulus,
             key_public,
             key_private,
-            prng: Box::new(Any::new()),
+            prng: Box::new(Any_PRNG_Creator::create()),
             hash: Box::new(SHA3_512::new()),
         }
     }

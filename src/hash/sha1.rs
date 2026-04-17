@@ -830,8 +830,37 @@ SHA1_Generic<N, H0, H1, H2, H3, H4, ROUND, K0, K1, K2, K3, RL1, RL5, RL30>
         }
     }
 
+    // pub fn box_new() -> Box<Self>
+    /// Constructs a new object of `SHA1` or `SHA0` wrapped by Box,
+    /// or SHA1-based hash object wrapped by Box.
+    /// 
+    /// # Output
+    /// A new object of `SHA1` or `SHA0` wrapped by Box,
+    /// or a new SHA1-based hash object wrapped by Box.
+    /// 
+    /// # Initialization
+    /// All the attributes of the constructed object, which is initial hash
+    /// value, will be initialized with
+    /// `0x67452301EFCDAB8998BADCFE10325476C3D2E1F0`.
+    /// 
+    /// # Example 1 for SHA1
+    /// ```
+    /// use cryptocol::hash::SHA1;
+    /// let hash = SHA1::box_new();
+    /// println!("Hash =\t{}", hash);
+    /// assert_eq!(hash.to_string(), "67452301EFCDAB8998BADCFE10325476C3D2E1F0");
+    /// ```
+    /// 
+    /// # Exmaple 2 for SHA1_Expanded
+    /// ```
+    /// use cryptocol::hash::SHA1_Expanded;
+    /// type MySHA1 = SHA1_Expanded<5, 0x1111_1111, 0x4444_4444, 0x8888_8888, 0xcccc_cccc, 0xffff_ffff, 160>;
+    /// let my_hash = MySHA1::box_new();
+    /// println!("Hash =\t{}", my_hash);
+    /// assert_eq!(my_hash.to_string(), "111111114444444488888888CCCCCCCCFFFFFFFF");
+    /// ```
     #[inline]
-    pub(crate) fn box_new() -> Box<Self>
+    pub fn box_new() -> Box<Self>
     {
         Box::new(Self::new())
     }

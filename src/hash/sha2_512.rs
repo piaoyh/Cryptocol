@@ -880,8 +880,77 @@ SHA2_512_Generic<N, H0, H1, H2, H3, H4, H5, H6, H7, ROUND,
         }
     }
 
+    // pub fn box_new() -> Box<Self>
+    /// Constructs a new object of `SHA2_512` or `SHA2_384` wrapped by Box,
+    /// or a new SHA2_512-based object wrapped by Box.
+    /// 
+    /// # Output
+    /// A new object of `SHA2_512` or `SHA2_384` wrapped by Box,
+    /// or a new SHA2_512-based object wrapped by Box.
+    /// 
+    /// # Initialization
+    /// All the attributes of the constructed object of SHA2_512, which is
+    /// initial hash value, will be initialized with
+    /// `0x6A09E667F3BCC908BB67AE8584CAA73B3C6EF372FE94F82BA54FF53A5F1D36F1510E527FADE682D19B05688C2B3E6C1F1F83D9ABFB41BD6B5BE0CD19137E2179`.
+    /// All the attributes of the constructed object of SHA2_384, which is
+    /// initial hash value, will be initialized with
+    /// `0xCBBB9D5DC1059ED8629A292A367CD5079159015A3070DD17152FECD8F70E593967332667FFC00B318EB44A8768581511`.
+    /// All the attributes of the constructed object of SHA2_256_256, which is
+    /// initial hash value, will be initialized with
+    /// `0x22312194FC2BF72C9F555FA3C84C64C22393B86B6F53B151963877195940EABD`.
+    /// 
+    /// # Example 1 for SHA2_512
+    /// ```
+    /// use cryptocol::hash::SHA2_512;
+    /// let hash = SHA2_512::box_new();
+    /// println!("Hash =\t{}", hash);
+    /// assert_eq!(hash.to_string(), "6A09E667F3BCC908BB67AE8584CAA73B3C6EF372FE94F82BA54FF53A5F1D36F1510E527FADE682D19B05688C2B3E6C1F1F83D9ABFB41BD6B5BE0CD19137E2179");
+    /// ```
+    /// 
+    /// # Example 2 for SHA2_512_Expanded
+    /// ```
+    /// use cryptocol::hash::SHA2_512_Expanded;
+    /// type MySHA2 = SHA2_512_Expanded<0x1111_1111_1111_1111, 0x3333_3333_3333_3333, 0x5555_5555_5555_5555, 0x7777_7777_7777_7777, 0x9999_9999_9999_9999, 0xbbbb_bbbb_bbbb_bbbb, 0xdddd_dddd_dddd_dddd, 0xffff_ffff_ffff_ffff, 160>;
+    /// let my_hash = MySHA2::box_new();
+    /// println!("Hash =\t{}", my_hash);
+    /// assert_eq!(my_hash.to_string(), "11111111111111113333333333333333555555555555555577777777777777779999999999999999BBBBBBBBBBBBBBBBDDDDDDDDDDDDDDDDFFFFFFFFFFFFFFFF");
+    /// ```
+    /// 
+    /// # Example 3 for SHA2_384
+    /// ```
+    /// use cryptocol::hash::SHA2_384;
+    /// let hash = SHA2_384::box_new();
+    /// println!("Hash =\t{}", hash);
+    /// assert_eq!(hash.to_string(), "CBBB9D5DC1059ED8629A292A367CD5079159015A3070DD17152FECD8F70E593967332667FFC00B318EB44A8768581511");
+    /// ```
+    /// 
+    /// # Example 4 for SHA2_384_Expanded
+    /// ```
+    /// use cryptocol::hash::SHA2_384_Expanded;
+    /// type MySHA2 = SHA2_384_Expanded<160>;
+    /// let my_hash = MySHA2::box_new();
+    /// println!("Hash =\t{}", my_hash);
+    /// assert_eq!(my_hash.to_string(), "CBBB9D5DC1059ED8629A292A367CD5079159015A3070DD17152FECD8F70E593967332667FFC00B318EB44A8768581511");
+    /// ```
+    /// 
+    /// # Example 5 for SHA2_512_256
+    /// ```
+    /// use cryptocol::hash::SHA2_512_256;
+    /// let hash = SHA2_512_256::box_new();
+    /// println!("Hash =\t{}", hash);
+    /// assert_eq!(hash.to_string(), "22312194FC2BF72C9F555FA3C84C64C22393B86B6F53B151963877195940EABD");
+    /// ```
+    /// 
+    /// # Example 6 for SHA2_512_256_Expanded
+    /// ```
+    /// use cryptocol::hash::SHA2_512_256_Expanded;
+    /// type MySHA2 = SHA2_512_256_Expanded<160>;
+    /// let my_hash = MySHA2::box_new();
+    /// println!("Hash =\t{}", my_hash);
+    /// assert_eq!(my_hash.to_string(), "22312194FC2BF72C9F555FA3C84C64C22393B86B6F53B151963877195940EABD");
+    /// ```
     #[inline]
-    pub(crate) fn box_new() -> Box<Self>
+    pub fn box_new() -> Box<Self>
     {
         Box::new(Self::new())
     }
