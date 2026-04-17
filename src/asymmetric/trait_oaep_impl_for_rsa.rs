@@ -157,17 +157,17 @@ fn mgf1<const L: usize, const M: usize, H: Hash>(seed: [u8; M], hash: &mut H) ->
 }
 
 
-impl<const N: usize, T, const MR: usize, RNG, HashType> OAEP<RNG, HashType> for RSA_Generic<N, T, MR, RNG, HashType>
-where T: SmallUInt, RNG: PRNG, HashType: Hash
+impl<const N: usize, T, const MR: usize> OAEP for RSA_Generic<N, T, MR>
+where T: SmallUInt
 {
     #[inline]
-    fn set_prng(&mut self, prng: RNG)
+    fn set_prng(&mut self, prng: impl PRNG)
     {
         self.set_prng(prng);
     }
 
     #[inline]
-    fn set_hash(&mut self, hash: HashType)
+    fn set_hash(&mut self, hash: impl Hash)
     {
         self.set_hash(hash);
     }

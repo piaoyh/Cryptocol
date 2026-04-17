@@ -98,15 +98,14 @@ use crate::asymmetric::{ PRNG, Hash };
 /// Therefore, RSA-OAEP is the current industry standard and the
 /// recommended choice for all modern RSA encryption implementations to
 /// ensure cryptographic robustness.
-pub trait OAEP<RNG, HashType>
-where RNG: PRNG, HashType: Hash
+pub trait OAEP
 {
     const BT: u8 = 2;
 
     // fn set_prng(&mut self, prng: RNG)
-    fn set_prng(&mut self, prng: RNG);
+    fn set_prng(&mut self, prng: impl PRNG);
     
-    fn set_hash(&mut self, hash: HashType);
+    fn set_hash(&mut self, hash: impl Hash);
     
     fn encrypt(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;
 

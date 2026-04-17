@@ -773,8 +773,7 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # For more examples,
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.new_with)
-    pub fn new_with<SG, AG>(mut main_generator: SG, mut aux_generator: AG) -> Self
-    where SG: PRNG_Engine + 'static, AG: PRNG_Engine + 'static
+    pub fn new_with(mut main_generator: Box<dyn PRNG_Engine>, mut aux_generator: Box<dyn PRNG_Engine>) -> Self
     {
         if COUNT == 0
             { panic!("COUNT should be greater than 0."); }
@@ -798,8 +797,8 @@ impl<const COUNT: u64> Random_Generic<COUNT>
             aux_state,
             count: COUNT,
             collect_seed: Self::collect_seed,
-            main_generator: Box::new(main_generator),
-            aux_generator: Box::new(aux_generator),
+            main_generator: main_generator,
+            aux_generator: aux_generator,
         }
     }
 
@@ -850,8 +849,7 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # For more examples,
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.new_with_generators_seeds)
-    pub fn new_with_generators_seeds<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed: u64, aux: u64) -> Self
-    where SG: PRNG_Engine + 'static, AG: PRNG_Engine + 'static
+    pub fn new_with_generators_seeds(mut main_generator: Box<dyn PRNG_Engine>, mut aux_generator: Box<dyn PRNG_Engine>, seed: u64, aux: u64) -> Self
     {
         if COUNT == 0
             { panic!("COUNT should be greater than 0."); }
@@ -881,8 +879,8 @@ impl<const COUNT: u64> Random_Generic<COUNT>
             aux_state,
             count: COUNT,
             collect_seed: Self::collect_seed,
-            main_generator: Box::new(main_generator),
-            aux_generator: Box::new(aux_generator),
+            main_generator: main_generator,
+            aux_generator: aux_generator,
         }
     }
 
@@ -935,8 +933,7 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # For more examples,
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.new_with_generators_seed_arrays)
-    pub fn new_with_generators_seed_arrays<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed: [u64; 8], aux: [u64; 8]) -> Self
-    where SG: PRNG_Engine + 'static, AG: PRNG_Engine + 'static
+    pub fn new_with_generators_seed_arrays(mut main_generator: Box<dyn PRNG_Engine>, mut aux_generator: Box<dyn PRNG_Engine>, seed: [u64; 8], aux: [u64; 8]) -> Self
     {
         if COUNT == 0
             { panic!("COUNT should be greater than 0."); }
@@ -954,8 +951,8 @@ impl<const COUNT: u64> Random_Generic<COUNT>
             aux_state,
             count: COUNT,
             collect_seed: Self::collect_seed,
-            main_generator: Box::new(main_generator),
-            aux_generator: Box::new(aux_generator),
+            main_generator: main_generator,
+            aux_generator: aux_generator,
         }
     }
 
@@ -1030,8 +1027,7 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # For more examples,
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.new_with_generators_seed_collector)
-    pub fn new_with_generators_seed_collector<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed_collector: fn() -> [u64; 8]) -> Self
-    where SG: PRNG_Engine + 'static, AG: PRNG_Engine + 'static
+    pub fn new_with_generators_seed_collector(mut main_generator: Box<dyn PRNG_Engine>, mut aux_generator: Box<dyn PRNG_Engine>, seed_collector: fn() -> [u64; 8]) -> Self
     {
         if COUNT == 0
             { panic!("COUNT should be greater than 0."); }
@@ -1055,8 +1051,8 @@ impl<const COUNT: u64> Random_Generic<COUNT>
             aux_state,
             count: COUNT,
             collect_seed: seed_collector,
-            main_generator: Box::new(main_generator),
-            aux_generator: Box::new(aux_generator),
+            main_generator: main_generator,
+            aux_generator: aux_generator,
         }
     }
 
@@ -1141,8 +1137,7 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # For more examples,
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.new_with_generators_seed_collector_seeds)
-    pub fn new_with_generators_seed_collector_seeds<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Self
-    where SG: PRNG_Engine + 'static, AG: PRNG_Engine + 'static
+    pub fn new_with_generators_seed_collector_seeds(mut main_generator: Box<dyn PRNG_Engine>, mut aux_generator: Box<dyn PRNG_Engine>, seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Self
     {
         if COUNT == 0
             { panic!("COUNT should be greater than 0."); }
@@ -1172,8 +1167,8 @@ impl<const COUNT: u64> Random_Generic<COUNT>
             aux_state,
             count: COUNT,
             collect_seed: seed_collector,
-            main_generator: Box::new(main_generator),
-            aux_generator: Box::new(aux_generator),
+            main_generator: main_generator,
+            aux_generator: aux_generator,
         }
     }
 
@@ -1258,8 +1253,7 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     /// 
     /// # For more examples,
     /// click [here](./documentation/random_random_biguint/struct.Random_Generic.html#method.new_with_generators_seed_collector_seed_arrays)
-    pub fn new_with_generators_seed_collector_seed_arrays<SG, AG>(mut main_generator: SG, mut aux_generator: AG, seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Self
-    where SG: PRNG_Engine + 'static, AG: PRNG_Engine + 'static
+    pub fn new_with_generators_seed_collector_seed_arrays(mut main_generator: Box<dyn PRNG_Engine>, mut aux_generator: Box<dyn PRNG_Engine>, seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Self
     {
         if COUNT == 0
             { panic!("COUNT should be greater than 0."); }
@@ -1277,8 +1271,8 @@ impl<const COUNT: u64> Random_Generic<COUNT>
             aux_state,
             count: COUNT,
             collect_seed: seed_collector,
-            main_generator: Box::new(main_generator),
-            aux_generator: Box::new(aux_generator),
+            main_generator: main_generator,
+            aux_generator: aux_generator,
         }
     }
 

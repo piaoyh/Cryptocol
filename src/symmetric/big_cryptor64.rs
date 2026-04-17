@@ -226,6 +226,12 @@ impl BigCryptor64
         }
     }
 
+    #[inline]
+    pub(crate) fn box_new() -> Box<Self>
+    {
+        Box::new(Self::new())
+    }
+
     // pub fn new_with_small_cryptor_array<const N: usize>(smallcryptor: [Box<dyn SmallCryptor64>; N]) -> Self
     /// Constructs a new object BigCryptor64 with some small cryptors
     /// (components).

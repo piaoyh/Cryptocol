@@ -16,24 +16,24 @@ use crate::random::{ PRNG_Creator_methods, DOC_STRING, LESS_SECURE_COUNT };
 
 pub trait PRNG
 {
-    fn new() -> Self;
-    fn new_with<SG, AG>(main_generator: SG, aux_generator: AG) -> Self
-        where SG: PRNG_Engine + 'static, AG: PRNG_Engine + 'static;
+    fn box_new() -> Box::<Self> where Self: Sized;
+    fn box_new_with(main_generator: Box<dyn PRNG_Engine>, aux_generator: Box<dyn PRNG_Engine>) -> Box::<Self> where Self: Sized;
     fn random_u8(&mut self) -> u8;
 }
 
 impl PRNG for Random_Generic<LESS_SECURE_COUNT>
 {
-    #[inline] fn new() -> Self
+    #[inline] fn box_new() -> Box::<Self>
+    where Self: Sized
     {
-        Self::new_with(BIG_KECCAK_1024::new(), BIG_KECCAK_1024::new())
+        Box::new(Self::new_with(BIG_KECCAK_1024::box_new(), BIG_KECCAK_1024::box_new()))
     }
 
     #[inline]
-    fn new_with<SG, AG>(main_generator: SG, aux_generator: AG) -> Self
-        where SG: PRNG_Engine + 'static, AG: PRNG_Engine + 'static
+    fn box_new_with(main_generator: Box<dyn PRNG_Engine>, aux_generator: Box<dyn PRNG_Engine>) -> Box::<Self>
+    where Self: Sized
     {
-        Self::new_with(main_generator, aux_generator)
+        Box::new(Self::new_with(main_generator, aux_generator))
     }
 
     #[inline]

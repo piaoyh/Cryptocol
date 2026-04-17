@@ -674,6 +674,12 @@ MD5_Generic<N, H0, H1, H2, H3, ROUND,
         }
     }
 
+    #[inline]
+    pub(crate) fn box_new() -> Box<Self>
+    {
+        Box::new(Self::new())
+    }
+
     // pub fn digest(&mut self, message: *const u8, length_in_bytes: u64)
     /// Computes hash value.
     /// 

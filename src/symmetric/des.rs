@@ -1653,6 +1653,12 @@ impl <const ROUND: usize, const SHIFT: u128,
         Self::new_with_key([0_u8; 8])
     }
 
+    #[inline]
+    pub(crate) fn box_new() -> Box<Self>
+    {
+        Box::new(Self::new())
+    }
+
     // pub fn new_with_key(key: [u8; 8]) -> Self
     /// Constructs a new object DES_Generic.
     ///

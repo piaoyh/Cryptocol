@@ -720,6 +720,12 @@ SHA2_512_t_Generic<t, A5A5A5A5A5A5A5A5,
         Self::new_with_seed_text(format!("SHA-512/{}", t).as_str())
     }
 
+    #[inline]
+    pub(crate) fn box_new() -> Box<Self>
+    {
+        Box::new(Self::new())
+    }
+
     // pub fn new_with_seed_text(seed_text: &str) -> Self
     /// Constructs a new object of `SHA2_256` or `SHA2_224`,
     /// or a new SHA2_256-based object with seed text

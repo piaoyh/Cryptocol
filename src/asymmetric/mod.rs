@@ -178,6 +178,7 @@ pub use rsa::{ RSA_Generic, RSA_4096, RSA_2048, RSA_1024,
 pub use trait_pkcs1v15::PKCS1V15;
 pub use trait_oaep::OAEP;
 pub use trait_hash::Hash;
+pub use trait_prng::PRNG;
 
 pub use trait_prng::{ Asymmetric_PRNG_Creator_BIG_KECCAK_1024,
                       Asymmetric_PRNG_Creator_SHA3_512, Asymmetric_PRNG_Creator_SHA3_256,
@@ -187,7 +188,6 @@ pub use trait_prng::{ Asymmetric_PRNG_Creator_BIG_KECCAK_1024,
                       Asymmetric_PRNG_Creator_MD5, Asymmetric_PRNG_Creator_MD4,
                       Asymmetric_PRNG_Creator_AES_128, Asymmetric_PRNG_Creator_DES,
                       Asymmetric_PRNG_Creator_CPRNG_Engine };
-use trait_prng::PRNG;
 
 // pub use ecc_25519::*;
 

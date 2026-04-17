@@ -1,35 +1,52 @@
 # Breaking Changes
 
+## Breaking changes from ver. 0.19.9 to ver. 0.19.10
+
+| Ver. 0.19.9                                                                                                                                                                                           | Ver. 0.19.10                                                                                                                                                                                                                       |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| pub fn Random_Geneic::new_with<SG, AG\>(mut main_generator: SG, mut aux_generator: AG) -> Self                                                                                                        | pub fn Random_Geneic::new_with(mut main_generator: Box<dyn PRNG_Engine\>, mut aux_generator: Box<dyn PRNG_Engine\>) -> Self                                                                                                        |
+| pub fn Random_Geneic::new_with_generators_seeds<SG, AG\>(mut main_generator: SG, mut aux_generator: AG, seed: u64, aux: u64) -> Self                                                                  | pub fn Random_Geneic::new_with_generators_seeds(mut main_generator: Box<dyn PRNG_Engine\>, mut aux_generator: Box<dyn PRNG_Engine\>, seed: u64, aux: u64) -> Self                                                                  |
+| pub fn Random_Geneic::new_with_generators_seed_arrays<SG, AG\>(mut main_generator: SG, mut aux_generator: AG, seed: [u64; 8], aux: [u64; 8]) -> Self                                                  | pub fn Random_Geneic::new_with_generators_seed_arrays(mut main_generator: Box<dyn PRNG_Engine\>, mut aux_generator: Box<dyn PRNG_Engine\>, seed: [u64; 8], aux: [u64; 8]) -> Self                                                  |
+| pub fn Random_Geneic::new_with_generators_seed_collector<SG, AG\>(mut main_generator: SG, mut aux_generator: AG, seed_collector: fn() -> [u64; 8]) -> Self                                            | pub fn Random_Geneic::new_with_generators_seed_collector(mut main_generator: Box<dyn PRNG_Engine\>, mut aux_generator: Box<dyn PRNG_Engine\>, seed_collector: fn() -> [u64; 8]) -> Self                                            |
+| pub fn Random_Geneic::new_with_generators_seed_collector_seeds<SG, AG\>(mut main_generator: SG, mut aux_generator: AG, seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Self                 | pub fn Random_Geneic::new_with_generators_seed_collector_seeds(mut main_generator: Box<dyn PRNG_Engine\>, mut aux_generator: Box<dyn PRNG_Engine\>, seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Self                 |
+| pub fn Random_Geneic::new_with_generators_seed_collector_seed_arrays<SG, AG\>(mut main_generator: SG, mut aux_generator: AG, seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Self | pub fn Random_Geneic::new_with_generators_seed_collector_seed_arrays(mut main_generator: Box<dyn PRNG_Engine\>, mut aux_generator: Box<dyn PRNG_Engine\>, seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Self |
+| fn PRNG::new() -> Self                                                                                                                                                                                | fn PRNG::box_new() -> Box::<Self\> where Self: Sized                                                                                                                                                                               |
+| fn PRNG::new_with<SG, AG>(main_generator: SG, aux_generator: AG) -> Self where SG: PRNG_Engine + 'static, AG: PRNG_Engine + 'static                                                                   | fn PRNG::box_new_with(main_generator: Box<dyn PRNG_Engine\>, aux_generator: Box<dyn PRNG_Engine\>) -> Box::<Self\> where Self: Sized                                                                                               |
+| fn Hash::new() -> Self                                                                                                                                                                                | fn ::box_new() -> Box<Self\>                                                                                                                                                                                                       |
+| fn Hash::calculate_hash_code<const N: usize>(&mut self, message: &[u8; N], counter: u32) -> [u8; N] | 
+
+- Changed interface for dyn compatibility.
+
 ## Breaking changes from ver. 0.19.8 to ver. 0.19.9
 
-| Ver. 0.19.8                                                                                                            | Ver. 0.19.9                                                                                                                             |
-|------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
-| Random                                                                                                                 | Random_PRNG_Creator                                                                                                                     |
-| Random_BIG_KECCAK_1024                                                                                                 | Random_PRNG_Creator_BIG_KECCAK_1024                                                                                                     |
-| Random_SHA3_512                                                                                                        | Random_PRNG_Creator_SHA3_512                                                                                                            |
-| Random_SHA2_512                                                                                                        | Random_PRNG_Creator_SHA2_512                                                                                                            |
-| Random_Rijndael                                                                                                        | Random_PRNG_Creator_Rijndael                                                                                                            |
-| Any                                                                                                                    | Any_PRNG_Creator                                                                                                                        |
-| Any_SHA3_512                                                                                                           | Any_PRNG_Creator_SHA2_512                                                                                                               |
-| Any_SHA3_256                                                                                                           | Any_PRNG_Creator_SHA3_256                                                                                                               |
-| Any_SHAKE_256                                                                                                          | Any_PRNG_Creator_SHAKE_256                                                                                                              |
-| Any_SHAKE_128                                                                                                          | Any_PRNG_Creator_SHAKE_128                                                                                                              |
-| Any_SHA2_512                                                                                                           | Any_PRNG_Creator_SHA2_512                                                                                                               |
-| Any_SHA2_256                                                                                                           | Any_PRNG_Creator_SHA2_256                                                                                                               |
-| Any_Rijndael                                                                                                           | Any_PRNG_Creator_Rijndael                                                                                                               |
-| Slapdash                                                                                                               | Slapdash_PRNG_Creator                                                                                                                   |
-| Slapdash_SHA1                                                                                                          | Slapdash_PRNG_Creator_SHA1                                                                                                              |
-| Slapdash_SHA0                                                                                                          | Slapdash_PRNG_Creator_SHA0                                                                                                              |
-| Slapdash_MD5                                                                                                           | Slapdash_PRNG_Creator_MD5                                                                                                               |
-| Slapdash_MD4                                                                                                           | Slapdash_PRNG_Creator_MD4                                                                                                               |
-| Slapdash_DES                                                                                                           | Slapdash_PRNG_Creator_DES                                                                                                               |
-| Slapdash_Num_C                                                                                                         | Slapdash_PRNG_Creator_CPRNG_Engine                                                                                                      |
-| Random_Engine                                                                                                          | PRNG_Engine                                                                                                                             |
-| AnyNumber_Engine_C                                                                                                     | CPRNG_Engine                                                                                                                            |
-| AnyNumber_Engine_C_Generic                                                                                             | CPRNG_Engine_Generic                                                                                                                    |
-| RandGen                                                                                                                | Random                                                                                                                                  |
-| AnyGen                                                                                                                 | Any                                                                                                                                     |
-| SlapdashGen                                                                                                            | Slapdash                                                                                                                                |
+| Ver. 0.19.8                                                                                                            | Ver. 0.19.9                                                                                                                              |
+| ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Random                                                                                                                 | Random_PRNG_Creator                                                                                                                      |
+| Random_BIG_KECCAK_1024                                                                                                 | Random_PRNG_Creator_BIG_KECCAK_1024                                                                                                      |
+| Random_SHA3_512                                                                                                        | Random_PRNG_Creator_SHA3_512                                                                                                             |
+| Random_SHA2_512                                                                                                        | Random_PRNG_Creator_SHA2_512                                                                                                             |
+| Random_Rijndael                                                                                                        | Random_PRNG_Creator_Rijndael                                                                                                             |
+| Any                                                                                                                    | Any_PRNG_Creator                                                                                                                         |
+| Any_SHA3_512                                                                                                           | Any_PRNG_Creator_SHA2_512                                                                                                                |
+| Any_SHA3_256                                                                                                           | Any_PRNG_Creator_SHA3_256                                                                                                                |
+| Any_SHAKE_256                                                                                                          | Any_PRNG_Creator_SHAKE_256                                                                                                               |
+| Any_SHAKE_128                                                                                                          | Any_PRNG_Creator_SHAKE_128                                                                                                               |
+| Any_SHA2_512                                                                                                           | Any_PRNG_Creator_SHA2_512                                                                                                                |
+| Any_SHA2_256                                                                                                           | Any_PRNG_Creator_SHA2_256                                                                                                                |
+| Any_Rijndael                                                                                                           | Any_PRNG_Creator_Rijndael                                                                                                                |
+| Slapdash                                                                                                               | Slapdash_PRNG_Creator                                                                                                                    |
+| Slapdash_SHA1                                                                                                          | Slapdash_PRNG_Creator_SHA1                                                                                                               |
+| Slapdash_SHA0                                                                                                          | Slapdash_PRNG_Creator_SHA0                                                                                                               |
+| Slapdash_MD5                                                                                                           | Slapdash_PRNG_Creator_MD5                                                                                                                |
+| Slapdash_MD4                                                                                                           | Slapdash_PRNG_Creator_MD4                                                                                                                |
+| Slapdash_DES                                                                                                           | Slapdash_PRNG_Creator_DES                                                                                                                |
+| Slapdash_Num_C                                                                                                         | Slapdash_PRNG_Creator_CPRNG_Engine                                                                                                       |
+| Random_Engine                                                                                                          | PRNG_Engine                                                                                                                              |
+| AnyNumber_Engine_C                                                                                                     | CPRNG_Engine                                                                                                                             |
+| AnyNumber_Engine_C_Generic                                                                                             | CPRNG_Engine_Generic                                                                                                                     |
+| RandGen                                                                                                                | Random                                                                                                                                   |
+| AnyGen                                                                                                                 | Any                                                                                                                                      |
+| SlapdashGen                                                                                                            | Slapdash                                                                                                                                 |
 | pub fn new() -> RandGen                                                                                                | pub fn create() -> Random_Generic<COUNT\>                                                                                                |
 | pub fn new_with_seeds(seed: u64, aux: u64) -> RandGen                                                                  | pub fn create_with_seeds(seed: u64, aux: u64) -> Random_Generic<COUNT\>                                                                  |
 | pub fn new_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> RandGen                                                  | pub fn create_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<COUNT\>                                                  |
@@ -44,7 +61,7 @@
 ## Breaking changes from ver. 0.18.7 to ver. 0.18.8
 
 | Ver. 0.18.7                                                       |                                                           |
-|-------------------------------------------------------------------|-----------------------------------------------------------|
+| ----------------------------------------------------------------- | --------------------------------------------------------- |
 | pub struct BigUInt<T, const N: usize\> where T: TraitsBigUInt<T\> | pub struct BigUInt<T, const N: usize\> where T: SmallUInt |
 
 - Trait bound for BigUInt has been changed.
@@ -53,14 +70,14 @@
 ## Breaking changes from ver. 0.18.2 to ver. 0.18.3
 
 | Ver. 0.18.2                                                                                                                              | Ver. 0.18.3 |
-|------------------------------------------------------------------------------------------------------------------------------------------|-------------|
+| ---------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
 | pub fn random_prime_with_msb_set_using_rsa_biguint<T, const N: usize\>(&mut self, repetition: usize) -> (BigUInt<T, N\>, BigUInt<T, N\>) | removed     |
 | pub fn random_prime_using_rsa_biguint<T, const N: usize\>(&mut self, repetition: usize) -> (BigUInt<T, N\>, BigUInt<T, N\>)              | removed     |
 
 - The methods above have been removed from the struct Random_Generic.
 
 | Ver. 0.18.2                                           | Ver. 0.18.3                                            |
-|-------------------------------------------------------|--------------------------------------------------------|
+| ----------------------------------------------------- | ------------------------------------------------------ |
 | pub fn get_modulo(&self) -> BigUInt<T, N\>            | pub fn get_modulus(&self) -> BigUInt<T, N\>            |
 | pub fn set_modulo(&mut self, modulus: BigUInt<T, N\>) | pub fn set_modulus(&mut self, modulus: BigUInt<T, N\>) |
 | pub fn set_modulo(&mut self, modulo: BigUInt<T, N\>)  | pub fn set_modulus(&mut self, modulus: BigUInt<T, N\>) |
@@ -71,7 +88,7 @@
 ## Breaking changes from ver. 0.17.3 to ver. 0.18.0
 
 | Ver. 0.17.3 | Ver. 0.18.0    |
-|-------------|----------------|
+| ----------- | -------------- |
 | Any_Num     | Slapdash       |
 | Any_Num_C   | Slapdash_Num_C |
 | Any_DES     | Slapdash_DES   |
@@ -86,7 +103,7 @@
 ## Breaking changes from ver. 0.17.1 to ver. 0.17.2
 
 | Ver. 0.17.1                                                                              | Ver. 0.17.2                                                                                                |
-|------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|
+| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | pub fn encrypt_unit(&self, message: &BigUInt<T, N\>) -> BigUInt<T, N\>                   | pub fn encrypt_biguint(&self, message: &BigUInt<T, N\>) -> BigUInt<T, N\>                                  |
 | pub fn decrypt_unit(&self, cipher: &BigUInt<T, N\>) -> BigUInt<T, N\>                    | pub fn decrypt_biguint(&self, cipher: &BigUInt<T, N\>) -> BigUInt<T, N\>                                   |
 | pub fn encrypt_array_unit(&self, message: &[BigUInt<T, N\>; M]) -> [BigUInt<T, N\>; M]   | pub fn encrypt_array_biguint<const M: usize\>(&self, message: &[BigUInt<T, N\>; M]) -> [BigUInt<T, N\>; M] |
@@ -102,13 +119,13 @@
 ## Breaking changes from ver. 0.16.1 to ver. 0.16.2
 
 | Ver. 0.16.1                                 | Ver. 0.17.0                                                      |
-|---------------------------------------------|------------------------------------------------------------------|
+| ------------------------------------------- | ---------------------------------------------------------------- |
 | fn sow_array(&mut self, message: &[u64; 8]) | fn sow_array(&mut self, message: &[u64; 8], original: &[u64; 8]) |
 
 - The above method of the trait Random_Engine has been changed.
 
 | Ver. 0.16.1                           | Ver. 0.17.0                                |
-|---------------------------------------|--------------------------------------------|
+| ------------------------------------- | ------------------------------------------ |
 | fn change_key(&mut self, sugar: bool) | fn change_key(&mut self, sugar: &[u64; 8]) |
 
 - The above method of the trait Key has been changed.
@@ -117,7 +134,7 @@
 ## Breaking changes from ver. 0.15.1 to ver. 0.16.0
 
 | Ver. 0.15.1                                        | Ver. 0.15.2 |
-|----------------------------------------------------|-------------|
+| -------------------------------------------------- | ----------- |
 | pub fn new() -> Self                               | removed     |
 | pub fn new_with_seeds<T\>(seed: T, aux: T) -> Self | removed     |
 
@@ -127,7 +144,7 @@
 ## Breaking changes from ver. 0.14.1 to ver. 0.15.0
 
 | Ver. 0.14.1                         | Ver. 0.15.0 |
-|-------------------------------------|-------------|
+| ----------------------------------- | ----------- |
 | fn set_key(&mut self, key: [u8; N]) | removed     |
 | fn set_key_unit(&mut self, key: T)  | removed     |
 
@@ -137,7 +154,7 @@
 ## Breaking changes from ver. 0.13.0 to ver. 0.13.1
 
 | Ver. 0.13.0                      | Ver. 0.13.1                             |
-|----------------------------------|-----------------------------------------|
+| -------------------------------- | --------------------------------------- |
 | pub fn set_successful(&mut self) | pub(super) fn set_successful(&mut self) |
 | pub fn set_failed(&mut self)     | pub(super) fn set_failed(&mut self)     |
 
@@ -147,25 +164,25 @@
 ## Breaking changes from ver. 0.12.1 to ver. 0.12.2
 
 | Ver. 0.12.1                      | Ver. 0.12.2                             |
-|----------------------------------|-----------------------------------------|
+| -------------------------------- | --------------------------------------- |
 | pub fn set_successful(&mut self) | pub(super) fn set_successful(&mut self) |
 | pub fn set_failed(&mut self)     | pub(super) fn set_failed(&mut self)     |
 
 - The attribute of the above functions of DES_Generic and Rijndael_Generic has been changed from `pub` into `pub(super)` for the security reason.
 
-| Ver. 0.12.1                                                               | Ver. 0.12.2                                                                |
-|---------------------------------------------------------------------------|----------------------------------------------------------------------------|
-| pub fn new_with_key<const K: usize\>(key: [u8; K]) -> Self                | pub fn new_with_key<const K: usize\>(key: &[u8; K]) -> Self                |
-| pub fn encryptor_with_key<const K: usize\>(key: [u8; K]) -> Self          | pub fn encryptor_with_key<const K: usize\>(key: &[u8; K]) -> Self          |
-| pub fn decryptor_with_key<const K: usize\>(key: [u8; K]) -> Self          | pub fn decryptor_with_key<const K: usize\>(key: &[u8; K]) -> Self          |
-| pub fn set_key<const K: usize\>(&mut self, key: [u8; K])                  | pub fn set_key<const K: usize\>(&mut self, key: &[u8; K])                  |
-| pub fn encrypt_unit(&mut self, message: [IntUnion; NB]) -> [IntUnion; NB] | pub fn encrypt_unit(&mut self, message: &[u32; NB]) -> [u32; NB]           |
-| pub fn decrypt_unit(&mut self, cipher: [IntUnion; NB]) -> [IntUnion; NB]  | pub fn decrypt_unit(&mut self, cipher: &[IntUnion; NB]) -> [IntUnion; NB]  |
+| Ver. 0.12.1                                                               | Ver. 0.12.2                                                               |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| pub fn new_with_key<const K: usize\>(key: [u8; K]) -> Self                | pub fn new_with_key<const K: usize\>(key: &[u8; K]) -> Self               |
+| pub fn encryptor_with_key<const K: usize\>(key: [u8; K]) -> Self          | pub fn encryptor_with_key<const K: usize\>(key: &[u8; K]) -> Self         |
+| pub fn decryptor_with_key<const K: usize\>(key: [u8; K]) -> Self          | pub fn decryptor_with_key<const K: usize\>(key: &[u8; K]) -> Self         |
+| pub fn set_key<const K: usize\>(&mut self, key: [u8; K])                  | pub fn set_key<const K: usize\>(&mut self, key: &[u8; K])                 |
+| pub fn encrypt_unit(&mut self, message: [IntUnion; NB]) -> [IntUnion; NB] | pub fn encrypt_unit(&mut self, message: &[u32; NB]) -> [u32; NB]          |
+| pub fn decrypt_unit(&mut self, cipher: [IntUnion; NB]) -> [IntUnion; NB]  | pub fn decrypt_unit(&mut self, cipher: &[IntUnion; NB]) -> [IntUnion; NB] |
 
 - The arguements `key`, `message`, and `cipher` of the above functions of Rijndael_Generic has been changed from `move` into `borrow`.
 
 | Ver. 0.12.1                           | Ver. 0.12.2                           |
-|---------------------------------------|---------------------------------------|
+| ------------------------------------- | ------------------------------------- |
 | pub fn get_desirable_ROUND() -> usize | pub fn get_desirable_round() -> usize |
 
 - The function name of the above functions of Rijndael_Generic has been changed from `get_desirable_ROUND` into `get_desirable_round`.
@@ -174,7 +191,7 @@
 ## Breaking changes from ver. 0.12.0 to ver. 0.12.1
 
 | Ver. 0.12.0                                     | Ver. 0.12.1                                            |
-|-------------------------------------------------|--------------------------------------------------------|
+| ----------------------------------------------- | ------------------------------------------------------ |
 | pub fn _encrypt(&mut self, message: u64) -> u64 | pub(super) fn _encrypt(&mut self, message: u64) -> u64 |
 | pub fn _decrypt(&mut self, cipher: u64) -> u64  | pub(super) fn _decrypt(&mut self, cipher: u64) -> u64  |
 
@@ -184,7 +201,7 @@
 ## Breaking changes from ver. 0.11.5 to ver. 0.11.6
 
 | Methods                                                                                  |
-|------------------------------------------------------------------------------------------|
+| ---------------------------------------------------------------------------------------- |
 | fn panic_free_divide_fully_uint<U\>(&self, rhs: U) -> (Self, Self)                       |
 | fn panic_free_div_uint<U\>(&self, rhs: U) -> Self                                        |
 | fn panic_free_div_assign_uint<U\>(&mut self, rhs: U)                                     |
@@ -249,7 +266,7 @@
 - The methods above have been moved from struct BigUInt or trait BigUInt_More to trait BigUInt_Panic_Free because docs.rs failed in generating struct.bigUInt.html.
 
 | Methods                                                                       |
-|-------------------------------------------------------------------------------|
+| ----------------------------------------------------------------------------- |
 | fn modular_add_uint<U\>(&self, rhs: U, modulo: &Self) -> Self                 |
 | fn modular_add_assign_uint<U\>(&mut self, rhs: U, modulo: &Self)              |
 | fn modular_sub_uint<U\>(&self, rhs: U, modulo: &Self) -> Self                 |
@@ -281,17 +298,17 @@
 
 - The methods above have been moved from struct BigUInt or trait BigUInt_More to trait BigUInt_Modular because docs.rs failed in generating struct.bigUInt.html.
 
-| Methods                                                                       |
-|-------------------------------------------------------------------------------|
-| fn gcd_uint<U\>(&self, other: U) -> Self                                      |
-| fn gcd_assign_uint<U\>(&mut self, other: U)                                   |
-| fn lcm_uint<U\>(&self, other: U) -> Self                                      |
-| fn lcm_assign_uint<U\>(&mut self, other: U)                                   |
-| fn gcd(&self, other: &Self) -> Self                                           |
-| fn gcd_assign(&mut self, other: &Self)                                        |
-| fn lcm(&self, other: &Self) -> Self                                           |
-| fn lcm_assign(&mut self, other: &Self)                                        |
-| fn is_prime_using_miller_rabin(&self, repetition: usize) -> bool              |
+| Methods                                                          |
+| ---------------------------------------------------------------- |
+| fn gcd_uint<U\>(&self, other: U) -> Self                         |
+| fn gcd_assign_uint<U\>(&mut self, other: U)                      |
+| fn lcm_uint<U\>(&self, other: U) -> Self                         |
+| fn lcm_assign_uint<U\>(&mut self, other: U)                      |
+| fn gcd(&self, other: &Self) -> Self                              |
+| fn gcd_assign(&mut self, other: &Self)                           |
+| fn lcm(&self, other: &Self) -> Self                              |
+| fn lcm_assign(&mut self, other: &Self)                           |
+| fn is_prime_using_miller_rabin(&self, repetition: usize) -> bool |
 
 - The methods above have been moved from struct BigUInt to trait BigUInt_Prime because docs.rs failed in generating struct.bigUInt.html.
 
@@ -301,7 +318,7 @@
 ### Contant BYTES in trait SmallUInt
 
 | Ver. 0.11.2        | Ver. 0.11.3     |
-|--------------------|-----------------|
+| ------------------ | --------------- |
 | const BYTES: usize | const BITS: u32 |
 
 - The constant SmallUInt::BYTES has been renamed to SmallUInt::BITS, and its datatype has also been changed from `usize` to `u32` for consistancy with the primitive datatyes such as `u8`, `u16`, `u32`, `u64`, `u128`, and `usize`.
@@ -310,7 +327,7 @@
 ### Four methods in BigUInt
 
 | Ver. 0.11.2                                                 | Ver. 0.11.3                                               |
-|-------------------------------------------------------------|-----------------------------------------------------------|
+| ----------------------------------------------------------- | --------------------------------------------------------- |
 | pub fn submax(size_in_bits: usize) -> Self                  | pub fn submax(size_in_bits: u32) -> Self                  |
 | pub const fn size_in_bytes() -> usize                       | pub const fn size_in_bytes() -> u32                       |
 | pub const fn size_in_bits() -> usize                        | pub const fn size_in_bits() -> u32                        |
@@ -322,7 +339,7 @@
 | pub fn generate_check_bits(bit_pos: usize) -> Option<Self\> | pub fn generate_check_bits(bit_pos: u32) -> Option<Self\> |
 | pub fn generate_check_bits_(bit_pos: usize) -> Self         | pub fn generate_check_bits_(bit_pos: u32) -> Self         |
 | pub fn get_lower_portion(portion: usize) -> Self            | pub fn get_lower_portion(portion: u32) -> Self            |
-| 
+|                                                             |
 
 - The return types and the arguments of the above methods has been changed from `usize` to `u32` for consistancy with the primitive datatyes such as `u8`, `u16`, `u32`, `u64`, `u128`, and `usize`.
 
@@ -330,7 +347,7 @@
 ### Four methods in SmallUInt
 
 | Ver. 0.11.2                                             | Ver. 0.11.3                                           |
-|---------------------------------------------------------|-------------------------------------------------------|
+| ------------------------------------------------------- | ----------------------------------------------------- |
 | fn size_in_bytes() -> usize                             | fn size_in_bytes() -> u32                             |
 | fn size_in_bits() -> usize                              | fn size_in_bits() -> u32                              |
 | fn length_in_bytes(&self) -> usize                      | fn length_in_bytes(&self) -> u32                      |
@@ -347,7 +364,7 @@
 ### methods in SHA_2_512_Generic and SHA_2_512_t_Generic
 
 | Ver. 0.11.2                                                                                                     | Ver. 0.11.3                                                                    |
-|-----------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------|
+| --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
 | pub fn digest(&mut self, message: *const u8, length_in_bytes: u128)                                             | pub fn digest(&mut self, message: *const u8, length_in_bytes: u64)             |
 | pub fn ruminate(&mut self, n: usize, message: *const u8, length_in_bytes: u128)                                 | pub fn ruminate(&mut self, n: usize, message: *const u8, length_in_bytes: u64) |
 | pub fn digest_c(&mut self, message: *const u8, length_in_bytes_low: u64, length_in_bytes_high: u64)             | removed                                                                        |
@@ -359,7 +376,7 @@
 ## Breaking changes from ver. 0.10.1 to ver. 0.10.2
 
 | Methods                                       |
-|-----------------------------------------------|
+| --------------------------------------------- |
 | pub fn encrypt_with_padding_*(..) -> u64      |
 | pub fn encrypt\_\*\_with_padding_*(..) -> u64 |
 | pub fn decrypt_with_padding_*(..) -> u64      |
@@ -371,7 +388,7 @@
 ## Breaking changes from ver. 0.9.3 to ver. 0.9.4
 
 | Methods                                                                                  |
-|------------------------------------------------------------------------------------------|
+| ---------------------------------------------------------------------------------------- |
 | fn next_multiple_of_uint<U\>(&self, rhs: U) -> Self                                      |
 | fn next_multiple_of_assign_uint<U\>(&mut self, rhs: U)                                   |
 | fn panic_free_next_multiple_of_uint<U\>(&self, rhs: U) -> Self                           |
@@ -425,7 +442,7 @@
 ## Breaking changes from ver. 0.9.2 to ver. 0.9.3
 
 | Methods                                                 |
-|---------------------------------------------------------|
+| ------------------------------------------------------- |
 | fn checked_add_uint<U\>(&self, rhs: U) -> Option<Self\> |
 | fn unchecked_add_uint<U\>(&self, rhs: U) -> Self        |
 | fn saturating_add_uint<U\>(&self, rhs: U) -> Self       |
@@ -485,7 +502,7 @@
 ## Breaking changes from ver. 0.9.0 to ver. 0.9.1
 
 | Ver. 0.9.0                                             | Ver. 0.9.1 |
-|--------------------------------------------------------|------------|
+| ------------------------------------------------------ | ---------- |
 | pub fn wrapping_pow_uint<U\>(&self, exp: U) -> Self    | removed    |
 | pub fn wrapping_pow_assign_uint<U\>(&mut self, exp: U) | removed    |
 | pub fn wrapping_pow(&mut self, exp: &Self) -> Self     | removed    |
@@ -499,7 +516,7 @@
 ### Arithmetic operators for SmallUInt, ShortUnion, IntUnion, LongUnion, and LongerUnion
 
 | Methods                                                        |
-|----------------------------------------------------------------|
+| -------------------------------------------------------------- |
 | Add::add(self, rhs: Self) -> Self for SmallUint                |
 | Add::add(self, rhs: Self) -> Self for ShortUnion               |
 | Add::add(self, rhs: Self) -> Self for IntUnion                 |
@@ -557,7 +574,7 @@
 ### Bit manipulation methods of BigUInt
 
 | Methods                                                      |
-|--------------------------------------------------------------|
+| ------------------------------------------------------------ |
 | pub fn shift_left<U\>(&self, n: U) -> Self                   |
 | pub fn shift_left_assign<U\>(&mut self, n: U)                |
 | pub fn checked_shift_left<U\>(&self, n: U) -> Option<Self\>  |
@@ -575,7 +592,7 @@
 ### Four methods of BigUInt
 
 | Ver. 0.8.5                                            | Ver. 0.8.6                                                       |
-|-------------------------------------------------------|------------------------------------------------------------------|
+| ----------------------------------------------------- | ---------------------------------------------------------------- |
 | pub fn to_string_with_radix_and_delimiter(&self, ...) | pub fn to_string_with_radix_and_stride_and_delimiter(&self, ...) |
 | pub fn set_flag_bit(&mut self, flag: u8)              | fn set_flag_bit(&mut self, flag: u8)                             |
 | pub fn reset_flag_bit(&mut self, flag: u8)            | fn reset_flag_bit(&mut self, flag: u8)                           |
@@ -588,7 +605,7 @@
 ### Three methods of BigUInt
 
 | Ver. 0.8.5                           | Ver. 0.8.6 |
-|--------------------------------------|------------|
+| ------------------------------------ | ---------- |
 | pub fn set_untrustable(&mut self)    | removed    |
 | pub fn reset_untrustable(&mut self)  | removed    |
 | pub fn is_untrustable(&self) -> bool | removed    |
@@ -600,20 +617,20 @@
 
 ### Twelve methods of BigUInt
 
-| Ver. 0.8.4                                        | Ver. 0.8.5 |
-|---------------------------------------------------|------------|
-| pub fn ilog2_uint(&self) -> Self                  | removed    |
-| pub fn ilog2_assign_uint(&mut self)               | removed    |
-| pub fn panic_free_ilog2_uint(&self) -> Self       | removed    |
-| pub fn panic_free_ilog2_assign_uint(&mut self)    | removed    |
+| Ver. 0.8.4                                         | Ver. 0.8.5 |
+| -------------------------------------------------- | ---------- |
+| pub fn ilog2_uint(&self) -> Self                   | removed    |
+| pub fn ilog2_assign_uint(&mut self)                | removed    |
+| pub fn panic_free_ilog2_uint(&self) -> Self        | removed    |
+| pub fn panic_free_ilog2_assign_uint(&mut self)     | removed    |
 | pub fn checked_ilog2_uint(&self) -> Option<Self\>  | removed    |
-| pub fn unchecked_ilog2_uint(&self) -> Self        | removed    |
-| pub fn ilog10_uint(&self) -> Self                 | removed    |
-| pub fn ilog10_assign_uint(&mut self)              | removed    |
-| pub fn panic_free_ilog10_uint(&self) -> Self      | removed    |
-| pub fn panic_free_ilog10_assign_uint(&mut self)   | removed    |
+| pub fn unchecked_ilog2_uint(&self) -> Self         | removed    |
+| pub fn ilog10_uint(&self) -> Self                  | removed    |
+| pub fn ilog10_assign_uint(&mut self)               | removed    |
+| pub fn panic_free_ilog10_uint(&self) -> Self       | removed    |
+| pub fn panic_free_ilog10_assign_uint(&mut self)    | removed    |
 | pub fn checked_ilog10_uint(&self) -> Option<Self\> | removed    |
-| pub fn unchecked_ilog10_uint(&self) -> Self       | removed    |
+| pub fn unchecked_ilog10_uint(&self) -> Self        | removed    |
 
 - The methods above have been removed because they are meaningless.
 
@@ -621,7 +638,7 @@
 ### Seven methods of BigUInt
 
 | Methods                                                                    |
-|----------------------------------------------------------------------------|
+| -------------------------------------------------------------------------- |
 | pub fn panic_free_iroot_uint<U\>(&self, exp: U) -> Self                    |
 | pub fn panic_free_modular_add_assign(&mut self, rhs: &Self, modulo: &Self) |
 | pub fn panic_free_modular_sub(&self, rhs: &Self, modulo: &Self) -> Self    |
@@ -639,7 +656,7 @@
 ### Five methods of BigUInt
 
 | Methods                                                                         |
-|---------------------------------------------------------------------------------|
+| ------------------------------------------------------------------------------- |
 | pub fn panic_free_divide_fully_uint<U\>(&self, rhs: U) -> (Self, Self)          |
 | pub fn panic_free_div_uint<U\>(&self, rhs: U) -> Self                           |
 | pub fn panic_free_div_assign_uint<U\>(&mut self, rhs: U)                        |
@@ -654,7 +671,7 @@
 ### Twenty-four methods of BigUInt
 
 | Ver. 0.8.1                                                      | Ver. 0.8.2 |
-|-----------------------------------------------------------------|------------|
+| --------------------------------------------------------------- | ---------- |
 | pub fn wrapping_root_uint(&self, exp: U) -> Self                | removed    |
 | pub fn wrapping_root_assign_uint(&mut self, exp: U)             | removed    |
 | pub fn overflowing_root_uint(&self, exp: U) -> (Self, bool)     | removed    |
@@ -686,7 +703,7 @@
 ### Seven (7) methods of BigUInt
 
 | Ver. 0.8.1                                                      | Ver. 0.8.2                                                       |
-|-----------------------------------------------------------------|------------------------------------------------------------------|
+| --------------------------------------------------------------- | ---------------------------------------------------------------- |
 | pub fn root_uint(&self, exp: U) -> Self                         | pub fn iroot_uint(&self, exp: U) -> Self                         |
 | pub fn root_assign_uint(&mut self, exp: U)                      | pub fn iroot_assign_uint(&mut self, exp: U)                      |
 | pub fn checked_root_uint(&self, exp: U) -> Option&lt;Self&gt;   | pub fn checked_iroot_uint(&self, exp: U) -> Option&lt;Self&gt;   |
@@ -699,7 +716,7 @@
 - The names of the three lower methods above `*inifinity()` have been changed into `*infinity()` because `inifinity` is the typo mistake of `infinity`.
 
 | Methods                                                                       | Ver. 0.8.1                                                    | Ver. 0.8.2                                       |
-|-------------------------------------------------------------------------------|---------------------------------------------------------------|--------------------------------------------------|
+| ----------------------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------ |
 | pub fn modular_add_uint&lt;U&gt;(&self, rhs: U, modulo: &Self) -> Self        | It returns maximum if `modulo` is either zero or one.         | It will panic if `modulo` is either zero or one. |
 | pub fn modular_add_assign_uint&lt;U&gt;(&self, rhs: U, modulo: &Self) -> Self | It gives maximum to `self` if `modulo` is either zero or one. | It will panic if `modulo` is either zero or one. |
 | pub fn modular_sub_uint&lt;U&gt;(&self, rhs: U, modulo: &Self) -> Self        | It returns maximum if `modulo` is either zero or one.         | It will panic if `modulo` is either zero or one. |
@@ -768,19 +785,19 @@
 
 ### One method of trait SmallUInt
 
-| Ver. 0.7.6                             | Ver. 0.8.0                            |
-|----------------------------------------|---------------------------------------|
-| pub fn root(self, exp: Self) -> Self   | pub fn iroot(self, exp: Self) -> Self |
+| Ver. 0.7.6                           | Ver. 0.8.0                            |
+| ------------------------------------ | ------------------------------------- |
+| pub fn root(self, exp: Self) -> Self | pub fn iroot(self, exp: Self) -> Self |
 
 - The method name root has been changed into iroot for the name consistancy with the methods isqrt, ilog, ilog10, ilog2, etc.
 
 
 ### Two methods of unions ShortUnion, IntUnion, LongUnion, LongerUnion, and SizeUnion
 
-| Ver. 0.7.6                             | Ver. 0.8.0 |
-|----------------------------------------|------------|
-| pub fn root(self, exp: Self) -> Self   | removed    |
-| pub fn reverse_bits(self) -> Self      | removed    |
+| Ver. 0.7.6                           | Ver. 0.8.0 |
+| ------------------------------------ | ---------- |
+| pub fn root(self, exp: Self) -> Self | removed    |
+| pub fn reverse_bits(self) -> Self    | removed    |
 
 - The above methods has been removed since they were found redundant. If you import (use) SmallUInt, you can use the above methods.
 
@@ -789,7 +806,7 @@
 ### Five (5) methods of BigUInt
 
 | Ver. 0.7.2                                      | Ver. 0.7.3                                     |
-|-------------------------------------------------|------------------------------------------------|
+| ----------------------------------------------- | ---------------------------------------------- |
 | pub fn from_array(val: &[T; N]) -> Self         | pub fn from_array(val: [T; N]) -> Self         |
 | pub fn from_be(be: &Self) -> Self               | pub fn from_be(be: Self) -> Self               |
 | pub fn from_le(le: S&elf) -> Self               | pub fn from_le(le: Self) -> Self               |
@@ -805,7 +822,7 @@
 ### 2 methods of unions ShortUnion, IntUnion, LongUnion, LongerUnion, and SizeUnion
 
 | Ver. 0.7.2                           | Ver. 0.7.3                            |
-|--------------------------------------|---------------------------------------|
+| ------------------------------------ | ------------------------------------- |
 | pub fn onoff(b: bool) -> Self        | pub fn new_with_bool(b: bool) -> Self |
 | pub fn onoff_signed(b: bool) -> Self | removed                               |
 
@@ -816,15 +833,15 @@
 
 ### A method of union SharedValue
 
-| Ver. 0.7.1                                          | Ver. 0.7.2 |
-|-----------------------------------------------------|------------|
+| Ver. 0.7.1                                                | Ver. 0.7.2 |
+| --------------------------------------------------------- | ---------- |
 | pub fn into_des(&mut self, pos: usize) -> Option&lt;D&gt; | removed    |
 
 
 ### A method of union SharedArray
 
 | Ver. 0.7.1                                   | Ver. 0.7.2                                       |
-|----------------------------------------------|--------------------------------------------------|
+| -------------------------------------------- | ------------------------------------------------ |
 | pub fn into_des(&mut self, des: &mut [D; N]) | pub fn put_des_in_array(&self, des: &mut [D; N]) |
 
 - The function name `into_des()` does not show its functionality very clearly. It is desirable that the function name `into_des()` is changed to put_des_in_array() for the name consistency with the methods such as put_hash_value_in_array() in hash modules. The argument `&mut self` does not have to be `&mut self` so that it was changed to `&self`
@@ -834,7 +851,7 @@
 ### A macro for BigUInt
 
 | Ver. 0.7.0                | Ver. 0.7.1 |
-|---------------------------|------------|
+| ------------------------- | ---------- |
 | define_Utypes_with_utypes | removed    |
 
 - The macro name `define_Utypes_with_utypes` should not have been exposed to the outside of this crate so it was removed rather than recommending not to use it at documentation.
@@ -843,7 +860,7 @@
 ### fields of ShortUnion, IntUnion, LongUnion, LongerUnion, and SizeUnion
 
 | Ver. 0.7.0  | Ver. 0.7.1 |
-|-------------|------------|
+| ----------- | ---------- |
 | pub this    | this       |
 | pub that    | that       |
 | pub ubyte   | ubyte      |
@@ -867,7 +884,7 @@
 ### Names of struct `Share` and `Common`
 
 | Ver. 0.7.0 | Ver. 0.7.1   |
-|------------|--------------|
+| ---------- | ------------ |
 | Share      | SharedValues |
 | Common     | SharedArrays |
 
@@ -878,7 +895,7 @@
 ### Five methods of trait SmallUInt
 
 | Ver. 0.6.3                        | Ver. 0.7.0               |
-|-----------------------------------|--------------------------|
+| --------------------------------- | ------------------------ |
 | fn sqrt(self) -> Self             | fn isqrt(self) -> Self   |
 | fn is_max(&self) -> bool          | fn is_max(self) -> bool  |
 | fn is_zero(&self) -> bool         | fn is_zero(self) -> bool |
@@ -893,7 +910,7 @@
 ### Methods of unions ShortUnion, IntUnion, LongUnion, LongerUnion, and SizeUnion
 
 | Ver. 0.6.3                                       | Ver. 0.7.0 |
-|--------------------------------------------------|------------|
+| ------------------------------------------------ | ---------- |
 | pub fn num(n: u128) -> Self                      | removed    |
 | pub fn zero() -> Self                            | removed    |
 | pub fn one() -> Self                             | removed    |
@@ -932,7 +949,7 @@ A breaking change has been made to change the function `number::BigUInt::copy_wi
 ### A method of struct BigUInt
 
 | Ver. 0.6.2                                         | Ver. 0.6.3                                     |
-|----------------------------------------------------|------------------------------------------------|
+| -------------------------------------------------- | ---------------------------------------------- |
 | pub fn copy_within(&mut self, src: R, dest: usize) | fn copy_within(&mut self, src: R, dest: usize) |
 
 
@@ -944,7 +961,7 @@ Breaking changes have been made to change the source code according to Rust conv
 ### Methods of trait SmallUInt and its implementation for u8, u16, u32, u64, u128, usize, ShortUnion, IntUnion, LongUnion, LongerUnion, and SizeUnion
 
 | Ver. 0.5.0                                                      | Ver. 0.6.0                                                      |
-|-----------------------------------------------------------------|-----------------------------------------------------------------|
+| --------------------------------------------------------------- | --------------------------------------------------------------- |
 | fn test_Miller_Rabin(self, a: Self) -> bool                     | fn test_miller_rabin(self, a: Self) -> bool                     |
 | fn is_prime_using_Miller_Rabin(self, repetition: usize) -> bool | fn is_prime_using_miller_rabin(self, repetition: usize) -> bool |
 | fn u128_as_SmallUInt(n: u128) -> Self                           | fn u128_as_smalluint(n: u128) -> Self                           |
@@ -962,7 +979,7 @@ Breaking changes have been made to change the source code according to Rust conv
 ### Five methods of struct BigUInt functions
 
 | Ver. 0.5.0                                                      | Ver. 0.6.0                                                      |
-|-----------------------------------------------------------------|-----------------------------------------------------------------|
+| --------------------------------------------------------------- | --------------------------------------------------------------- |
 | fn test_Miller_Rabin(self, a: Self) -> bool                     | fn test_miller_rabin(self, a: Self) -> bool                     |
 | fn is_prime_using_Miller_Rabin(self, repetition: usize) -> bool | fn is_prime_using_miller_rabin(self, repetition: usize) -> bool |
 | fn set_MSB(&mut self)                                           | fn set_msb(&mut self)                                           |
@@ -973,7 +990,7 @@ Breaking changes have been made to change the source code according to Rust conv
 ### types of struct BigUInt
 
 | Ver. 0.5.0            | Ver. 0.6.0            |
-|-----------------------|-----------------------|
+| --------------------- | --------------------- |
 | type U32              | type UU32             |
 | type U64              | type UU64             |
 | type U128             | type UU128            |
@@ -1056,7 +1073,7 @@ Breaking changes have been made to change the source code according to Rust conv
 ### Two methods of trait SmallSInt and its implementation for i8, i16, i32, i64, i128, and isize
 
 | Ver. 0.5.0       | Ver. 0.6.0       |
-|------------------|------------------|
+| ---------------- | ---------------- |
 | fn Max() -> Self | fn max() -> Self |
 | fn Min() -> Self | fn min() -> Self |
 
@@ -1064,7 +1081,7 @@ Breaking changes have been made to change the source code according to Rust conv
 ### Methods of struct MD4_Generic, MD5_Generic, SHA1_Generic, SHA2_256_Generic, SHA2_512_Generic, and SHA2_512_t_Generic
 
 | Ver. 0.5.0                                                 | Ver. 0.6.0                                                   |
-|------------------------------------------------------------|--------------------------------------------------------------|
+| ---------------------------------------------------------- | ------------------------------------------------------------ |
 | fn get_HashValue(&self, hashValue: *mut u8, length: usize) | fn get_hash_value(&self, hash_value: *mut u8, length: usize) |
 | fn get_HashValue_in_string(&self) -> String                | fn get_hash_value_in_string(&self) -> String                 |
 | fn get_HashValue_in_array(&self) -> [u32; N]               | fn get_hash_value_in_array(&self) -> [u32; N]                |
@@ -1076,7 +1093,7 @@ Breaking changes have been made to change the source code according to Rust conv
 ### Three methods of struct SHA2_512_t_Generic
 
 | Ver. 0.5.0                                    | Ver. 0.6.0                                     |
-|-----------------------------------------------|------------------------------------------------|
+| --------------------------------------------- | ---------------------------------------------- |
 | fn get_HashValue_in_array_TM(&self) -> [T; M] | fn get_hash_value_in_array_tm(&self) -> [T; M] |
 | fn new_with_seedText(seed_text: &str) -> Self | fn new_with_seed_text(seed_text: &str) -> Self |
 | fn new_with_H(h: &[u64; 8]) -> Self           | fn new_with_h(h: &[u64; 8]) -> Self            |
@@ -1085,7 +1102,7 @@ Breaking changes have been made to change the source code according to Rust conv
 ### Methods of struct Random
 
 | Ver. 0.5.0                                                       | Ver. 0.6.0                                                       |
-|------------------------------------------------------------------|------------------------------------------------------------------|
+| ---------------------------------------------------------------- | ---------------------------------------------------------------- |
 | fn random_with_MSB_set_uint(&mut self) -> T                      | fn random_with_msb_set_uint(&mut self) -> T                      |
 | fn random_odd_with_MSB_set_uint(&mut self) -> T                  | fn random_odd_with_msb_set_uint(&mut self) -> T                  |
 | fn random_prime_using_Miller_Rabin_uint(&mut self, ... ) -> T    | fn random_prime_using_miller_rabin_uint(&mut self, ... ) -> T    |

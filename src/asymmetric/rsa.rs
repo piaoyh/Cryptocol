@@ -151,18 +151,18 @@ pub type RSA_1024 = RSA_1024_u32;
 /// 
 /// # Notice for Practical Use
 /// 
-pub struct RSA_Generic<const N: usize, T, const MR: usize = 7, RNG = Any, HashType = SHA3_512>
-where T: SmallUInt, RNG: PRNG, HashType: Hash
+pub struct RSA_Generic<const N: usize, T, const MR: usize = 7>
+where T: SmallUInt
 {
     modulus: BigUInt<T, N>,
     key_public: BigUInt<T, N>,
     key_private: BigUInt<T, N>,
-    prng: RNG,
-    hash: HashType,
+    prng: Box<dyn PRNG>,
+    hash: Box<dyn Hash>,
 }
 
-impl<const N: usize, T, const MR: usize, RNG, HashType> RSA_Generic<N, T, MR, RNG, HashType>
-where T: SmallUInt, RNG: PRNG, HashType: Hash
+impl<const N: usize, T, const MR: usize> RSA_Generic<N, T, MR>
+where T: SmallUInt
 {
     // pub fn new() -> Self
     /// Constructs a new object of the struct `RSA_Generic`.
@@ -191,8 +191,8 @@ where T: SmallUInt, RNG: PRNG, HashType: Hash
             modulus: BigUInt::<T, N>::new(),
             key_public: BigUInt::<T, N>::new(),
             key_private: BigUInt::<T, N>::new(),
-            prng: PRNG::new(),
-            hash: HashType::new(),
+            prng: Box::new(Any::new()),
+            hash: Box::new(SHA3_512::new()),
         }
     }
 
@@ -269,8 +269,8 @@ where T: SmallUInt, RNG: PRNG, HashType: Hash
             modulus,
             key_public,
             key_private,
-            prng: PRNG::new(),
-            hash: HashType::new(),
+            prng: Box::new(Any::new()),
+            hash: Box::new(SHA3_512::new()),
         }
     }
 
@@ -486,12 +486,12 @@ where T: SmallUInt, RNG: PRNG, HashType: Hash
         self.modulus = modulus;
     }
 
-    pub(super) fn set_prng(&mut self, prng: RNG)
+    pub(super) fn set_prng(&mut self, prng: Box<dyn PRNG>)
     {
         self.prng = prng;
     }
 
-    pub(super) fn set_hash(&mut self, hash: HashType)
+    pub(super) fn set_hash(&mut self, hash: Box<dyn Hash>)
     {
         self.hash = hash;
     }

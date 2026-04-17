@@ -119,7 +119,7 @@ macro_rules! PRNG_Creator_methods {
         #[inline]
         pub fn create_with_seed_arrays(seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<$count> 
         {
-            Random_Generic::<$count>::new_with_generators_seed_arrays($engine::new(), $engine::new(), seed, aux)
+            Random_Generic::<$count>::new_with_generators_seed_arrays(Box::new($engine::new()), Box::new($engine::new()), seed, aux)
         }
         
         // pub fn create_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<COUNT>
@@ -171,7 +171,7 @@ macro_rules! PRNG_Creator_methods {
         #[inline]
         pub fn create_with_seed_collector(seed_collector: fn() -> [u64; 8]) -> Random_Generic<$count>
         {
-            Random_Generic::<$count>::new_with_generators_seed_collector($engine::new(), $engine::new(), seed_collector)
+            Random_Generic::<$count>::new_with_generators_seed_collector(Box::new($engine::new()), Box::new($engine::new()), seed_collector)
         }
 
         // pub fn create_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<COUNT>
@@ -234,7 +234,7 @@ macro_rules! PRNG_Creator_methods {
         #[inline]
         pub fn create_with_seed_collector_seeds(seed_collector: fn() -> [u64; 8], seed: u64, aux: u64) -> Random_Generic<$count>
         {
-            Random_Generic::<$count>::new_with_generators_seed_collector_seeds($engine::new(), $engine::new(), seed_collector, seed, aux)
+            Random_Generic::<$count>::new_with_generators_seed_collector_seeds(($engine::new()), Box::new($engine::new()), seed_collector, seed, aux)
         }
 
         // pub fn create_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<COUNT>
@@ -299,7 +299,7 @@ macro_rules! PRNG_Creator_methods {
         #[inline]
         pub fn create_with_seed_collector_seed_arrays(seed_collector: fn() -> [u64; 8], seed: [u64; 8], aux: [u64; 8]) -> Random_Generic<$count>
         {
-            Random_Generic::<$count>::new_with_generators_seed_collector_seed_arrays($engine::new(), $engine::new(), seed_collector, seed, aux)
+            Random_Generic::<$count>::new_with_generators_seed_collector_seed_arrays(($engine::new()), Box::new($engine::new()), seed_collector, seed, aux)
         }
     };
 }
@@ -367,7 +367,8 @@ engine.
 
 This struct produces a pseudo-random number generator (PRNG) capable of
 generating both primitive unsigned integers (`u8`, `u16`, `u32`, `u64`,
-`u128`, `usize`) and `BigUInt` values. 
+`u128`, `usize`) and `BigUInt` values. In other words, it is a factory
+struct for [`Random_Generic`](struct@Random_Generic) instances.
 
 # Quick Start
 `"##, stringify!($cat), "_PRNG_Creator_", stringify!($engine),
@@ -386,7 +387,8 @@ engine.
 
 This struct produces a pseudo-random number generator (PRNG) capable of
 generating both primitive unsigned integers (`u8`, `u16`, `u32`, `u64`,
-`u128`, `usize`) and `BigUInt` values. 
+`u128`, `usize`) and `BigUInt` values. In other words, it is a factory
+struct for [`Random_Generic`](struct@Random_Generic) instances.
 
 # Quick Start
 `"##, "Slapdash_PRNG_Creator_", stringify!($engine),

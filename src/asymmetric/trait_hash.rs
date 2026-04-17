@@ -17,9 +17,9 @@ use crate::hash::{  MD4, MD5, SHA0, SHA1,
 #[allow(non_camel_case_types)]
 pub trait Hash
 {
-    fn new() -> Self;
+    fn box_new() -> Box<Self> where Self: Sized;
     fn get_default_length_in_bytes(&self) -> usize;
-    fn calculate_hash_code<const N: usize>(&mut self, message: &[u8; N], counter: u32) -> [u8; N];
+    fn calculate_hash_code(&mut self, message: &[u8], counter: u32) -> Vec<u8>;
 }
 
 macro_rules! trait_Hash_impl {
@@ -27,9 +27,9 @@ macro_rules! trait_Hash_impl {
         $(
             impl Hash for $hash_type
             {
-                fn new() -> Self
+                fn box_new() -> Box<Self> where Self: Sized
                 {
-                    Self::new()
+                    Box::new(Self::new())
                 }
 
                 #[inline]
@@ -38,16 +38,16 @@ macro_rules! trait_Hash_impl {
                     Self::DEFUALT_OUTPUT_LENGTH_IN_BYTES
                 }
 
-                fn calculate_hash_code<const N: usize>(&mut self, message: &[u8; N], counter: u32) -> [u8; N]
+                fn calculate_hash_code(&mut self, message: &[u8], counter: u32) -> Vec<u8>
                 {
                     let mut message_array = Vec::<u8>::from(message);
                     let counter = counter.to_be_bytes();
                     for i in 0..4
                         { message_array.push(counter[i]); }
-                    let mut hash = [0_u8; N];
                     self.digest_vec(&message_array);
-                    self.put_hash_value_in_array(&mut hash);
-                    hash
+                    let mut a = self.get_hash_value_in_vec();
+                    let b = Vec::<u32>::new();
+                    b.
                 }
             }
         )*

@@ -1773,6 +1773,12 @@ where T: SmallUInt
         Self { state: [[T::MIN; 5]; 5] }
     }
 
+    #[inline]
+    pub(crate) fn box_new() -> Box<Self>
+    {
+        Box::new(Self::new())
+    }
+
     // pub fn digest(&mut self, message: *const u8, length_in_bytes: u64)
     /// Computes hash value.
     /// 

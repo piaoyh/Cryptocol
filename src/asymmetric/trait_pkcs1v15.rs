@@ -15,6 +15,7 @@
 
 
 use crate::number::SmallUInt;
+use crate::asymmetric::PRNG;
 
 /// This trait PKCS1V15 is based on PKCS #1 ver. 1.5. The RSA PKCS #1 v1.5
 /// padding format is designed to format a message before RSA encryption to
@@ -79,13 +80,13 @@ use crate::number::SmallUInt;
 /// Therefore, PKCS #1 v1.5 is considered not to be cryptographically secure
 /// enough so that you are not encouraged to use this trait. Instead, you are
 /// encouraged to use the trait OAEP.
-pub trait PKCS1V15<RNG>
+pub trait PKCS1V15
 {
     const BT: u8 = 2;
     // const BT: u8 = 1;
     // const PS: u8 = 0xFF_u8;
 
-    // fn set_prng<RNG: PRNG>(&mut self, prng: RNG)
+    // fn set_prng(&mut self, prng: impl RNG)
     /// Sets pseudo-random generator engine.
     /// 
     /// # Argument
@@ -110,7 +111,7 @@ pub trait PKCS1V15<RNG>
     /// - [`Asymmetric_PRNG_Creator_AES_128`](struct.Asymmetric_PRNG_Creator_AES_128.html#struct.Asymmetric_PRNG_Creator_AES_128)
     /// - [`Asymmetric_PRNG_Creator_DES`](struct.Asymmetric_PRNG_Creator_DES.html#struct.Asymmetric_PRNG_Creator_DES)
     /// - [`Asymmetric_PRNG_Creator_CPRNG_Engine`](struct.Asymmetric_PRNG_Creator_CPRNG_Engine.html#struct.Asymmetric_PRNG_Creator_CPRNG_Engine)
-    fn set_prng(&mut self, prng: RNG);
+    fn set_prng(&mut self, prng: impl PRNG);
 
     // fn encrypt(&mut self, message: *const u8, length_in_bytes: u64, cipher: *mut u8) -> u64;
     /// Encrypts the data with the padding defined

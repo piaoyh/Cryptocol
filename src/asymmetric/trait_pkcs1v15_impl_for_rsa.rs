@@ -130,11 +130,11 @@ macro_rules! crypt_into_something_with_padding {
 
 
 
-impl<const N: usize, T, const MR: usize, RNG> PKCS1V15<RNG> for RSA_Generic<N, T, MR, RNG>
-where T: SmallUInt, RNG: PRNG
+impl<const N: usize, T, const MR: usize> PKCS1V15 for RSA_Generic<N, T, MR>
+where T: SmallUInt
 {
     #[inline]
-    fn set_prng(&mut self, prng: RNG)
+    fn set_prng(&mut self, prng: impl PRNG)
     {
         self.set_prng(prng);
     }

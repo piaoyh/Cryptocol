@@ -880,6 +880,12 @@ SHA2_512_Generic<N, H0, H1, H2, H3, H4, H5, H6, H7, ROUND,
         }
     }
 
+    #[inline]
+    pub(crate) fn box_new() -> Box<Self>
+    {
+        Box::new(Self::new())
+    }
+
     // // pub fn digest_c(&mut self, message: *const u8, length_in_bytes_low: u64, length_in_bytes_high: u64)
     // /// Computes hash value.
     // /// 

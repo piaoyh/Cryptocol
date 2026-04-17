@@ -1014,6 +1014,12 @@ Rijndael_Generic<ROUND, NB, NK, IRREDUCIBLE, AFFINE_MUL, AFFINE_ADD, SR0, SR1, S
         rijndael
     }
 
+    #[inline]
+    pub(crate) fn box_new() -> Box<Self>
+    {
+        Box::new(Self::new())
+    }
+
     // pub fn new_with_key<const K: usize>(key: &[u8; K]) -> Self
     /// Constructs a new object Rijndael_Generic.
     ///
