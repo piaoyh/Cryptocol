@@ -684,7 +684,7 @@ pub union SizeUnion
 /// recommended for production environments. Users assume all 
 /// responsibility for any issues that may arise when using this crate 
 /// on Big-Endian systems.
-#[cfg(target_pointer_width = "32")]
+#[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]
 #[derive(Copy, Clone, Eq)]
 #[allow(dead_code)]
 pub union SizeUnion
@@ -1044,7 +1044,7 @@ impl SizeUnion
     /// println!("a = {}", a.get());
     /// #[cfg(target_pointer_width = "128")]    assert_eq!(a.get(), 123456789012345678901234567890123456789_usize);
     /// #[cfg(target_pointer_width = "64")]     assert_eq!(a.get(), 12312739301371248917_usize);
-    /// #[cfg(target_pointer_width = "32")]     assert_eq!(a.get(), 2923004181_usize);
+    /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]     assert_eq!(a.get(), 2923004181_usize);
     /// #[cfg(target_pointer_width = "16")]     assert_eq!(a.get(), 33045_usize);
     /// #[cfg(target_pointer_width = "8")]      assert_eq!(a.get(), 21_usize);
     /// ```
@@ -1138,18 +1138,18 @@ impl SizeUnion
 
     // #[cfg(target_pointer_width = "128")]    crate::number::get_set_byte!(16);
     #[cfg(target_pointer_width = "64")]     crate::number::get_set_byte!(8);
-    #[cfg(target_pointer_width = "32")]     crate::number::get_set_byte!(4);
+    #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]     crate::number::get_set_byte!(4);
     #[cfg(target_pointer_width = "16")]     crate::number::get_set_byte!(2);
     // #[cfg(target_pointer_width = "8")]      crate::number::get_set_byte_fit!();
 
     // #[cfg(target_pointer_width = "128")]    crate::number::get_set_short!(8);
     #[cfg(target_pointer_width = "64")]     crate::number::get_set_short!(4);
-    #[cfg(target_pointer_width = "32")]     crate::number::get_set_short!(2);
+    #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]     crate::number::get_set_short!(2);
     #[cfg(target_pointer_width = "16")]     crate::number::get_set_short_fit!();
 
     // #[cfg(target_pointer_width = "128")]    crate::number::get_set_int!(4);
     #[cfg(target_pointer_width = "64")]     crate::number::get_set_int!(2);
-    #[cfg(target_pointer_width = "32")]     crate::number::get_set_int_fit!();
+    #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]     crate::number::get_set_int_fit!();
 
     // #[cfg(target_pointer_width = "128")]    crate::number::get_set_long!(2);
     #[cfg(target_pointer_width = "64")]     crate::number::get_set_long_fit!();
@@ -1349,7 +1349,7 @@ impl Debug for SizeUnion
             .field("ubyte", unsafe { &self.ubyte } )
             .field("sbyte", unsafe { &self.sbyte } );
 
-        #[cfg(target_pointer_width = "32")]
+        #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]
         ff.field("uint", unsafe { &self.uint } )
             .field("sint", unsafe { &self.sint } )
             .field("ushort", unsafe { &self.ushort } )

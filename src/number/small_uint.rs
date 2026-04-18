@@ -18887,7 +18887,7 @@ pub trait SmallUInt:
     ///     println!("3 ** 128 = {}, where ** is the power operator", b_usize);
     ///     #[cfg(target_pointer_width = "8")] assert_eq!(b_usize, 1_usize);
     ///     #[cfg(target_pointer_width = "16")] assert_eq!(b_usize, 31233_usize);
-    ///     #[cfg(target_pointer_width = "32")] assert_eq!(b_usize, 2324068865_usize);
+    ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(b_usize, 2324068865_usize);
     ///     #[cfg(target_pointer_width = "64")] assert_eq!(b_usize, 9241971931925084673_usize);
     ///     #[cfg(target_pointer_width = "128")] assert_eq!(b_usize, 303523815449207866983105381828026333697_usize);
     /// }
@@ -18996,7 +18996,7 @@ pub trait SmallUInt:
     ///     println!("3 ** 128 = {}, where ** is the power operator", c_sizeunion);
     ///     #[cfg(target_pointer_width = "8")] assert_eq!(c_sizeunion.get(), 1_usize);
     ///     #[cfg(target_pointer_width = "16")] assert_eq!(c_sizeunion.get(), 31233_usize);
-    ///     #[cfg(target_pointer_width = "32")] assert_eq!(c_sizeunion.get(), 2324068865_usize);
+    ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(c_sizeunion.get(), 2324068865_usize);
     ///     #[cfg(target_pointer_width = "64")] assert_eq!(c_sizeunion.get(), 9241971931925084673_usize);
     ///     #[cfg(target_pointer_width = "128")] assert_eq!(c_sizeunion.get(), 303523815449207866983105381828026333697_usize);
     /// }
@@ -19063,7 +19063,7 @@ pub trait SmallUInt:
     ///     println!("3 ** 128 = {}, where ** is the power operator", b_usize);
     ///     #[cfg(target_pointer_width = "8")] assert_eq!(b_usize, 1_usize);
     ///     #[cfg(target_pointer_width = "16")] assert_eq!(b_usize, 31233_usize);
-    ///     #[cfg(target_pointer_width = "32")] assert_eq!(b_usize, 2324068865_usize);
+    ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(b_usize, 2324068865_usize);
     ///     #[cfg(target_pointer_width = "64")] assert_eq!(b_usize, 9241971931925084673_usize);
     ///     #[cfg(target_pointer_width = "128")] assert_eq!(b_usize, 303523815449207866983105381828026333697_usize);
     /// 
@@ -19112,7 +19112,7 @@ pub trait SmallUInt:
     ///     println!("3 ** 128 = {}, where ** is the power operator", c_sizeunion);
     ///     #[cfg(target_pointer_width = "8")] assert_eq!(c_sizeunion.get(), 1_usize);
     ///     #[cfg(target_pointer_width = "16")] assert_eq!(c_sizeunion.get(), 31233_usize);
-    ///     #[cfg(target_pointer_width = "32")] assert_eq!(c_sizeunion.get(), 2324068865_usize);
+    ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(c_sizeunion.get(), 2324068865_usize);
     ///     #[cfg(target_pointer_width = "64")] assert_eq!(c_sizeunion.get(), 9241971931925084673_usize);
     ///     #[cfg(target_pointer_width = "128")] assert_eq!(c_sizeunion.get(), 303523815449207866983105381828026333697_usize);
     /// }
@@ -19288,7 +19288,7 @@ pub trait SmallUInt:
     ///     println!("{} ** 128 = {}, where ** is the power operator\nOverflow = {}", 3_usize, b_usize, overflow);
     ///     #[cfg(target_pointer_width = "8")] assert_eq!(b_usize, 1_usize);
     ///     #[cfg(target_pointer_width = "16")] assert_eq!(b_usize, 31233_usize);
-    ///     #[cfg(target_pointer_width = "32")] assert_eq!(b_usize, 2324068865_usize);
+    ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(b_usize, 2324068865_usize);
     ///     #[cfg(target_pointer_width = "64")] assert_eq!(b_usize, 9241971931925084673_usize);
     ///     #[cfg(target_pointer_width = "128")] assert_eq!(b_usize, 303523815449207866983105381828026333697_usize);
     ///     assert_eq!(overflow, true);
@@ -19402,7 +19402,7 @@ pub trait SmallUInt:
     ///     println!("{} ** 128 = {}, where ** is the power operator\nOverflow = {}", 3_u64, b_sizeunion, overflow);
     ///     #[cfg(target_pointer_width = "8")] assert_eq!(b_sizeunion.get(), 1_usize);
     ///     #[cfg(target_pointer_width = "16")] assert_eq!(b_sizeunion.get(), 31233_usize);
-    ///     #[cfg(target_pointer_width = "32")] assert_eq!(b_sizeunion.get(), 2324068865_usize);
+    ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(b_sizeunion.get(), 2324068865_usize);
     ///     #[cfg(target_pointer_width = "64")] assert_eq!(b_sizeunion.get(), 9241971931925084673_usize);
     ///     #[cfg(target_pointer_width = "128")] assert_eq!(b_sizeunion.get(), 303523815449207866983105381828026333697_usize);
     ///     assert_eq!(overflow, true);
@@ -19481,7 +19481,7 @@ pub trait SmallUInt:
     ///     println!("{} ** 128 = {}, where ** is the power operator\nOverflow = {}", 3_usize, b_usize, overflow);
     ///     #[cfg(target_pointer_width = "8")] assert_eq!(b_usize, 1_usize);
     ///     #[cfg(target_pointer_width = "16")] assert_eq!(b_usize, 31233_usize);
-    ///     #[cfg(target_pointer_width = "32")] assert_eq!(b_usize, 2324068865_usize);
+    ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(b_usize, 2324068865_usize);
     ///     #[cfg(target_pointer_width = "64")] assert_eq!(b_usize, 9241971931925084673_usize);
     ///     #[cfg(target_pointer_width = "128")] assert_eq!(b_usize, 303523815449207866983105381828026333697_usize);
     ///     assert_eq!(overflow, true);
@@ -19535,7 +19535,7 @@ pub trait SmallUInt:
     ///     println!("{} ** 128 = {}, where ** is the power operator\nOverflow = {}", 3_u64, b_sizeunion, overflow);
     ///     #[cfg(target_pointer_width = "8")] assert_eq!(b_sizeunion.get(), 1_usize);
     ///     #[cfg(target_pointer_width = "16")] assert_eq!(b_sizeunion.get(), 31233_usize);
-    ///     #[cfg(target_pointer_width = "32")] assert_eq!(b_sizeunion.get(), 2324068865_usize);
+    ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(b_sizeunion.get(), 2324068865_usize);
     ///     #[cfg(target_pointer_width = "64")] assert_eq!(b_sizeunion.get(), 9241971931925084673_usize);
     ///     #[cfg(target_pointer_width = "128")] assert_eq!(b_sizeunion.get(), 303523815449207866983105381828026333697_usize);
     ///     assert_eq!(overflow, true);

@@ -410,7 +410,7 @@ macro_rules! new_with_small_uint {
         /// println!("a_sizeunion = {}", a_sizeunion.get());
         /// assert_eq!(a_sizeunion.get(), 3840278750_usize);
         /// ```
-        #[cfg(target_pointer_width = "32")]
+        #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]
         #[inline] pub fn new_with_ubytes(ubyte: [u8; 4]) -> Self    { Self { ubyte } }
 
         // pub fn new_with_ubytes(ubyte: [u8; 8]) -> Self
@@ -472,7 +472,7 @@ macro_rules! new_with_small_uint {
         /// println!("a_sizeunion = {}", a_sizeunion.get());
         /// assert_eq!(a_sizeunion.get(), 3840278750_usize);
         /// ```
-        #[cfg(target_pointer_width = "32")]
+        #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]
         #[inline] pub fn new_with_ushorts(ushort: [u16; 2]) -> Self  { Self { ushort } }
 
         // pub fn new_with_ushorts(ushort: [u16; 4]) -> Self
@@ -779,7 +779,7 @@ macro_rules! get_set_byte {
         ///
         /// # Example 6 for SizeUnion for 32-bit CPU
         /// ```
-        /// #[cfg(target_pointer_width = "32")]
+        /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]
         /// {
         ///     use cryptocol::number::SizeUnion;
         ///     let a_sizeunion = SizeUnion::new_with(4048161615_usize);
@@ -998,7 +998,7 @@ macro_rules! get_set_byte {
         ///
         /// # Example 6 for SizeUnion for 32-bit CPU
         /// ```
-        /// #[cfg(target_pointer_width = "32")]
+        /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]
         /// {
         ///     use cryptocol::number::SizeUnion;
         ///     let mut a_sizeunion = SizeUnion::new();
@@ -1180,7 +1180,7 @@ macro_rules! get_set_byte {
         ///
         /// # Example 6 for SizeUnion for 32-bit CPU
         /// ```
-        /// #[cfg(target_pointer_width = "32")]
+        /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]
         /// {
         ///     use cryptocol::number::SizeUnion;
         ///     let a_sizeunion = SizeUnion::new_with(4048161615_usize);
@@ -1402,7 +1402,7 @@ macro_rules! get_set_byte {
         ///
         /// # Example 6 for SizeUnion for 32-bit CPU
         /// ```
-        /// #[cfg(target_pointer_width = "32")]
+        /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]
         /// {
         ///     use cryptocol::number::SizeUnion;
         ///     let mut a_sizeunion = SizeUnion::new();
@@ -1596,7 +1596,7 @@ macro_rules! get_set_byte {
         ///
         /// # Example 5 for SizeUnion for 32-bit CPU
         /// ```
-        /// #[cfg(target_pointer_width = "32")]
+        /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]
         /// {
         ///     use cryptocol::number::SizeUnion;
         ///     let a_sizeunion = SizeUnion::new_with(4048161615_usize);
@@ -1884,7 +1884,7 @@ macro_rules! get_set_byte {
         ///
         /// # Example 6 for SizeUnion for 32-bit CPU
         /// ```
-        /// #[cfg(target_pointer_width = "32")]
+        /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]
         /// {
         ///     use cryptocol::number::SizeUnion;
         ///     let mut a_sizeunion = SizeUnion::new();
@@ -2100,7 +2100,7 @@ macro_rules! get_set_byte {
         ///
         /// # Example 6 for SizeUnion for 32-bit CPU
         /// ```
-        /// #[cfg(target_pointer_width = "32")]
+        /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]
         /// {
         ///     use cryptocol::number::SizeUnion;
         ///     let a_sizeunion = SizeUnion::new_with(4048161615_usize);
@@ -2388,7 +2388,7 @@ macro_rules! get_set_byte {
         ///
         /// # Example 6 for SizeUnion for 32-bit CPU
         /// ```
-        /// #[cfg(target_pointer_width = "32")]
+        /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]
         /// {
         ///     use cryptocol::number::SizeUnion;
         ///     let mut a_sizeunion = SizeUnion::new();
@@ -2639,7 +2639,7 @@ macro_rules! get_set_short {
         ///
         /// # Example 5 for SizeUnion for 32-bit CPU
         /// ```
-        /// #[cfg(target_pointer_width = "32")]
+        /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]
         /// {
         ///     use cryptocol::number::SizeUnion;
         ///     let a_sizeunion = SizeUnion::new_with(4048161615_usize);
@@ -2786,7 +2786,7 @@ macro_rules! get_set_short {
         ///
         /// # Example 5 for SizeUnion for 32-bit CPU
         /// ```
-        /// #[cfg(target_pointer_width = "32")]
+        /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]
         /// {
         ///     use cryptocol::number::SizeUnion;
         ///     let mut a_sizeunion = SizeUnion::new();
@@ -2910,7 +2910,7 @@ macro_rules! get_set_short {
         ///
         /// # Example 5 for SizeUnion for 32-bit CPU
         /// ```
-        /// #[cfg(target_pointer_width = "32")]
+        /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]
         /// {
         ///     use cryptocol::number::SizeUnion;
         ///     let a_sizeunion = SizeUnion::new_with(4048161615_usize);
@@ -3057,7 +3057,7 @@ macro_rules! get_set_short {
         ///
         /// # Example 5 for SizeUnion for 32-bit CPU
         /// ```
-        /// #[cfg(target_pointer_width = "32")]
+        /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]
         /// {
         ///     use cryptocol::number::SizeUnion;
         ///     a_sizeunion.set_sshort_(0, 2895_i16);
@@ -3191,7 +3191,7 @@ macro_rules! get_set_short {
         ///
         /// # Example 5 for SizeUnion for 32-bit CPU
         /// ```
-        /// #[cfg(target_pointer_width = "32")]
+        /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]
         /// {
         ///     use cryptocol::number::SizeUnion;
         ///     let a_sizeunion = IntUnion::new_with(4048161615_usize);
@@ -3381,7 +3381,7 @@ macro_rules! get_set_short {
         ///
         /// # Example 5 for SizeUnion for 32-bit CPU
         /// ```
-        /// #[cfg(target_pointer_width = "32")]
+        /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]
         /// {
         ///     use cryptocol::number::SizeUnion;
         ///     let mut a_sizeunion = SizeUnion::new();
@@ -3529,7 +3529,7 @@ macro_rules! get_set_short {
         ///
         /// # Example 5 for SizeUnion for 32-bit CPU
         /// ```
-        /// #[cfg(target_pointer_width = "32")]
+        /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]
         /// {
         ///     use cryptocol::number::SizeUnion;
         ///     let a_sizeunion = IntUnion::new_with(4048161615_usize);
@@ -3718,7 +3718,7 @@ macro_rules! get_set_short {
         ///
         /// # Example 5 for SizeUnion for 32-bit CPU
         /// ```
-        /// #[cfg(target_pointer_width = "32")]
+        /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]
         /// {
         ///     use cryptocol::number::SizeUnion;
         ///     let mut a_sizeunion = SizeUnion::new();
@@ -5318,7 +5318,7 @@ macro_rules! get_set_size {
         /// Support for big-endian CPUs is currently experimental. Users are 
         /// advised to use this on big-endian systems with caution and at 
         /// their own risk.
-        #[cfg(target_pointer_width = "32")]
+        #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]
         #[inline] pub fn get_usize_(&self, i: usize) -> usize
         {
             #[cfg(target_endian = "little")]    unsafe { self.u_size[i] }
@@ -5608,7 +5608,7 @@ macro_rules! get_set_size {
         /// Support for big-endian CPUs is currently experimental. Users are 
         /// advised to use this on big-endian systems with caution and at 
         /// their own risk.
-        #[cfg(target_pointer_width = "32")]
+        #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]
         #[inline] pub fn set_usize_(&mut self, i: usize, val: usize)
         {
             #[cfg(target_endian = "little")]    unsafe { self.u_size[i] = val; }
@@ -5903,7 +5903,7 @@ macro_rules! get_set_size {
         /// Support for big-endian CPUs is currently experimental. Users are 
         /// advised to use this on big-endian systems with caution and at 
         /// their own risk.
-        #[cfg(target_pointer_width = "32")]
+        #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]
         #[inline] pub fn get_ssize_(&self, i: usize) -> isize
         {
             #[cfg(target_endian = "little")]    unsafe { self.s_size[i] }
@@ -6299,7 +6299,7 @@ macro_rules! get_set_size {
         /// Support for big-endian CPUs is currently experimental. Users are 
         /// advised to use this on big-endian systems with caution and at 
         /// their own risk.
-        #[cfg(target_pointer_width = "32")]
+        #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]
         #[inline] pub fn set_ssize_(&mut self, i: usize, val: isize)
         {
             #[cfg(target_endian = "little")]    unsafe { self.s_size[i] = val; }
@@ -6634,7 +6634,7 @@ macro_rules! get_set_size {
         /// Support for big-endian CPUs is currently experimental. Users are 
         /// advised to use this on big-endian systems with caution and at 
         /// their own risk.
-        #[cfg(target_pointer_width = "32")]
+        #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]
         pub fn get_usize(&self, i: usize) -> Option<usize>
         {
             if i <= Self::J
@@ -7096,7 +7096,7 @@ macro_rules! get_set_size {
         /// Support for big-endian CPUs is currently experimental. Users are 
         /// advised to use this on big-endian systems with caution and at 
         /// their own risk.
-        #[cfg(target_pointer_width = "32")]
+        #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]
         pub fn set_usize(&mut self, i: usize, val:usize) -> bool
         {
             if i <= Self::J
@@ -7437,7 +7437,7 @@ macro_rules! get_set_size {
         /// Support for big-endian CPUs is currently experimental. Users are 
         /// advised to use this on big-endian systems with caution and at 
         /// their own risk.
-        #[cfg(target_pointer_width = "32")]
+        #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]
         pub fn get_ssize(&self, i: usize) -> Option<isize>
         {
             if i <= Self::J
@@ -7899,7 +7899,7 @@ macro_rules! get_set_size {
         /// Support for big-endian CPUs is currently experimental. Users are 
         /// advised to use this on big-endian systems with caution and at 
         /// their own risk.
-        #[cfg(target_pointer_width = "32")]
+        #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]
         pub fn set_ssize(&mut self, i: usize, val: isize) -> bool
         {
             if i <= Self::J
@@ -11352,7 +11352,7 @@ macro_rules! integer_union_methods {
         /// println!("3 ** 128 = {}, where ** is the power operator", c_sizeunion);
         /// // #[cfg(target_pointer_width = "8")] assert_eq!(c_sizeunion.get(), 1_usize);
         /// #[cfg(target_pointer_width = "16")] assert_eq!(c_sizeunion.get(), 31233_usize);
-        /// #[cfg(target_pointer_width = "32")] assert_eq!(c_sizeunion.get(), 2324068865_usize);
+        /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(c_sizeunion.get(), 2324068865_usize);
         /// #[cfg(target_pointer_width = "64")] assert_eq!(c_sizeunion.get(), 9241971931925084673_usize);
         /// // #[cfg(target_pointer_width = "128")] assert_eq!(c_sizeunion.get(), 303523815449207866983105381828026333697_usize);
         /// ```
@@ -11442,7 +11442,7 @@ macro_rules! integer_union_methods {
         /// println!("{} ** 128 = {}, where ** is the power operator\nOverflow = {}", 3_u64, b_sizeunion, overflow);
         /// // #[cfg(target_pointer_width = "8")] assert_eq!(b_sizeunion.get(), 1_usize);
         /// #[cfg(target_pointer_width = "16")] assert_eq!(b_sizeunion.get(), 31233_usize);
-        /// #[cfg(target_pointer_width = "32")] assert_eq!(b_sizeunion.get(), 2324068865_usize);
+        /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(b_sizeunion.get(), 2324068865_usize);
         /// #[cfg(target_pointer_width = "64")] assert_eq!(b_sizeunion.get(), 9241971931925084673_usize);
         /// // #[cfg(target_pointer_width = "128")] assert_eq!(b_sizeunion.get(), 303523815449207866983105381828026333697_usize);
         /// assert_eq!(overflow, true);
@@ -13420,7 +13420,7 @@ macro_rules! operators_for_integer_unions_impl {
             /// let c_sizeunion = a_sizeunion * b_sizeunion;
             /// println!("{} * {} = {}", a_sizeunion, b_sizeunion, c_sizeunion);
             /// #[cfg(target_pointer_width = "16")] assert_eq!(c_sizeunion.get(), 43690_usize);
-            /// #[cfg(target_pointer_width = "32")] assert_eq!(c_sizeunion.get(), 2863311530_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(c_sizeunion.get(), 2863311530_usize);
             /// #[cfg(target_pointer_width = "64")] assert_eq!(c_sizeunion.get(), 12297829382473034410_usize);
             ///
             /// #[cfg(not(debug_assertions))]
@@ -13428,7 +13428,7 @@ macro_rules! operators_for_integer_unions_impl {
             ///     let d_sizeunion = c_sizeunion * b_sizeunion;
             ///     println!("{} * {} = {}", c_sizeunion, b_sizeunion, d_sizeunion);
             ///     #[cfg(target_pointer_width = "16")] assert_eq!(d_sizeunion.get(), 21844_usize);
-            ///     #[cfg(target_pointer_width = "32")] assert_eq!(d_sizeunion.get(), 1431655764_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(d_sizeunion.get(), 1431655764_usize);
             ///     #[cfg(target_pointer_width = "64")] assert_eq!(d_sizeunion.get(), 6148914691236517204_usize);
             /// }
             /// ```
@@ -13569,7 +13569,7 @@ macro_rules! operators_for_integer_unions_impl {
             /// a_sizeunion *= b_sizeunion;
             /// println!("After a_sizeunion *= {}, a_sizeunion = {}", b_sizeunion, a_sizeunion);
             /// #[cfg(target_pointer_width = "16")] assert_eq!(a_sizeunion.get(), 43690_usize);
-            /// #[cfg(target_pointer_width = "32")] assert_eq!(a_sizeunion.get(), 2863311530_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(a_sizeunion.get(), 2863311530_usize);
             /// #[cfg(target_pointer_width = "64")] assert_eq!(a_sizeunion.get(), 12297829382473034410_usize);
             ///
             /// #[cfg(not(debug_assertions))]
@@ -13577,7 +13577,7 @@ macro_rules! operators_for_integer_unions_impl {
             ///     a_sizeunion *= b_sizeunion;
             ///     println!("After a_sizeunion *= {}, a_sizeunion = {}", b_sizeunion, a_sizeunion);
             ///     #[cfg(target_pointer_width = "16")] assert_eq!(a_sizeunion.get(), 21844_usize);
-            ///     #[cfg(target_pointer_width = "32")] assert_eq!(a_sizeunion.get(), 1431655764_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(a_sizeunion.get(), 1431655764_usize);
             ///     #[cfg(target_pointer_width = "64")] assert_eq!(a_sizeunion.get(), 6148914691236517204_usize);
             /// }
             /// ```
@@ -13696,7 +13696,7 @@ macro_rules! operators_for_integer_unions_impl {
             /// let c_sizeunion = a_sizeunion / b_sizeunion;
             /// println!("{} / {} = {}", a_sizeunion, b_sizeunion, c_sizeunion);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(c_sizeunion.get(), 10922_usize);
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(c_sizeunion.get(), 715827882_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(c_sizeunion.get(), 715827882_usize);
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(c_sizeunion.get(), 3074457345618258602_usize);
             /// ```
             ///
@@ -13808,7 +13808,7 @@ macro_rules! operators_for_integer_unions_impl {
             /// a_sizeunion /= b_sizeunion;
             /// println!("After a_sizeunion /= {}, a_sizeunion = {}", b_sizeunion, a_sizeunion);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(a_sizeunion.get(), 10922_usize);
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(a_sizeunion.get(), 715827882_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(a_sizeunion.get(), 715827882_usize);
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(a_sizeunion.get(), 3074457345618258602_usize);
             /// ```
             ///
@@ -14236,15 +14236,15 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::{ SmallUInt, SizeUnion };
             ///
             /// #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            /// #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             /// #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             /// #[cfg(target_pointer_width = "16")] let b_sizeunion = SizeUnion::new_with(0b_10001111_10110011);
-            /// #[cfg(target_pointer_width = "32")] let b_sizeunion = SizeUnion::new_with(0b_00001111_10000011_10110011_10001111);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let b_sizeunion = SizeUnion::new_with(0b_00001111_10000011_10110011_10001111);
             /// #[cfg(target_pointer_width = "64")] let b_sizeunion = SizeUnion::new_with(0b_11110000_00111111_10000000_11111111_10110011_10001111_00001111_10000011);
             /// let c_sizeunion = a_sizeunion & b_sizeunion;
             /// println!("{:b} & {:b} = {:b}", a_sizeunion, b_sizeunion, c_sizeunion);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(c_sizeunion.get(), 0b_1000001110000011_usize);
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(c_sizeunion.get(), 0b_11100000110000001110000011_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(c_sizeunion.get(), 0b_11100000110000001110000011_usize);
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(c_sizeunion.get(), 0b_1011000000001111000000001000001110110000000011110000000010000011_usize);
             /// ```
             ///
@@ -14253,13 +14253,13 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::{ SmallUInt, SizeUnion };
             ///
             /// #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            /// #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             /// #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             /// let b_sizeunion = SizeUnion::max();
             /// let c_sizeunion = a_sizeunion & b_sizeunion;
             /// println!("{:b} & {:b} = {:b}", a_sizeunion, b_sizeunion, c_sizeunion);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(c_sizeunion.get(), 0b_1011001110001111_usize);
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(c_sizeunion.get(), 0b_0b_10110011100011110000111110000011_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(c_sizeunion.get(), 0b_0b_10110011100011110000111110000011_usize);
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(c_sizeunion.get(), 0b_1011001110001111000011111000001111110000001111111000000011111111_usize);
             /// ```
             ///
@@ -14268,7 +14268,7 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::{ SmallUInt, SizeUnion };
             ///
             /// #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            /// #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             /// #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             /// let b_sizeunion = SizeUnion::zero();
             /// let c_sizeunion = a_sizeunion & b_sizeunion;
@@ -14440,16 +14440,16 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::{ SmallUInt, SizeUnion };
             ///
             /// #[cfg(target_pointer_width = "16")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            /// #[cfg(target_pointer_width = "32")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             /// #[cfg(target_pointer_width = "64")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             /// println!("Originally, a_sizeunion = {}", a_sizeunion);
             /// #[cfg(target_pointer_width = "16")] let b_sizeunion = SizeUnion::new_with(0b_10001111_10110011);
-            /// #[cfg(target_pointer_width = "32")] let b_sizeunion = SizeUnion::new_with(0b_00001111_10000011_10110011_10001111);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let b_sizeunion = SizeUnion::new_with(0b_00001111_10000011_10110011_10001111);
             /// #[cfg(target_pointer_width = "64")] let b_sizeunion = SizeUnion::new_with(0b_11110000_00111111_10000000_11111111_10110011_10001111_00001111_10000011);
             /// a_sizeunion &= b_sizeunion;
             /// println!("After a_sizeunion &= {:b}, a_sizeunion = {:b}", b_sizeunion, a_sizeunion);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(a_sizeunion.get(), 0b_1000001110000011_usize);
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(a_sizeunion.get(), 0b_11100000110000001110000011_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(a_sizeunion.get(), 0b_11100000110000001110000011_usize);
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(a_sizeunion.get(), 0b_1011000000001111000000001000001110110000000011110000000010000011_usize);
             /// ```
             ///
@@ -14458,14 +14458,14 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::{ SmallUInt, SizeUnion };
             ///
             /// #[cfg(target_pointer_width = "16")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            /// #[cfg(target_pointer_width = "32")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             /// #[cfg(target_pointer_width = "64")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             /// println!("Originally, a_sizeunion = {}", a_sizeunion);
             /// let b_sizeunion = SizeUnion::max();
             /// a_sizeunion &= b_sizeunion;
             /// println!("After a_sizeunion &= {:b}, a_sizeunion = {:b}", b_sizeunion, a_sizeunion);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(a_sizeunion.get(), 0b_1011001110001111_usize);
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(a_sizeunion.get(), 0b_0b_10110011100011110000111110000011_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(a_sizeunion.get(), 0b_0b_10110011100011110000111110000011_usize);
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(a_sizeunion.get(), 0b_1011001110001111000011111000001111110000001111111000000011111111_usize);
             /// ```
             ///
@@ -14474,7 +14474,7 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::{ SmallUInt, SizeUnion };
             ///
             /// #[cfg(target_pointer_width = "16")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            /// #[cfg(target_pointer_width = "32")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             /// #[cfg(target_pointer_width = "64")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             /// println!("Originally, a_sizeunion = {}", a_sizeunion);
             /// let b_sizeunion = SizeUnion::zero();
@@ -14641,15 +14641,15 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::{ SmallUInt, SizeUnion };
             ///
             /// #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            /// #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             /// #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             /// #[cfg(target_pointer_width = "16")] let b_sizeunion = SizeUnion::new_with(0b_10001111_10110011);
-            /// #[cfg(target_pointer_width = "32")] let b_sizeunion = SizeUnion::new_with(0b_00001111_10000011_10110011_10001111);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let b_sizeunion = SizeUnion::new_with(0b_00001111_10000011_10110011_10001111);
             /// #[cfg(target_pointer_width = "64")] let b_sizeunion = SizeUnion::new_with(0b_11110000_00111111_10000000_11111111_10110011_10001111_00001111_10000011);
             /// let c_sizeunion = a_sizeunion | b_sizeunion;
             /// println!("{:b} | {:b} = {:b}", a_sizeunion, b_sizeunion, c_sizeunion);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(c_sizeunion.get(), 0b_1011111110111111_usize);
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(c_sizeunion.get(), 0b_10111111100011111011111110001111_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(c_sizeunion.get(), 0b_10111111100011111011111110001111_usize);
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(c_sizeunion.get(), 0b_1111001110111111100011111111111111110011101111111000111111111111_usize);
             /// ```
             ///
@@ -14658,13 +14658,13 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::{ SmallUInt, SizeUnion };
             ///
             /// #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            /// #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             /// #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             /// let b_sizeunion = SizeUnion::max();
             /// let c_sizeunion = a_sizeunion | b_sizeunion;
             /// println!("{:b} | {:b} = {:b}", a_sizeunion, b_sizeunion, c_sizeunion);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(c_sizeunion.get(), 0b_1111111111111111_usize);
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(c_sizeunion.get(), 0b_11111111111111111111111111111111_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(c_sizeunion.get(), 0b_11111111111111111111111111111111_usize);
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(c_sizeunion.get(), 0b_1111111111111111111111111111111111111111111111111111111111111111_usize);
             /// ```
             ///
@@ -14673,13 +14673,13 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::{ SmallUInt, SizeUnion };
             ///
             /// #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            /// #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             /// #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             /// let b_sizeunion = SizeUnion::zero();
             /// let c_sizeunion = a_sizeunion | b_sizeunion;
             /// println!("{:b} | {:b} = {:b}", a_sizeunion, b_sizeunion, c_sizeunion);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(c_sizeunion.get(), 0b_10110011_10001111_usize);
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(c_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(c_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_usize);
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(c_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111_usize);
             /// ```
             fn bitor(self, rhs: Self) -> Self
@@ -14846,16 +14846,16 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::{ SmallUInt, SizeUnion };
             ///
             /// #[cfg(target_pointer_width = "16")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            /// #[cfg(target_pointer_width = "32")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             /// #[cfg(target_pointer_width = "64")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             /// println!("Originally, a_sizeunion = {}", a_sizeunion);
             /// #[cfg(target_pointer_width = "16")] let b_sizeunion = SizeUnion::new_with(0b_10001111_10110011);
-            /// #[cfg(target_pointer_width = "32")] let b_sizeunion = SizeUnion::new_with(0b_00001111_10000011_10110011_10001111);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let b_sizeunion = SizeUnion::new_with(0b_00001111_10000011_10110011_10001111);
             /// #[cfg(target_pointer_width = "64")] let b_sizeunion = SizeUnion::new_with(0b_11110000_00111111_10000000_11111111_10110011_10001111_00001111_10000011);
             /// a_sizeunion |= b_sizeunion;
             /// println!("After a_sizeunion |= {:b}, a_sizeunion = {:b}", b_sizeunion, a_sizeunion);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(a_sizeunion.get(), 0b_1011111110111111_usize);
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(a_sizeunion.get(), 0b_10111111100011111011111110001111_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(a_sizeunion.get(), 0b_10111111100011111011111110001111_usize);
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(a_sizeunion.get(), 0b_1111001110111111100011111111111111110011101111111000111111111111_usize);
             /// ```
             ///
@@ -14864,14 +14864,14 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::{ SmallUInt, SizeUnion };
             ///
             /// #[cfg(target_pointer_width = "16")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            /// #[cfg(target_pointer_width = "32")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             /// #[cfg(target_pointer_width = "64")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             /// println!("Originally, a_sizeunion = {}", a_sizeunion);
             /// let b_sizeunion = SizeUnion::max();
             /// a_sizeunion |= b_sizeunion;
             /// println!("After a_sizeunion |= {:b}, a_sizeunion = {:b}", b_sizeunion, a_sizeunion);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(a_sizeunion.get(), 0b_1111111111111111_usize);
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(a_sizeunion.get(), 0b_11111111111111111111111111111111_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(a_sizeunion.get(), 0b_11111111111111111111111111111111_usize);
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(a_sizeunion.get(), 0b_1111111111111111111111111111111111111111111111111111111111111111_usize);
             /// ```
             ///
@@ -14880,14 +14880,14 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::{ SmallUInt, SizeUnion };
             ///
             /// #[cfg(target_pointer_width = "16")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            /// #[cfg(target_pointer_width = "32")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             /// #[cfg(target_pointer_width = "64")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             /// println!("Originally, a_sizeunion = {}", a_sizeunion);
             /// let b_sizeunion = SizeUnion::zero();
             /// a_sizeunion |= b_sizeunion;
             /// println!("After a_sizeunion |= {:b}, a_sizeunion = {:b}", b_sizeunion, a_sizeunion);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(a_sizeunion.get(), 0b_10110011_10001111_usize);
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(a_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(a_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_usize);
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(a_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111_usize);
             /// ```
             #[inline]
@@ -15047,15 +15047,15 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::{ SmallUInt, SizeUnion };
             ///
             /// #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            /// #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             /// #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             /// #[cfg(target_pointer_width = "16")] let b_sizeunion = SizeUnion::new_with(0b_10001111_10110011);
-            /// #[cfg(target_pointer_width = "32")] let b_sizeunion = SizeUnion::new_with(0b_00001111_10000011_10110011_10001111);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let b_sizeunion = SizeUnion::new_with(0b_00001111_10000011_10110011_10001111);
             /// #[cfg(target_pointer_width = "64")] let b_sizeunion = SizeUnion::new_with(0b_11110000_00111111_10000000_11111111_10110011_10001111_00001111_10000011);
             /// let c_sizeunion = a_sizeunion ^ b_sizeunion;
             /// println!("{:b} ^ {:b} = {:b}", a_sizeunion, b_sizeunion, c_sizeunion);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(c_sizeunion.get(), 0b_11110000111100_usize);
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(c_sizeunion.get(), 0b_10111100000011001011110000001100_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(c_sizeunion.get(), 0b_10111100000011001011110000001100_usize);
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(c_sizeunion.get(), 0b_100001110110000100011110111110001000011101100001000111101111100_usize);
             /// ```
             ///
@@ -15064,13 +15064,13 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::{ SmallUInt, SizeUnion };
             ///
             /// #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            /// #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             /// #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             /// let b_sizeunion = SizeUnion::max();
             /// let c_sizeunion = a_sizeunion ^ b_sizeunion;
             /// println!("{:b} ^ {:b} = {:b}", a_sizeunion, b_sizeunion, c_sizeunion);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(c_sizeunion.get(), 0b_100110001110000_usize);
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(c_sizeunion.get(), 0b_1001100011100001111000001111100_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(c_sizeunion.get(), 0b_1001100011100001111000001111100_usize);
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(c_sizeunion.get(), 0b_100110001110000111100000111110000001111110000000111111100000000_usize);
             /// ```
             ///
@@ -15079,13 +15079,13 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::{ SmallUInt, SizeUnion };
             ///
             /// #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            /// #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             /// #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             /// let b_sizeunion = SizeUnion::zero();
             /// let c_sizeunion = a_sizeunion ^ b_sizeunion;
             /// println!("{:b} ^ {:b} = {:b}", a_sizeunion, b_sizeunion, c_sizeunion);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(c_sizeunion.get(), 0b_10110011_10001111_usize);
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(c_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(c_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_usize);
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(c_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111_usize);
             /// ```
             fn bitxor(self, rhs: Self) -> Self
@@ -15252,16 +15252,16 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::{ SmallUInt, SizeUnion };
             ///
             /// #[cfg(target_pointer_width = "16")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            /// #[cfg(target_pointer_width = "32")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             /// #[cfg(target_pointer_width = "64")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             /// println!("Originally, a_sizeunion = {}", a_sizeunion);
             /// #[cfg(target_pointer_width = "16")] let b_sizeunion = SizeUnion::new_with(0b_10001111_10110011);
-            /// #[cfg(target_pointer_width = "32")] let b_sizeunion = SizeUnion::new_with(0b_00001111_10000011_10110011_10001111);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let b_sizeunion = SizeUnion::new_with(0b_00001111_10000011_10110011_10001111);
             /// #[cfg(target_pointer_width = "64")] let b_sizeunion = SizeUnion::new_with(0b_11110000_00111111_10000000_11111111_10110011_10001111_00001111_10000011);
             /// a_sizeunion ^= b_sizeunion;
             /// println!("After a_sizeunion ^= {:b}, a_sizeunion = {:b}", b_sizeunion, a_sizeunion);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(a_sizeunion.get(), 0b_11110000111100_usize);
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(a_sizeunion.get(), 0b_10111100000011001011110000001100_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(a_sizeunion.get(), 0b_10111100000011001011110000001100_usize);
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(a_sizeunion.get(), 0b_100001110110000100011110111110001000011101100001000111101111100_usize);
             /// ```
             ///
@@ -15270,14 +15270,14 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::{ SmallUInt, SizeUnion };
             ///
             /// #[cfg(target_pointer_width = "16")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            /// #[cfg(target_pointer_width = "32")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             /// #[cfg(target_pointer_width = "64")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             /// println!("Originally, a_sizeunion = {}", a_sizeunion);
             /// let b_sizeunion = SizeUnion::max();
             /// a_sizeunion ^= b_sizeunion;
             /// println!("After a_sizeunion ^= {:b}, a_sizeunion = {:b}", b_sizeunion, a_sizeunion);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(a_sizeunion.get(), 0b_100110001110000_usize);
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(a_sizeunion.get(), 0b_1001100011100001111000001111100_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(a_sizeunion.get(), 0b_1001100011100001111000001111100_usize);
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(a_sizeunion.get(), 0b_100110001110000111100000111110000001111110000000111111100000000_usize);
             /// ```
             ///
@@ -15286,14 +15286,14 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::{ SmallUInt, SizeUnion };
             ///
             /// #[cfg(target_pointer_width = "16")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            /// #[cfg(target_pointer_width = "32")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             /// #[cfg(target_pointer_width = "64")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             /// println!("Originally, a_sizeunion = {}", a_sizeunion);
             /// let b_sizeunion = SizeUnion::zero();
             /// a_sizeunion ^= b_sizeunion;
             /// println!("After a_sizeunion ^= {:b}, a_sizeunion = {:b}", b_sizeunion, a_sizeunion);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(a_sizeunion.get(), 0b_10110011_10001111_usize);
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(a_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(a_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_usize);
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(a_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111_usize);
             /// ```
             #[inline]
@@ -15360,12 +15360,12 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::{ SmallUInt, SizeUnion };
             ///
             /// #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            /// #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             /// #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             /// let b_sizeunion = !a_sizeunion;
             /// println!("!{:b} = {:b}", a_sizeunion, b_sizeunion);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(b_sizeunion.get(), 0b_100110001110000_usize);
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(b_sizeunion.get(), 0b_1001100011100001111000001111100_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(b_sizeunion.get(), 0b_1001100011100001111000001111100_usize);
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(b_sizeunion.get(), 0b_100110001110000111100000111110000001111110000000111111100000000_usize);
             /// ```
             #[inline]
@@ -15504,10 +15504,10 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(12345678901234567890_usize);
             /// #[cfg(target_pointer_width = "16")] let b_sizeunion = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")] let b_sizeunion = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let b_sizeunion = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")] let b_sizeunion = SizeUnion::new_with(12345678901234567890_usize);
             /// let equal = a_sizeunion == b_sizeunion;
             /// let different = a_sizeunion != b_sizeunion;
@@ -15522,10 +15522,10 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(12345678901234567890_usize);
             /// #[cfg(target_pointer_width = "16")] let b_sizeunion = SizeUnion::new_with(54321_usize);
-            /// #[cfg(target_pointer_width = "32")] let b_sizeunion = SizeUnion::new_with(987654321_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let b_sizeunion = SizeUnion::new_with(987654321_usize);
             /// #[cfg(target_pointer_width = "64")] let b_sizeunion = SizeUnion::new_with(9876543210987654321_usize);
             /// let equal = a_sizeunion == b_sizeunion;
             /// let different = a_sizeunion != b_sizeunion;
@@ -15714,10 +15714,10 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(123456789_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(123456789_usize);
             /// #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(1234567890123456789_usize);
             /// #[cfg(target_pointer_width = "16")] let b_sizeunion = SizeUnion::new_with(54321_usize);
-            /// #[cfg(target_pointer_width = "32")] let b_sizeunion = SizeUnion::new_with(987654321_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let b_sizeunion = SizeUnion::new_with(987654321_usize);
             /// #[cfg(target_pointer_width = "64")] let b_sizeunion = SizeUnion::new_with(9876543210987654321_usize);
             /// if a_sizeunion < b_sizeunion
             ///     { println!("{} < {}", a_sizeunion, b_sizeunion); }
@@ -15731,10 +15731,10 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(54321_usize);
-            /// #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(987654321_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(987654321_usize);
             /// #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(9876543210987654321_usize);
             /// #[cfg(target_pointer_width = "16")] let b_sizeunion = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")] let b_sizeunion = SizeUnion::new_with(123456789_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let b_sizeunion = SizeUnion::new_with(123456789_usize);
             /// #[cfg(target_pointer_width = "64")] let b_sizeunion = SizeUnion::new_with(1234567890123456789_usize);
             /// if a_sizeunion < b_sizeunion
             ///     { println!("{} < {}", a_sizeunion, b_sizeunion); }
@@ -15748,10 +15748,10 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(123456789_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(123456789_usize);
             /// #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(1234567890123456789_usize);
             /// #[cfg(target_pointer_width = "16")] let b_sizeunion = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")] let b_sizeunion = SizeUnion::new_with(123456789_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let b_sizeunion = SizeUnion::new_with(123456789_usize);
             /// #[cfg(target_pointer_width = "64")] let b_sizeunion = SizeUnion::new_with(1234567890123456789_usize);
             /// if a_sizeunion < b_sizeunion
             ///     { println!("{} < {}", a_sizeunion, b_sizeunion); }
@@ -15933,10 +15933,10 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(54321_usize);
-            /// #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(987654321_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(987654321_usize);
             /// #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(9876543210987654321_usize);
             /// #[cfg(target_pointer_width = "16")] let b_sizeunion = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")] let b_sizeunion = SizeUnion::new_with(123456789_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let b_sizeunion = SizeUnion::new_with(123456789_usize);
             /// #[cfg(target_pointer_width = "64")] let b_sizeunion = SizeUnion::new_with(1234567890123456789_usize);
             /// if a_sizeunion > b_sizeunion
             ///     { println!("{} > {}", a_sizeunion, b_sizeunion); }
@@ -15950,10 +15950,10 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(123456789_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(123456789_usize);
             /// #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(1234567890123456789_usize);
             /// #[cfg(target_pointer_width = "16")] let b_sizeunion = SizeUnion::new_with(54321_usize);
-            /// #[cfg(target_pointer_width = "32")] let b_sizeunion = SizeUnion::new_with(987654321_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let b_sizeunion = SizeUnion::new_with(987654321_usize);
             /// #[cfg(target_pointer_width = "64")] let b_sizeunion = SizeUnion::new_with(9876543210987654321_usize);
             /// if a_sizeunion > b_sizeunion
             ///     { println!("{} > {}", a_sizeunion, b_sizeunion); }
@@ -15967,10 +15967,10 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(123456789_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(123456789_usize);
             /// #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(1234567890123456789_usize);
             /// #[cfg(target_pointer_width = "16")] let b_sizeunion = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")] let b_sizeunion = SizeUnion::new_with(123456789_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let b_sizeunion = SizeUnion::new_with(123456789_usize);
             /// #[cfg(target_pointer_width = "64")] let b_sizeunion = SizeUnion::new_with(1234567890123456789_usize);
             /// if a_sizeunion > b_sizeunion
             ///     { println!("{} > {}", a_sizeunion, b_sizeunion); }
@@ -16153,10 +16153,10 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(123456789_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(123456789_usize);
             /// #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(1234567890123456789_usize);
             /// #[cfg(target_pointer_width = "16")] let b_sizeunion = SizeUnion::new_with(54321_usize);
-            /// #[cfg(target_pointer_width = "32")] let b_sizeunion = SizeUnion::new_with(987654321_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let b_sizeunion = SizeUnion::new_with(987654321_usize);
             /// #[cfg(target_pointer_width = "64")] let b_sizeunion = SizeUnion::new_with(9876543210987654321_usize);
             /// if a_sizeunion <= b_sizeunion
             ///     { println!("{} <= {}", a_sizeunion, b_sizeunion); }
@@ -16170,10 +16170,10 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(54321_usize);
-            /// #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(987654321_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(987654321_usize);
             /// #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(9876543210987654321_usize);
             /// #[cfg(target_pointer_width = "16")] let b_sizeunion = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")] let b_sizeunion = SizeUnion::new_with(123456789_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let b_sizeunion = SizeUnion::new_with(123456789_usize);
             /// #[cfg(target_pointer_width = "64")] let b_sizeunion = SizeUnion::new_with(1234567890123456789_usize);
             /// if a_sizeunion <= b_sizeunion
             ///     { println!("{} <= {}", a_sizeunion, b_sizeunion); }
@@ -16187,10 +16187,10 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(123456789_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(123456789_usize);
             /// #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(1234567890123456789_usize);
             /// #[cfg(target_pointer_width = "16")] let b_sizeunion = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")] let b_sizeunion = SizeUnion::new_with(123456789_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let b_sizeunion = SizeUnion::new_with(123456789_usize);
             /// #[cfg(target_pointer_width = "64")] let b_sizeunion = SizeUnion::new_with(1234567890123456789_usize);
             /// if a_sizeunion <= b_sizeunion
             ///     { println!("{} <= {}", a_sizeunion, b_sizeunion); }
@@ -16373,10 +16373,10 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(54321_usize);
-            /// #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(987654321_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(987654321_usize);
             /// #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(9876543210987654321_usize);
             /// #[cfg(target_pointer_width = "16")] let b_sizeunion = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")] let b_sizeunion = SizeUnion::new_with(123456789_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let b_sizeunion = SizeUnion::new_with(123456789_usize);
             /// #[cfg(target_pointer_width = "64")] let b_sizeunion = SizeUnion::new_with(1234567890123456789_usize);
             /// if a_sizeunion >= b_sizeunion
             ///     { println!("{} >= {}", a_sizeunion, b_sizeunion); }
@@ -16390,10 +16390,10 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(123456789_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(123456789_usize);
             /// #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(1234567890123456789_usize);
             /// #[cfg(target_pointer_width = "16")] let b_sizeunion = SizeUnion::new_with(54321_usize);
-            /// #[cfg(target_pointer_width = "32")] let b_sizeunion = SizeUnion::new_with(987654321_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let b_sizeunion = SizeUnion::new_with(987654321_usize);
             /// #[cfg(target_pointer_width = "64")] let b_sizeunion = SizeUnion::new_with(9876543210987654321_usize);
             /// if a_sizeunion >= b_sizeunion
             ///     { println!("{} >= {}", a_sizeunion, b_sizeunion); }
@@ -16407,10 +16407,10 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(123456789_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(123456789_usize);
             /// #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(1234567890123456789_usize);
             /// #[cfg(target_pointer_width = "16")] let b_sizeunion = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")] let b_sizeunion = SizeUnion::new_with(123456789_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let b_sizeunion = SizeUnion::new_with(123456789_usize);
             /// #[cfg(target_pointer_width = "64")] let b_sizeunion = SizeUnion::new_with(1234567890123456789_usize);
             /// if a_sizeunion >= b_sizeunion
             ///     { println!("{} >= {}", a_sizeunion, b_sizeunion); }
@@ -16524,10 +16524,10 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(12345678901234567890_usize);
             /// #[cfg(target_pointer_width = "16")] let b_sizeunion = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")] let b_sizeunion = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let b_sizeunion = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")] let b_sizeunion = SizeUnion::new_with(12345678901234567890_usize);
             /// let equal = a_sizeunion == b_sizeunion;
             /// let different = a_sizeunion != b_sizeunion;
@@ -16540,10 +16540,10 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(12345678901234567890_usize);
             /// #[cfg(target_pointer_width = "16")] let b_sizeunion = SizeUnion::new_with(54321_usize);
-            /// #[cfg(target_pointer_width = "32")] let b_sizeunion = SizeUnion::new_with(987654321_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let b_sizeunion = SizeUnion::new_with(987654321_usize);
             /// #[cfg(target_pointer_width = "64")] let b_sizeunion = SizeUnion::new_with(9876543210987654321_usize);
             /// let equal = a_sizeunion == b_sizeunion;
             /// let different = a_sizeunion != b_sizeunion;
@@ -16655,10 +16655,10 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(12345678901234567890_usize);
             /// #[cfg(target_pointer_width = "16")] let b_sizeunion = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")] let b_sizeunion = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let b_sizeunion = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")] let b_sizeunion = SizeUnion::new_with(12345678901234567890_usize);
             /// let different = a_sizeunion != b_sizeunion;
             /// println!("{} != {} : {}", a_sizeunion, b_sizeunion, different);
@@ -16670,10 +16670,10 @@ macro_rules! operators_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(12345678901234567890_usize);
             /// #[cfg(target_pointer_width = "16")] let b_sizeunion = SizeUnion::new_with(54321_usize);
-            /// #[cfg(target_pointer_width = "32")] let b_sizeunion = SizeUnion::new_with(987654321_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let b_sizeunion = SizeUnion::new_with(987654321_usize);
             /// #[cfg(target_pointer_width = "64")] let b_sizeunion = SizeUnion::new_with(9876543210987654321_usize);
             /// let different = a_sizeunion != b_sizeunion;
             /// println!("{} != {} : {}", a_sizeunion, b_sizeunion, different);
@@ -16892,13 +16892,13 @@ macro_rules! shift_ops_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            /// #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             /// #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             /// let b_uint = 4_u128;
             /// let c_sizeunion = a_sizeunion << b_uint;
             /// println!("{:b} << {} = {:b}", a_sizeunion, b_uint, c_sizeunion);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(c_sizeunion.get(), 0b_00111000_11110000_usize);
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(c_sizeunion.get(), 0b_00111000_11110000_11111000_00110000_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(c_sizeunion.get(), 0b_00111000_11110000_11111000_00110000_usize);
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(c_sizeunion.get(), 0b_00111000_11110000_11111000_00111111_00000011_11111000_00001111_11110000_usize);
             /// ```
             ///
@@ -16909,13 +16909,13 @@ macro_rules! shift_ops_for_integer_unions_impl {
             /// #[cfg(not(debug_assertions))]
             /// {
             ///     #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     let b_uint = 68_u128;
             ///     let c_sizeunion = a_sizeunion << b_uint;
             ///     println!("{:b} << {} = {:b}", a_sizeunion, b_uint, c_sizeunion);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(c_sizeunion.get(), 0b_00111000_11110000_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(c_sizeunion.get(), 0b_00111000_11110000_11111000_00110000_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(c_sizeunion.get(), 0b_00111000_11110000_11111000_00110000_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(c_sizeunion.get(), 0b_00111000_11110000_11111000_00111111_00000011_11111000_00001111_11110000_usize);
             /// }
             /// ```
@@ -16927,7 +16927,7 @@ macro_rules! shift_ops_for_integer_unions_impl {
             /// #[cfg(not(debug_assertions))]
             /// {
             ///     #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     let b_sint = -2_isize;
             ///     let b_uint = b_sint as usize;
@@ -16936,12 +16936,12 @@ macro_rules! shift_ops_for_integer_unions_impl {
             ///     println!("{:b} << {} = {:b}", a_sizeunion, b_sint, c_sizeunion);
             ///     println!("{:b} << {} = {:b}", a_sizeunion, b_uint, d_sizeunion);
             ///     #[cfg(target_pointer_width = "16")] assert_eq!(b_uint, 65534_usize);
-            ///     #[cfg(target_pointer_width = "32")] assert_eq!(b_uint, 4294967294_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(b_uint, 4294967294_usize);
             ///     #[cfg(target_pointer_width = "64")] assert_eq!(b_uint, 18446744073709551614_usize);
             ///     #[cfg(target_pointer_width = "16")] assert_eq!(c_sizeunion.get(), 0b_11000000_00000000_usize);
             ///     #[cfg(target_pointer_width = "16")] assert_eq!(d_sizeunion.get(), 0b_11000000_00000000_usize);
-            ///     #[cfg(target_pointer_width = "32")] assert_eq!(c_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_usize);
-            ///     #[cfg(target_pointer_width = "32")] assert_eq!(d_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(c_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(d_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_usize);
             ///     #[cfg(target_pointer_width = "64")] assert_eq!(c_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_usize);
             ///     #[cfg(target_pointer_width = "64")] assert_eq!(d_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_usize);
             /// }
@@ -17028,17 +17028,17 @@ macro_rules! shift_ops_for_integer_unions_impl {
             ///     assert_eq!(d_longerunion.get(), 0b_11000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_u128);
             ///
             ///     #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     let b_uint = 68_u128;
             ///     let c_sizeunion = a_sizeunion << b_uint;
             ///     println!("{:b} << {} = {:b}", a_sizeunion, b_uint, c_sizeunion);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(c_sizeunion.get(), 0b_00111000_11110000_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(c_sizeunion.get(), 0b_00111000_11110000_11111000_00110000_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(c_sizeunion.get(), 0b_00111000_11110000_11111000_00110000_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(c_sizeunion.get(), 0b_00111000_11110000_11111000_00111111_00000011_11111000_00001111_11110000_usize);
             ///
             ///     #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     let b_sint = -2_isize;
             ///     let b_uint = b_sint as usize;
@@ -17047,12 +17047,12 @@ macro_rules! shift_ops_for_integer_unions_impl {
             ///     println!("{:b} << {} = {:b}", a_sizeunion, b_sint, c_sizeunion);
             ///     println!("{:b} << {} = {:b}", a_sizeunion, b_uint, d_sizeunion);
             ///     #[cfg(target_pointer_width = "16")] assert_eq!(b_uint, 65534_usize);
-            ///     #[cfg(target_pointer_width = "32")] assert_eq!(b_uint, 4294967294_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(b_uint, 4294967294_usize);
             ///     #[cfg(target_pointer_width = "64")] assert_eq!(b_uint, 18446744073709551614_usize);
             ///     #[cfg(target_pointer_width = "16")] assert_eq!(c_sizeunion.get(), 0b_11000000_00000000_usize);
             ///     #[cfg(target_pointer_width = "16")] assert_eq!(d_sizeunion.get(), 0b_11000000_00000000_usize);
-            ///     #[cfg(target_pointer_width = "32")] assert_eq!(c_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_usize);
-            ///     #[cfg(target_pointer_width = "32")] assert_eq!(d_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(c_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(d_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_usize);
             ///     #[cfg(target_pointer_width = "64")] assert_eq!(c_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_usize);
             ///     #[cfg(target_pointer_width = "64")] assert_eq!(d_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_usize);
             /// }
@@ -17311,13 +17311,13 @@ macro_rules! shift_ops_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            /// #[cfg(target_pointer_width = "32")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             /// #[cfg(target_pointer_width = "64")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             /// let b_uint = 4_u128;
             /// a_sizeunion <<= b_uint;
             /// println!("After a_sizeunion <<= {}, = {:b}", b_uint, a_sizeunion);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(a_sizeunion.get(), 0b_00111000_11110000_usize);
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(a_sizeunion.get(), 0b_00111000_11110000_11111000_00110000_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(a_sizeunion.get(), 0b_00111000_11110000_11111000_00110000_usize);
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(a_sizeunion.get(), 0b_00111000_11110000_11111000_00111111_00000011_11111000_00001111_11110000_usize);
             /// ```
             ///
@@ -17328,13 +17328,13 @@ macro_rules! shift_ops_for_integer_unions_impl {
             /// #[cfg(not(debug_assertions))]
             /// {
             ///     #[cfg(target_pointer_width = "16")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     let b_uint = 68_u128;
             ///     a_sizeunion <<= b_uint;
             ///     println!("After a_sizeunion <<= {}, = {:b}", b_uint, a_sizeunion);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(a_sizeunion.get(), 0b_00111000_11110000_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(a_sizeunion.get(), 0b_00111000_11110000_11111000_00110000_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(a_sizeunion.get(), 0b_00111000_11110000_11111000_00110000_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(a_sizeunion.get(), 0b_00111000_11110000_11111000_00111111_00000011_11111000_00001111_11110000_usize);
             /// }
             /// ```
@@ -17346,13 +17346,13 @@ macro_rules! shift_ops_for_integer_unions_impl {
             /// #[cfg(not(debug_assertions))]
             /// {
             ///     #[cfg(target_pointer_width = "16")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     let b_sint = -2_isize;
             ///     a_sizeunion <<= b_sint;
             ///     println!("After a_sizeunion <<= {}, = {:b}", b_sint, a_sizeunion);
             ///     #[cfg(target_pointer_width = "16")] assert_eq!(a_sizeunion.get(), 0b_11000000_00000000_usize);
-            ///     #[cfg(target_pointer_width = "32")] assert_eq!(a_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(a_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_usize);
             ///     #[cfg(target_pointer_width = "64")] assert_eq!(a_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_usize);
             /// }
             /// ```
@@ -17364,16 +17364,16 @@ macro_rules! shift_ops_for_integer_unions_impl {
             /// #[cfg(not(debug_assertions))]
             /// {
             ///     #[cfg(target_pointer_width = "16")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     let b_uint = -2_isize as usize;
             ///     a_sizeunion <<= b_uint;
             ///     println!("After a_sizeunion <<= {}, = {:b}", b_uint, a_sizeunion);
             ///     #[cfg(target_pointer_width = "16")] assert_eq!(b_uint, 65534_usize);
-            ///     #[cfg(target_pointer_width = "32")] assert_eq!(b_uint, 4294967294_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(b_uint, 4294967294_usize);
             ///     #[cfg(target_pointer_width = "64")] assert_eq!(b_uint, 18446744073709551614_usize);
             ///     #[cfg(target_pointer_width = "16")] assert_eq!(a_sizeunion.get(), 0b_11000000_00000000_usize);
-            ///     #[cfg(target_pointer_width = "32")] assert_eq!(a_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(a_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_usize);
             ///     #[cfg(target_pointer_width = "64")] assert_eq!(a_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_usize);
             /// }
             /// ```
@@ -17473,36 +17473,36 @@ macro_rules! shift_ops_for_integer_unions_impl {
             ///     assert_eq!(a_longerunion.get(), 0b_11000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_u128);
             ///
             ///     #[cfg(target_pointer_width = "16")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     let b_uint = 68_u128;
             ///     a_sizeunion <<= b_uint;
             ///     println!("After a_sizeunion <<= {}, = {:b}", b_uint, a_sizeunion);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(a_sizeunion.get(), 0b_00111000_11110000_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(a_sizeunion.get(), 0b_00111000_11110000_11111000_00110000_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(a_sizeunion.get(), 0b_00111000_11110000_11111000_00110000_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(a_sizeunion.get(), 0b_00111000_11110000_11111000_00111111_00000011_11111000_00001111_11110000_usize);
             ///
             ///     #[cfg(target_pointer_width = "16")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     let b_sint = -2_isize;
             ///     let c_sizeunion = a_sizeunion <<= b_sint;
             ///     println!("After a_sizeunion <<= {}, = {:b}", b_sint, a_sizeunion);
             ///     #[cfg(target_pointer_width = "16")] assert_eq!(a_sizeunion.get(), 0b_11000000_00000000_usize);
-            ///     #[cfg(target_pointer_width = "32")] assert_eq!(a_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(a_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_usize);
             ///     #[cfg(target_pointer_width = "64")] assert_eq!(a_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_usize);
             ///
             ///     #[cfg(target_pointer_width = "16")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     let b_uint = -2_isize as usize;
             ///     a_sizeunion <<= b_uint;
             ///     println!("After a_sizeunion <<= {}, = {:b}", b_uint, a_sizeunion);
             ///     #[cfg(target_pointer_width = "16")] assert_eq!(b_uint, 65534_usize);
-            ///     #[cfg(target_pointer_width = "32")] assert_eq!(b_uint, 4294967294_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(b_uint, 4294967294_usize);
             ///     #[cfg(target_pointer_width = "64")] assert_eq!(b_uint, 18446744073709551614_usize);
             ///     #[cfg(target_pointer_width = "16")] assert_eq!(d_sizeunion.get(), 0b_11000000_00000000_usize);
-            ///     #[cfg(target_pointer_width = "32")] assert_eq!(d_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(d_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_usize);
             ///     #[cfg(target_pointer_width = "64")] assert_eq!(d_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_usize);
             /// }
             /// ```
@@ -17709,13 +17709,13 @@ macro_rules! shift_ops_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            /// #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             /// #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             /// let b_uint = 4_u128;
             /// let c_sizeunion = a_sizeunion >> b_uint;
             /// println!("{:b} >> {} = {:b}", a_sizeunion, b_uint, c_sizeunion);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(c_sizeunion.get(), 0b_00001011_00111000_usize);
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(c_sizeunion.get(), 0b_0000101_100111000_11110000_11111000_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(c_sizeunion.get(), 0b_0000101_100111000_11110000_11111000_usize);
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(c_sizeunion.get(), 0b_00001011_00111000_11110000_11111000_00111111_00000011_11111000_00001111_usize);
             /// ```
             ///
@@ -17726,13 +17726,13 @@ macro_rules! shift_ops_for_integer_unions_impl {
             /// #[cfg(not(debug_assertions))]
             /// {
             ///     #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     let b_uint = 68_u128;
             ///     let c_sizeunion = a_sizeunion >> b_uint;
             ///     println!("{:b} >> {} = {:b}", a_sizeunion, b_uint, c_sizeunion);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(c_sizeunion.get(), 0b_00001011_00111000_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(c_sizeunion.get(), 0b_0000101_100111000_11110000_11111000_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(c_sizeunion.get(), 0b_0000101_100111000_11110000_11111000_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(c_sizeunion.get(), 0b_00001011_00111000_11110000_11111000_00111111_00000011_11111000_00001111_usize);
             /// }
             /// ```
@@ -17744,7 +17744,7 @@ macro_rules! shift_ops_for_integer_unions_impl {
             /// #[cfg(not(debug_assertions))]
             /// {
             ///     #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     let b_sint = -2_isize;
             ///     let b_uint = b_sint as usize;
@@ -17753,12 +17753,12 @@ macro_rules! shift_ops_for_integer_unions_impl {
             ///     println!("{:b} >> {} = {:b}", a_sizeunion, b_sint, c_sizeunion);
             ///     println!("{:b} >> {} = {:b}", a_sizeunion, b_uint, d_sizeunion);
             ///     #[cfg(target_pointer_width = "16")] assert_eq!(b_uint, 65534_usize);
-            ///     #[cfg(target_pointer_width = "32")] assert_eq!(b_uint, 4294967294_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(b_uint, 4294967294_usize);
             ///     #[cfg(target_pointer_width = "64")] assert_eq!(b_uint, 18446744073709551614_usize);
             ///     #[cfg(target_pointer_width = "16")] assert_eq!(c_sizeunion.get(), 0b_00000000_00000010_usize);
             ///     #[cfg(target_pointer_width = "16")] assert_eq!(d_sizeunion.get(), 0b_00000000_00000010_usize);
-            ///     #[cfg(target_pointer_width = "32")] assert_eq!(c_sizeunion.get(), 0b_00000000_00000000_00000000_00000010_usize);
-            ///     #[cfg(target_pointer_width = "32")] assert_eq!(d_sizeunion.get(), 0b_00000000_00000000_00000000_00000010_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(c_sizeunion.get(), 0b_00000000_00000000_00000000_00000010_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(d_sizeunion.get(), 0b_00000000_00000000_00000000_00000010_usize);
             ///     #[cfg(target_pointer_width = "64")] assert_eq!(c_sizeunion.get(), 0b_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000010_usize);
             ///     #[cfg(target_pointer_width = "64")] assert_eq!(d_sizeunion.get(), 0b_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000010_usize);
             /// }
@@ -17851,36 +17851,36 @@ macro_rules! shift_ops_for_integer_unions_impl {
             ///     assert_eq!(a_longerunion.get(), 0b_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000010_u128);
             ///
             ///     #[cfg(target_pointer_width = "16")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     let b_uint = 68_u128;
             ///     a_sizeunion >>= b_uint;
             ///     println!("After a_sizeunion >>= {}, = {:b}", b_uint, a_sizeunion);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(a_sizeunion.get(), 0b_00001011_00111000_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(a_sizeunion.get(), 0b_0000101_100111000_11110000_11111000_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(a_sizeunion.get(), 0b_0000101_100111000_11110000_11111000_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(a_sizeunion.get(), 0b_00001011_00111000_11110000_11111000_00111111_00000011_11111000_00001111_usize);
             ///
             ///     #[cfg(target_pointer_width = "16")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     let b_sint = -2_isize;
             ///     a_sizeunion >>= b_sint;
             ///     println!("After a_sizeunion >>= {}, = {:b}", b_sint, a_sizeunion);
             ///     #[cfg(target_pointer_width = "16")] assert_eq!(a_sizeunion.get(), 0b_00000000_00000010_usize);
-            ///     #[cfg(target_pointer_width = "32")] assert_eq!(a_sizeunion.get(), 0b_00000000_00000000_00000000_00000010_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(a_sizeunion.get(), 0b_00000000_00000000_00000000_00000010_usize);
             ///     #[cfg(target_pointer_width = "64")] assert_eq!(a_sizeunion.get(), 0b_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000010_usize);
             ///
             ///     #[cfg(target_pointer_width = "16")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     let b_uint = -2_isize as usize;
             ///     a_sizeunion >>= b_uint;
             ///     println!("After a_sizeunion >>= {}, = {:b}", b_uint, a_sizeunion);
             ///     #[cfg(target_pointer_width = "16")] assert_eq!(b_uint, 65534_usize);
-            ///     #[cfg(target_pointer_width = "32")] assert_eq!(b_uint, 4294967294_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(b_uint, 4294967294_usize);
             ///     #[cfg(target_pointer_width = "64")] assert_eq!(b_uint, 18446744073709551614_usize);
             ///     #[cfg(target_pointer_width = "16")] assert_eq!(a_sizeunion.get(), 0b_00000000_00000010_usize);
-            ///     #[cfg(target_pointer_width = "32")] assert_eq!(a_sizeunion.get(), 0b_00000000_00000000_00000000_00000010_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(a_sizeunion.get(), 0b_00000000_00000000_00000000_00000010_usize);
             ///     #[cfg(target_pointer_width = "64")] assert_eq!(a_sizeunion.get(), 0b_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000010_usize);
             /// }
             /// ```
@@ -18131,13 +18131,13 @@ macro_rules! shift_ops_for_integer_unions_impl {
         /// use cryptocol::number::SizeUnion;
         ///
         /// #[cfg(target_pointer_width = "16")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-        /// #[cfg(target_pointer_width = "32")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+        /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
         /// #[cfg(target_pointer_width = "64")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
         /// let b_uint = 4_u128;
         /// a_sizeunion >>= b_uint;
         /// println!("After a_sizeunion >>= {}, = {:b}", b_uint, a_sizeunion);
         /// #[cfg(target_pointer_width = "16")]  assert_eq!(a_sizeunion.get(), 0b_00001011_00111000_usize);
-        /// #[cfg(target_pointer_width = "32")]  assert_eq!(a_sizeunion.get(), 0b_0000101_100111000_11110000_11111000_usize);
+        /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(a_sizeunion.get(), 0b_0000101_100111000_11110000_11111000_usize);
         /// #[cfg(target_pointer_width = "64")]  assert_eq!(a_sizeunion.get(), 0b_00001011_00111000_11110000_11111000_00111111_00000011_11111000_00001111_usize);
         /// ```
         ///
@@ -18148,13 +18148,13 @@ macro_rules! shift_ops_for_integer_unions_impl {
         /// #[cfg(not(debug_assertions))]
         /// {
         ///     #[cfg(target_pointer_width = "16")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-        ///     #[cfg(target_pointer_width = "32")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+        ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
         ///     #[cfg(target_pointer_width = "64")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
         ///     let b_uint = 68_u128;
         ///     a_sizeunion >>= b_uint;
         ///     println!("After a_sizeunion >>= {}, = {:b}", b_uint, a_sizeunion);
         ///     #[cfg(target_pointer_width = "16")]  assert_eq!(a_sizeunion.get(), 0b_00001011_00111000_usize);
-        ///     #[cfg(target_pointer_width = "32")]  assert_eq!(a_sizeunion.get(), 0b_0000101_100111000_11110000_11111000_usize);
+        ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(a_sizeunion.get(), 0b_0000101_100111000_11110000_11111000_usize);
         ///     #[cfg(target_pointer_width = "64")]  assert_eq!(a_sizeunion.get(), 0b_00001011_00111000_11110000_11111000_00111111_00000011_11111000_00001111_usize);
         /// }
         /// ```
@@ -18166,13 +18166,13 @@ macro_rules! shift_ops_for_integer_unions_impl {
         /// #[cfg(not(debug_assertions))]
         /// {
         ///     #[cfg(target_pointer_width = "16")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-        ///     #[cfg(target_pointer_width = "32")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+        ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
         ///     #[cfg(target_pointer_width = "64")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
         ///     let b_sint = -2_isize;
         ///     a_sizeunion >>= b_sint;
         ///     println!("After a_sizeunion >>= {}, = {:b}", b_sint, a_sizeunion);
         ///     #[cfg(target_pointer_width = "16")] assert_eq!(a_sizeunion.get(), 0b_00000000_00000010_usize);
-        ///     #[cfg(target_pointer_width = "32")] assert_eq!(a_sizeunion.get(), 0b_00000000_00000000_00000000_00000010_usize);
+        ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(a_sizeunion.get(), 0b_00000000_00000000_00000000_00000010_usize);
         ///     #[cfg(target_pointer_width = "64")] assert_eq!(a_sizeunion.get(), 0b_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000010_usize);
         /// }
         /// ```
@@ -18184,16 +18184,16 @@ macro_rules! shift_ops_for_integer_unions_impl {
         /// #[cfg(not(debug_assertions))]
         /// {
         ///     #[cfg(target_pointer_width = "16")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-        ///     #[cfg(target_pointer_width = "32")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+        ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
         ///     #[cfg(target_pointer_width = "64")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
         ///     let b_uint = -2_isize as usize;
         ///     a_sizeunion >>= b_uint;
         ///     println!("After a_sizeunion >>= {}, = {:b}", b_uint, a_sizeunion);
         ///     #[cfg(target_pointer_width = "16")] assert_eq!(b_uint, 65534_usize);
-        ///     #[cfg(target_pointer_width = "32")] assert_eq!(b_uint, 4294967294_usize);
+        ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(b_uint, 4294967294_usize);
         ///     #[cfg(target_pointer_width = "64")] assert_eq!(b_uint, 18446744073709551614_usize);
         ///     #[cfg(target_pointer_width = "16")] assert_eq!(a_sizeunion.get(), 0b_00000000_00000010_usize);
-        ///     #[cfg(target_pointer_width = "32")] assert_eq!(a_sizeunion.get(), 0b_00000000_00000000_00000000_00000010_usize);
+        ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(a_sizeunion.get(), 0b_00000000_00000000_00000000_00000010_usize);
         ///     #[cfg(target_pointer_width = "64")] assert_eq!(a_sizeunion.get(), 0b_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000010_usize);
         /// }
         /// ```
@@ -18293,36 +18293,36 @@ macro_rules! shift_ops_for_integer_unions_impl {
         ///     assert_eq!(a_longerunion.get(), 0b_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000010_u128);
         ///
         ///     #[cfg(target_pointer_width = "16")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-        ///     #[cfg(target_pointer_width = "32")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+        ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
         ///     #[cfg(target_pointer_width = "64")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
         ///     let b_uint = 68_u128;
         ///     a_sizeunion >>= b_uint;
         ///     println!("After a_sizeunion >>= {}, = {:b}", b_uint, a_sizeunion);
         ///     #[cfg(target_pointer_width = "16")]  assert_eq!(a_sizeunion.get(), 0b_00001011_00111000_usize);
-        ///     #[cfg(target_pointer_width = "32")]  assert_eq!(a_sizeunion.get(), 0b_0000101_100111000_11110000_11111000_usize);
+        ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(a_sizeunion.get(), 0b_0000101_100111000_11110000_11111000_usize);
         ///     #[cfg(target_pointer_width = "64")]  assert_eq!(a_sizeunion.get(), 0b_00001011_00111000_11110000_11111000_00111111_00000011_11111000_00001111_usize);
         ///
         ///     #[cfg(target_pointer_width = "16")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-        ///     #[cfg(target_pointer_width = "32")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+        ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
         ///     #[cfg(target_pointer_width = "64")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
         ///     let b_sint = -2_isize;
         ///     a_sizeunion >>= b_sint;
         ///     println!("After a_sizeunion >>= {}, = {:b}", b_sint, a_sizeunion);
         ///     #[cfg(target_pointer_width = "16")] assert_eq!(a_sizeunion.get(), 0b_00000000_00000010_usize);
-        ///     #[cfg(target_pointer_width = "32")] assert_eq!(a_sizeunion.get(), 0b_00000000_00000000_00000000_00000010_usize);
+        ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(a_sizeunion.get(), 0b_00000000_00000000_00000000_00000010_usize);
         ///     #[cfg(target_pointer_width = "64")] assert_eq!(a_sizeunion.get(), 0b_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000010_usize);
         ///
         ///     #[cfg(target_pointer_width = "16")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-        ///     #[cfg(target_pointer_width = "32")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+        ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
         ///     #[cfg(target_pointer_width = "64")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
         ///     let b_uint = -2_isize as usize;
         ///     a_sizeunion >>= b_uint;
         ///     println!("After a_sizeunion >>= {}, = {:b}", b_uint, a_sizeunion);
         ///     #[cfg(target_pointer_width = "16")] assert_eq!(b_uint, 65534_usize);
-        ///     #[cfg(target_pointer_width = "32")] assert_eq!(b_uint, 4294967294_usize);
+        ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(b_uint, 4294967294_usize);
         ///     #[cfg(target_pointer_width = "64")] assert_eq!(b_uint, 18446744073709551614_usize);
         ///     #[cfg(target_pointer_width = "16")] assert_eq!(a_sizeunion.get(), 0b_00000000_00000010_usize);
-        ///     #[cfg(target_pointer_width = "32")] assert_eq!(a_sizeunion.get(), 0b_00000000_00000000_00000000_00000010_usize);
+        ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(a_sizeunion.get(), 0b_00000000_00000000_00000000_00000010_usize);
         ///     #[cfg(target_pointer_width = "64")] assert_eq!(a_sizeunion.get(), 0b_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000010_usize);
         /// }
         /// ```
@@ -18556,15 +18556,15 @@ macro_rules! shift_ops_for_integer_unions_by_union_impl {
             /// #[cfg(not(debug_assertions))]
             /// {
             ///     #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     #[cfg(target_pointer_width = "16")] let b_sizeunion = SizeUnion::new_with(16_usize);
-            ///     #[cfg(target_pointer_width = "32")] let b_sizeunion = SizeUnion::new_with(32_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let b_sizeunion = SizeUnion::new_with(32_usize);
             ///     #[cfg(target_pointer_width = "64")] let b_sizeunion = SizeUnion::new_with(64_usize);
             ///     let c_sizeunion = a_sizeunion << b_sizeunion;
             ///     println!("{:b} << {} = {:b}", a_sizeunion, b_sizeunion, c_sizeunion);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(c_sizeunion.get(), 0b_10110011_10001111_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(c_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(c_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(c_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111_usize);
             /// }
             /// ```
@@ -18576,15 +18576,15 @@ macro_rules! shift_ops_for_integer_unions_by_union_impl {
             /// #[cfg(not(debug_assertions))]
             /// {
             ///     #[cfg(target_pointer_width = "16")]  let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")]  let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")]  let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     #[cfg(target_pointer_width = "16")]  let b_union = LongUnion::new_with(18);
-            ///     #[cfg(target_pointer_width = "32")]  let b_union = ShortUnion::new_with(40);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let b_union = ShortUnion::new_with(40);
             ///     #[cfg(target_pointer_width = "64")]  let b_union = IntUnion::new_with(72);
             ///     let c_sizeunion = a_sizeunion << b_union;
             ///     println!("{:b} << {} = {:b}", a_sizeunion, b_union, c_sizeunion);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(c_sizeunion.get(), 0b_11001110_00111100_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(c_sizeunion.get(), 0b_10001111_00001111_10000011_00000000_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(c_sizeunion.get(), 0b_10001111_00001111_10000011_00000000_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(c_sizeunion.get(), 0b_10001111_00001111_10000011_11110000_00111111_10000000_11111111_00000000_usize);
             /// }
             /// ```
@@ -18596,7 +18596,7 @@ macro_rules! shift_ops_for_integer_unions_by_union_impl {
             /// #[cfg(not(debug_assertions))]
             /// {
             ///     #[cfg(target_pointer_width = "16")]  let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")]  let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")]  let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     let b_sizeunion = SizeUnion::new_with_signed(-2);
             ///     let b_sizeunion2 = SizeUnion::new_with(-2_isize as usize);
@@ -18605,13 +18605,13 @@ macro_rules! shift_ops_for_integer_unions_by_union_impl {
             ///     println!("{:b} << {} = {:b}", a_sizeunion, b_sizeunion, c_sizeunion);
             ///     println!("{:b} << {} = {:b}", a_sizeunion, b_sizeunion2, d_sizeunion);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(b_sizeunion2.get(), 65534_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(b_sizeunion2.get(), 4294967294_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(b_sizeunion2.get(), 4294967294_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(b_sizeunion2.get(), 18446744073709551614_usize);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(c_sizeunion.get(), 0b_11000000_00000000_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(c_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(c_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(c_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_usize);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(d_sizeunion.get(), 0b_11000000_00000000_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(d_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(d_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(d_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_usize);
             /// }
             /// ```
@@ -18691,31 +18691,31 @@ macro_rules! shift_ops_for_integer_unions_by_union_impl {
             ///     assert_eq!(d_longerunion.get(), 0b_11000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_u128);
             ///
             ///     #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     #[cfg(target_pointer_width = "16")] let b_sizeunion = SizeUnion::new_with(16_usize);
-            ///     #[cfg(target_pointer_width = "32")] let b_sizeunion = SizeUnion::new_with(32_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let b_sizeunion = SizeUnion::new_with(32_usize);
             ///     #[cfg(target_pointer_width = "64")] let b_sizeunion = SizeUnion::new_with(64_usize);
             ///     let c_sizeunion = a_sizeunion << b_sizeunion;
             ///     println!("{:b} << {} = {:b}", a_sizeunion, b_sizeunion, c_sizeunion);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(c_sizeunion.get(), 0b_10110011_10001111_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(c_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(c_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(c_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111_usize);
             ///
             ///     #[cfg(target_pointer_width = "16")]  let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")]  let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")]  let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     #[cfg(target_pointer_width = "16")]  let b_sizeunion = SizeUnion::new_with(18);
-            ///     #[cfg(target_pointer_width = "32")]  let b_sizeunion = SizeUnion::new_with(40);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let b_sizeunion = SizeUnion::new_with(40);
             ///     #[cfg(target_pointer_width = "64")]  let b_sizeunion = SizeUnion::new_with(72);
             ///     let c_sizeunion = a_sizeunion << b_sizeunion;
             ///     println!("{:b} << {} = {:b}", a_sizeunion, b_sizeunion, c_sizeunion);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(c_sizeunion.get(), 0b_11001110_00111100_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(c_sizeunion.get(), 0b_10001111_00001111_10000011_00000000_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(c_sizeunion.get(), 0b_10001111_00001111_10000011_00000000_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(c_sizeunion.get(), 0b_10001111_00001111_10000011_11110000_00111111_10000000_11111111_00000000_usize);
             ///
             ///     #[cfg(target_pointer_width = "16")]  let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")]  let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")]  let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     let b_sizeunion = SizeUnion::new_with_signed(-2);
             ///     let b_sizeunion2 = SizeUnion::new_with(-2_isize as usize);
@@ -18724,13 +18724,13 @@ macro_rules! shift_ops_for_integer_unions_by_union_impl {
             ///     println!("{:b} << {} = {:b}", a_sizeunion, b_sizeunion, c_sizeunion);
             ///     println!("{:b} << {} = {:b}", a_sizeunion, b_sizeunion2, d_sizeunion);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(b_sizeunion2.get(), 65534_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(b_sizeunion2.get(), 4294967294_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(b_sizeunion2.get(), 4294967294_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(b_sizeunion2.get(), 18446744073709551614_usize);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(c_sizeunion.get(), 0b_11000000_00000000_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(c_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(c_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(c_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_usize);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(d_sizeunion.get(), 0b_11000000_00000000_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(d_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(d_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(d_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_usize);
             /// }
             /// ```
@@ -18995,15 +18995,15 @@ macro_rules! shift_ops_for_integer_unions_by_union_impl {
             /// #[cfg(not(debug_assertions))]
             /// {
             ///     #[cfg(target_pointer_width = "16")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     #[cfg(target_pointer_width = "16")] let b_sizeunion = SizeUnion::new_with(16_usize);
-            ///     #[cfg(target_pointer_width = "32")] let b_sizeunion = SizeUnion::new_with(32_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let b_sizeunion = SizeUnion::new_with(32_usize);
             ///     #[cfg(target_pointer_width = "64")] let b_sizeunion = SizeUnion::new_with(64_usize);
             ///     a_sizeunion <<= b_sizeunion;
             ///     println!("After a_sizeunion <<= {}, = {:b}", b_sizeunion, a_sizeunion);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(a_sizeunion.get(), 0b_10110011_10001111_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(a_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(a_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(a_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111_usize);
             /// }
             /// ```
@@ -19015,15 +19015,15 @@ macro_rules! shift_ops_for_integer_unions_by_union_impl {
             /// #[cfg(not(debug_assertions))]
             /// {
             ///     #[cfg(target_pointer_width = "16")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     #[cfg(target_pointer_width = "16")]  let b_sizeunion = LongUnion::new_with(18);
-            ///     #[cfg(target_pointer_width = "32")]  let b_sizeunion = ShortUnion::new_with(40);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let b_sizeunion = ShortUnion::new_with(40);
             ///     #[cfg(target_pointer_width = "64")]  let b_sizeunion = IntUnion::new_with(72);
             ///     a_sizeunion <<= b_sizeunion;
             ///     println!("After a_sizeunion <<= {}, = {:b}", b_sizeunion, a_sizeunion);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(a_sizeunion.get(), 0b_11001110_00111100_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(a_sizeunion.get(), 0b_10001111_00001111_10000011_00000000_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(a_sizeunion.get(), 0b_10001111_00001111_10000011_00000000_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(a_sizeunion.get(), 0b_10001111_00001111_10000011_11110000_00111111_10000000_11111111_00000000_usize);
             /// }
             /// ```
@@ -19035,16 +19035,16 @@ macro_rules! shift_ops_for_integer_unions_by_union_impl {
             /// #[cfg(not(debug_assertions))]
             /// {
             ///     #[cfg(target_pointer_width = "16")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     let b_sizeunion = SizeUnion::new_with_signed(-2);
             ///     a_sizeunion <<= b_sizeunion;
             ///     println!("After a_sizeunion <<= {}, = {:b}", b_sizeunion, a_sizeunion);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(b_sizeunion.get(), 65534_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(b_sizeunion.get(), 4294967294_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(b_sizeunion.get(), 4294967294_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(b_sizeunion.get(), 18446744073709551614_usize);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(a_sizeunion.get(), 0b_11000000_00000000_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(a_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(a_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(a_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_usize);
             /// }
             /// ```
@@ -19056,16 +19056,16 @@ macro_rules! shift_ops_for_integer_unions_by_union_impl {
             /// #[cfg(not(debug_assertions))]
             /// {
             ///     #[cfg(target_pointer_width = "16")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     let b_sizeunion = SizeUnion::new_with(-2_isize as usize);
             ///     a_sizeunion <<= b_sizeunion;
             ///     println!("After a_sizeunion <<= {}, = {:b}", b_sizeunion, a_sizeunion);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(b_sizeunion.get(), 65534_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(b_sizeunion.get(), 4294967294_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(b_sizeunion.get(), 4294967294_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(b_sizeunion.get(), 18446744073709551614_usize);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(a_sizeunion.get(), 0b_11000000_00000000_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(a_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(a_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(a_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_usize);
             /// }
             /// ```
@@ -19169,53 +19169,53 @@ macro_rules! shift_ops_for_integer_unions_by_union_impl {
             ///     assert_eq!(a_longerunion.get(), 0b_11000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_u128);
             ///
             ///     #[cfg(target_pointer_width = "16")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     #[cfg(target_pointer_width = "16")] let b_sizeunion = SizeUnion::new_with(16_usize);
-            ///     #[cfg(target_pointer_width = "32")] let b_sizeunion = SizeUnion::new_with(32_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let b_sizeunion = SizeUnion::new_with(32_usize);
             ///     #[cfg(target_pointer_width = "64")] let b_sizeunion = SizeUnion::new_with(64_usize);
             ///     a_sizeunion <<= b_sizeunion;
             ///     println!("After a_sizeunion <<= {}, = {:b}", b_sizeunion, a_sizeunion);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(a_sizeunion.get(), 0b_10110011_10001111_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(a_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(a_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(a_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111_usize);
             ///
             ///     #[cfg(target_pointer_width = "16")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     #[cfg(target_pointer_width = "16")]  let b_sizeunion = LongUnion::new_with(18);
-            ///     #[cfg(target_pointer_width = "32")]  let b_sizeunion = ShortUnion::new_with(40);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let b_sizeunion = ShortUnion::new_with(40);
             ///     #[cfg(target_pointer_width = "64")]  let b_sizeunion = IntUnion::new_with(72);
             ///     a_sizeunion <<= b_sizeunion;
             ///     println!("After a_sizeunion <<= {}, = {:b}", b_sizeunion, a_sizeunion);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(a_sizeunion.get(), 0b_11001110_00111100_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(a_sizeunion.get(), 0b_10001111_00001111_10000011_00000000_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(a_sizeunion.get(), 0b_10001111_00001111_10000011_00000000_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(a_sizeunion.get(), 0b_10001111_00001111_10000011_11110000_00111111_10000000_11111111_00000000_usize);
             ///
             ///     #[cfg(target_pointer_width = "16")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     let b_sizeunion = SizeUnion::new_with_signed(-2);
             ///     a_sizeunion <<= b_sizeunion;
             ///     println!("After a_sizeunion <<= {}, = {:b}", b_sizeunion, a_sizeunion);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(b_sizeunion.get(), 65534_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(b_sizeunion.get(), 4294967294_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(b_sizeunion.get(), 4294967294_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(b_sizeunion.get(), 18446744073709551614_usize);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(a_sizeunion.get(), 0b_11000000_00000000_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(a_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(a_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(a_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_usize);
             ///
             ///     #[cfg(target_pointer_width = "16")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     let b_sizeunion = SizeUnion::new_with(-2_isize as usize);
             ///     a_sizeunion <<= b_sizeunion;
             ///     println!("After a_sizeunion <<= {}, = {:b}", b_sizeunion, a_sizeunion);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(b_sizeunion.get(), 65534_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(b_sizeunion.get(), 4294967294_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(b_sizeunion.get(), 4294967294_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(b_sizeunion.get(), 18446744073709551614_usize);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(a_sizeunion.get(), 0b_11000000_00000000_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(a_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(a_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(a_sizeunion.get(), 0b_11000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_usize);
             /// }
             /// ```
@@ -19436,15 +19436,15 @@ macro_rules! shift_ops_for_integer_unions_by_union_impl {
             /// #[cfg(not(debug_assertions))]
             /// {
             ///     #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     #[cfg(target_pointer_width = "16")] let b_sizeunion = SizeUnion::new_with(16_usize);
-            ///     #[cfg(target_pointer_width = "32")] let b_sizeunion = SizeUnion::new_with(32_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let b_sizeunion = SizeUnion::new_with(32_usize);
             ///     #[cfg(target_pointer_width = "64")] let b_sizeunion = SizeUnion::new_with(64_usize);
             ///     let c_sizeunion = a_sizeunion >> b_sizeunion;
             ///     println!("{:b} >> {} = {:b}", a_sizeunion, b_sizeunion, c_sizeunion);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(c_sizeunion.get(), 0b_10110011_10001111_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(c_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(c_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(c_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111_usize);
             /// }
             /// ```
@@ -19456,15 +19456,15 @@ macro_rules! shift_ops_for_integer_unions_by_union_impl {
             /// #[cfg(not(debug_assertions))]
             /// {
             ///     #[cfg(target_pointer_width = "16")]  let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")]  let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")]  let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     #[cfg(target_pointer_width = "16")]  let b_union = LongUnion::new_with(18);
-            ///     #[cfg(target_pointer_width = "32")]  let b_union = ShortUnion::new_with(40);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let b_union = ShortUnion::new_with(40);
             ///     #[cfg(target_pointer_width = "64")]  let b_union = IntUnion::new_with(72);
             ///     let c_sizeunion = a_sizeunion >> b_union;
             ///     println!("{:b} >> {} = {:b}", a_sizeunion, b_union, c_sizeunion);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(c_sizeunion.get(), 0b_00101100_11100011_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(c_sizeunion.get(), 0b_00000000_10110011_10001111_00001111_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(c_sizeunion.get(), 0b_00000000_10110011_10001111_00001111_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(c_sizeunion.get(), 0b_00000000_10110011_10001111_00001111_10000011_11110000_00111111_10000000_usize);
             /// }
             /// ```
@@ -19476,7 +19476,7 @@ macro_rules! shift_ops_for_integer_unions_by_union_impl {
             /// #[cfg(not(debug_assertions))]
             /// {
             ///     #[cfg(target_pointer_width = "16")]  let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")]  let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")]  let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     let b_sizeunion = SizeUnion::new_with_signed(-2);
             ///     let b_sizeunion2 = SizeUnion::new_with(-2_isize as usize);
@@ -19485,12 +19485,12 @@ macro_rules! shift_ops_for_integer_unions_by_union_impl {
             ///     println!("{:b} >> {} = {:b}", a_sizeunion, b_sizeunion, c_sizeunion);
             ///     println!("{:b} >> {} = {:b}", a_sizeunion, b_sizeunion2, d_sizeunion);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(b_sizeunion2.get(), 65534_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(b_sizeunion2.get(), 4294967294_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(b_sizeunion2.get(), 4294967294_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(b_sizeunion2.get(), 18446744073709551614_usize);
             ///     #[cfg(target_pointer_width = "16")] assert_eq!(c_sizeunion.get(), 0b_00000000_00000010_usize);
             ///     #[cfg(target_pointer_width = "16")] assert_eq!(d_sizeunion.get(), 0b_00000000_00000010_usize);
-            ///     #[cfg(target_pointer_width = "32")] assert_eq!(c_sizeunion.get(), 0b_00000000_00000000_00000000_00000010_usize);
-            ///     #[cfg(target_pointer_width = "32")] assert_eq!(d_sizeunion.get(), 0b_00000000_00000000_00000000_00000010_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(c_sizeunion.get(), 0b_00000000_00000000_00000000_00000010_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(d_sizeunion.get(), 0b_00000000_00000000_00000000_00000010_usize);
             ///     #[cfg(target_pointer_width = "64")] assert_eq!(c_sizeunion.get(), 0b_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000010_usize);
             ///     #[cfg(target_pointer_width = "64")] assert_eq!(d_sizeunion.get(), 0b_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000010_usize);
             /// }
@@ -19571,31 +19571,31 @@ macro_rules! shift_ops_for_integer_unions_by_union_impl {
             ///     assert_eq!(d_longerunion.get(), 0b_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000010_u128);
             ///
             ///     #[cfg(target_pointer_width = "16")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")] let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     #[cfg(target_pointer_width = "16")] let b_sizeunion = SizeUnion::new_with(16_usize);
-            ///     #[cfg(target_pointer_width = "32")] let b_sizeunion = SizeUnion::new_with(32_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let b_sizeunion = SizeUnion::new_with(32_usize);
             ///     #[cfg(target_pointer_width = "64")] let b_sizeunion = SizeUnion::new_with(64_usize);
             ///     let c_sizeunion = a_sizeunion >> b_sizeunion;
             ///     println!("{:b} >> {} = {:b}", a_sizeunion, b_sizeunion, c_sizeunion);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(c_sizeunion.get(), 0b_10110011_10001111_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(c_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(c_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(c_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111_usize);
             ///
             ///     #[cfg(target_pointer_width = "16")]  let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")]  let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")]  let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     #[cfg(target_pointer_width = "16")]  let b_union = LongUnion::new_with(18);
-            ///     #[cfg(target_pointer_width = "32")]  let b_union = ShortUnion::new_with(40);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let b_union = ShortUnion::new_with(40);
             ///     #[cfg(target_pointer_width = "64")]  let b_union = IntUnion::new_with(72);
             ///     let c_sizeunion = a_sizeunion >> b_union;
             ///     println!("{:b} >> {} = {:b}", a_sizeunion, b_union, c_sizeunion);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(c_sizeunion.get(), 0b_00101100_11100011_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(c_sizeunion.get(), 0b_00000000_10110011_10001111_00001111_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(c_sizeunion.get(), 0b_00000000_10110011_10001111_00001111_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(c_sizeunion.get(), 0b_00000000_10110011_10001111_00001111_10000011_11110000_00111111_10000000_usize);
             ///
             ///     #[cfg(target_pointer_width = "16")]  let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")]  let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")]  let a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     let b_sizeunion = SizeUnion::new_with_signed(-2);
             ///     let b_sizeunion2 = SizeUnion::new_with(-2_isize as usize);
@@ -19604,12 +19604,12 @@ macro_rules! shift_ops_for_integer_unions_by_union_impl {
             ///     println!("{:b} >> {} = {:b}", a_sizeunion, b_sizeunion, c_sizeunion);
             ///     println!("{:b} >> {} = {:b}", a_sizeunion, b_sizeunion2, d_sizeunion);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(b_sizeunion2.get(), 65534_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(b_sizeunion2.get(), 4294967294_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(b_sizeunion2.get(), 4294967294_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(b_sizeunion2.get(), 18446744073709551614_usize);
             ///     #[cfg(target_pointer_width = "16")] assert_eq!(c_sizeunion.get(), 0b_00000000_00000010_usize);
             ///     #[cfg(target_pointer_width = "16")] assert_eq!(d_sizeunion.get(), 0b_00000000_00000010_usize);
-            ///     #[cfg(target_pointer_width = "32")] assert_eq!(c_sizeunion.get(), 0b_00000000_00000000_00000000_00000010_usize);
-            ///     #[cfg(target_pointer_width = "32")] assert_eq!(d_sizeunion.get(), 0b_00000000_00000000_00000000_00000010_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(c_sizeunion.get(), 0b_00000000_00000000_00000000_00000010_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(d_sizeunion.get(), 0b_00000000_00000000_00000000_00000010_usize);
             ///     #[cfg(target_pointer_width = "64")] assert_eq!(c_sizeunion.get(), 0b_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000010_usize);
             ///     #[cfg(target_pointer_width = "64")] assert_eq!(d_sizeunion.get(), 0b_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000010_usize);
             /// }
@@ -19876,15 +19876,15 @@ macro_rules! shift_ops_for_integer_unions_by_union_impl {
             /// #[cfg(not(debug_assertions))]
             /// {
             ///     #[cfg(target_pointer_width = "16")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     #[cfg(target_pointer_width = "16")] let b_sizeunion = SizeUnion::new_with(16_usize);
-            ///     #[cfg(target_pointer_width = "32")] let b_sizeunion = SizeUnion::new_with(32_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let b_sizeunion = SizeUnion::new_with(32_usize);
             ///     #[cfg(target_pointer_width = "64")] let b_sizeunion = SizeUnion::new_with(64_usize);
             ///     a_sizeunion >>= b_sizeunion;
             ///     println!("After a_sizeunion >>= {}, = {:b}", b_sizeunion, a_sizeunion);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(a_sizeunion.get(), 0b_10110011_10001111_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(a_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(a_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(a_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111_usize);
             /// }
             /// ```
@@ -19896,15 +19896,15 @@ macro_rules! shift_ops_for_integer_unions_by_union_impl {
             /// #[cfg(not(debug_assertions))]
             /// {
             ///     #[cfg(target_pointer_width = "16")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     #[cfg(target_pointer_width = "16")]  let b_sizeunion = LongUnion::new_with(18);
-            ///     #[cfg(target_pointer_width = "32")]  let b_sizeunion = ShortUnion::new_with(40);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let b_sizeunion = ShortUnion::new_with(40);
             ///     #[cfg(target_pointer_width = "64")]  let b_sizeunion = IntUnion::new_with(72);
             ///     a_sizeunion >>= b_sizeunion;
             ///     println!("After a_sizeunion >>= {}, = {:b}", b_sizeunion, a_sizeunion);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(a_sizeunion.get(), 0b_00101100_11100011_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(a_sizeunion.get(), 0b_00000000_10110011_10001111_00001111_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(a_sizeunion.get(), 0b_00000000_10110011_10001111_00001111_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(a_sizeunion.get(), 0b_00000000_10110011_10001111_00001111_10000011_11110000_00111111_10000000_usize);
             /// }
             /// ```
@@ -19916,16 +19916,16 @@ macro_rules! shift_ops_for_integer_unions_by_union_impl {
             /// #[cfg(not(debug_assertions))]
             /// {
             ///     #[cfg(target_pointer_width = "16")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     let b_sizeunion = SizeUnion::new_with_signed(-2);
             ///     a_sizeunion >>= b_sizeunion;
             ///     println!("After a_sizeunion >>= {}, = {:b}", b_sizeunion, a_sizeunion);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(b_sizeunion.get(), 65534_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(b_sizeunion.get(), 4294967294_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(b_sizeunion.get(), 4294967294_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(b_sizeunion.get(), 18446744073709551614_usize);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(a_sizeunion.get(), 0b_00000000_00000010_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(a_sizeunion.get(), 0b_00000000_00000000_00000000_00000010_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(a_sizeunion.get(), 0b_00000000_00000000_00000000_00000010_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(a_sizeunion.get(), 0b_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000010_usize);
             /// }
             /// ```
@@ -19937,16 +19937,16 @@ macro_rules! shift_ops_for_integer_unions_by_union_impl {
             /// #[cfg(not(debug_assertions))]
             /// {
             ///     #[cfg(target_pointer_width = "16")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     let b_sizeunion = SizeUnion::new_with(-2_isize as usize);
             ///     a_sizeunion >>= b_sizeunion;
             ///     println!("After a_sizeunion >>= {}, = {:b}", b_sizeunion, a_sizeunion);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(b_sizeunion.get(), 65534_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(b_sizeunion.get(), 4294967294_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(b_sizeunion.get(), 4294967294_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(b_sizeunion.get(), 18446744073709551614_usize);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(a_sizeunion.get(), 0b_00000000_00000010_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(a_sizeunion.get(), 0b_00000000_00000000_00000000_00000010_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(a_sizeunion.get(), 0b_00000000_00000000_00000000_00000010_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(a_sizeunion.get(), 0b_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000010_usize);
             /// }
             /// ```
@@ -20087,53 +20087,53 @@ macro_rules! shift_ops_for_integer_unions_by_union_impl {
             ///     assert_eq!(a_longerunion.get(), 0b_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000010_u128);
             ///
             ///     #[cfg(target_pointer_width = "16")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")] let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     #[cfg(target_pointer_width = "16")] let b_sizeunion = SizeUnion::new_with(16_usize);
-            ///     #[cfg(target_pointer_width = "32")] let b_sizeunion = SizeUnion::new_with(32_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] let b_sizeunion = SizeUnion::new_with(32_usize);
             ///     #[cfg(target_pointer_width = "64")] let b_sizeunion = SizeUnion::new_with(64_usize);
             ///     a_sizeunion >>= b_sizeunion;
             ///     println!("After a_sizeunion >>= {}, = {:b}", b_sizeunion, a_sizeunion);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(a_sizeunion.get(), 0b_10110011_10001111_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(a_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(a_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(a_sizeunion.get(), 0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111_usize);
             ///
             ///     #[cfg(target_pointer_width = "16")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     #[cfg(target_pointer_width = "16")]  let b_sizeunion = LongUnion::new_with(18);
-            ///     #[cfg(target_pointer_width = "32")]  let b_sizeunion = ShortUnion::new_with(40);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let b_sizeunion = ShortUnion::new_with(40);
             ///     #[cfg(target_pointer_width = "64")]  let b_sizeunion = IntUnion::new_with(72);
             ///     a_sizeunion >>= b_sizeunion;
             ///     println!("After a_sizeunion >>= {}, = {:b}", b_sizeunion, a_sizeunion);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(a_sizeunion.get(), 0b_00101100_11100011_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(a_sizeunion.get(), 0b_00000000_10110011_10001111_00001111_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(a_sizeunion.get(), 0b_00000000_10110011_10001111_00001111_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(a_sizeunion.get(), 0b_00000000_10110011_10001111_00001111_10000011_11110000_00111111_10000000_usize);
             ///
             ///     #[cfg(target_pointer_width = "16")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     let b_sizeunion = SizeUnion::new_with_signed(-2);
             ///     a_sizeunion >>= b_sizeunion;
             ///     println!("After a_sizeunion >>= {}, = {:b}", b_sizeunion, a_sizeunion);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(b_sizeunion.get(), 65534_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(b_sizeunion.get(), 4294967294_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(b_sizeunion.get(), 4294967294_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(b_sizeunion.get(), 18446744073709551614_usize);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(a_sizeunion.get(), 0b_00000000_00000010_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(a_sizeunion.get(), 0b_00000000_00000000_00000000_00000010_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(a_sizeunion.get(), 0b_00000000_00000000_00000000_00000010_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(a_sizeunion.get(), 0b_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000010_usize);
             ///
             ///     #[cfg(target_pointer_width = "16")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111);
-            ///     #[cfg(target_pointer_width = "32")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011);
             ///     #[cfg(target_pointer_width = "64")]  let mut a_sizeunion = SizeUnion::new_with(0b_10110011_10001111_00001111_10000011_11110000_00111111_10000000_11111111);
             ///     let b_sizeunion = SizeUnion::new_with(-2_isize as usize);
             ///     a_sizeunion >>= b_sizeunion;
             ///     println!("After a_sizeunion >>= {}, = {:b}", b_sizeunion, a_sizeunion);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(b_sizeunion.get(), 65534_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(b_sizeunion.get(), 4294967294_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(b_sizeunion.get(), 4294967294_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(b_sizeunion.get(), 18446744073709551614_usize);
             ///     #[cfg(target_pointer_width = "16")]  assert_eq!(a_sizeunion.get(), 0b_00000000_00000010_usize);
-            ///     #[cfg(target_pointer_width = "32")]  assert_eq!(a_sizeunion.get(), 0b_00000000_00000000_00000000_00000010_usize);
+            ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(a_sizeunion.get(), 0b_00000000_00000000_00000000_00000010_usize);
             ///     #[cfg(target_pointer_width = "64")]  assert_eq!(a_sizeunion.get(), 0b_00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000010_usize);
             /// }
             /// ```
@@ -20215,12 +20215,12 @@ macro_rules! format_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")]  let a_uint = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")]  let a_uint = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_uint = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")]  let a_uint = SizeUnion::new_with(12345678901234567890_usize);
             /// println!("{:<25}", a_uint);
             /// let txt = format!("{:<25}", a_uint);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(txt, "12345                    ");
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(txt, "1234567890               ");
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(txt, "1234567890               ");
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(txt, "12345678901234567890     ");
             /// ```
             ///
@@ -20269,12 +20269,12 @@ macro_rules! format_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")]  let a_uint = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")]  let a_uint = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_uint = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")]  let a_uint = SizeUnion::new_with(12345678901234567890_usize);
             /// println!("{:$^025}", a_uint);
             /// let txt = format!("{:$^025}", a_uint);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(txt, "0000000000000000000012345");
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(txt, "0000000000000001234567890");
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(txt, "0000000000000001234567890");
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(txt, "0000012345678901234567890");
             /// ```
             ///
@@ -20570,12 +20570,12 @@ macro_rules! format_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")]  let a_uint = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")]  let a_uint = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_uint = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")]  let a_uint = SizeUnion::new_with(12345678901234567890_usize);
             /// println!("{:#<25X}", a_uint);
             /// let txt = format!("{:#<25X}", a_uint);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(txt, "3039#####################");
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(txt, "499602D2#################");
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(txt, "499602D2#################");
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(txt, "AB54A98CEB1F0AD2#########");
             /// ```
             ///
@@ -20584,12 +20584,12 @@ macro_rules! format_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")]  let a_uint = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")]  let a_uint = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_uint = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")]  let a_uint = SizeUnion::new_with(12345678901234567890_usize);
             /// println!("{:$<#25X}", a_uint);
             /// let txt = format!("{:$<25X}", a_uint);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(txt, "3039$$$$$$$$$$$$$$$$$$$$$");
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(txt, "499602D2$$$$$$$$$$$$$$$$$");
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(txt, "499602D2$$$$$$$$$$$$$$$$$");
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(txt, "AB54A98CEB1F0AD2$$$$$$$$$");
             /// ```
             ///
@@ -20598,12 +20598,12 @@ macro_rules! format_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")]  let a_uint = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")]  let a_uint = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_uint = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")]  let a_uint = SizeUnion::new_with(12345678901234567890_usize);
             /// println!("{:!>25X}", a_uint);
             /// let txt = format!("{:!>25X}", a_uint);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(txt, "!!!!!!!!!!!!!!!!!!!!!3039");
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(txt, "!!!!!!!!!!!!!!!!!499602D2");
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(txt, "!!!!!!!!!!!!!!!!!499602D2");
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(txt, "!!!!!!!!!AB54A98CEB1F0AD2");
             /// ```
             ///
@@ -20612,12 +20612,12 @@ macro_rules! format_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")]  let a_uint = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")]  let a_uint = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_uint = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")]  let a_uint = SizeUnion::new_with(12345678901234567890_usize);
             /// println!("{:@>#25X}", a_uint);
             /// let txt = format!("{:@>#25X}", a_uint);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(txt, "@@@@@@@@@@@@@@@@@@@0X3039");
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(txt, "@@@@@@@@@@@@@@@0X499602D2");
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(txt, "@@@@@@@@@@@@@@@0X499602D2");
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(txt, "@@@@@@@0XAB54A98CEB1F0AD2");
             /// ```
             ///
@@ -20626,12 +20626,12 @@ macro_rules! format_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")]  let a_uint = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")]  let a_uint = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_uint = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")]  let a_uint = SizeUnion::new_with(12345678901234567890_usize);
             /// println!("{:%^25X}", a_uint);
             /// let txt = format!("{:%^25X}", a_uint);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(txt, "%%%%%%%%%%3039%%%%%%%%%%%");
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(txt, "%%%%%%%%499602D2%%%%%%%%%");
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(txt, "%%%%%%%%499602D2%%%%%%%%%");
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(txt, "%%%%AB54A98CEB1F0AD2%%%%%");
             /// ```
             ///
@@ -20640,12 +20640,12 @@ macro_rules! format_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")]  let a_uint = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")]  let a_uint = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_uint = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")]  let a_uint = SizeUnion::new_with(12345678901234567890_usize);
             /// println!("{:^^#25X}", a_uint);
             /// let txt = format!("{:^^#25X}", a_uint);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(txt, "^^^^^^^^^0X3039^^^^^^^^^^");
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(txt, "^^^^^^^0X499602D2^^^^^^^^");
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(txt, "^^^^^^^0X499602D2^^^^^^^^");
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(txt, "^^^0XAB54A98CEB1F0AD2^^^^");
             /// ```
             fn fmt(&self, f: &mut Formatter<'_>) -> Result<(), Error>
@@ -20911,12 +20911,12 @@ macro_rules! format_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")]  let a_uint = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")]  let a_uint = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_uint = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")]  let a_uint = SizeUnion::new_with(12345678901234567890_usize);
             /// println!("{:#<25x}", a_uint);
             /// let txt = format!("{:#<25x}", a_uint);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(txt, "3039#####################");
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(txt, "499602D2#################");
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(txt, "499602D2#################");
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(txt, "AB54A98CEB1F0AD2#########");
             /// ```
             ///
@@ -20925,12 +20925,12 @@ macro_rules! format_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")]  let a_uint = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")]  let a_uint = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_uint = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")]  let a_uint = SizeUnion::new_with(12345678901234567890_usize);
             /// println!("{:$<#25x}", a_uint);
             /// let txt = format!("{:$<25x}", a_uint);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(txt, "3039$$$$$$$$$$$$$$$$$$$$$");
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(txt, "499602D2$$$$$$$$$$$$$$$$$");
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(txt, "499602D2$$$$$$$$$$$$$$$$$");
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(txt, "AB54A98CEB1F0AD2$$$$$$$$$");
             /// ```
             ///
@@ -20939,12 +20939,12 @@ macro_rules! format_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")]  let a_uint = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")]  let a_uint = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_uint = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")]  let a_uint = SizeUnion::new_with(12345678901234567890_usize);
             /// println!("{:!>25x}", a_uint);
             /// let txt = format!("{:!>25x}", a_uint);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(txt, "!!!!!!!!!!!!!!!!!!!!!3039");
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(txt, "!!!!!!!!!!!!!!!!!499602D2");
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(txt, "!!!!!!!!!!!!!!!!!499602D2");
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(txt, "!!!!!!!!!AB54A98CEB1F0AD2");
             /// ```
             ///
@@ -20953,12 +20953,12 @@ macro_rules! format_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")]  let a_uint = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")]  let a_uint = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_uint = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")]  let a_uint = SizeUnion::new_with(12345678901234567890_usize);
             /// println!("{:@>#25x}", a_uint);
             /// let txt = format!("{:@>#25x}", a_uint);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(txt, "@@@@@@@@@@@@@@@@@@@0x3039");
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(txt, "@@@@@@@@@@@@@@@0x499602D2");
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(txt, "@@@@@@@@@@@@@@@0x499602D2");
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(txt, "@@@@@@@0xAB54A98CEB1F0AD2");
             /// ```
             ///
@@ -20967,12 +20967,12 @@ macro_rules! format_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")]  let a_uint = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")]  let a_uint = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_uint = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")]  let a_uint = SizeUnion::new_with(12345678901234567890_usize);
             /// println!("{:%^25x}", a_uint);
             /// let txt = format!("{:%^25x}", a_uint);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(txt, "%%%%%%%%%%3039%%%%%%%%%%%");
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(txt, "%%%%%%%%499602D2%%%%%%%%%");
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(txt, "%%%%%%%%499602D2%%%%%%%%%");
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(txt, "%%%%AB54A98CEB1F0AD2%%%%%");
             /// ```
             ///
@@ -20981,12 +20981,12 @@ macro_rules! format_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")]  let a_uint = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")]  let a_uint = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_uint = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")]  let a_uint = SizeUnion::new_with(12345678901234567890_usize);
             /// println!("{:^^#25x}", a_uint);
             /// let txt = format!("{:^^#25x}", a_uint);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(txt, "^^^^^^^^^0x3039^^^^^^^^^^");
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(txt, "^^^^^^^0x499602D2^^^^^^^^");
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(txt, "^^^^^^^0x499602D2^^^^^^^^");
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(txt, "^^^0xAB54A98CEB1F0AD2^^^^");
             /// ```
             fn fmt(&self, f: &mut Formatter<'_>) -> Result<(), Error>
@@ -21252,12 +21252,12 @@ macro_rules! format_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")]  let a_uint = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")]  let a_uint = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_uint = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")]  let a_uint = SizeUnion::new_with(12345678901234567890_usize);
             /// println!("{:#<70b}", a_uint);
             /// let txt = format!("{:#<70b}", a_uint);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(txt, "11000000111001########################################################");
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(txt, "1001001100101100000001011010010#######################################");
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(txt, "1001001100101100000001011010010#######################################");
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(txt, "1010101101010100101010011000110011101011000111110000101011010010######");
             /// ```
             ///
@@ -21266,12 +21266,12 @@ macro_rules! format_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")]  let a_uint = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")]  let a_uint = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_uint = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")]  let a_uint = SizeUnion::new_with(12345678901234567890_usize);
             /// println!("{:$<#70b}", a_uint);
             /// let txt = format!("{:$<#70b}", a_uint);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(txt, "0b11000000111001$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(txt, "0b1001001100101100000001011010010$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(txt, "0b1001001100101100000001011010010$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(txt, "0b1010101101010100101010011000110011101011000111110000101011010010$$$$");
             /// ```
             ///
@@ -21280,12 +21280,12 @@ macro_rules! format_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")]  let a_uint = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")]  let a_uint = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_uint = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")]  let a_uint = SizeUnion::new_with(12345678901234567890_usize);
             /// println!("{:!>70b}", a_uint);
             /// let txt = format!("{:!>70b}", a_uint);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(txt, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11000000111001");
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(txt, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1001001100101100000001011010010");
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(txt, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1001001100101100000001011010010");
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(txt, "!!!!!!1010101101010100101010011000110011101011000111110000101011010010");
             /// ```
             ///
@@ -21294,12 +21294,12 @@ macro_rules! format_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")]  let a_uint = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")]  let a_uint = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_uint = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")]  let a_uint = SizeUnion::new_with(12345678901234567890_usize);
             /// println!("{:@>#70b}", a_uint);
             /// let txt = format!("{:@>#70b}", a_uint);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(txt, "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@0b11000000111001");
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(txt, "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@0b1001001100101100000001011010010");
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(txt, "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@0b1001001100101100000001011010010");
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(txt, "@@@@0b1010101101010100101010011000110011101011000111110000101011010010");
             /// ```
             ///
@@ -21308,12 +21308,12 @@ macro_rules! format_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")]  let a_uint = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")]  let a_uint = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_uint = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")]  let a_uint = SizeUnion::new_with(12345678901234567890_usize);
             /// println!("{:%^70b}", a_uint);
             /// let txt = format!("{:%^70b}", a_uint);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(txt, "%%%%%%%%%%%%%%%%%%%%%%%%%%%%11000000111001%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(txt, "%%%%%%%%%%%%%%%%%%%1001001100101100000001011010010%%%%%%%%%%%%%%%%%%%%");
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(txt, "%%%%%%%%%%%%%%%%%%%1001001100101100000001011010010%%%%%%%%%%%%%%%%%%%%");
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(txt, "%%%1010101101010100101010011000110011101011000111110000101011010010%%%");
             /// ```
             ///
@@ -21322,12 +21322,12 @@ macro_rules! format_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")]  let a_uint = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")]  let a_uint = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_uint = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")]  let a_uint = SizeUnion::new_with(12345678901234567890_usize);
             /// println!("{:^^#70b}", a_uint);
             /// let txt = format!("{:^^#70b}", a_uint);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(txt, "^^^^^^^^^^^^^^^^^^^^^^^^^^^^11000000111001^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(txt, "^^^^^^^^^^^^^^^^^^^1001001100101100000001011010010^^^^^^^^^^^^^^^^^^^^");
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(txt, "^^^^^^^^^^^^^^^^^^^1001001100101100000001011010010^^^^^^^^^^^^^^^^^^^^");
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(txt, "^^0b1010101101010100101010011000110011101011000111110000101011010010^^");
             /// ```
             fn fmt(&self, f: &mut Formatter<'_>) -> Result<(), Error>
@@ -21593,12 +21593,12 @@ macro_rules! format_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")]  let a_uint = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")]  let a_uint = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_uint = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")]  let a_uint = SizeUnion::new_with(12345678901234567890_usize);
             /// println!("{:#<25o}", a_uint);
             /// let txt = format!("{:#<25o}", a_uint);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(txt, "30071####################");
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(txt, "11145401322##############");
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(txt, "11145401322##############");
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(txt, "1255245230635307605322###");
             /// ```
             ///
@@ -21607,12 +21607,12 @@ macro_rules! format_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")]  let a_uint = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")]  let a_uint = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_uint = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")]  let a_uint = SizeUnion::new_with(12345678901234567890_usize);
             /// println!("{:$<#25o}", a_uint);
             /// let txt = format!("{:$<25o}", a_uint);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(txt, "30071$$$$$$$$$$$$$$$$$$$$");
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(txt, "11145401322$$$$$$$$$$$$$$");
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(txt, "11145401322$$$$$$$$$$$$$$");
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(txt, "1255245230635307605322$$$");
             /// ```
             ///
@@ -21621,12 +21621,12 @@ macro_rules! format_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")]  let a_uint = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")]  let a_uint = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_uint = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")]  let a_uint = SizeUnion::new_with(12345678901234567890_usize);
             /// println!("{:!>25o}", a_uint);
             /// let txt = format!("{:!>25o}", a_uint);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(txt, "!!!!!!!!!!!!!!!!!!!!30071");
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(txt, "!!!!!!!!!!!!!!11145401322");
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(txt, "!!!!!!!!!!!!!!11145401322");
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(txt, "!!!1255245230635307605322");
             /// ```
             ///
@@ -21635,12 +21635,12 @@ macro_rules! format_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")]  let a_uint = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")]  let a_uint = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_uint = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")]  let a_uint = SizeUnion::new_with(12345678901234567890_usize);
             /// println!("{:@>#25o}", a_uint);
             /// let txt = format!("{:@>#25o}", a_uint);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(txt, "@@@@@@@@@@@@@@@@@@0o30071");
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(txt, "@@@@@@@@@@@@0o11145401322");
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(txt, "@@@@@@@@@@@@0o11145401322");
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(txt, "@0o1255245230635307605322");
             /// ```
             ///
@@ -21649,12 +21649,12 @@ macro_rules! format_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")]  let a_uint = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")]  let a_uint = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_uint = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")]  let a_uint = SizeUnion::new_with(12345678901234567890_usize);
             /// println!("{:%^25o}", a_uint);
             /// let txt = format!("{:%^25o}", a_uint);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(txt, "%%%%%%%%%%30071%%%%%%%%%%");
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(txt, "%%%%%%%11145401322%%%%%%%");
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(txt, "%%%%%%%11145401322%%%%%%%");
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(txt, "%1255245230635307605322%%");
             /// ```
             ///
@@ -21663,12 +21663,12 @@ macro_rules! format_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")]  let a_uint = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")]  let a_uint = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_uint = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")]  let a_uint = SizeUnion::new_with(12345678901234567890_usize);
             /// println!("{:^^#25o}", a_uint);
             /// let txt = format!("{:^^#25o}", a_uint);
             /// #[cfg(target_pointer_width = "16")]  assert_eq!(txt, "^^^^^^^^^0o30071^^^^^^^^^");
-            /// #[cfg(target_pointer_width = "32")]  assert_eq!(txt, "^^^^^^0o11145401322^^^^^^");
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  assert_eq!(txt, "^^^^^^0o11145401322^^^^^^");
             /// #[cfg(target_pointer_width = "64")]  assert_eq!(txt, "0o1255245230635307605322^");
             /// ```
             fn fmt(&self, f: &mut Formatter<'_>) -> Result<(), Error>
@@ -22512,7 +22512,7 @@ macro_rules! format_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")]  let a_uint = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")]  let a_uint = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_uint = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")]  let a_uint = SizeUnion::new_with(12345678901234567890_usize);
             /// println!("{:<20p}", a_uint);
             /// let txt = format!("{:<20p}", a_uint);
@@ -22569,7 +22569,7 @@ macro_rules! format_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")]  let a_uint = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")]  let a_uint = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_uint = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")]  let a_uint = SizeUnion::new_with(12345678901234567890_usize);
             /// println!("{:^p}", a_uint);
             /// let txt = format!("{:^p}", a_uint);
@@ -22626,7 +22626,7 @@ macro_rules! format_for_integer_unions_impl {
             /// use cryptocol::number::SizeUnion;
             ///
             /// #[cfg(target_pointer_width = "16")]  let a_uint = SizeUnion::new_with(12345_usize);
-            /// #[cfg(target_pointer_width = "32")]  let a_uint = SizeUnion::new_with(1234567890_usize);
+            /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]  let a_uint = SizeUnion::new_with(1234567890_usize);
             /// #[cfg(target_pointer_width = "64")]  let a_uint = SizeUnion::new_with(12345678901234567890_usize);
             /// println!("{:^^20p}", a_uint);
             /// let txt = format!("{:^^20p}", a_uint);
@@ -22709,7 +22709,7 @@ macro_rules! random_for_unions_impl {
 
         /// Make a `SmallUInt`-type object to have a random value.
         /// [Read more in detail](trait@SmallUInt#tymethod.random)
-        #[cfg(target_pointer_width = "32")]
+        #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]
         #[inline] fn random() -> Self   { Self::new_with(OsRng.next_u32() as usize) }
 
         /// Make a `SmallUInt`-type object to have a random value.

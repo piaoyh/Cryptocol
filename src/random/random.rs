@@ -1706,7 +1706,7 @@ impl<const COUNT: u64> Random_Generic<COUNT>
     {
         // #[cfg(target_pointer_width = "8")]      return self.random_u8().into_usize();
         #[cfg(target_pointer_width = "16")]     return self.random_u16().into_usize();
-        #[cfg(target_pointer_width = "32")]     return self.random_u32().into_usize();
+        #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]     return self.random_u32().into_usize();
         #[cfg(target_pointer_width = "64")]     return self.random_u64().into_usize();
         // #[cfg(target_pointer_width = "128")]    return self.random_u128().into_usize();
     }

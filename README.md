@@ -6,16 +6,17 @@
 
 ### Big-endian Compatibility Notice
 
-Support for __Big-endian__ architectures is currently experimental. We do not recommend using this crate on Big-endian systems for production or critical applications. Users choosing to do so assume full responsibility for any potential issues.
+Support for **Big-endian** architectures is currently experimental. We do not recommend using this crate on Big-endian systems for production or critical applications. Users choosing to do so assume full responsibility for any potential issues.
 
 ## Roadmap for Version 1.0
 
 The following features are planned for the `cryptocol` ecosystem.
 
 - [X] **Completed:** Implementation and documentation are at least **95%** complete.
-- [ ] __In Progress:__ Implementation or documentation is below __95%__, or work has not yet begun.
+- [ ] **In Progress:** Implementation or documentation is below **95%**, or work has not yet begun.
 
 ### 1. Small Numbers
+
 _Foundational types for Big Numbers and other cryptographic modules._
 
 - [X] **`SmallUInt` Trait:** Core implementation for primitive unsigned data types. --
@@ -27,7 +28,7 @@ _Foundational types for Big Numbers and other cryptographic modules._
       [LongerUnion](https://docs.rs/cryptocol/latest/cryptocol/number/longer_union/union.LongerUnion.html#union.LongerUnion),
       [SizeUnion](https://docs.rs/cryptocol/latest/cryptocol/number/size_union/union.SizeUnion.html#union.SizeUnion),
       [SharedValues](https://docs.rs/cryptocol/latest/cryptocol/number/shared_values/union.SharedValues.html#union.SharedValues), and
-      [SharedArrays](https://docs.rs/cryptocol/latest/cryptocol/number/shared_arrays/union.SharedArrays.html#union.SharedArrays)      
+      [SharedArrays](https://docs.rs/cryptocol/latest/cryptocol/number/shared_arrays/union.SharedArrays.html#union.SharedArrays)
 <!--
 - [ ] __`SmallSInt` Trait:__ (Planned) Core implementation for primitive signed data type. --
       `SmallSInt`
@@ -35,6 +36,7 @@ _Foundational types for Big Numbers and other cryptographic modules._
 -->
 
 ### 2. Big Numbers
+
 _Essential for Asymmetric-Key Algorithms and high-precision calculations._
 
 - [X] **Fixed-Size Big Unsigned Integers:** Standard operations for large unsigned integers. --
@@ -56,6 +58,7 @@ _Essential for Asymmetric-Key Algorithms and high-precision calculations._
 ### 3. Hash Algorithms
 
 #### 3-1. Official SHA-series
+
 - [X] **SHA-3 & Keccak:** Supports 8/16/32/64-bit variants, including SHA3-224/256/384/512 and SHAKE 128/256. --
       [Keccak_Generic](https://docs.rs/cryptocol/latest/cryptocol/hash/keccak/struct.Keccak_Generic.html#struct.Keccak_Generic)
 - [X] **SHA-2 (512/t):** Including 512/256 and 512/224 variants. --
@@ -66,6 +69,7 @@ _Essential for Asymmetric-Key Algorithms and high-precision calculations._
       [SHA2_256_Generic](https://docs.rs/cryptocol/latest/cryptocol/hash/sha2_256/struct.SHA2_256_Generic.html#struct.SHA2_256_Generic)
 
 #### 3-2. Educational Hash Algorithms (Insecure)
+
 **Warning:** These are intended for educational purposes only and should not be used for securing sensitive data.
 
 - [X] **SHA-1 & SHA-0:** 160-bit hash algorithms. --
@@ -90,7 +94,9 @@ _Essential for Asymmetric-Key Algorithms and high-precision calculations._
 -->
 
 ### 4. Symmetric-Key Algorithms (Block Ciphers)
+
 #### 4-1. AES Finalists
+
 - [X] **AES (Advanced Encryption Standard) & Rijndael:** Full support for AES/Rijndael with various operation modes (ECB, CBC, PCBC, CFB, OFB, CTR) and padding schemes (PKCS#7, ISO 7816-4). --
       [Rijndael_Generic](https://docs.rs/cryptocol/latest/cryptocol/symmetric/struct.Rijndael_Generic.html#struct.Rijndael_Generic),
       [ECB_PKCS7](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.ECB_PKCS7.html#trait.ECB_PKCS7),
@@ -143,6 +149,7 @@ _Essential for Asymmetric-Key Algorithms and high-precision calculations._
 -->
 
 #### 4-2. Educational Block Ciphers (Insecure)
+
 **Warning:** These are intended for educational purposes only and should not be used for securing sensitive data.
 <!--
 - [ ] __RC2:__ (Planned) Standard DES implementation with multiple modes (ECB, CBC, PCBC, CFB, OFB, CTR) and padding options (PKCS#7, ISO 7816-4). --
@@ -167,6 +174,7 @@ _Essential for Asymmetric-Key Algorithms and high-precision calculations._
 -->
 
 #### 4-3. Combined Cipher Containers
+
 - [X] **BigCryptor128:** A tool for combining multiple symmetric algorithms (e.g., 2AES, 3AES) with multiple modes (ECB, CBC, PCBC, CFB, OFB, CTR) and padding options (PKCS#7, ISO 7816-4). --
       [BigCryptor128](https://docs.rs/cryptocol/latest/cryptocol/symmetric/struct.BigCryptor128.html#struct.BigCryptor128),
       [ECB_PKCS7](https://docs.rs/cryptocol/latest/cryptocol/symmetric/trait.ECB_PKCS7.html#trait.ECB_PKCS7),
@@ -208,6 +216,7 @@ _Note: While supported, using native AES-256 or specific Rijndael variants is ge
 -->
 
 ### 5. Pseudo-Random Number Generators (PRNG)
+
 - [X] **Generic PRNG Framework:**
       struct [Random_Generic](https://docs.rs/cryptocol/latest/cryptocol/random/struct.Random_Generic.html#struct.Random_Generic) and
       trait [Random_Engine](https://docs.rs/cryptocol/latest/cryptocol/random/trait_random_engine/trait.Random_Engine.html#trait.Random_Engine)
@@ -234,11 +243,11 @@ _Note: While supported, using native AES-256 or specific Rijndael variants is ge
 
 ### 6. Asymmetric-Key Algorithms
 
-- [ ] __ECC (Elliptic Curve Cryptography):__ (Planned) Generic ECC implementation with padding support. --
+- [ ] **ECC (Elliptic Curve Cryptography):** (Planned) Generic ECC implementation with padding support. --
       `ECC_Generic`.
 ECC (Elliptic Curve Cryptosystem) asymmetric-key encryption/decryption algorithm, and the traits and its implementations of Padding bits for ECC_Generic
       --- Includes ECC and its expanded versions.
-- [ ] __RSA (Ron Rivest, Adi Shamir, Leonard Adleman):__ (In Progress) Implementation of RSA with PKCS #1 v1.5 and OAEP (Optimal Asymmetric Encryption Padding) (PKCS #1 v2.0/RFC 2437) padding. --
+- [ ] **RSA (Ron Rivest, Adi Shamir, Leonard Adleman):** (In Progress) Implementation of RSA with PKCS #1 v1.5 and OAEP (Optimal Asymmetric Encryption Padding) (PKCS #1 v2.0/RFC 2437) padding. --
       [RSA_Generic](https://docs.rs/cryptocol/latest/cryptocol/asymmetric/struct.RSA_Generic.html#struct.RSA_Generic),
       [PKCS1V15](https://docs.rs/cryptocol/latest/cryptocol/asymmetric/trait.PKCS1V15.html#trait.PKCS1V15), and
       OAEP.
@@ -252,13 +261,14 @@ ECC (Elliptic Curve Cryptosystem) asymmetric-key encryption/decryption algorithm
 -->
 
 ## Versioning Policy
+
 The project will reach Version 1.0.0.0 once all twenty-one functional areas listed above are fully implemented.
 
-- __Pre-v1.0:__ Versions will range up to 0.21.x.x based on the progress of the listed functionalities.
+- **Pre-v1.0:** Versions will range up to 0.21.x.x based on the progress of the listed functionalities.
 - **Post-v1.0:** New features will increment the version beyond 1.0.0.0.
 
 _Note: Version numbers like 0.5.0.0 indicate progress through the functionality list, not necessarily a 50% completion of the entire codebase._
 
 ## Breaking Changes
-Please refer to `BreakingChanges.md` for a detailed history of API changes.
 
+Please refer to `BreakingChanges.md` for a detailed history of API changes.

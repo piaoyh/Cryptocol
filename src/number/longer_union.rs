@@ -168,7 +168,7 @@ use crate::number::{ union_calc_assign_to_calc, union_fmt_with_radix, union_fmt_
 ///         assert_eq!(a.get_ssize_(0), -4781862973812896945_isize);
 ///         assert_eq!(a.get_ssize_(1), -66926059474483112_isize);
 ///     }
-///     #[cfg(target_pointer_width = "32")]
+///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]
 ///     {
 ///         const N: usize = 4;
 ///         for i in 0..N
@@ -422,10 +422,10 @@ pub union LongerUnion
     #[cfg(target_pointer_width = "64")] s_size: [isize; 2],
 
     /// Array of four pointer-sized unsigned integers (32-bit architectures).
-    #[cfg(target_pointer_width = "32")] u_size: [usize; 4],
+    #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] u_size: [usize; 4],
 
     /// Array of four pointer-sized signed integers (32-bit architectures).
-    #[cfg(target_pointer_width = "32")] s_size: [isize; 4],
+    #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] s_size: [isize; 4],
 
     /// Array of eight pointer-sized unsigned integers (16-bit architectures).
     #[cfg(target_pointer_width = "16")] u_size: [usize; 8],
@@ -686,7 +686,7 @@ impl LongerUnion
 
     // #[cfg(target_pointer_width = "128")]    crate::number::get_set_size_fit!();
     #[cfg(target_pointer_width = "64")]     crate::number::get_set_size!(2);
-    #[cfg(target_pointer_width = "32")]     crate::number::get_set_size!(4);
+    #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]     crate::number::get_set_size!(4);
     #[cfg(target_pointer_width = "16")]     crate::number::get_set_size!(8);
     // #[cfg(target_pointer_width = "8")]      crate::number::get_set_size!(16);
     
@@ -913,7 +913,7 @@ impl Debug for LongerUnion
                                                 // .field("s_size", &self.get_ssize());
         #[cfg(target_pointer_width = "64")] ff.field("u_size", &[self.get_usize_(0), self.get_usize_(1)])
                                                 .field("s_size", &[self.get_ssize_(0), self.get_ssize_(1)]);
-        #[cfg(target_pointer_width = "32")] ff.field("u_size", &[self.get_usize_(0), self.get_usize_(1), self.get_usize_(2), self.get_usize_(3)])
+        #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] ff.field("u_size", &[self.get_usize_(0), self.get_usize_(1), self.get_usize_(2), self.get_usize_(3)])
                                                 .field("s_size", &[self.get_ssize_(0), self.get_ssize_(1), self.get_ssize_(2), self.get_ssize_(3)]);
         #[cfg(target_pointer_width = "16")] ff.field("u_size", &[self.get_usize_(0), self.get_usize_(1), self.get_usize_(2), self.get_usize_(3), self.get_usize_(4), self.get_usize_(5), self.get_usize_(6), self.get_usize_(7)])
                                                 .field("s_size", &[self.get_ssize_(0), self.get_ssize_(1), self.get_ssize_(2), self.get_ssize_(3), self.get_ssize_(4), self.get_ssize_(5), self.get_ssize_(6), self.get_ssize_(7)]);

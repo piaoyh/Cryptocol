@@ -6275,7 +6275,7 @@ where T: SmallUInt
     /// let b_usize = a_biguint.into_usize();
     /// println!("usize of {} = {}", a_biguint, b_usize);
     /// #[cfg(target_pointer_width = "64")] assert_eq!(b_usize, 10308603139955162880_usize);
-    /// #[cfg(target_pointer_width = "32")] assert_eq!(b_usize, 1065418496_usize);
+    /// #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(b_usize, 1065418496_usize);
     /// #[cfg(target_pointer_width = "16")] assert_eq!(b_usize, 65280_usize);
     /// ```
     #[inline]
