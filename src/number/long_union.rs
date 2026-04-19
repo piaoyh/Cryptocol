@@ -99,7 +99,7 @@ use crate::number::{ union_calc_assign_to_calc, union_fmt_with_radix, union_fmt_
 /// assert_eq!(a.get_sbyte_(6), -5_i8);
 /// assert_eq!(a.get_sbyte_(7), -1_i8);
 /// 
-/// #[cfg(target_pointer_width = "64")]
+/// #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
 /// {
 ///     println!("a.get_usize() = {}", a.get_usize());
 ///     println!("a.get_ssize() = {}", a.get_ssize());
@@ -277,10 +277,10 @@ pub union LongUnion
     sbyte: [i8; 8],
 
     /// Pointer-sized unsigned representation (64-bit architectures).
-    #[cfg(target_pointer_width = "64")] u_size: usize,
+    #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] u_size: usize,
 
     /// Pointer-sized signed representation (64-bit architectures).
-    #[cfg(target_pointer_width = "64")] s_size: isize,
+    #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] s_size: isize,
 
     /// Array of two pointer-sized unsigned integers (32-bit architectures).
     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] u_size: [usize; 2],
@@ -523,10 +523,10 @@ impl LongUnion
 
     crate::number::get_set_int!(2);
 
-    #[cfg(target_pointer_width = "64")]     crate::number::get_set_size_fit!();
-    #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]     crate::number::get_set_usize!(2);
-    #[cfg(target_pointer_width = "16")]     crate::number::get_set_usize!(4);
-    // #[cfg(target_pointer_width = "8")]      crate::number::get_set_usize!(8);
+    #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]     crate::number::get_set_size_fit!();
+    #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]     crate::number::get_set_size!(2);
+    #[cfg(target_pointer_width = "16")]     crate::number::get_set_size!(4);
+    // #[cfg(target_pointer_width = "8")]      crate::number::get_set_size!(8);
 
     crate::number::integer_union_methods!(u64);
 
@@ -631,7 +631,7 @@ impl Debug for LongUnion
     /// use cryptocol::number::*;
     /// let a_long = LongUnion::new_with_signed(-1234567890123456789_i64);
     /// println!("a_long = {:?}", a_long);
-    /// #[cfg(target_pointer_width = "64")] assert_eq!(format!("{a_long:?}"), "LongUnion { this: 17212176183586094827, that: -1234567890123456789, ulong: 17212176183586094827, slong: -1234567890123456789, uint: [2182512363, 4007522059], sint: [-2112454933, -287445237], ushort: [32491, 33302, 61195, 61149], sshort: [32491, -32234, -4341, -4387], ubyte: [235, 126, 22, 130, 11, 239, 221, 238], sbyte: [-21, 126, 22, -126, 11, -17, -35, -18], u_size: 17212176183586094827, s_size: -1234567890123456789 }");
+    /// #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] assert_eq!(format!("{a_long:?}"), "LongUnion { this: 17212176183586094827, that: -1234567890123456789, ulong: 17212176183586094827, slong: -1234567890123456789, uint: [2182512363, 4007522059], sint: [-2112454933, -287445237], ushort: [32491, 33302, 61195, 61149], sshort: [32491, -32234, -4341, -4387], ubyte: [235, 126, 22, 130, 11, 239, 221, 238], sbyte: [-21, 126, 22, -126, 11, -17, -35, -18], u_size: 17212176183586094827, s_size: -1234567890123456789 }");
     /// ```
     /// 
     /// # Example for the format specifier :#?
@@ -640,7 +640,7 @@ impl Debug for LongUnion
     /// use cryptocol::number::*;
     /// let a_long = LongUnion::new_with_signed(-1234567890123456789_i64);
     /// println!("a_long = {:#?}", a_long);
-    /// #[cfg(target_pointer_width = "64")] assert_eq!(format!("{a_long:#?}"), r#"LongUnion {
+    /// #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] assert_eq!(format!("{a_long:#?}"), r#"LongUnion {
     ///     this: 17212176183586094827,
     ///     that: -1234567890123456789,
     ///     ulong: 17212176183586094827,
@@ -711,7 +711,7 @@ impl Debug for LongUnion
             .field("sshort", &[self.get_sshort_(0), self.get_sshort_(1), self.get_sshort_(2), self.get_sshort_(3)])
             .field("ubyte", &[self.get_ubyte_(0), self.get_ubyte_(1), self.get_ubyte_(2), self.get_ubyte_(3), self.get_ubyte_(4), self.get_ubyte_(5), self.get_ubyte_(6), self.get_ubyte_(7)])
             .field("sbyte", &[self.get_sbyte_(0), self.get_sbyte_(1), self.get_sbyte_(2), self.get_sbyte_(3), self.get_sbyte_(4), self.get_sbyte_(5), self.get_sbyte_(6), self.get_sbyte_(7)]);
-        #[cfg(target_pointer_width = "64")] ff.field("u_size", &self.get_usize())
+        #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] ff.field("u_size", &self.get_usize())
                                                 .field("s_size", &self.get_ssize());
         #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] ff.field("u_size", &[self.get_usize_(0), self.get_usize_(1)])
                                                 .field("s_size", &[self.get_ssize_(0), self.get_ssize_(1)]);

@@ -452,7 +452,7 @@ impl Debug for ShortUnion
     /// use cryptocol::number::*;
     /// let a_short = ShortUnion::new_with_signed(-12345_i16);
     /// println!("a_short = {:?}", a_short);
-    /// #[cfg(target_pointer_width = "64")] assert_eq!(format!("{a_short:?}"), "ShortUnion { this: 53191, that: -12345, ushort: 53191, sshort: -12345, ubyte: [199, 207], sbyte: [-57, -49] }");
+    /// #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] assert_eq!(format!("{a_short:?}"), "ShortUnion { this: 53191, that: -12345, ushort: 53191, sshort: -12345, ubyte: [199, 207], sbyte: [-57, -49] }");
     /// ```
     /// 
     /// # Example for the format specifier :#?
@@ -460,7 +460,7 @@ impl Debug for ShortUnion
     /// use cryptocol::number::*;
     /// let a_short = ShortUnion::new_with_signed(-12345_i16);
     /// println!("a_short = {:#?}", a_short);
-    /// #[cfg(target_pointer_width = "64")] assert_eq!(format!("{a_short:#?}"), r#"ShortUnion {
+    /// #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] assert_eq!(format!("{a_short:#?}"), r#"ShortUnion {
     ///     this: 53191,
     ///     that: -12345,
     ///     ushort: 53191,

@@ -156,7 +156,7 @@ use crate::number::{ union_calc_assign_to_calc, union_fmt_with_radix, union_fmt_
 ///         assert_eq!(a.get_usize(), 339047799029950809142362261752780557135_usize);
 ///         assert_eq!(a.get_ssize(), 1234567890987654321012345678987654321_isize);
 ///     }
-///     #[cfg(target_pointer_width = "64")]
+///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
 ///     {
 ///         const N: usize = 2;
 ///         for i in 0..N
@@ -416,10 +416,10 @@ pub union LongerUnion
     // #[cfg(target_pointer_width = "128")] s_size: isize,
 
     /// Array of two pointer-sized unsigned integers (64-bit architectures).
-    #[cfg(target_pointer_width = "64")] u_size: [usize; 2],
+    #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] u_size: [usize; 2],
 
     /// Array of two pointer-sized signed integers (64-bit architectures).
-    #[cfg(target_pointer_width = "64")] s_size: [isize; 2],
+    #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] s_size: [isize; 2],
 
     /// Array of four pointer-sized unsigned integers (32-bit architectures).
     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] u_size: [usize; 4],
@@ -685,7 +685,7 @@ impl LongerUnion
     crate::number::get_set_long!(2);
 
     // #[cfg(target_pointer_width = "128")]    crate::number::get_set_size_fit!();
-    #[cfg(target_pointer_width = "64")]     crate::number::get_set_size!(2);
+    #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]     crate::number::get_set_size!(2);
     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]     crate::number::get_set_size!(4);
     #[cfg(target_pointer_width = "16")]     crate::number::get_set_size!(8);
     // #[cfg(target_pointer_width = "8")]      crate::number::get_set_size!(16);
@@ -786,7 +786,7 @@ impl Debug for LongerUnion
     /// use cryptocol::number::*;
     /// let a_longer = LongerUnion::new_with_signed(-123456789012345678901234567890123456789_i128);
     /// println!("a_longer = {:?}", a_longer);
-    /// #[cfg(target_pointer_width = "64")] assert_eq!(format!("{a_longer:?}"), "LongerUnion { this: 216825577908592784562140039541644754667, that: -123456789012345678901234567890123456789, ulonger: 216825577908592784562140039541644754667, slonger: -123456789012345678901234567890123456789, ulong: [6134004772338302699, 11754138130946064698], slong: [6134004772338302699, -6692605942763486918], uint: [1371963115, 1428184279, 2682913082, 2736723546], sint: [1371963115, 1428184279, -1612054214, -1558243750], ushort: [32491, 20934, 23767, 21792, 314, 40938, 5722, 41759], sshort: [32491, 20934, 23767, 21792, 314, -24598, 5722, -23777], ubyte: [235, 126, 198, 81, 215, 92, 32, 85, 58, 1, 234, 159, 90, 22, 31, 163], sbyte: [-21, 126, -58, 81, -41, 92, 32, 85, 58, 1, -22, -97, 90, 22, 31, -93], u_size: [6134004772338302699, 11754138130946064698], s_size: [6134004772338302699, -6692605942763486918] }");
+    /// #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] assert_eq!(format!("{a_longer:?}"), "LongerUnion { this: 216825577908592784562140039541644754667, that: -123456789012345678901234567890123456789, ulonger: 216825577908592784562140039541644754667, slonger: -123456789012345678901234567890123456789, ulong: [6134004772338302699, 11754138130946064698], slong: [6134004772338302699, -6692605942763486918], uint: [1371963115, 1428184279, 2682913082, 2736723546], sint: [1371963115, 1428184279, -1612054214, -1558243750], ushort: [32491, 20934, 23767, 21792, 314, 40938, 5722, 41759], sshort: [32491, 20934, 23767, 21792, 314, -24598, 5722, -23777], ubyte: [235, 126, 198, 81, 215, 92, 32, 85, 58, 1, 234, 159, 90, 22, 31, 163], sbyte: [-21, 126, -58, 81, -41, 92, 32, 85, 58, 1, -22, -97, 90, 22, 31, -93], u_size: [6134004772338302699, 11754138130946064698], s_size: [6134004772338302699, -6692605942763486918] }");
     /// ```
     /// 
     /// # Example for the format specifier :#?
@@ -794,7 +794,7 @@ impl Debug for LongerUnion
     /// use cryptocol::number::*;
     /// let a_longer = LongerUnion::new_with_signed(-123456789012345678901234567890123456789_i128);
     /// println!("a_longer = {:#?}", a_longer);
-    /// #[cfg(target_pointer_width = "64")] assert_eq!(format!("{a_longer:#?}"), r#"LongerUnion {
+    /// #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] assert_eq!(format!("{a_longer:#?}"), r#"LongerUnion {
     ///     this: 216825577908592784562140039541644754667,
     ///     that: -123456789012345678901234567890123456789,
     ///     ulonger: 216825577908592784562140039541644754667,
@@ -911,7 +911,7 @@ impl Debug for LongerUnion
             .field("sbyte", &[self.get_sbyte_(0), self.get_sbyte_(1), self.get_sbyte_(2), self.get_sbyte_(3), self.get_sbyte_(4), self.get_sbyte_(5), self.get_sbyte_(6), self.get_sbyte_(7), self.get_sbyte_(8), self.get_sbyte_(9), self.get_sbyte_(10), self.get_sbyte_(11), self.get_sbyte_(12), self.get_sbyte_(13), self.get_sbyte_(14), self.get_sbyte_(15)]);
         // #[cfg(target_pointer_width = "128")] ff.field("u_size",  &self.get_usize())
                                                 // .field("s_size", &self.get_ssize());
-        #[cfg(target_pointer_width = "64")] ff.field("u_size", &[self.get_usize_(0), self.get_usize_(1)])
+        #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] ff.field("u_size", &[self.get_usize_(0), self.get_usize_(1)])
                                                 .field("s_size", &[self.get_ssize_(0), self.get_ssize_(1)]);
         #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] ff.field("u_size", &[self.get_usize_(0), self.get_usize_(1), self.get_usize_(2), self.get_usize_(3)])
                                                 .field("s_size", &[self.get_ssize_(0), self.get_ssize_(1), self.get_ssize_(2), self.get_ssize_(3)]);

@@ -8795,7 +8795,7 @@ pub trait SmallUInt:
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         // a_u128: u128 === (a_high_usize, a_low_usize) == (10775095670246085798_usize, 7681743649119882630_usize) == 198765432198765432198765432198765432198_u128
     ///         let a_high_usize = 10775095670246085798_usize;
@@ -9076,7 +9076,7 @@ pub trait SmallUInt:
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         // a_u128: u128 === (a_high_usize, a_low_usize) == (10775095670246085798_usize, 7681743649119882630_usize) == 198765432198765432198765432198765432198_u128
     ///         let a_high_sizeunion = 10775095670246085798_usize.into_sizeunion();
@@ -9288,7 +9288,7 @@ pub trait SmallUInt:
     ///     assert_eq!(c_lower_u128, 305933135181961371815664194362919418360_u128);
     ///     
     ///     // Example for usize for 64-bit CPUs for Little Endian
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         // a_u128: u128 === (a_high_usize, a_low_usize) == (10775095670246085798_usize, 7681743649119882630_usize) == 198765432198765432198765432198765432198_u128
     ///         let a_high_usize = 10775095670246085798_usize;
@@ -9433,7 +9433,7 @@ pub trait SmallUInt:
     ///     assert_eq!(c_low_longerunion.get(), 75658536124021560573913567605711708949_u128);
     ///     assert_eq!(c_lower_longerunion.get(), 305933135181961371815664194362919418360_u128);
     /// 
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         // a_u128: u128 === (a_high_usize, a_low_usize) == (10775095670246085798_usize, 7681743649119882630_usize) == 198765432198765432198765432198765432198_u128
     ///         let a_high_sizeunion = 10775095670246085798_usize.into_sizeunion();
@@ -9892,7 +9892,7 @@ pub trait SmallUInt:
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         // a_u128: u128 === (a_high_usize, a_low_usize) == (10775095670246085798_usize, 7681743649119882630_usize) == 198765432198765432198765432198765432198_u128
     ///         let a_high_usize = 10775095670246085798_usize;
@@ -10213,7 +10213,7 @@ pub trait SmallUInt:
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         // a_u128: u128 === (a_high_usize, a_low_usize) == (10775095670246085798_usize, 7681743649119882630_usize) == 198765432198765432198765432198765432198_u128
     ///         let a_high_sizeunion = 10775095670246085798_usize.into_sizeunion();
@@ -13966,7 +13966,7 @@ pub trait SmallUInt:
     /// {
     ///     let a_usize = func(usize::MAX / 3, 2_usize);
     ///     println!("{} / 2 = {}\nOverflow = {}", usize::MAX / 3, a_usize.0, a_usize.1);
-    ///     #[cfg(target_pointer_width = "64")] assert_eq!(a_usize.0, 3074457345618258602_usize);
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] assert_eq!(a_usize.0, 3074457345618258602_usize);
     ///     assert_eq!(a_usize.1, false);
     ///     // It will panic.
     ///     // let a_panic = func(a_usize.0, 0_usize);
@@ -14065,7 +14065,7 @@ pub trait SmallUInt:
     /// {
     ///     let (a_sizeunion, overflow) = func((usize::MAX / 3).into_sizeunion(), 2_usize.into_sizeunion());
     ///     println!("{} / 2 = {}\nOverflow = {}", (usize::MAX / 3).into_sizeunion(), a_sizeunion, overflow);
-    ///     #[cfg(target_pointer_width = "64")] assert_eq!(a_sizeunion.get(), 3074457345618258602_usize);
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] assert_eq!(a_sizeunion.get(), 3074457345618258602_usize);
     ///     assert_eq!(overflow, false);
     /// 
     ///     // It will panic.
@@ -14128,7 +14128,7 @@ pub trait SmallUInt:
     /// 
     ///     let a_usize = func(usize::MAX / 3, 2_usize);
     ///     println!("{} / 2 = {}\nOverflow = {}", usize::MAX / 3, a_usize.0, a_usize.1);
-    ///     #[cfg(target_pointer_width = "64")] assert_eq!(a_usize.0, 3074457345618258602_usize);
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] assert_eq!(a_usize.0, 3074457345618258602_usize);
     ///     assert_eq!(a_usize.1, false);
     /// 
     ///     // It will panic.
@@ -14168,7 +14168,7 @@ pub trait SmallUInt:
     /// 
     ///     let (a_sizeunion, overflow) = func((usize::MAX / 3).into_sizeunion(), 2_usize.into_sizeunion());
     ///     println!("{} / 2 = {}\nOverflow = {}", (usize::MAX / 3).into_sizeunion(), a_sizeunion, overflow);
-    ///     #[cfg(target_pointer_width = "64")] assert_eq!(a_sizeunion.get(), 3074457345618258602_usize);
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] assert_eq!(a_sizeunion.get(), 3074457345618258602_usize);
     ///     assert_eq!(overflow, false);
     /// 
     ///     // It will panic.
@@ -14389,7 +14389,7 @@ pub trait SmallUInt:
     ///     {
     ///         Some(a) => {
     ///                 println!("{} / 2 = {}", usize::MAX / 3, a);
-    ///                 #[cfg(target_pointer_width = "64")] assert_eq!(a, 3074457345618258602_usize);
+    ///                 #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] assert_eq!(a, 3074457345618258602_usize);
     ///             },
     ///         None => { println!("Divided by zero."); },
     ///     }
@@ -14549,7 +14549,7 @@ pub trait SmallUInt:
     ///     {
     ///         Some(a) => {
     ///                 println!("{} / 2 = {}", (usize::MAX / 3).into_sizeunion(), a);
-    ///                 #[cfg(target_pointer_width = "64")] assert_eq!(a.get(), 3074457345618258602_usize);
+    ///                 #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] assert_eq!(a.get(), 3074457345618258602_usize);
     ///             },
     ///         None => { println!("Divided by zero."); },
     ///     }
@@ -14684,7 +14684,7 @@ pub trait SmallUInt:
     ///     {
     ///         Some(a) => {
     ///                 println!("{} / 2 = {}", usize::MAX / 3, a);
-    ///                 #[cfg(target_pointer_width = "64")] assert_eq!(a, 3074457345618258602_usize);
+    ///                 #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] assert_eq!(a, 3074457345618258602_usize);
     ///             },
     ///         None => { println!("Divided by zero."); },
     ///     }
@@ -14784,7 +14784,7 @@ pub trait SmallUInt:
     ///     {
     ///         Some(a) => {
     ///                 println!("{} / 2 = {}", (usize::MAX / 3).into_sizeunion(), a);
-    ///                 #[cfg(target_pointer_width = "64")] assert_eq!(a.get(), 3074457345618258602_usize);
+    ///                 #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] assert_eq!(a.get(), 3074457345618258602_usize);
     ///             },
     ///         None => { println!("Divided by zero."); },
     ///     }
@@ -14940,7 +14940,7 @@ pub trait SmallUInt:
     /// {
     ///     let a_usize = func(usize::MAX / 3, 2_usize);
     ///     println!("{} / 2 = {}", usize::MAX / 3, a_usize);
-    ///     #[cfg(target_pointer_width = "64")] assert_eq!(a_usize, 3074457345618258602_usize);
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] assert_eq!(a_usize, 3074457345618258602_usize);
     ///     // It will panic.
     ///     // let b_usize = func(usize::MAX / 3, 0_usize);
     /// }
@@ -15030,7 +15030,7 @@ pub trait SmallUInt:
     /// {
     ///     let a_sizeunion = func((usize::MAX / 3).into_sizeunion(), 2_usize.into_sizeunion());
     ///     println!("{} / 2 = {}", (usize::MAX / 3).into_sizeunion(), a_sizeunion);
-    ///     #[cfg(target_pointer_width = "64")] assert_eq!(a_sizeunion.get(), 3074457345618258602_usize);
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] assert_eq!(a_sizeunion.get(), 3074457345618258602_usize);
     ///     // It will panic.
     ///     // let b_sizeunion = func((usize::MAX / 3).into_sizeunion(), 0_usize.into_sizeunion());
     /// }
@@ -15081,7 +15081,7 @@ pub trait SmallUInt:
     /// 
     ///     let a_usize = func(usize::MAX / 3, 2_usize);
     ///     println!("{} / 2 = {}", usize::MAX / 3, a_usize);
-    ///     #[cfg(target_pointer_width = "64")] assert_eq!(a_usize, 3074457345618258602_usize);
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] assert_eq!(a_usize, 3074457345618258602_usize);
     ///     // It will panic.
     ///     // let b_usize = func(usize::MAX / 3, 0_usize);
     /// 
@@ -15111,7 +15111,7 @@ pub trait SmallUInt:
     /// 
     ///     let a_sizeunion = func((usize::MAX / 3).into_sizeunion(), 2_usize.into_sizeunion());
     ///     println!("{} / 2 = {}", (usize::MAX / 3).into_sizeunion(), a_sizeunion);
-    ///     #[cfg(target_pointer_width = "64")] assert_eq!(a_sizeunion.get(), 3074457345618258602_usize);
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] assert_eq!(a_sizeunion.get(), 3074457345618258602_usize);
     ///     // It will panic.
     ///     // let b_sizeunion = func((usize::MAX / 3).into_sizeunion(), 0_usize.into_sizeunion());
     /// }
@@ -15257,7 +15257,7 @@ pub trait SmallUInt:
     /// {
     ///     let a_usize = func(usize::MAX / 3, 2_usize);
     ///     println!("{} / 2 = {}", usize::MAX / 3, a_usize);
-    ///     #[cfg(target_pointer_width = "64")] assert_eq!(a_usize, 3074457345618258602_usize);
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] assert_eq!(a_usize, 3074457345618258602_usize);
     /// 
     ///     // It will panic.
     ///     // let a_panic = UInt_saturating_div___func(usize::MAX / 3, 0_usize);
@@ -15352,7 +15352,7 @@ pub trait SmallUInt:
     /// {
     ///     let a_sizeunion = func((usize::MAX / 3).into_sizeunion(), 2_usize.into_sizeunion());
     ///     println!("{} / 2 = {}", (usize::MAX / 3).into_sizeunion(), a_sizeunion);
-    ///     #[cfg(target_pointer_width = "64")] assert_eq!(a_sizeunion.get(), 3074457345618258602_usize);
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] assert_eq!(a_sizeunion.get(), 3074457345618258602_usize);
     /// 
     ///     // It will panic.
     ///     // let a_panic = func((usize::MAX / 3).into_sizeunion(), 0_usize.into_sizeunion());
@@ -15405,7 +15405,7 @@ pub trait SmallUInt:
     /// 
     ///     let a_usize = func(usize::MAX / 3, 2_usize);
     ///     println!("{} / 2 = {}", usize::MAX / 3, a_usize);
-    ///     #[cfg(target_pointer_width = "64")] assert_eq!(a_usize, 3074457345618258602_usize);
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] assert_eq!(a_usize, 3074457345618258602_usize);
     ///     // It will panic.
     ///     // let a_panic = func(usize::MAX / 3, 0_usize);
     /// 
@@ -15435,7 +15435,7 @@ pub trait SmallUInt:
     /// 
     ///     let a_sizeunion = func((usize::MAX / 3).into_sizeunion(), 2_usize.into_sizeunion());
     ///     println!("{} / 2 = {}", (usize::MAX / 3).into_sizeunion(), a_sizeunion);
-    ///     #[cfg(target_pointer_width = "64")] assert_eq!(a_sizeunion.get(), 3074457345618258602_usize);
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] assert_eq!(a_sizeunion.get(), 3074457345618258602_usize);
     ///     // It will panic.
     ///     // let a_panic = func((usize::MAX / 3).into_sizeunion(), 0_usize.into_sizeunion());
     /// }
@@ -18888,7 +18888,7 @@ pub trait SmallUInt:
     ///     #[cfg(target_pointer_width = "8")] assert_eq!(b_usize, 1_usize);
     ///     #[cfg(target_pointer_width = "16")] assert_eq!(b_usize, 31233_usize);
     ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(b_usize, 2324068865_usize);
-    ///     #[cfg(target_pointer_width = "64")] assert_eq!(b_usize, 9241971931925084673_usize);
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] assert_eq!(b_usize, 9241971931925084673_usize);
     ///     #[cfg(target_pointer_width = "128")] assert_eq!(b_usize, 303523815449207866983105381828026333697_usize);
     /// }
     /// 
@@ -18997,7 +18997,7 @@ pub trait SmallUInt:
     ///     #[cfg(target_pointer_width = "8")] assert_eq!(c_sizeunion.get(), 1_usize);
     ///     #[cfg(target_pointer_width = "16")] assert_eq!(c_sizeunion.get(), 31233_usize);
     ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(c_sizeunion.get(), 2324068865_usize);
-    ///     #[cfg(target_pointer_width = "64")] assert_eq!(c_sizeunion.get(), 9241971931925084673_usize);
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] assert_eq!(c_sizeunion.get(), 9241971931925084673_usize);
     ///     #[cfg(target_pointer_width = "128")] assert_eq!(c_sizeunion.get(), 303523815449207866983105381828026333697_usize);
     /// }
     /// 
@@ -19064,7 +19064,7 @@ pub trait SmallUInt:
     ///     #[cfg(target_pointer_width = "8")] assert_eq!(b_usize, 1_usize);
     ///     #[cfg(target_pointer_width = "16")] assert_eq!(b_usize, 31233_usize);
     ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(b_usize, 2324068865_usize);
-    ///     #[cfg(target_pointer_width = "64")] assert_eq!(b_usize, 9241971931925084673_usize);
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] assert_eq!(b_usize, 9241971931925084673_usize);
     ///     #[cfg(target_pointer_width = "128")] assert_eq!(b_usize, 303523815449207866983105381828026333697_usize);
     /// 
     ///     let a_shortunion = ShortUnion::new_with(9);
@@ -19113,7 +19113,7 @@ pub trait SmallUInt:
     ///     #[cfg(target_pointer_width = "8")] assert_eq!(c_sizeunion.get(), 1_usize);
     ///     #[cfg(target_pointer_width = "16")] assert_eq!(c_sizeunion.get(), 31233_usize);
     ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(c_sizeunion.get(), 2324068865_usize);
-    ///     #[cfg(target_pointer_width = "64")] assert_eq!(c_sizeunion.get(), 9241971931925084673_usize);
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] assert_eq!(c_sizeunion.get(), 9241971931925084673_usize);
     ///     #[cfg(target_pointer_width = "128")] assert_eq!(c_sizeunion.get(), 303523815449207866983105381828026333697_usize);
     /// }
     /// 
@@ -19289,7 +19289,7 @@ pub trait SmallUInt:
     ///     #[cfg(target_pointer_width = "8")] assert_eq!(b_usize, 1_usize);
     ///     #[cfg(target_pointer_width = "16")] assert_eq!(b_usize, 31233_usize);
     ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(b_usize, 2324068865_usize);
-    ///     #[cfg(target_pointer_width = "64")] assert_eq!(b_usize, 9241971931925084673_usize);
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] assert_eq!(b_usize, 9241971931925084673_usize);
     ///     #[cfg(target_pointer_width = "128")] assert_eq!(b_usize, 303523815449207866983105381828026333697_usize);
     ///     assert_eq!(overflow, true);
     /// }
@@ -19403,7 +19403,7 @@ pub trait SmallUInt:
     ///     #[cfg(target_pointer_width = "8")] assert_eq!(b_sizeunion.get(), 1_usize);
     ///     #[cfg(target_pointer_width = "16")] assert_eq!(b_sizeunion.get(), 31233_usize);
     ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(b_sizeunion.get(), 2324068865_usize);
-    ///     #[cfg(target_pointer_width = "64")] assert_eq!(b_sizeunion.get(), 9241971931925084673_usize);
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] assert_eq!(b_sizeunion.get(), 9241971931925084673_usize);
     ///     #[cfg(target_pointer_width = "128")] assert_eq!(b_sizeunion.get(), 303523815449207866983105381828026333697_usize);
     ///     assert_eq!(overflow, true);
     /// }
@@ -19482,7 +19482,7 @@ pub trait SmallUInt:
     ///     #[cfg(target_pointer_width = "8")] assert_eq!(b_usize, 1_usize);
     ///     #[cfg(target_pointer_width = "16")] assert_eq!(b_usize, 31233_usize);
     ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(b_usize, 2324068865_usize);
-    ///     #[cfg(target_pointer_width = "64")] assert_eq!(b_usize, 9241971931925084673_usize);
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] assert_eq!(b_usize, 9241971931925084673_usize);
     ///     #[cfg(target_pointer_width = "128")] assert_eq!(b_usize, 303523815449207866983105381828026333697_usize);
     ///     assert_eq!(overflow, true);
     /// 
@@ -19536,7 +19536,7 @@ pub trait SmallUInt:
     ///     #[cfg(target_pointer_width = "8")] assert_eq!(b_sizeunion.get(), 1_usize);
     ///     #[cfg(target_pointer_width = "16")] assert_eq!(b_sizeunion.get(), 31233_usize);
     ///     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))] assert_eq!(b_sizeunion.get(), 2324068865_usize);
-    ///     #[cfg(target_pointer_width = "64")] assert_eq!(b_sizeunion.get(), 9241971931925084673_usize);
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))] assert_eq!(b_sizeunion.get(), 9241971931925084673_usize);
     ///     #[cfg(target_pointer_width = "128")] assert_eq!(b_sizeunion.get(), 303523815449207866983105381828026333697_usize);
     ///     assert_eq!(overflow, true);
     /// }
@@ -25449,7 +25449,7 @@ pub trait SmallUInt:
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_usize = 0b1011001110001111000011111000001111110000001111111000000011111111_usize;
     ///         let b_usize = func(a_usize);
@@ -25537,7 +25537,7 @@ pub trait SmallUInt:
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_sizeunion = 0b1011001110001111000011111000001111110000001111111000000011111111_usize.into_sizeunion();
     ///         let b_sizeunion = func(a_sizeunion);
@@ -25585,7 +25585,7 @@ pub trait SmallUInt:
     ///     println!("{:0128b} -> {:0128b}", a_u128, b_u128);
     ///     assert_eq!(b_u128, 0b00000001111111111100000000001111111111000000000111111111000000001111111100000001111111000000111111000001111100001111000111001101_u128);
     /// 
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_usize = 0b1011001110001111000011111000001111110000001111111000000011111111_usize;
     ///         let b_usize = func(a_usize);
@@ -25613,7 +25613,7 @@ pub trait SmallUInt:
     ///     println!("{:0128b} -> {:0128b}", a_longerunion.get(), b_longerunion.get());
     ///     assert_eq!(b_longerunion.get(), 0b00000001111111111100000000001111111111000000000111111111000000001111111100000001111111000000111111000001111100001111000111001101_u128);
     /// 
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_sizeunion = 0b1011001110001111000011111000001111110000001111111000000011111111_usize.into_sizeunion();
     ///         let b_sizeunion = func(a_sizeunion);
@@ -25761,7 +25761,7 @@ pub trait SmallUInt:
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_usize = 0b1011001110001111000011111000001111110000001111111000000011111111_usize;
     ///         let b_usize = func(a_usize, 16);
@@ -25849,7 +25849,7 @@ pub trait SmallUInt:
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_sizeunion = 0b1011001110001111000011111000001111110000001111111000000011111111_usize.into_sizeunion();
     ///         let b_sizeunion = func(a_sizeunion, 16);
@@ -25897,7 +25897,7 @@ pub trait SmallUInt:
     ///     println!("{:0128b} -> {:0128b}", a_u128, b_u128);
     ///     assert_eq!(b_u128, 0b11110000001111111000000011111111000000001111111110000000001111111111000000000011111111111000000010110011100011110000111110000011_u128);
     /// 
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_usize = 0b1011001110001111000011111000001111110000001111111000000011111111_usize;
     ///         let b_usize = func(a_usize, 16);
@@ -25925,7 +25925,7 @@ pub trait SmallUInt:
     ///     println!("{:0128b} -> {:0128b}", a_longerunion.get(), b_longerunion.get());
     ///     assert_eq!(b_longerunion.get(), 0b11110000001111111000000011111111000000001111111110000000001111111111000000000011111111111000000010110011100011110000111110000011_u128);
     /// 
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_sizeunion = 0b1011001110001111000011111000001111110000001111111000000011111111_usize.into_sizeunion();
     ///         let b_sizeunion = func(a_sizeunion, 16);
@@ -26073,7 +26073,7 @@ pub trait SmallUInt:
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_usize = 0b1011001110001111000011111000001111110000001111111000000011111111_usize;
     ///         let b_usize = func(a_usize, 16);
@@ -26161,7 +26161,7 @@ pub trait SmallUInt:
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_sizeunion = 0b1011001110001111000011111000001111110000001111111000000011111111_usize.into_sizeunion();
     ///         let b_sizeunion = func(a_sizeunion, 16);
@@ -26214,7 +26214,7 @@ pub trait SmallUInt:
     ///     println!("{:0128b} -> {:0128b}", a_u128, b_u128);
     ///     assert_eq!(b_u128, 0b11110000000000111111111110000000101100111000111100001111100000111111000000111111100000001111111100000000111111111000000000111111_u128);
     /// 
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_usize = 0b1011001110001111000011111000001111110000001111111000000011111111_usize;
     ///         let b_usize = func(a_usize, 16);
@@ -26247,7 +26247,7 @@ pub trait SmallUInt:
     ///     assert_eq!(b_longerunion.get(), 0b11110000000000111111111110000000101100111000111100001111100000111111000000111111100000001111111100000000111111111000000000111111_u128);
     /// 
     ///     // Examples for SizeUnion
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_sizeunion = 0b1011001110001111000011111000001111110000001111111000000011111111_usize.into_sizeunion();
     ///         let b_sizeunion = func(a_sizeunion, 16);
@@ -26681,7 +26681,7 @@ pub trait SmallUInt:
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_usize = 0b1011001110001111000011111000001111110000001111111000000011111111_usize;
     ///         let zeros = func(a_usize);
@@ -26769,7 +26769,7 @@ pub trait SmallUInt:
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_sizeunion = 0b1011001110001111000011111000001111110000001111111000000011111111_usize.into_sizeunion();
     ///         let zeros = func(a_sizeunion);
@@ -26817,7 +26817,7 @@ pub trait SmallUInt:
     ///     println!("The number of zeros of {:0128b} is {}.", a_u128, zeros);
     ///     assert_eq!(zeros, 62_u32);
     /// 
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_usize = 0b1011001110001111000011111000001111110000001111111000000011111111_usize;
     ///         let zeros = func(a_usize);
@@ -26845,7 +26845,7 @@ pub trait SmallUInt:
     ///     println!("The number of zeros of {:0128b} is {}.", a_longerunion.get(), zeros);
     ///     assert_eq!(zeros, 62_u32);
     /// 
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_sizeunion = 0b1011001110001111000011111000001111110000001111111000000011111111_usize.into_sizeunion();
     ///         let zeros = func(a_sizeunion);
@@ -26986,7 +26986,7 @@ pub trait SmallUInt:
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_usize = 0b0000001111111000000011111111101100111000111100001111100000111111_usize;
     ///         let ones = func(a_usize);
@@ -27074,7 +27074,7 @@ pub trait SmallUInt:
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_sizeunion = 0b1111111000000011111111101100111000111100001111100000111111000000_usize.into_sizeunion();
     ///         let ones = func(a_sizeunion);
@@ -27122,7 +27122,7 @@ pub trait SmallUInt:
     ///     println!("The number of leading ones of {:0128b} is {}.", a_u128, ones);
     ///     assert_eq!(ones, 1_u32);
     /// 
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_usize = 0b0000001111111000000011111111101100111000111100001111100000111111_usize;
     ///         let ones = func(a_usize);
@@ -27150,7 +27150,7 @@ pub trait SmallUInt:
     ///     println!("The number of leading ones of {:0128b} is {}.", a_longerunion.get(), ones);
     ///     assert_eq!(ones, 11_u32);
     /// 
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_sizeunion = 0b1111111000000011111111101100111000111100001111100000111111000000_usize.into_sizeunion();
     ///         let ones = func(a_sizeunion);
@@ -27292,7 +27292,7 @@ pub trait SmallUInt:
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_usize = 0b0000111110000011111100000011111110000000111111111011001110001111_usize;
     ///         let zeros = func(a_usize);
@@ -27380,7 +27380,7 @@ pub trait SmallUInt:
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_sizeunion = 0b0000111110000011111100000011111110000000111111111011001110001111_usize.into_sizeunion();
     ///         let zeros = func(a_sizeunion);
@@ -27428,7 +27428,7 @@ pub trait SmallUInt:
     ///     println!("The number of leading zeros of {:0128b} is {}.", a_u128, zeros);
     ///     assert_eq!(zeros, 10_u32);
     /// 
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_usize = 0b0000111110000011111100000011111110000000111111111011001110001111_usize;
     ///         let zeros = func(a_usize);
@@ -27456,7 +27456,7 @@ pub trait SmallUInt:
     ///     println!("The number of leading zeros of {:0128b} is {}.", a_longerunion.get(), zeros);
     ///     assert_eq!(zeros, 7_u32);
     /// 
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_sizeunion = 0b0000111110000011111100000011111110000000111111111011001110001111_usize.into_sizeunion();
     ///         let zeros = func(a_sizeunion);
@@ -36073,7 +36073,7 @@ pub trait SmallUInt:
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_usizebe = 0x123456789ABCDEF0_usize;
     ///         let b_usizele = func(a_usizebe);
@@ -36161,7 +36161,7 @@ pub trait SmallUInt:
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_sizeunionbe = 0x123456789ABCDEF0_usize.into_sizeunion();
     ///         let b_sizeunionle = func(a_sizeunionbe);
@@ -36209,7 +36209,7 @@ pub trait SmallUInt:
     ///     println!("{:032x} -> {:032x}", a_u128be, b_u128le);
     ///     assert_eq!(b_u128le, 0xf0debc9a78563412f0debc9a78563412_u128);
     /// 
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_usizebe = 0x123456789ABCDEF0_usize;
     ///         let b_usizele = func(a_usizebe);
@@ -36237,7 +36237,7 @@ pub trait SmallUInt:
     ///     println!("{:032x} -> {:032x}", a_longerunionbe.get(), b_longerunionle.get());
     ///     assert_eq!(b_longerunionle.get(), 0xf0debc9a78563412f0debc9a78563412_u128);
     /// 
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_sizeunionbe = 0x123456789ABCDEF0_usize.into_sizeunion();
     ///         let b_sizeunionle = func(a_sizeunionbe);
@@ -36383,7 +36383,7 @@ pub trait SmallUInt:
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_usizele = 0x123456789ABCDEF0_usize;
     ///         let b_usizele = func(a_usizele);
@@ -36471,7 +36471,7 @@ pub trait SmallUInt:
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_sizeunionle = 0x123456789ABCDEF0_usize.into_sizeunion();
     ///         let b_sizeunionle = func(a_sizeunionle);
@@ -36519,7 +36519,7 @@ pub trait SmallUInt:
     ///     println!("{:032x} -> {:032x}", a_u128le, b_u128le);
     ///     assert_eq!(b_u128le, 0x123456789ABCDEF0123456789ABCDEF0_u128);
     /// 
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_usizele = 0x123456789ABCDEF0_usize;
     ///         let b_usizele = func(a_usizele);
@@ -36547,7 +36547,7 @@ pub trait SmallUInt:
     ///     println!("{:032x} -> {:032x}", a_longerunionle.get(), b_longerunionle.get());
     ///     assert_eq!(b_longerunionle.get(), 0x123456789ABCDEF0123456789ABCDEF0_u128);
     /// 
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_sizeunionle = 0x123456789ABCDEF0_usize.into_sizeunion();
     ///         let b_sizeunionle = func(a_sizeunionle);
@@ -36690,7 +36690,7 @@ pub trait SmallUInt:
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_usizele = 0x123456789ABCDEF0_usize;
     ///         let b_usizebe = func(a_usizele);
@@ -36778,7 +36778,7 @@ pub trait SmallUInt:
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_sizeunionle = 0x123456789ABCDEF0_usize.into_sizeunion();
     ///         let b_sizeunionbe = func(a_sizeunionle);
@@ -36826,7 +36826,7 @@ pub trait SmallUInt:
     ///     println!("{:032x} -> {:032x}", a_u128le, b_u128be);
     ///     assert_eq!(b_u128be, 0xf0debc9a78563412f0debc9a78563412_u128);
     /// 
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_usizele = 0x123456789ABCDEF0_usize;
     ///         let b_usizebe = func(a_usizele);
@@ -36854,7 +36854,7 @@ pub trait SmallUInt:
     ///     println!("{:032x} -> {:032x}", a_longerunionle.get(), b_longerunionbe.get());
     ///     assert_eq!(b_longerunionbe.get(), 0xf0debc9a78563412f0debc9a78563412_u128);
     /// 
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_sizeunionle = 0x123456789ABCDEF0_usize.into_sizeunion();
     ///         let b_sizeunionbe = func(a_sizeunionle);
@@ -36997,7 +36997,7 @@ pub trait SmallUInt:
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_usizele = 0x123456789ABCDEF0_usize;
     ///         let b_usizele = func(a_usizele);
@@ -37085,7 +37085,7 @@ pub trait SmallUInt:
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_sizeunionle = 0x123456789ABCDEF0_usize.into_sizeunion();
     ///         let b_sizeunionle = func(a_sizeunionle);
@@ -37133,7 +37133,7 @@ pub trait SmallUInt:
     ///     println!("{:032x} -> {:032x}", a_u128le, b_u128le);
     ///     assert_eq!(b_u128le, 0x123456789ABCDEF0123456789ABCDEF0_u128);
     /// 
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_usizele = 0x123456789ABCDEF0_usize;
     ///         let b_usizele = func(a_usizele);
@@ -37161,7 +37161,7 @@ pub trait SmallUInt:
     ///     println!("{:032x} -> {:032x}", a_longerunionle.get(), b_longerunionle.get());
     ///     assert_eq!(b_longerunionle.get(), 0x123456789ABCDEF0123456789ABCDEF0_u128);
     /// 
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_sizeunionle = 0x123456789ABCDEF0_usize.into_sizeunion();
     ///         let b_sizeunionle = func(a_sizeunionle);
@@ -37304,7 +37304,7 @@ pub trait SmallUInt:
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_usize = 0x123456789ABCDEF0_usize;
     ///         let b_usize = func(a_usize);
@@ -37392,7 +37392,7 @@ pub trait SmallUInt:
     /// use cryptocol::number::SmallUInt;
     /// fn main()
     /// {
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_sizeunion = 0x123456789ABCDEF0_usize.into_sizeunion();
     ///         let b_sizeunion = func(a_sizeunion);
@@ -37440,7 +37440,7 @@ pub trait SmallUInt:
     ///     println!("{:032x} -> {:032x}", a_u128, b_u128);
     ///     assert_eq!(b_u128, 0xf0debc9a78563412f0debc9a78563412_u128);
     /// 
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_usize = 0x123456789ABCDEF0_usize;
     ///         let b_usize = func(a_usize);
@@ -37468,7 +37468,7 @@ pub trait SmallUInt:
     ///     println!("{:032x} -> {:032x}", a_longerunion.get(), b_longerunion.get());
     ///     assert_eq!(b_longerunion.get(), 0xf0debc9a78563412f0debc9a78563412_u128);
     /// 
-    ///     #[cfg(target_pointer_width = "64")]
+    ///     #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     ///     {
     ///         let a_sizeunion = 0x123456789ABCDEF0_usize.into_sizeunion();
     ///         let b_sizeunion = func(a_sizeunion);

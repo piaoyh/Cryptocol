@@ -10963,7 +10963,7 @@ where T: SmallUInt
     pub fn into_usize(&self) -> usize
     {
         // #[cfg(target_pointer_width = "128")]    return self.into_u128().into_usize();
-        #[cfg(target_pointer_width = "64")]     return self.into_u64().into_usize();
+        #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]     return self.into_u64().into_usize();
         #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]     return self.into_u32().into_usize();
         #[cfg(target_pointer_width = "16")]     return self.into_u16().into_usize();
         // #[cfg(target_pointer_width = "8")]      return self.into_u8().into_usize();

@@ -433,8 +433,8 @@ impl IntUnion
     crate::number::get_set_short!(2);
 
     #[cfg(any(target_pointer_width = "32", target_arch = "wasm32"))]     crate::number::get_set_size_fit!();
-    #[cfg(target_pointer_width = "16")]     crate::number::get_set_usize!(2);
-    // #[cfg(target_pointer_width = "8")]      crate::number::get_set_usize!(4);
+    #[cfg(target_pointer_width = "16")]     crate::number::get_set_size!(2);
+    // #[cfg(target_pointer_width = "8")]      crate::number::get_set_size!(4);
 
     crate::number::integer_union_methods!(u32);
 
@@ -539,7 +539,7 @@ impl Debug for IntUnion
     /// use cryptocol::number::*;
     /// let a_int = IntUnion::new_with_signed(-1234567890_i32);
     /// println!("a_int = {:?}", a_int);
-    /// #[cfg(target_pointer_width = "64")]
+    /// #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     /// assert_eq!(format!("{a_int:?}"), "IntUnion { this: 3060399406, that: -1234567890, uint: 3060399406, sint: -1234567890, ushort: [64814, 46697], sshort: [-722, -18839], ubyte: [46, 253, 105, 182], sbyte: [46, -3, 105, -74] }");
     /// ```
     /// 
@@ -549,7 +549,7 @@ impl Debug for IntUnion
     /// use cryptocol::number::*;
     /// let a_int = IntUnion::new_with_signed(-1234567890_i32);
     /// println!("a_int = {:#?}", a_int);
-    /// #[cfg(target_pointer_width = "64")]
+    /// #[cfg(any(target_pointer_width = "64", target_arch = "wasm64"))]
     /// assert_eq!(format!("{a_int:#?}"), r#"IntUnion {
     ///     this: 3060399406,
     ///     that: -1234567890,
